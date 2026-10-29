@@ -1,0 +1,21 @@
+{
+  "id": "wulf",
+  "extends": "_base_villager",
+  "name": "Wulf the Smuggler",
+  "body": { "build": "slim", "height": "tall" },
+  "palette": {
+    "hair": "#2e2622",
+    "main": "#4a5a3a",
+    "trim": "#b08a4a",
+    "pants": "#3a3030",
+    "hat": "#3a3236",
+    "cape": "#2e2a30",
+    "skin": "#c88c66",
+    "boots": "#2a2020"
+  },
+  "face": { "beard": "stubble", "brows": "#221a18" },
+  "hair": { "style": "ponytail" },
+  "outfit": { "top": "tunic", "belt": "#6a4226" },
+  "headwear": { "style": "hood", "color": "hat" },
+  "accessories": [ { "type": "cape", "color": "cape" } ]
+}

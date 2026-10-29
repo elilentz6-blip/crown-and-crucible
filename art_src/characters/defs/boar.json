@@ -1,0 +1,14 @@
+{
+  "id": "boar",
+  "name": "Wild Boar",
+  "role": "foe",
+  "renderer": "boar",
+  "palette": {
+    "fur": "#6e4a36",
+    "belly": "#8a6a4e",
+    "bristle": "#3e2a28",
+    "tusk": "#eee0c0",
+    "snout": "#c48676",
+    "eyes": "#2a1418"
+  }
+}

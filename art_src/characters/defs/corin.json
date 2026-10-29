@@ -1,0 +1,20 @@
+{
+  "id": "corin",
+  "extends": "_base_villager",
+  "name": "Peddler Corin",
+  "body": { "build": "stout", "height": "normal" },
+  "palette": {
+    "hair": "#7a5a3a",
+    "main": "#6a3a7a",
+    "trim": "#e0b850",
+    "pants": "#5a4a36",
+    "hat": "#3a6a5a",
+    "accent": "#e8564a",
+    "skin": "#e0a882"
+  },
+  "face": { "beard": "long", "beard_color": "hair", "smile": true },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic", "belt": "#7a4a22" },
+  "headwear": { "style": "feather_cap", "color": "hat", "feather": "accent", "trim": "trim" },
+  "accessories": [ { "type": "staff", "color": "#8a6a44" } ]
+}

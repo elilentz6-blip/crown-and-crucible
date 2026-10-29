@@ -1,0 +1,11 @@
+{
+  "id": "hob", "extends": "_base_villager", "name": "Hob Ashby, Sellsword",
+  "body": { "build": "stout", "height": "tall" },
+  "palette": { "hair": "#6a3a22", "metal": "#8e959e", "main": "#6e4a32", "trim": "#c9a45a",
+               "skin": "#d6946c", "boots": "#33241c", "pants": "#3c3430" },
+  "face": { "beard": "long", "beard_color": "hair", "brows": "#4a2614", "blush": true },
+  "hair": { "style": "short" },
+  "outfit": { "top": "mail", "metal": "metal", "sleeves": "main", "belt": "#4a3020", "buckle": "trim" },
+  "headwear": { "style": "kettle_helm", "color": "metal", "trim": "#6e4a32" },
+  "accessories": [ { "type": "spear", "pennant": "#b8862e" } ]
+}

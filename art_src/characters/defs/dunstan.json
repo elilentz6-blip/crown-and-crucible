@@ -1,0 +1,34 @@
+{
+  "id": "dunstan",
+  "extends": "_base_villager",
+  "name": "Brother Dunstan",
+  "body": {
+    "build": "stout",
+    "height": "short"
+  },
+  "palette": {
+    "hair": "#6a4024",
+    "main": "#8a5a34",
+    "belt": "#d8c08a",
+    "skin": "#eeb08a"
+  },
+  "face": {
+    "blush": true,
+    "smile": true
+  },
+  "hair": {
+    "style": "tonsure"
+  },
+  "outfit": {
+    "top": "robe",
+    "belt": "belt",
+    "belt_style": "rope"
+  },
+  "accessories": [
+    {
+      "type": "rosary",
+      "color": "#c9a36b",
+      "cross": "#d9a441"
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "id": "pippin",
+  "extends": "_base_villager",
+  "name": "Scribe Pippin",
+  "body": { "build": "slim", "height": "short" },
+  "palette": {
+    "hair": "#5a3a24",
+    "main": "#3a4f86",
+    "trim": "#e8dcb8",
+    "pants": "#4a3f52",
+    "skin": "#f2c8a4",
+    "boots": "#3e2c26"
+  },
+  "face": { "blush": true },
+  "hair": { "style": "curly" },
+  "outfit": { "top": "robe", "belt": "#c9a36b", "belt_style": "rope" },
+  "accessories": []
+}

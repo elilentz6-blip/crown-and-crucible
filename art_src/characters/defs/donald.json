@@ -1,0 +1,40 @@
+{
+  "id": "donald",
+  "extends": "_base_villager",
+  "name": "Militia Guard Donald",
+  "body": {
+    "build": "stout"
+  },
+  "palette": {
+    "hair": "#8a5a30",
+    "metal": "#9aa4b2",
+    "tabard": "#b23a34",
+    "trim": "#f0e2c4",
+    "skin": "#dda17a",
+    "boots": "#3e2c24"
+  },
+  "face": {
+    "beard": "mustache",
+    "brows": "#6a3e1e"
+  },
+  "outfit": {
+    "top": "mail",
+    "metal": "metal",
+    "tabard": "tabard",
+    "crest": "cross",
+    "crest_color": "trim",
+    "sleeves": "metal",
+    "belt": "belt"
+  },
+  "headwear": {
+    "style": "kettle_helm",
+    "color": "metal",
+    "trim": "#b23a34"
+  },
+  "accessories": [
+    {
+      "type": "spear",
+      "pennant": "tabard"
+    }
+  ]
+}

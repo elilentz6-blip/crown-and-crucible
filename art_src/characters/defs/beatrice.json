@@ -1,0 +1,34 @@
+{
+  "id": "beatrice",
+  "extends": "_base_villager",
+  "name": "Baker Beatrice",
+  "body": {
+    "build": "stout"
+  },
+  "palette": {
+    "hair": "#b0482c",
+    "main": "#c4607a",
+    "trim": "#f0d9a8",
+    "hat": "#f2e8d4",
+    "apron": "#efe6d2",
+    "skin": "#f0bf96",
+    "boots": "#6a3e2a"
+  },
+  "face": {
+    "blush": true,
+    "smile": true
+  },
+  "hair": {
+    "style": "bun"
+  },
+  "outfit": {
+    "top": "dress",
+    "apron": "apron",
+    "belt": null
+  },
+  "headwear": {
+    "style": "mob_cap",
+    "color": "hat",
+    "trim": "#d98a6a"
+  }
+}

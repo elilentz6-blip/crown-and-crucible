@@ -1,0 +1,893 @@
+{
+ "generator": "art_src/ui/gen_ui.py",
+ "gui_scale": 2,
+ "gui_size": [
+  1366,
+  768
+ ],
+ "sprites": [
+  {
+   "name": "spr_ui_frame_iron",
+   "frames": [
+    "png/spr_ui_frame_iron_0.png"
+   ],
+   "width": 64,
+   "height": 64,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 20,
+    "top": 20,
+    "right": 20,
+    "bottom": 20
+   },
+   "note": "engraved iron frame; centre transparent, draw a fill texture first"
+  },
+  {
+   "name": "spr_ui_frame_gilded",
+   "frames": [
+    "png/spr_ui_frame_gilded_0.png"
+   ],
+   "width": 72,
+   "height": 72,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 24,
+    "top": 24,
+    "right": 24,
+    "bottom": 24
+   },
+   "note": "ornate gilt frame for dialogue and the armory"
+  },
+  {
+   "name": "spr_ui_frame_inset",
+   "frames": [
+    "png/spr_ui_frame_inset_0.png"
+   ],
+   "width": 24,
+   "height": 24,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 8,
+    "top": 8,
+    "right": 8,
+    "bottom": 8
+   },
+   "note": "recessed sub-panel"
+  },
+  {
+   "name": "spr_ui_tex_parchment",
+   "frames": [
+    "png/spr_ui_tex_parchment_0.png"
+   ],
+   "width": 128,
+   "height": 128,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "tileable parchment fill"
+  },
+  {
+   "name": "spr_ui_tex_leather",
+   "frames": [
+    "png/spr_ui_tex_leather_0.png"
+   ],
+   "width": 128,
+   "height": 128,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "tileable dark leather fill"
+  },
+  {
+   "name": "spr_ui_bar_frame",
+   "frames": [
+    "png/spr_ui_bar_frame_0.png"
+   ],
+   "width": 32,
+   "height": 16,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 8,
+    "top": 6,
+    "right": 8,
+    "bottom": 6
+   }
+  },
+  {
+   "name": "spr_ui_bar_fill",
+   "frames": [
+    "png/spr_ui_bar_fill_0.png",
+    "png/spr_ui_bar_fill_1.png",
+    "png/spr_ui_bar_fill_2.png",
+    "png/spr_ui_bar_fill_3.png",
+    "png/spr_ui_bar_fill_4.png"
+   ],
+   "width": 4,
+   "height": 8,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frames: 0 hp, 1 xp/gold, 2 blue, 3 green, 4 empty; stretch"
+  },
+  {
+   "name": "spr_ui_button",
+   "frames": [
+    "png/spr_ui_button_0.png",
+    "png/spr_ui_button_1.png",
+    "png/spr_ui_button_2.png",
+    "png/spr_ui_button_3.png"
+   ],
+   "width": 48,
+   "height": 32,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 12,
+    "top": 12,
+    "right": 12,
+    "bottom": 12
+   },
+   "note": "frames: normal, hover, pressed, disabled"
+  },
+  {
+   "name": "spr_ui_keycap",
+   "frames": [
+    "png/spr_ui_keycap_0.png"
+   ],
+   "width": 24,
+   "height": 24,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 8,
+    "top": 8,
+    "right": 8,
+    "bottom": 10
+   }
+  },
+  {
+   "name": "spr_ui_ribbon",
+   "frames": [
+    "png/spr_ui_ribbon_0.png"
+   ],
+   "width": 80,
+   "height": 32,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 24,
+    "top": 12,
+    "right": 24,
+    "bottom": 12
+   },
+   "note": "crimson title ribbon"
+  },
+  {
+   "name": "spr_ui_nameplate",
+   "frames": [
+    "png/spr_ui_nameplate_0.png"
+   ],
+   "width": 64,
+   "height": 36,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 18,
+    "top": 14,
+    "right": 18,
+    "bottom": 14
+   },
+   "note": "speaker nameplate"
+  },
+  {
+   "name": "spr_ui_divider",
+   "frames": [
+    "png/spr_ui_divider_0.png"
+   ],
+   "width": 80,
+   "height": 14,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 20,
+    "top": 0,
+    "right": 20,
+    "bottom": 0
+   }
+  },
+  {
+   "name": "spr_ui_medallion",
+   "frames": [
+    "png/spr_ui_medallion_0.png"
+   ],
+   "width": 64,
+   "height": 64,
+   "origin": [
+    32,
+    32
+   ],
+   "category": "ui"
+  },
+  {
+   "name": "spr_ui_portrait_frame",
+   "frames": [
+    "png/spr_ui_portrait_frame_0.png"
+   ],
+   "width": 144,
+   "height": 144,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "64x64-art window at (8,8) GUI"
+  },
+  {
+   "name": "spr_ui_portrait_bg",
+   "frames": [
+    "png/spr_ui_portrait_bg_0.png"
+   ],
+   "width": 128,
+   "height": 128,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui"
+  },
+  {
+   "name": "spr_ui_next_arrow",
+   "frames": [
+    "png/spr_ui_next_arrow_0.png",
+    "png/spr_ui_next_arrow_1.png"
+   ],
+   "width": 18,
+   "height": 16,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui"
+  },
+  {
+   "name": "spr_ui_slot",
+   "frames": [
+    "png/spr_ui_slot_0.png",
+    "png/spr_ui_slot_1.png",
+    "png/spr_ui_slot_2.png"
+   ],
+   "width": 56,
+   "height": 56,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 12,
+    "top": 12,
+    "right": 12,
+    "bottom": 12
+   },
+   "note": "frames: normal, hover, selected"
+  },
+  {
+   "name": "spr_ui_select",
+   "frames": [
+    "png/spr_ui_select_0.png"
+   ],
+   "width": 32,
+   "height": 32,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 12,
+    "top": 12,
+    "right": 12,
+    "bottom": 12
+   },
+   "note": "selection highlight, centre transparent"
+  },
+  {
+   "name": "spr_ui_rarity_border",
+   "frames": [
+    "png/spr_ui_rarity_border_0.png",
+    "png/spr_ui_rarity_border_1.png",
+    "png/spr_ui_rarity_border_2.png",
+    "png/spr_ui_rarity_border_3.png",
+    "png/spr_ui_rarity_border_4.png"
+   ],
+   "width": 56,
+   "height": 56,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "nine_slice": {
+    "left": 12,
+    "top": 12,
+    "right": 12,
+    "bottom": 12
+   },
+   "note": "frame = rarity tier 0..4"
+  },
+  {
+   "name": "spr_ui_rarity_gem",
+   "frames": [
+    "png/spr_ui_rarity_gem_0.png",
+    "png/spr_ui_rarity_gem_1.png",
+    "png/spr_ui_rarity_gem_2.png",
+    "png/spr_ui_rarity_gem_3.png",
+    "png/spr_ui_rarity_gem_4.png"
+   ],
+   "width": 14,
+   "height": 14,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frame = rarity tier 0..4"
+  },
+  {
+   "name": "spr_ui_icons",
+   "frames": [
+    "png/spr_ui_icons_0.png",
+    "png/spr_ui_icons_1.png",
+    "png/spr_ui_icons_2.png",
+    "png/spr_ui_icons_3.png",
+    "png/spr_ui_icons_4.png",
+    "png/spr_ui_icons_5.png",
+    "png/spr_ui_icons_6.png",
+    "png/spr_ui_icons_7.png",
+    "png/spr_ui_icons_8.png",
+    "png/spr_ui_icons_9.png",
+    "png/spr_ui_icons_10.png",
+    "png/spr_ui_icons_11.png",
+    "png/spr_ui_icons_12.png",
+    "png/spr_ui_icons_13.png",
+    "png/spr_ui_icons_14.png",
+    "png/spr_ui_icons_15.png",
+    "png/spr_ui_icons_16.png"
+   ],
+   "width": 28,
+   "height": 28,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frame = UI_ICON_* macro"
+  },
+  {
+   "name": "spr_ui_items",
+   "frames": [
+    "png/spr_ui_items_0.png",
+    "png/spr_ui_items_1.png",
+    "png/spr_ui_items_2.png",
+    "png/spr_ui_items_3.png",
+    "png/spr_ui_items_4.png",
+    "png/spr_ui_items_5.png",
+    "png/spr_ui_items_6.png",
+    "png/spr_ui_items_7.png",
+    "png/spr_ui_items_8.png"
+   ],
+   "width": 44,
+   "height": 44,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frame = UI_ITEM_* macro"
+  },
+  {
+   "name": "spr_ui_slot_ghost",
+   "frames": [
+    "png/spr_ui_slot_ghost_0.png",
+    "png/spr_ui_slot_ghost_1.png",
+    "png/spr_ui_slot_ghost_2.png"
+   ],
+   "width": 44,
+   "height": 44,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frames: weapon, armor, relic"
+  },
+  {
+   "name": "spr_ui_socket",
+   "frames": [
+    "png/spr_ui_socket_0.png",
+    "png/spr_ui_socket_1.png",
+    "png/spr_ui_socket_2.png",
+    "png/spr_ui_socket_3.png",
+    "png/spr_ui_socket_4.png",
+    "png/spr_ui_socket_5.png",
+    "png/spr_ui_socket_6.png",
+    "png/spr_ui_socket_7.png",
+    "png/spr_ui_socket_8.png",
+    "png/spr_ui_socket_9.png",
+    "png/spr_ui_socket_10.png",
+    "png/spr_ui_socket_11.png",
+    "png/spr_ui_socket_12.png",
+    "png/spr_ui_socket_13.png",
+    "png/spr_ui_socket_14.png",
+    "png/spr_ui_socket_15.png",
+    "png/spr_ui_socket_16.png",
+    "png/spr_ui_socket_17.png",
+    "png/spr_ui_socket_18.png",
+    "png/spr_ui_socket_19.png",
+    "png/spr_ui_socket_20.png"
+   ],
+   "width": 40,
+   "height": 40,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frame = discipline*3 + state (0 empty, 1 filled, 2 highlight)"
+  },
+  {
+   "name": "spr_ui_card_base",
+   "frames": [
+    "png/spr_ui_card_base_0.png",
+    "png/spr_ui_card_base_1.png",
+    "png/spr_ui_card_base_2.png",
+    "png/spr_ui_card_base_3.png",
+    "png/spr_ui_card_base_4.png",
+    "png/spr_ui_card_base_5.png",
+    "png/spr_ui_card_base_6.png"
+   ],
+   "width": 112,
+   "height": 152,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frame = discipline index"
+  },
+  {
+   "name": "spr_ui_card_frame",
+   "frames": [
+    "png/spr_ui_card_frame_0.png",
+    "png/spr_ui_card_frame_1.png",
+    "png/spr_ui_card_frame_2.png",
+    "png/spr_ui_card_frame_3.png",
+    "png/spr_ui_card_frame_4.png"
+   ],
+   "width": 112,
+   "height": 152,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "frame = rarity tier"
+  },
+  {
+   "name": "spr_ui_card_back",
+   "frames": [
+    "png/spr_ui_card_back_0.png"
+   ],
+   "width": 112,
+   "height": 152,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui"
+  },
+  {
+   "name": "spr_ui_card_slot",
+   "frames": [
+    "png/spr_ui_card_slot_0.png"
+   ],
+   "width": 112,
+   "height": 152,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "tint with discipline colour"
+  },
+  {
+   "name": "spr_ui_party_shield",
+   "frames": [
+    "png/spr_ui_party_shield_0.png",
+    "png/spr_ui_party_shield_1.png"
+   ],
+   "width": 24,
+   "height": 26,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui",
+   "note": "0 empty, 1 rim (draw spr_ui_party_field tinted first)"
+  },
+  {
+   "name": "spr_ui_party_field",
+   "frames": [
+    "png/spr_ui_party_field_0.png"
+   ],
+   "width": 24,
+   "height": 26,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "ui"
+  },
+  {
+   "name": "spr_ui_font_body",
+   "frames": [
+    "png/spr_ui_font_body_0.png",
+    "png/spr_ui_font_body_1.png",
+    "png/spr_ui_font_body_2.png",
+    "png/spr_ui_font_body_3.png",
+    "png/spr_ui_font_body_4.png",
+    "png/spr_ui_font_body_5.png",
+    "png/spr_ui_font_body_6.png",
+    "png/spr_ui_font_body_7.png",
+    "png/spr_ui_font_body_8.png",
+    "png/spr_ui_font_body_9.png",
+    "png/spr_ui_font_body_10.png",
+    "png/spr_ui_font_body_11.png",
+    "png/spr_ui_font_body_12.png",
+    "png/spr_ui_font_body_13.png",
+    "png/spr_ui_font_body_14.png",
+    "png/spr_ui_font_body_15.png",
+    "png/spr_ui_font_body_16.png",
+    "png/spr_ui_font_body_17.png",
+    "png/spr_ui_font_body_18.png",
+    "png/spr_ui_font_body_19.png",
+    "png/spr_ui_font_body_20.png",
+    "png/spr_ui_font_body_21.png",
+    "png/spr_ui_font_body_22.png",
+    "png/spr_ui_font_body_23.png",
+    "png/spr_ui_font_body_24.png",
+    "png/spr_ui_font_body_25.png",
+    "png/spr_ui_font_body_26.png",
+    "png/spr_ui_font_body_27.png",
+    "png/spr_ui_font_body_28.png",
+    "png/spr_ui_font_body_29.png",
+    "png/spr_ui_font_body_30.png",
+    "png/spr_ui_font_body_31.png",
+    "png/spr_ui_font_body_32.png",
+    "png/spr_ui_font_body_33.png",
+    "png/spr_ui_font_body_34.png",
+    "png/spr_ui_font_body_35.png",
+    "png/spr_ui_font_body_36.png",
+    "png/spr_ui_font_body_37.png",
+    "png/spr_ui_font_body_38.png",
+    "png/spr_ui_font_body_39.png",
+    "png/spr_ui_font_body_40.png",
+    "png/spr_ui_font_body_41.png",
+    "png/spr_ui_font_body_42.png",
+    "png/spr_ui_font_body_43.png",
+    "png/spr_ui_font_body_44.png",
+    "png/spr_ui_font_body_45.png",
+    "png/spr_ui_font_body_46.png",
+    "png/spr_ui_font_body_47.png",
+    "png/spr_ui_font_body_48.png",
+    "png/spr_ui_font_body_49.png",
+    "png/spr_ui_font_body_50.png",
+    "png/spr_ui_font_body_51.png",
+    "png/spr_ui_font_body_52.png",
+    "png/spr_ui_font_body_53.png",
+    "png/spr_ui_font_body_54.png",
+    "png/spr_ui_font_body_55.png",
+    "png/spr_ui_font_body_56.png",
+    "png/spr_ui_font_body_57.png",
+    "png/spr_ui_font_body_58.png",
+    "png/spr_ui_font_body_59.png",
+    "png/spr_ui_font_body_60.png",
+    "png/spr_ui_font_body_61.png",
+    "png/spr_ui_font_body_62.png",
+    "png/spr_ui_font_body_63.png",
+    "png/spr_ui_font_body_64.png",
+    "png/spr_ui_font_body_65.png",
+    "png/spr_ui_font_body_66.png",
+    "png/spr_ui_font_body_67.png",
+    "png/spr_ui_font_body_68.png",
+    "png/spr_ui_font_body_69.png",
+    "png/spr_ui_font_body_70.png",
+    "png/spr_ui_font_body_71.png",
+    "png/spr_ui_font_body_72.png",
+    "png/spr_ui_font_body_73.png",
+    "png/spr_ui_font_body_74.png",
+    "png/spr_ui_font_body_75.png",
+    "png/spr_ui_font_body_76.png",
+    "png/spr_ui_font_body_77.png",
+    "png/spr_ui_font_body_78.png",
+    "png/spr_ui_font_body_79.png",
+    "png/spr_ui_font_body_80.png",
+    "png/spr_ui_font_body_81.png",
+    "png/spr_ui_font_body_82.png",
+    "png/spr_ui_font_body_83.png",
+    "png/spr_ui_font_body_84.png",
+    "png/spr_ui_font_body_85.png",
+    "png/spr_ui_font_body_86.png",
+    "png/spr_ui_font_body_87.png",
+    "png/spr_ui_font_body_88.png",
+    "png/spr_ui_font_body_89.png",
+    "png/spr_ui_font_body_90.png",
+    "png/spr_ui_font_body_91.png",
+    "png/spr_ui_font_body_92.png",
+    "png/spr_ui_font_body_93.png",
+    "png/spr_ui_font_body_94.png"
+   ],
+   "width": 20,
+   "height": 30,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "font",
+   "note": "body glyphs for ASCII 32..126; tint with draw colour"
+  },
+  {
+   "name": "spr_ui_font_small",
+   "frames": [
+    "png/spr_ui_font_small_0.png",
+    "png/spr_ui_font_small_1.png",
+    "png/spr_ui_font_small_2.png",
+    "png/spr_ui_font_small_3.png",
+    "png/spr_ui_font_small_4.png",
+    "png/spr_ui_font_small_5.png",
+    "png/spr_ui_font_small_6.png",
+    "png/spr_ui_font_small_7.png",
+    "png/spr_ui_font_small_8.png",
+    "png/spr_ui_font_small_9.png",
+    "png/spr_ui_font_small_10.png",
+    "png/spr_ui_font_small_11.png",
+    "png/spr_ui_font_small_12.png",
+    "png/spr_ui_font_small_13.png",
+    "png/spr_ui_font_small_14.png",
+    "png/spr_ui_font_small_15.png",
+    "png/spr_ui_font_small_16.png",
+    "png/spr_ui_font_small_17.png",
+    "png/spr_ui_font_small_18.png",
+    "png/spr_ui_font_small_19.png",
+    "png/spr_ui_font_small_20.png",
+    "png/spr_ui_font_small_21.png",
+    "png/spr_ui_font_small_22.png",
+    "png/spr_ui_font_small_23.png",
+    "png/spr_ui_font_small_24.png",
+    "png/spr_ui_font_small_25.png",
+    "png/spr_ui_font_small_26.png",
+    "png/spr_ui_font_small_27.png",
+    "png/spr_ui_font_small_28.png",
+    "png/spr_ui_font_small_29.png",
+    "png/spr_ui_font_small_30.png",
+    "png/spr_ui_font_small_31.png",
+    "png/spr_ui_font_small_32.png",
+    "png/spr_ui_font_small_33.png",
+    "png/spr_ui_font_small_34.png",
+    "png/spr_ui_font_small_35.png",
+    "png/spr_ui_font_small_36.png",
+    "png/spr_ui_font_small_37.png",
+    "png/spr_ui_font_small_38.png",
+    "png/spr_ui_font_small_39.png",
+    "png/spr_ui_font_small_40.png",
+    "png/spr_ui_font_small_41.png",
+    "png/spr_ui_font_small_42.png",
+    "png/spr_ui_font_small_43.png",
+    "png/spr_ui_font_small_44.png",
+    "png/spr_ui_font_small_45.png",
+    "png/spr_ui_font_small_46.png",
+    "png/spr_ui_font_small_47.png",
+    "png/spr_ui_font_small_48.png",
+    "png/spr_ui_font_small_49.png",
+    "png/spr_ui_font_small_50.png",
+    "png/spr_ui_font_small_51.png",
+    "png/spr_ui_font_small_52.png",
+    "png/spr_ui_font_small_53.png",
+    "png/spr_ui_font_small_54.png",
+    "png/spr_ui_font_small_55.png",
+    "png/spr_ui_font_small_56.png",
+    "png/spr_ui_font_small_57.png",
+    "png/spr_ui_font_small_58.png",
+    "png/spr_ui_font_small_59.png",
+    "png/spr_ui_font_small_60.png",
+    "png/spr_ui_font_small_61.png",
+    "png/spr_ui_font_small_62.png",
+    "png/spr_ui_font_small_63.png",
+    "png/spr_ui_font_small_64.png",
+    "png/spr_ui_font_small_65.png",
+    "png/spr_ui_font_small_66.png",
+    "png/spr_ui_font_small_67.png",
+    "png/spr_ui_font_small_68.png",
+    "png/spr_ui_font_small_69.png",
+    "png/spr_ui_font_small_70.png",
+    "png/spr_ui_font_small_71.png",
+    "png/spr_ui_font_small_72.png",
+    "png/spr_ui_font_small_73.png",
+    "png/spr_ui_font_small_74.png",
+    "png/spr_ui_font_small_75.png",
+    "png/spr_ui_font_small_76.png",
+    "png/spr_ui_font_small_77.png",
+    "png/spr_ui_font_small_78.png",
+    "png/spr_ui_font_small_79.png",
+    "png/spr_ui_font_small_80.png",
+    "png/spr_ui_font_small_81.png",
+    "png/spr_ui_font_small_82.png",
+    "png/spr_ui_font_small_83.png",
+    "png/spr_ui_font_small_84.png",
+    "png/spr_ui_font_small_85.png",
+    "png/spr_ui_font_small_86.png",
+    "png/spr_ui_font_small_87.png",
+    "png/spr_ui_font_small_88.png",
+    "png/spr_ui_font_small_89.png",
+    "png/spr_ui_font_small_90.png",
+    "png/spr_ui_font_small_91.png",
+    "png/spr_ui_font_small_92.png",
+    "png/spr_ui_font_small_93.png",
+    "png/spr_ui_font_small_94.png"
+   ],
+   "width": 14,
+   "height": 22,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "font",
+   "note": "small glyphs for ASCII 32..126; tint with draw colour"
+  },
+  {
+   "name": "spr_ui_font_title",
+   "frames": [
+    "png/spr_ui_font_title_0.png",
+    "png/spr_ui_font_title_1.png",
+    "png/spr_ui_font_title_2.png",
+    "png/spr_ui_font_title_3.png",
+    "png/spr_ui_font_title_4.png",
+    "png/spr_ui_font_title_5.png",
+    "png/spr_ui_font_title_6.png",
+    "png/spr_ui_font_title_7.png",
+    "png/spr_ui_font_title_8.png",
+    "png/spr_ui_font_title_9.png",
+    "png/spr_ui_font_title_10.png",
+    "png/spr_ui_font_title_11.png",
+    "png/spr_ui_font_title_12.png",
+    "png/spr_ui_font_title_13.png",
+    "png/spr_ui_font_title_14.png",
+    "png/spr_ui_font_title_15.png",
+    "png/spr_ui_font_title_16.png",
+    "png/spr_ui_font_title_17.png",
+    "png/spr_ui_font_title_18.png",
+    "png/spr_ui_font_title_19.png",
+    "png/spr_ui_font_title_20.png",
+    "png/spr_ui_font_title_21.png",
+    "png/spr_ui_font_title_22.png",
+    "png/spr_ui_font_title_23.png",
+    "png/spr_ui_font_title_24.png",
+    "png/spr_ui_font_title_25.png",
+    "png/spr_ui_font_title_26.png",
+    "png/spr_ui_font_title_27.png",
+    "png/spr_ui_font_title_28.png",
+    "png/spr_ui_font_title_29.png",
+    "png/spr_ui_font_title_30.png",
+    "png/spr_ui_font_title_31.png",
+    "png/spr_ui_font_title_32.png",
+    "png/spr_ui_font_title_33.png",
+    "png/spr_ui_font_title_34.png",
+    "png/spr_ui_font_title_35.png",
+    "png/spr_ui_font_title_36.png",
+    "png/spr_ui_font_title_37.png",
+    "png/spr_ui_font_title_38.png",
+    "png/spr_ui_font_title_39.png",
+    "png/spr_ui_font_title_40.png",
+    "png/spr_ui_font_title_41.png",
+    "png/spr_ui_font_title_42.png",
+    "png/spr_ui_font_title_43.png",
+    "png/spr_ui_font_title_44.png",
+    "png/spr_ui_font_title_45.png",
+    "png/spr_ui_font_title_46.png",
+    "png/spr_ui_font_title_47.png",
+    "png/spr_ui_font_title_48.png",
+    "png/spr_ui_font_title_49.png",
+    "png/spr_ui_font_title_50.png",
+    "png/spr_ui_font_title_51.png",
+    "png/spr_ui_font_title_52.png",
+    "png/spr_ui_font_title_53.png",
+    "png/spr_ui_font_title_54.png",
+    "png/spr_ui_font_title_55.png",
+    "png/spr_ui_font_title_56.png",
+    "png/spr_ui_font_title_57.png",
+    "png/spr_ui_font_title_58.png",
+    "png/spr_ui_font_title_59.png",
+    "png/spr_ui_font_title_60.png",
+    "png/spr_ui_font_title_61.png",
+    "png/spr_ui_font_title_62.png",
+    "png/spr_ui_font_title_63.png",
+    "png/spr_ui_font_title_64.png",
+    "png/spr_ui_font_title_65.png",
+    "png/spr_ui_font_title_66.png",
+    "png/spr_ui_font_title_67.png",
+    "png/spr_ui_font_title_68.png",
+    "png/spr_ui_font_title_69.png",
+    "png/spr_ui_font_title_70.png",
+    "png/spr_ui_font_title_71.png",
+    "png/spr_ui_font_title_72.png",
+    "png/spr_ui_font_title_73.png",
+    "png/spr_ui_font_title_74.png",
+    "png/spr_ui_font_title_75.png",
+    "png/spr_ui_font_title_76.png",
+    "png/spr_ui_font_title_77.png",
+    "png/spr_ui_font_title_78.png",
+    "png/spr_ui_font_title_79.png",
+    "png/spr_ui_font_title_80.png",
+    "png/spr_ui_font_title_81.png",
+    "png/spr_ui_font_title_82.png",
+    "png/spr_ui_font_title_83.png",
+    "png/spr_ui_font_title_84.png",
+    "png/spr_ui_font_title_85.png",
+    "png/spr_ui_font_title_86.png",
+    "png/spr_ui_font_title_87.png",
+    "png/spr_ui_font_title_88.png",
+    "png/spr_ui_font_title_89.png",
+    "png/spr_ui_font_title_90.png",
+    "png/spr_ui_font_title_91.png",
+    "png/spr_ui_font_title_92.png",
+    "png/spr_ui_font_title_93.png",
+    "png/spr_ui_font_title_94.png"
+   ],
+   "width": 19,
+   "height": 27,
+   "origin": [
+    0,
+    0
+   ],
+   "category": "font",
+   "note": "title glyphs for ASCII 32..126; tint with draw colour"
+  }
+ ]
+}

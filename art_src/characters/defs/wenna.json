@@ -1,0 +1,11 @@
+{
+  "id": "wenna", "extends": "_base_villager", "name": "Wenna Fletch, Longbow",
+  "body": { "build": "slim", "height": "normal" },
+  "palette": { "hair": "#b8642e", "main": "#3f6a3c", "trim": "#d8c08a", "hat": "#2f4f2e",
+               "skin": "#e6b08a", "boots": "#4a3424", "pants": "#5a4a36", "cape": "#2f4f2e" },
+  "face": { "brows": "#7a3a18", "blush": true },
+  "hair": { "style": "ponytail" },
+  "outfit": { "top": "tunic", "belt": "#6a4226", "buckle": "trim" },
+  "headwear": { "style": "feather_cap", "color": "hat", "feather": "#e8e0d0" },
+  "accessories": [ { "type": "cape", "color": "cape" }, { "type": "bow", "color": "#9a6a3a" } ]
+}

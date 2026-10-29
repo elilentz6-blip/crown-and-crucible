@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/elilentz/GameMakerProjects/BLANK GAME/**)",
+      "Edit(//Users/elilentz/GameMakerProjects/BLANK GAME/**)",
+      "Write(//Users/elilentz/GameMakerProjects/BLANK GAME/**)",
+      "Bash(python3 generate_sprites.py:*)",
+      "Bash(python3 /Users/elilentz/GameMakerProjects/BLANK GAME/generate_sprites.py:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(cat:*)",
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(open -a GameMaker:*)",
+      "Bash(screencapture:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf:*)",
+      "Bash(git push --force:*)",
+      "Edit(//Users/elilentz/GameMakerProjects/Retro Game/**)",
+      "Edit(//Users/elilentz/GameMakerProjects/Blank Pixel Game/**)"
+    ]
+  }
+}

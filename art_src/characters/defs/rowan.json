@@ -1,0 +1,34 @@
+{
+  "id": "rowan",
+  "extends": "_base_villager",
+  "name": "Sir Rowan",
+  "role": "player",
+  "palette": {
+    "hair": "#7a4526",
+    "main": "#3e64a8",
+    "trim": "#e0b04a",
+    "pants": "#5b4634",
+    "cape": "#a63a3a",
+    "skin": "#eab58c"
+  },
+  "face": {
+    "brows": "#5a301c"
+  },
+  "outfit": {
+    "top": "tunic",
+    "belt": "belt"
+  },
+  "hair": {
+    "style": "swept"
+  },
+  "accessories": [
+    {
+      "type": "cape",
+      "color": "cape"
+    },
+    {
+      "type": "sword_hip",
+      "hilt": "#e0b04a"
+    }
+  ]
+}

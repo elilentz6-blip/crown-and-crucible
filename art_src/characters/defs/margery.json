@@ -1,0 +1,40 @@
+{
+  "id": "margery",
+  "extends": "_base_villager",
+  "name": "Margery the Minstrel",
+  "body": {
+    "build": "slim"
+  },
+  "palette": {
+    "hair": "#c8562e",
+    "main": "#3f8a5a",
+    "trim": "#e8c45a",
+    "hat": "#8a2f4a",
+    "accent": "#f0d070",
+    "boots": "#5a3424",
+    "skin": "#f2c49c"
+  },
+  "face": {
+    "blush": true,
+    "smile": true
+  },
+  "hair": {
+    "style": "long"
+  },
+  "outfit": {
+    "top": "dress",
+    "belt": "#7a3e2a"
+  },
+  "headwear": {
+    "style": "feather_cap",
+    "color": "hat",
+    "feather": "accent",
+    "trim": "trim"
+  },
+  "accessories": [
+    {
+      "type": "lute",
+      "color": "#b8743a"
+    }
+  ]
+}

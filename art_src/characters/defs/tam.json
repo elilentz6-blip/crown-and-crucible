@@ -1,0 +1,11 @@
+{
+  "id": "tam", "extends": "_base_villager", "name": "Tam Reedy, Scout",
+  "body": { "build": "slim", "height": "short" },
+  "palette": { "hair": "#d8b060", "main": "#6a6a48", "trim": "#a88a5a", "hat": "#4e5a3a",
+               "skin": "#e8b890", "boots": "#3a2a1e", "pants": "#4a4234", "cape": "#53603e" },
+  "face": { "brows": "#a07a3a", "smile": true },
+  "hair": { "style": "fringe" },
+  "outfit": { "top": "tunic", "belt": "#5a3a24" },
+  "headwear": { "style": "hood", "color": "hat" },
+  "accessories": [ { "type": "cape", "color": "cape" }, { "type": "staff", "color": "#7a5a3a", "gem": "#a8c890" } ]
+}

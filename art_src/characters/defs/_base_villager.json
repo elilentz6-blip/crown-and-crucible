@@ -1,0 +1,43 @@
+{
+  "id": "_base_villager",
+  "abstract": true,
+  "role": "npc",
+  "body": {
+    "build": "average",
+    "height": "normal",
+    "skin": "skin"
+  },
+  "palette": {
+    "skin": "#e9b48c",
+    "eyes": "#3a2420",
+    "hair": "#6b4128",
+    "main": "#7a8a4a",
+    "trim": "#d9a441",
+    "pants": "#5c4a36",
+    "boots": "#4a3226",
+    "belt": "#6a4226",
+    "metal": "#a7b0bc",
+    "hat": "#c8a060",
+    "cape": "#8e2f34",
+    "accent": "#d8574a"
+  },
+  "hair": {
+    "style": "short",
+    "color": "hair"
+  },
+  "face": {
+    "eyes": "eyes"
+  },
+  "outfit": {
+    "top": "tunic",
+    "main": "main",
+    "trim": "trim",
+    "legs_color": "pants",
+    "boots": "boots",
+    "belt": "belt"
+  },
+  "headwear": {
+    "style": "none"
+  },
+  "accessories": []
+}

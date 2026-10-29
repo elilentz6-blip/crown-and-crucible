@@ -1,0 +1,47 @@
+{
+  "id": "highwayman",
+  "extends": "_base_villager",
+  "name": "Highwayman",
+  "role": "foe",
+  "body": {
+    "build": "slim",
+    "height": "tall"
+  },
+  "palette": {
+    "hair": "#3a2a26",
+    "main": "#4a5a46",
+    "hat": "#3e4a3c",
+    "mask": "#5a2e2e",
+    "pants": "#3e3430",
+    "boots": "#2e2222",
+    "cape": "#3a3640",
+    "skin": "#d8a07c",
+    "eyes": "#2a1a18"
+  },
+  "face": {
+    "beard": "mask",
+    "beard_color": "mask",
+    "brows": "#2a1a18"
+  },
+  "outfit": {
+    "top": "tunic",
+    "belt": "#2e2222",
+    "buckle": "#a8a8b0"
+  },
+  "headwear": {
+    "style": "hood",
+    "color": "hat"
+  },
+  "accessories": [
+    {
+      "type": "cape",
+      "color": "cape",
+      "clasp": "#a8a8b0"
+    },
+    {
+      "type": "sword_hip",
+      "hilt": "#a8a8b0",
+      "sheath": "#2e2222"
+    }
+  ]
+}

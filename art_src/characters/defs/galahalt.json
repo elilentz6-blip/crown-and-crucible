@@ -1,0 +1,45 @@
+{
+  "id": "galahalt",
+  "extends": "_base_villager",
+  "name": "Sir Galahalt",
+  "body": {
+    "build": "stout",
+    "height": "tall"
+  },
+  "palette": {
+    "hair": "#a8a39a",
+    "metal": "#b4bcc8",
+    "cape": "#2f5a9a",
+    "tabard": "#2f5a9a",
+    "trim": "#e8d088",
+    "skin": "#d9a07a"
+  },
+  "face": {
+    "beard": "short",
+    "beard_color": "hair",
+    "brows": "#8a857c",
+    "wrinkles": true
+  },
+  "hair": {
+    "style": "short"
+  },
+  "outfit": {
+    "top": "plate",
+    "metal": "metal",
+    "tabard": "tabard",
+    "crest": "cross",
+    "crest_color": "trim",
+    "belt": "#5a3a24"
+  },
+  "accessories": [
+    {
+      "type": "cape",
+      "color": "cape"
+    },
+    {
+      "type": "sword_hip",
+      "hilt": "#e8d088",
+      "sheath": "#3a2a3a"
+    }
+  ]
+}

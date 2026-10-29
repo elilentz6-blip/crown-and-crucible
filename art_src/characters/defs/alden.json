@@ -1,0 +1,38 @@
+{
+  "id": "alden",
+  "extends": "_base_villager",
+  "name": "Elder Alden",
+  "body": {
+    "build": "slim",
+    "height": "normal",
+    "hunch": true
+  },
+  "palette": {
+    "hair": "#e6e0d4",
+    "main": "#6a4a7a",
+    "trim": "#d9b45a",
+    "skin": "#e2ad88",
+    "belt": "#c9a45a"
+  },
+  "face": {
+    "beard": "long",
+    "beard_color": "hair",
+    "wrinkles": true,
+    "brows": "#d8d2c6"
+  },
+  "hair": {
+    "style": "white_fringe"
+  },
+  "outfit": {
+    "top": "robe",
+    "belt": "belt",
+    "belt_style": "rope"
+  },
+  "accessories": [
+    {
+      "type": "staff",
+      "color": "#7a5030",
+      "gem": "#8fd0c4"
+    }
+  ]
+}

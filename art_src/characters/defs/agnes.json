@@ -1,0 +1,11 @@
+{
+  "id": "agnes", "extends": "_base_villager", "name": "Sister Agnes, Field Healer",
+  "body": { "build": "average", "height": "normal" },
+  "palette": { "hair": "#5a4a40", "main": "#d8d0c0", "trim": "#9a3a3a", "hat": "#f0ece2",
+               "skin": "#e0aa84", "boots": "#3a2c26" },
+  "face": { "brows": "#4a3a30", "wrinkles": true },
+  "hair": { "style": "bun" },
+  "outfit": { "top": "robe", "apron": "#f0e8d8", "belt": "#7a5a3a", "belt_style": "rope" },
+  "headwear": { "style": "mob_cap", "color": "hat" },
+  "accessories": [ { "type": "rosary", "color": "#9a3a3a", "cross": "#c9a45a" } ]
+}

@@ -1,0 +1,35 @@
+{
+  "id": "giles",
+  "extends": "_base_villager",
+  "name": "Farmer Giles",
+  "palette": {
+    "hair": "#a88050",
+    "main": "#8a9a4c",
+    "sleeves": "#e2cfa2",
+    "pants": "#6a5236",
+    "hat": "#e2c070",
+    "trim": "#a8442e",
+    "skin": "#d99a6c"
+  },
+  "face": {
+    "beard": "stubble",
+    "blush": true,
+    "smile": true
+  },
+  "outfit": {
+    "top": "tunic",
+    "sleeves": "sleeves",
+    "belt": "#5a3a22",
+    "belt_style": "rope"
+  },
+  "headwear": {
+    "style": "straw_hat",
+    "color": "hat",
+    "trim": "trim"
+  },
+  "accessories": [
+    {
+      "type": "pitchfork"
+    }
+  ]
+}

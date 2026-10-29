@@ -1,0 +1,48 @@
+# Operating System
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+Thumbs.db
+[Dd]esktop.ini
+
+# GameMaker Build Output, Caches, & Project Temp Files
+*.ios
+*.zip
+*.dmg
+*.app/
+*.app
+tmp/
+cache/
+options/*/cache/
+*.resource_order
+*.old
+*.stackdump
+Build/
+build/
+
+# Backups & Agent Scaffolding
+weapon-combat-backup-*
+equipment-update-backup-*
+_backups/
+*_backup*/
+*_backup*
+scratch/
+.agents/
+
+# Dependencies & Environment / Secrets
+node_modules/
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.secret

@@ -1,0 +1,10 @@
+{
+  "id": "isolde", "extends": "_base_villager", "name": "Isolde Venn, Exiled Herald",
+  "body": { "build": "slim", "height": "tall" },
+  "palette": { "hair": "#1e1a2a", "main": "#4a2f6a", "trim": "#e0c070", "tabard": "#4a2f6a",
+               "skin": "#c98e6a", "boots": "#2a2030", "cape": "#7a2a3a", "pants": "#2e2638" },
+  "face": { "brows": "#1a1420" },
+  "hair": { "style": "long" },
+  "outfit": { "top": "gown", "tabard": "tabard", "crest": "cross", "crest_color": "trim", "belt": "trim" },
+  "accessories": [ { "type": "cape", "color": "cape" }, { "type": "sword_hip", "hilt": "#e0c070", "sheath": "#2a2030" } ]
+}

@@ -1,0 +1,2906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Crown & Crucible - Living Medieval World Prototype</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes heart-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.18); }
+    }
+    .heart-pulse { animation: heart-pulse 0.75s infinite ease-in-out; }
+    canvas { image-rendering: auto; }
+    .font-ut { font-family: 'Courier New', Courier, monospace; }
+  </style>
+</head>
+<body class="bg-black text-white p-3 md:p-6 font-ut select-none min-h-screen flex flex-col justify-between">
+  
+  <div class="max-w-4xl mx-auto w-full space-y-3">
+    
+    <!-- Top Header -->
+    <header class="flex items-center justify-between px-3 py-2 border-b border-stone-800">
+      <div class="flex items-center gap-2">
+        <span class="text-red-500 text-lg">❤️</span>
+        <h1 class="text-sm font-bold tracking-widest uppercase">
+          Crown & Crucible • Living Medieval World
+        </h1>
+      </div>
+      <div class="flex items-center gap-4 text-xs">
+        <button id="btn-time-toggle" class="px-2.5 py-1 bg-stone-900 border border-amber-600/60 rounded text-amber-300 font-bold hover:bg-stone-800 transition">
+          ☀️ DAY [T]
+        </button>
+        <div>GOLD: <strong id="gold-val" class="text-amber-300">140G</strong></div>
+        <div>LV: <strong id="lv-val" class="text-white">1</strong></div>
+        <div class="text-purple-300">Party: <strong id="party-count-val">1</strong>/4</div>
+        <button id="btn-quest-toggle" class="px-2.5 py-1 bg-stone-900 border border-emerald-600/70 hover:bg-stone-800 rounded text-emerald-300 font-bold text-xs transition">
+          📜 Quests [Q]
+        </button>
+        <button id="btn-kingdom-toggle" class="px-2.5 py-1 bg-stone-900 border border-purple-600/70 hover:bg-stone-800 rounded text-purple-300 font-bold text-xs transition">
+          👑 Kingdom [M]
+        </button>
+        <button id="btn-equip-toggle" class="px-2.5 py-1 bg-stone-900 border border-stone-700 hover:bg-stone-800 rounded text-amber-300 text-xs transition">
+          🎒 Equipment [C]
+        </button>
+        <button id="btn-sound" class="px-2 py-1 bg-stone-900 border border-stone-700 rounded text-stone-300 text-xs">
+          🔊
+        </button>
+      </div>
+    </header>
+
+    <!-- MAIN GAME SCREEN (CANVAS + BATTLE UI) -->
+    <div class="relative bg-black border-2 border-white rounded-xl overflow-hidden shadow-2xl min-h-[500px] flex flex-col justify-between p-4">
+      
+      <!-- MODE 1: OVERWORLD (Exploration at your own pace) -->
+      <div id="overworld-view" class="w-full flex-1 flex flex-col justify-between">
+        <div class="flex justify-between items-center text-xs text-stone-400 mb-2">
+          <div class="flex items-center gap-2">
+            <span id="current-location-pill" class="px-2 py-0.5 bg-amber-950/80 border border-amber-600/70 rounded text-amber-300 font-bold text-[11px]">
+              📍 Stonecross Hamlet • Home Realm
+            </span>
+            <span id="map-region-name" class="text-stone-400 text-[11px] hidden md:inline">Aethelgard (The Sunken Crown)</span>
+          </div>
+          <span class="text-[11px]">[WASD] Walk • [Z] Interact • [Q] Quests • [M] Politics/Map • [C] Armory • [T] Time</span>
+        </div>
+
+        <canvas id="overworld-canvas" width="760" height="380" class="w-full h-auto block border border-stone-800 rounded-lg mx-auto bg-stone-950"></canvas>
+
+        <!-- Overworld Dialogue / Interaction Box -->
+        <div id="overworld-dialogue" class="mt-3 border-2 border-white bg-black p-3 rounded text-xs min-h-[64px] flex flex-col justify-between">
+          <div class="flex items-center justify-between">
+            <p id="dialogue-text" class="text-white leading-relaxed flex-1">
+              * (Welcome to Stonecross. A handcrafted medieval kingdom awaits exploration at your own pace.)
+            </p>
+            <span class="text-[10px] text-stone-500 font-mono ml-4 hidden md:inline">[Z] Next / Interact</span>
+          </div>
+          <!-- Interactive Multi-Choice Dialogue Actions -->
+          <div id="dialogue-choices" class="hidden mt-2 pt-2 border-t border-stone-800 flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <!-- MODE 2: UNDERTALE BATTLE SCREEN -->
+      <div id="battle-view" class="hidden w-full flex-1 flex flex-col justify-between">
+        
+        <!-- Enemy Display Area -->
+        <div class="flex flex-col items-center justify-center pt-1">
+          <div id="battle-enemy-sprite" class="w-20 h-20 bg-stone-900 border-2 border-white rounded-lg flex items-center justify-center text-4xl shadow-lg transition-transform duration-150">
+            🥷
+          </div>
+          <div class="mt-1 text-center">
+            <h2 id="battle-enemy-name" class="text-sm font-bold tracking-widest uppercase text-white transition-colors">Forest Highwayman</h2>
+            <div class="text-[11px] text-stone-400 mt-0.5">HP: <span id="battle-enemy-hp">65/65</span></div>
+          </div>
+        </div>
+
+        <!-- The Central Undertale Battle Box -->
+        <div class="w-full my-2 flex justify-center">
+          <div id="battle-box" class="w-[440px] h-[135px] border-4 border-white bg-black relative overflow-hidden flex flex-col justify-center p-3">
+            
+            <!-- Dialogue / Menu Text State -->
+            <div id="box-content-text" class="text-xs text-white leading-relaxed">
+              * The highwayman grips his rusty blade with trembling hands.
+            </div>
+
+            <!-- Strike Timing Reticle State -->
+            <div id="strike-area" class="hidden absolute inset-0 flex flex-col items-center justify-center">
+              <div class="text-[10px] text-sky-300 font-bold mb-1 tracking-wider">TIME YOUR STRIKE! PRESS [Z]</div>
+              <div class="w-[360px] h-10 border-2 border-white relative overflow-hidden bg-stone-950">
+                <div class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-5 bg-sky-400"></div>
+                <div id="strike-bar" class="absolute top-0 bottom-0 w-2.5 bg-white" style="left: 0px;"></div>
+              </div>
+            </div>
+
+            <!-- Dodge Box Canvas State (Enemy Attack Phase) -->
+            <canvas id="dodge-canvas" width="440" height="135" class="hidden absolute inset-0 block"></canvas>
+          </div>
+        </div>
+
+        <!-- Player HP & Status Bar -->
+        <div class="flex items-center justify-center gap-6 text-xs font-bold mb-2">
+          <span>Sir Rowan</span>
+          <span>LV 1</span>
+          <div class="flex items-center gap-2">
+            <span class="text-yellow-400 text-[10px]">HP</span>
+            <div class="w-28 h-3.5 bg-red-900 rounded-sm overflow-hidden">
+              <div id="hero-hp-bar" class="h-full bg-yellow-400 transition-all duration-150" style="width: 100%;"></div>
+            </div>
+            <span id="hero-hp-text">20 / 20</span>
+          </div>
+        </div>
+
+        <!-- The Iconic 4 Undertale Buttons -->
+        <div class="grid grid-cols-4 gap-3 text-center text-sm font-black tracking-wider">
+          <button class="ut-btn active py-2 border-2 border-amber-400 text-amber-400 bg-black flex items-center justify-center gap-1.5 transition" data-action="fight">
+            <span class="text-red-500">❤️</span> FIGHT
+          </button>
+          <button class="ut-btn py-2 border-2 border-amber-800 text-stone-400 bg-black flex items-center justify-center gap-1.5 transition" data-action="act">
+            <span>💬</span> ACT
+          </button>
+          <button class="ut-btn py-2 border-2 border-amber-800 text-stone-400 bg-black flex items-center justify-center gap-1.5 transition" data-action="item">
+            <span>🎒</span> ITEM
+          </button>
+          <button class="ut-btn py-2 border-2 border-amber-800 text-stone-400 bg-black flex items-center justify-center gap-1.5 transition" data-action="mercy">
+            <span>🕊️</span> MERCY
+          </button>
+        </div>
+
+      </div>
+
+      <!-- MODAL: EQUIPMENT & JRPG INVENTORY (Toggled via [C]) -->
+      <div id="equip-modal" class="hidden absolute inset-0 bg-black/95 border-2 border-white rounded-xl p-5 z-30 flex flex-col justify-between">
+        <div class="flex justify-between items-center border-b border-stone-700 pb-2">
+          <h2 class="text-sm font-bold text-amber-400 uppercase tracking-widest">Knightly Armory & Party Dossier</h2>
+          <button id="btn-close-equip" class="text-stone-400 hover:text-white text-xs">[ESC / C] Close</button>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 my-auto">
+          <!-- Equipped Gear Slots -->
+          <div class="space-y-2 text-xs">
+            <span class="text-stone-400 uppercase text-[10px] tracking-wider">Equipped Items (Keys [1], [2], [3] to Cycle)</span>
+            
+            <div class="p-2 border border-amber-500/60 rounded bg-stone-950 flex justify-between items-center">
+              <div>
+                <div class="text-[10px] text-stone-500">WEAPON [1]</div>
+                <div class="font-bold text-amber-300" id="slot-weapon">Rusty Shortsword</div>
+                <div class="text-[10px] text-stone-400" id="slot-weapon-desc">Notched militia blade.</div>
+              </div>
+              <span class="text-sky-400 font-mono" id="slot-weapon-stat">+6 ATK</span>
+            </div>
+
+            <div class="p-2 border border-sky-500/60 rounded bg-stone-950 flex justify-between items-center">
+              <div>
+                <div class="text-[10px] text-stone-500">ARMOR [2]</div>
+                <div class="font-bold text-sky-300" id="slot-armor">Peasant Gambeson</div>
+                <div class="text-[10px] text-stone-400" id="slot-armor-desc">Padded wool tunic.</div>
+              </div>
+              <span class="text-sky-400 font-mono" id="slot-armor-stat">+4 DEF</span>
+            </div>
+
+            <div class="p-2 border border-purple-500/60 rounded bg-stone-950 flex justify-between items-center">
+              <div>
+                <div class="text-[10px] text-stone-500">ACCESSORY [3]</div>
+                <div class="font-bold text-purple-300" id="slot-relic">Pilgrim's Badge</div>
+                <div class="text-[10px] text-stone-400" id="slot-relic-desc">Ancient shrine lead badge.</div>
+              </div>
+              <span class="text-amber-400 font-mono" id="slot-relic-stat">+5% CRIT</span>
+            </div>
+          </div>
+
+          <!-- Total JRPG Stats & Companions -->
+          <div class="space-y-3">
+            <div class="bg-stone-950 border border-stone-800 p-3 rounded text-xs space-y-2">
+              <span class="text-stone-400 uppercase text-[10px] tracking-wider">Total Attributes</span>
+              <div class="space-y-1 font-mono">
+                <div class="flex justify-between"><span>ATK (Strike Damage):</span> <strong class="text-amber-400" id="stat-atk">12</strong></div>
+                <div class="flex justify-between"><span>DEF (Armor Absorption):</span> <strong class="text-sky-400" id="stat-def">6</strong></div>
+                <div class="flex justify-between"><span>SPD (Soul Speed):</span> <strong class="text-emerald-400" id="stat-spd">3.6</strong></div>
+                <div class="flex justify-between"><span>CRIT CHANCE:</span> <strong class="text-red-400" id="stat-crit">5%</strong></div>
+                <div class="flex justify-between"><span>MAX HIT POINTS:</span> <strong class="text-white" id="stat-maxhp">20 HP</strong></div>
+              </div>
+            </div>
+
+            <!-- Recruited Party -->
+            <div class="bg-stone-950 border border-purple-900/50 p-2.5 rounded text-xs">
+              <span class="text-purple-400 uppercase text-[10px] tracking-wider font-bold">Party Members</span>
+              <div id="party-roster-list" class="mt-1 space-y-1 text-stone-300">
+                <div>• Rowan (Knight Vanguard)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center text-[10px] text-stone-400">
+          Find companions and loot chests scattered across the world at your own pace!
+        </div>
+      </div>
+
+      <!-- MODAL: QUEST CHRONICLE & REALM LOG (Toggled via [Q]) -->
+      <div id="quest-modal" class="hidden absolute inset-0 bg-black/95 border-2 border-white rounded-xl p-4 md:p-5 z-40 flex flex-col justify-between overflow-y-auto">
+        <div class="flex justify-between items-center border-b border-stone-700 pb-2">
+          <div class="flex items-center gap-3">
+            <h2 class="text-sm font-bold text-emerald-400 uppercase tracking-widest flex items-center gap-1.5">
+              <span>📜</span> Quest Chronicle & Feudal Records
+            </h2>
+            <span id="quest-active-count-badge" class="text-[10px] px-2 py-0.5 bg-stone-900 border border-emerald-500/60 rounded text-emerald-300 font-bold">
+              1 Active Quest
+            </span>
+          </div>
+          <button id="btn-close-quest" class="text-stone-400 hover:text-white text-xs">[ESC / Q] Close</button>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex gap-2 border-b border-stone-800 py-2 text-xs">
+          <button id="tab-btn-quest-main" class="px-3 py-1 bg-stone-900 border border-emerald-500 text-emerald-300 rounded font-bold transition">
+            ⚔️ Main Storyline
+          </button>
+          <button id="tab-btn-quest-settlements" class="px-3 py-1 bg-stone-900 border border-stone-700 text-stone-300 rounded hover:border-emerald-500 hover:text-emerald-300 transition">
+            🏰 Settlement Quests
+          </button>
+          <button id="tab-btn-quest-accords" class="px-3 py-1 bg-stone-900 border border-stone-700 text-stone-300 rounded hover:border-emerald-500 hover:text-emerald-300 transition">
+            ⚖️ Political Accords & Memory
+          </button>
+          <button id="tab-btn-quest-save" class="px-3 py-1 bg-stone-900 border border-stone-700 text-stone-300 rounded hover:border-emerald-500 hover:text-emerald-300 transition">
+            💾 Save / Load Realm
+          </button>
+        </div>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <div id="quest-tab-content" class="flex-1 my-2 overflow-y-auto pr-1 min-h-[280px]">
+          <!-- Populated dynamically via renderQuestModal() -->
+        </div>
+
+        <div class="text-center text-[10px] text-stone-500 border-t border-stone-800 pt-1.5 flex justify-between items-center">
+          <span>Decisions permanently shape lordly alliances and kingdom stability.</span>
+          <span class="text-emerald-400">Press [1], [2], [3], [4] to switch tabs</span>
+        </div>
+      </div>
+
+      <!-- MODAL: KINGDOM, FEUDAL POLITICS & DIMENSIONAL ATLAS (Toggled via [M]) -->
+      <div id="kingdom-modal" class="hidden absolute inset-0 bg-black/95 border-2 border-white rounded-xl p-4 md:p-5 z-40 flex flex-col justify-between overflow-y-auto">
+        <div class="flex justify-between items-center border-b border-stone-700 pb-2">
+          <div class="flex items-center gap-3">
+            <h2 class="text-sm font-bold text-purple-400 uppercase tracking-widest flex items-center gap-1.5">
+              <span>👑</span> Feudal Politics & Dimensional Atlas
+            </h2>
+            <span id="atlas-dim-badge" class="text-[10px] px-2 py-0.5 bg-stone-900 border border-purple-500/60 rounded text-purple-300 font-bold">
+              Dim I: Aethelgard (Ash & Iron)
+            </span>
+          </div>
+          <button id="btn-close-kingdom" class="text-stone-400 hover:text-white text-xs">[ESC / M] Close</button>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <div class="flex gap-2 border-b border-stone-800 py-2 text-xs">
+          <button id="tab-btn-monarch" class="px-3 py-1 bg-stone-900 border border-amber-500 text-amber-300 rounded font-bold transition">
+            👑 The Monarch
+          </button>
+          <button id="tab-btn-lords" class="px-3 py-1 bg-stone-900 border border-stone-700 text-stone-300 rounded hover:border-amber-500 hover:text-amber-300 transition">
+            🏰 Feudal Lords & Realms
+          </button>
+          <button id="tab-btn-map" class="px-3 py-1 bg-stone-900 border border-stone-700 text-stone-300 rounded hover:border-amber-500 hover:text-amber-300 transition">
+            🗺️ Overland Map & Travel
+          </button>
+          <button id="tab-btn-multiverse" class="px-3 py-1 bg-stone-900 border border-stone-700 text-stone-300 rounded hover:border-amber-500 hover:text-amber-300 transition">
+            🌌 Dimensional Registry
+          </button>
+        </div>
+
+        <!-- TAB CONTENT CONTAINER -->
+        <div id="tab-content" class="flex-1 my-2 overflow-y-auto pr-1 min-h-[280px]">
+          <!-- Populated dynamically via renderKingdomModal() -->
+        </div>
+
+        <div class="text-center text-[10px] text-stone-500 border-t border-stone-800 pt-1.5 flex justify-between items-center">
+          <span>Feudal reputation governs tariffs, audience access, and army support.</span>
+          <span class="text-purple-400">Press [1], [2], [3], [4] to switch tabs</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Status / Hint -->
+    <footer class="flex items-center justify-between text-xs text-stone-400 px-1 font-mono">
+      <div id="footer-companions-summary">Party: Rowan</div>
+      <div>Vast World • Interconnected Routes • Living Hamlet</div>
+    </footer>
+  </div>
+
+  <script>
+    // --- CHIPTUNE AUDIO ENGINE ---
+    let audioCtx = null;
+    let soundEnabled = true;
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+
+    function playTone(freq, type, duration, gainStart = 0.08, gainEnd = 0.001) {
+      if (!soundEnabled) return;
+      initAudio();
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(gainStart, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(gainEnd, audioCtx.currentTime + duration);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+      } catch (e) {}
+    }
+
+    function sfxBlip() { playTone(300, 'square', 0.04, 0.06); }
+    function sfxSlash() { playTone(220, 'sawtooth', 0.12, 0.15); }
+    function sfxHit() { playTone(95, 'sawtooth', 0.15, 0.2); }
+    function sfxMenu() { playTone(440, 'triangle', 0.05, 0.08); }
+    function sfxRecruit() {
+      playTone(523, 'triangle', 0.1, 0.1);
+      setTimeout(() => playTone(659, 'triangle', 0.12, 0.1), 100);
+      setTimeout(() => playTone(784, 'triangle', 0.25, 0.12), 200);
+    }
+
+    document.getElementById('btn-sound').addEventListener('click', (e) => {
+      soundEnabled = !soundEnabled;
+      e.target.textContent = soundEnabled ? '🔊' : '🔇';
+    });
+
+    // --- GAME STATE (Vast World & Living Systems) ---
+
+// =========================================================================
+    // CROWN & CRUCIBLE: PHASE 2 - THE LIVING KINGDOM ENGINE
+    // =========================================================================
+
+    // 1. REUSABLE DIMENSIONAL REGISTRY
+    const DIMENSION_REGISTRY = {
+      dim_aethelgard: {
+        id: "dim_aethelgard",
+        name: "Aethelgard (The Sunken Crown)",
+        subtitle: "The Realm of Ash and Iron",
+        theme: "FEUDAL_MEDIEVAL",
+        lore: "An ancient empire of scarred iron plate and melted blades. Two centuries ago, the Great Crucible cleaved reality into five mirrored dimensional shards, each bearing divergent memories of the cataclysm.",
+        monarch: {
+          id: "king_aldous",
+          name: "King Aldous III",
+          epithet: "The Iron-Minded",
+          age: 54,
+          title: "Sovereign of the Sunken Crown, Warden of High Cairn",
+          seat: "High Cairn Citadel",
+          appearance: "A towering, battle-hardened monarch crowned with melted sword blades, clad in black-iron plate beneath a worn ermine mantle.",
+          personality: "Pragmatic, stern, burdened by statecraft, deeply suspicious of lordly rebellion, haunted by the Quiet Rifts.",
+          fear: "That the dimensional rifts will swallow what remains of his fractured kingdom.",
+          quote: "* 'An iron peace is better than a golden war. Keep your steel sharp, knight.'",
+          courtFavor: 15
+        },
+        politics: {
+          titheRule: "ANCIENT_CHARTER_200G_BASE",
+          titheSurcharge: 50, // Emergency Rift Defense Levy imposed by Chancellor Eamon
+          titheDue: 250,      // Current gross demand before resolution
+          tithePaid: false,
+          charterFound: false,
+          manifestRecovered: false,
+          timberManifestChoice: null, // "EXPOSED_EAMON_TO_ALDOUS", "GAVE_TO_VIVIENNE", "CHIVALRIC_COMPROMISE", "BRIBED_BY_EAMON"
+          dunhollowMineStatus: "TREMORS_ACTIVE", // "MINES_WARDED", "MINES_SEALED", "GUARDS_ENFORCED"
+          riftResonance: "DORMANT", // "TUNED_VESPERA", "HARMONIC_LINK"
+          stability: 82
+        },
+        reputation: {
+          crown: 15,       // Recognized Vanguard
+          stonecross: 30,  // Home Defender
+          oakhaven: 5,     // Neutral Merchant
+          dunhollow: 10    // Known Warrior
+        }
+      },
+      dim_vespera: {
+        id: "dim_vespera",
+        name: "Vespera (The Sunless Spires)",
+        subtitle: "The Twilight Realm of Alchemical Stars",
+        theme: "CELESTIAL_GOTHIC",
+        lore: "A nocturnal civilization of obsidian spires beneath perpetual nebulae. Guided by astrological colleges and moonstone metallurgy.",
+        monarch: {
+          id: "queen_seraphina",
+          name: "Queen Seraphina",
+          epithet: "The Star-Gazer",
+          age: 28,
+          title: "Arch-Astrologer of the Astral Spire, Lady of Perpetual Twilight",
+          seat: "The Obsidian Observatory",
+          appearance: "Draped in midnight samite woven with silver constellations, holding a brass astrolabe and crystalline sceptre.",
+          personality: "Contemplative, scholarly, fascinated by the harmonic frequencies that separate parallel worlds.",
+          fear: "The dimming of the celestial nebulae that feed Vespera's alchemical furnaces.",
+          quote: "* 'The skies of Aethelgard have earth and sun; our skies have only memory and celestial fire.'",
+          courtFavor: 0
+        },
+        politics: {
+          titheDue: 500,
+          stability: 91
+        },
+        reputation: {
+          astral_college: 0
+        }
+      }
+    };
+
+    // 2. DATA-DRIVEN QUEST REGISTRY (Main Storyline & 20 Settlement Quests)
+    const QUEST_REGISTRY = {
+      // --- MAIN STORYLINE ---
+      MAIN_TIMBER_TARIFF: {
+        id: "MAIN_TIMBER_TARIFF",
+        title: "The Timber Tariff & The Smuggler's Manifest",
+        category: "MAIN",
+        chapter: "Act I: Feudal Discord",
+        description: "Chancellor Eamon levied an unauthorized 50G Rift Surcharge over the lawful 200G Lady Day tithe, seizing Oakhaven timber barges. Baroness Vivienne demands justice, while King Aldous seeks to defend against waking rifts.",
+        stage: 0,
+        stages: {
+          0: "Speak with Elder Alden in Stonecross about the emergency 250G tithe writ.",
+          1: "Travel to Oakhaven River Port and consult Baroness Vivienne de la Tour.",
+          2: "Question Shipwright Brendan and Smuggler Jago on the Oakhaven Docks.",
+          3: "Search the hollow willow stump along the river shallows for the seized Royal Manifest.",
+          4: "Manifest recovered! Choose your allegiance: King Aldous (Expose Eamon), Baroness Vivienne (Free Trade), or Chivalric Mediator (Present Ancient Charter)."
+        },
+        status: "ACTIVE", // "ACTIVE", "COMPLETED"
+        evidenceFound: false,
+        resolution: null
+      },
+      MAIN_DUNHOLLOW_TREMORS: {
+        id: "MAIN_DUNHOLLOW_TREMORS",
+        title: "The Heartbeat in the Granite",
+        category: "MAIN",
+        chapter: "Act II: The Resonant Shafts",
+        description: "Deep iron shafts in Dunhollow struck an obsidian monolith vibrating with extraterrestrial harmonics from the Great Fracture.",
+        stage: 0,
+        stages: {
+          0: "Speak with Castellan Morvath at the Dunhollow Gatehouse Bastion.",
+          1: "Investigate the Deep Iron Shaft and inspect the vibrating purple obsidian vein.",
+          2: "Enlist Brother Dunstan to consecrate the pit with ancient holy rites."
+        },
+        status: "NOT_STARTED",
+        resolution: null
+      },
+      MAIN_SUNKEN_CROWN: {
+        id: "MAIN_SUNKEN_CROWN",
+        title: "The Mystery of the Sunken Crown",
+        category: "MAIN",
+        chapter: "Act III: The Shattered Crucible",
+        description: "Hermit Oakhound reveals that the true ancestral crown fell through the dimensional rift during the Great Fracture. King Aldous's melted blade crown is a desperate facade.",
+        stage: 0,
+        stages: {
+          0: "Consult Hermit Oakhound at the Obsidian Henge in Weeping Weald.",
+          1: "Interact with the Rift Terminal Altar and tune the harmonic frequency to Dimension II (Vespera).",
+          2: "Confront King Aldous III with the multiversal truth of the Great Fracture."
+        },
+        status: "NOT_STARTED",
+        resolution: null
+      },
+
+      // --- STONECROSS SETTLEMENT QUESTS ---
+      STONECROSS_ANCESTRAL_CRYPT: {
+        id: "STONECROSS_ANCESTRAL_CRYPT",
+        settlement: "Stonecross",
+        title: "The Desecrated Crypt of Sir Jocelyn",
+        category: "LOCAL_MAJOR",
+        description: "Sir Jocelyn's ancestral tomb in the Barrows has been disturbed. Friar Dunstan seeks to pacify the soul.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      STONECROSS_SOURDOUGH_SCANDAL: {
+        id: "STONECROSS_SOURDOUGH_SCANDAL",
+        settlement: "Stonecross",
+        title: "The Baker's Sourdough Scandal",
+        category: "LOCAL_OPTIONAL",
+        description: "Baker Beatrice's 40-year sourdough yeast pot went missing. Clues lead to Farmer Giles's sheep Barnaby, who is stumbling around tipsy after eating the fermented grain!",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      STONECROSS_SMITH_BELLOWS: {
+        id: "STONECROSS_SMITH_BELLOWS",
+        settlement: "Stonecross",
+        title: "Master Odo's Bellows",
+        category: "LOCAL_OPTIONAL",
+        description: "Master Odo needs seasoned bog-leather from Oakhaven to repair his forge bellows.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      STONECROSS_STOLEN_BALLAD: {
+        id: "STONECROSS_STOLEN_BALLAD",
+        settlement: "Stonecross",
+        title: "A Minstrel's Stolen Satire",
+        category: "LOCAL_OPTIONAL",
+        description: "Margery's satirical ballad notebook poking fun at Chancellor Eamon was stolen by a forest bandit.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+
+      // --- OAKHAVEN SETTLEMENT QUESTS ---
+      OAKHAVEN_BRENDAN_PINS: {
+        id: "OAKHAVEN_BRENDAN_PINS",
+        settlement: "Oakhaven",
+        title: "The Shipwright's Brass Keel-Pins",
+        category: "LOCAL_OPTIONAL",
+        description: "Heavy brass keel-pins for Brendan's grand river barge were stolen. Interrogate the dockhands.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      OAKHAVEN_FISH_CHOWDER: {
+        id: "OAKHAVEN_FISH_CHOWDER",
+        settlement: "Oakhaven",
+        title: "The Salty Sturgeon's Secret Chowder",
+        category: "LOCAL_OPTIONAL",
+        description: "Old Barnaby needs river watercress and barrow-salt to brew his legendary stamina chowder.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      OAKHAVEN_CONTRABAND_CASK: {
+        id: "OAKHAVEN_CONTRABAND_CASK",
+        settlement: "Oakhaven",
+        title: "The Smuggler's Vintage",
+        category: "LOCAL_OPTIONAL",
+        description: "Smuggler Jago asks Rowan to deliver an uninspected cask of southern wine into Stonecross past Bailiff Corvin.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+
+      // --- DUNHOLLOW SETTLEMENT QUESTS ---
+      DUNHOLLOW_TEMPERING_SLAG: {
+        id: "DUNHOLLOW_TEMPERING_SLAG",
+        settlement: "Dunhollow",
+        title: "Smith Thora's Cooling Spring",
+        category: "LOCAL_OPTIONAL",
+        description: "Smith Thora needs cold mountain spring water to temper high-carbon iron plate harnesses.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      DUNHOLLOW_STRIKE_PETITION: {
+        id: "DUNHOLLOW_STRIKE_PETITION",
+        settlement: "Dunhollow",
+        title: "The Miners' Candle Petition",
+        category: "LOCAL_OPTIONAL",
+        description: "Foreman Burl wants Rowan to present a petition to Castellan Morvath for tallow candles and oatmeal rations.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      DUNHOLLOW_TRAPPED_CANARY: {
+        id: "DUNHOLLOW_TRAPPED_CANARY",
+        settlement: "Dunhollow",
+        title: "The Lucky Whistling Canary",
+        category: "LOCAL_OPTIONAL",
+        description: "Retrieve a miner's lucky caged whistling bird from a sealed, gas-filled gallery in the upper quarry.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+
+      // --- HIGH CAIRN SETTLEMENT QUESTS ---
+      HIGH_CAIRN_MARSHAL_DUEL: {
+        id: "HIGH_CAIRN_MARSHAL_DUEL",
+        settlement: "High Cairn",
+        title: "The Grand Marshal's Chivalric Spar",
+        category: "LOCAL_OPTIONAL",
+        description: "Grand Marshal Brandon challenges Sir Rowan to a chivalric martial duel in the citadel courtyard.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      HIGH_CAIRN_MISSING_CHARTER: {
+        id: "HIGH_CAIRN_MISSING_CHARTER",
+        settlement: "High Cairn",
+        title: "The Charter of the Four Quarters",
+        category: "LOCAL_OPTIONAL",
+        description: "Locate the ancient royal parchment proving that the Lady Day tithe is legally capped at 200 Gold.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      HIGH_CAIRN_SOVEREIGN_INSOMNIA: {
+        id: "HIGH_CAIRN_SOVEREIGN_INSOMNIA",
+        settlement: "High Cairn",
+        title: "The Sovereign's Night Terrors",
+        category: "LOCAL_OPTIONAL",
+        description: "King Aldous cannot sleep due to nightmares of the void rift. Prepare a soothing herbal infusion.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+
+      // --- WEEPING WEALD QUESTS ---
+      WEEPING_WEALD_MISTLETOE: {
+        id: "WEEPING_WEALD_MISTLETOE",
+        settlement: "Weeping Weald",
+        title: "Golden Mistletoe of the Druids",
+        category: "LOCAL_OPTIONAL",
+        description: "Gather golden mistletoe from the highest branches of the weeping willows without alarming forest wisps.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      WEEPING_WEALD_ACOUSTIC_HENGE: {
+        id: "WEEPING_WEALD_ACOUSTIC_HENGE",
+        settlement: "Weeping Weald",
+        title: "The Echoing Dolmens",
+        category: "LOCAL_OPTIONAL",
+        description: "Activate three ancient runic standing stones in harmonic order to unseal a pre-Fracture relic cache.",
+        stage: 0,
+        status: "NOT_STARTED"
+      },
+      WEEPING_WEALD_VOID_WISP: {
+        id: "WEEPING_WEALD_VOID_WISP",
+        settlement: "Weeping Weald",
+        title: "Tears of the Void Wisp",
+        category: "LOCAL_OPTIONAL",
+        description: "Encounter an ethereal dimensional aberration and pacify it through ACT moral reasoning to collect celestial tears.",
+        stage: 0,
+        status: "NOT_STARTED"
+      }
+    };
+
+    // 3. MULTI-MAP & SETTLEMENT REGISTRY
+    const MAP_REGISTRY = {
+      MAP_STONECROSS: {
+        id: "MAP_STONECROSS",
+        name: "Stonecross Hamlet",
+        region: "Heartland of Aethelgard",
+        rulerTitle: "Elder Alden & Bailiff Corvin",
+        prosperity: 75,
+        width: 2400,
+        height: 1800,
+        description: "The hero's home settlement. Fertile wheat fields, Master Odo's smithy, the Boar & Flagon tavern, and the ancient barrows.",
+        exits: [
+          { x: 1150, y: 150, w: 100, h: 60, targetMap: "MAP_HIGH_CAIRN", spawnX: 900, spawnY: 1180, label: "North to High Cairn Citadel" },
+          { x: 100, y: 1300, w: 80, h: 100, targetMap: "MAP_OAKHAVEN", spawnX: 1600, spawnY: 720, label: "West to Oakhaven River Port" },
+          { x: 2260, y: 880, w: 80, h: 100, targetMap: "MAP_DUNHOLLOW", spawnX: 240, spawnY: 720, label: "East to Dunhollow Quarry" },
+          { x: 1820, y: 150, w: 100, h: 60, targetMap: "MAP_WEEPING_WEALD", spawnX: 900, spawnY: 1180, label: "NE to Weeping Weald (Rift Gate)" }
+        ]
+      },
+      MAP_OAKHAVEN: {
+        id: "MAP_OAKHAVEN",
+        name: "Oakhaven River Port",
+        region: "River Stonecross Estuary",
+        rulerTitle: "Baroness Vivienne de la Tour",
+        prosperity: 88,
+        width: 1800,
+        height: 1400,
+        description: "A bustling river trade port. Wharfs laden with timber, spinning watermills, moored cargo barges, and the Gilded Anchor Guildhall.",
+        exits: [
+          { x: 1680, y: 660, w: 80, h: 120, targetMap: "MAP_STONECROSS", spawnX: 240, spawnY: 1350, label: "East to Stonecross Hamlet" }
+        ]
+      },
+      MAP_DUNHOLLOW: {
+        id: "MAP_DUNHOLLOW",
+        name: "Dunhollow Quarry & Fortress",
+        region: "Iron Crags Foothills",
+        rulerTitle: "Castellan Morvath 'The Unbroken'",
+        prosperity: 52,
+        width: 1800,
+        height: 1400,
+        description: "A grim mountain quarry carved into sheer granite ravines. Blazing blast furnaces, mine shafts, and iron-jawed stonemasons.",
+        exits: [
+          { x: 140, y: 660, w: 80, h: 120, targetMap: "MAP_STONECROSS", spawnX: 2200, spawnY: 920, label: "West to Stonecross Hamlet" }
+        ]
+      },
+      MAP_HIGH_CAIRN: {
+        id: "MAP_HIGH_CAIRN",
+        name: "High Cairn Royal Citadel",
+        region: "Mountain Seat of the Sunken Crown",
+        rulerTitle: "King Aldous III 'The Iron-Minded'",
+        prosperity: 94,
+        width: 1800,
+        height: 1400,
+        description: "The royal seat of Aethelgard. Ashlar ramparts fluttering with gold lion heraldry, the Grand Audience Hall, and the terrifying Throne of Swords.",
+        exits: [
+          { x: 840, y: 1240, w: 120, h: 80, targetMap: "MAP_STONECROSS", spawnX: 1200, spawnY: 280, label: "South to Stonecross Hamlet" }
+        ]
+      },
+      MAP_WEEPING_WEALD: {
+        id: "MAP_WEEPING_WEALD",
+        name: "The Weeping Weald & Rift Gate",
+        region: "Ancient Mist Woodland",
+        rulerTitle: "Hermit Oakhound (Rift Watcher)",
+        prosperity: 40,
+        width: 1800,
+        height: 1400,
+        description: "Ancient druidic woods cloaked in violet mist. At its heart lies the Obsidian Henge and the shimmering Dimensional Rift Gate.",
+        exits: [
+          { x: 840, y: 1240, w: 120, h: 80, targetMap: "MAP_STONECROSS", spawnX: 1860, spawnY: 280, label: "South to Stonecross Hamlet" }
+        ]
+      }
+    };
+
+    // 4. MASTER GAME STATE
+    const STATE = {
+      mode: "OVERWORLD", // "OVERWORLD", "BATTLE", "EQUIPMENT", "KINGDOM", "QUEST"
+      currentDimensionId: "dim_aethelgard",
+      currentMapId: "MAP_STONECROSS",
+      discoveredMaps: ["MAP_STONECROSS"],
+      activeTab: "MONARCH",
+      activeQuestTab: "MAIN",
+      worldW: 2400,
+      worldH: 1800,
+      camera: { x: 820, y: 770 },
+      timeOfDay: 1, // 0: Dawn, 1: Day, 2: Dusk, 3: Night
+      timeNames: ["DAWN", "DAY", "DUSK", "NIGHT"],
+      hero: {
+        x: 1200,
+        y: 960,
+        hp: 20,
+        maxHp: 20,
+        baseAtk: 6,
+        baseDef: 2,
+        baseSpd: 3.6,
+        baseCrit: 5,
+        gold: 140,
+        lv: 1
+      },
+      equipment: {
+        weapons: [
+          { name: "Rusty Shortsword", atk: 6, desc: "A notched militia blade." }
+        ],
+        armors: [
+          { name: "Peasant Gambeson", def: 4, desc: "Padded wool tunic." }
+        ],
+        relics: [
+          { name: "Pilgrim's Badge", perk: "+5% Crit", crit: 5, spd: 0, desc: "Lead token from ancient shrine." }
+        ],
+        curWeaponIdx: 0,
+        curArmorIdx: 0,
+        curRelicIdx: 0
+      },
+      worldCompanions: [
+        {
+          id: "MARGERY",
+          name: "Margery",
+          title: "Tavern Minstrel",
+          x: 1620,
+          y: 560,
+          col: "#f43f5e",
+          recruited: false,
+          quote: "* (Margery joined your party! +20% Critical Strike unlocked!)",
+          perk: "+20% Crit",
+          type: "CRIT"
+        },
+        {
+          id: "DUNSTAN",
+          name: "Brother Dunstan",
+          title: "Monastery Brewer",
+          x: 1980,
+          y: 1040,
+          col: "#d97706",
+          recruited: false,
+          quote: "* (Brother Dunstan joined your party! Max HP +10, blessed heal unlocked!)",
+          perk: "+10 Max HP",
+          type: "HEAL"
+        },
+        {
+          id: "GALAHALT",
+          name: "Sir Galahalt",
+          title: "Rust-Worn Knight",
+          x: 630,
+          y: 1410,
+          col: "#94a3b8",
+          recruited: false,
+          quote: "* (Sir Galahalt joined your party! Defense +10 unlocked!)",
+          perk: "+10 Defense",
+          type: "DEF"
+        }
+      ],
+      recruitedParty: [],
+
+      // NPC Dynamic Memory & World Flags
+      npcMemory: {
+        timberManifestRecovered: false,
+        timberDisputeOutcome: null,
+        charterRecovered: false,
+        eamonImprisoned: false,
+        barnabySobered: false,
+        odoBellowsRepaired: false,
+        margerySatireFound: false,
+        brendanPinsFound: false,
+        chowderTasted: false,
+        jagoVintageDelivered: false,
+        dunhollowMinesWarded: false,
+        canarySaved: false,
+        burlPetitionFiled: false,
+        marshalDueled: false,
+        aldousNightTerrorsCured: false,
+        mistletoeHarvested: false,
+        dolmensAttuned: false,
+        wispPacified: false,
+        gildedAnchorPasskey: false,
+        royalVaultUnlocked: false,
+        deepShaftUnlocked: false
+      },
+
+      mapData: {
+        MAP_STONECROSS: {
+          villagers: [
+            { id: "ALDEN", name: "Elder Alden", role: "ELDER", x: 1200, y: 810, tx: 1200, ty: 870, spd: 0.6 },
+            { id: "BEATRICE", name: "Baker Beatrice", role: "BAKER", x: 1140, y: 860, tx: 1140, ty: 860, spd: 0 },
+            { id: "DONALD", name: "Militia Guard Donald", role: "GUARD", x: 1040, y: 900, tx: 1110, ty: 900, spd: 0.8 },
+            { id: "GILES", name: "Farmer Giles", role: "FARMER", x: 1320, y: 1010, tx: 1335, ty: 1020, spd: 0.4 },
+            { id: "BARNABY_SHEEP", name: "Barnaby the Sheep (Tipsy)", role: "FARMER", x: 1335, y: 990, tx: 1335, ty: 990, spd: 0, isInteractive: true }
+          ],
+          sheep: [
+            { x: 840, y: 630, anim: 0 },
+            { x: 1365, y: 1015, anim: 2.4 },
+            { x: 1315, y: 1030, anim: 0.6 }
+          ],
+          landmarks: [
+            { name: "Stonecross Town Fountain", x: 1200, y: 900, rad: 36, text: "* (Clean spring water bubbles up. You drink and feel restored!)" },
+            { name: "Town Notice Board", x: 1260, y: 855, rad: 26, text: "* (NOTICE: Minstrel Margery at Boar & Flagon. Friar Dunstan at Eastern Chapel. Sir Galahalt camped by South Watchtower.)" },
+            { name: "Master Odo's Forge", x: 720, y: 510, rad: 60, text: "* (Master Odo bellows: 'Open that chest by my anvil to claim a forged blade!')" },
+            { name: "The Boar & Flagon Tavern", x: 1580, y: 540, rad: 70, text: "* (Lute music and spiced mead aromas drift from the warm tavern.)" },
+            { name: "Eastern Stone Chapel", x: 1950, y: 950, rad: 65, text: "* (Sunlight streams through the stained glass rose window upon the altar.)" },
+            { name: "Ruined Watchtower Camp", x: 600, y: 1390, rad: 65, text: "* (A campfire crackles beside crumbling stone ramparts.)" },
+            { name: "Barrows Crypt Arch", x: 1840, y: 1515, rad: 65, text: "* (Cold air exhales from the stone archway into the barrows.)" }
+          ],
+          chests: [
+            { id: "CHEST_SMITH", x: 795, y: 555, opened: false, itemType: "WEAPON", item: { name: "Tempered Longsword", atk: 16, desc: "Razor-honed steel longsword forged by Master Odo." }, quote: "* (Opened chest! Found Tempered Longsword (+16 ATK)! Equipped!)" },
+            { id: "CHEST_TOWER", x: 560, y: 1365, opened: false, itemType: "ARMOR", item: { name: "Chainmail Hauberk", def: 10, desc: "Double-riveted steel chainmail." }, quote: "* (Opened chest! Found Chainmail Hauberk (+10 DEF)! Equipped!)" },
+            { id: "CHEST_CRYPT", x: 1910, y: 1485, opened: false, itemType: "ARMOR", item: { name: "Sun-Emblazoned Cuirass", def: 18, desc: "Gilded plate armor radiating holy wards." }, quote: "* (Opened chest! Found Sun-Emblazoned Cuirass (+18 DEF)! Equipped!)" },
+            { id: "CHEST_SECRET", x: 560, y: 390, opened: false, itemType: "RELIC", item: { name: "Ancient Knight's Signet", perk: "+15% Crit", crit: 15, spd: 0.5, desc: "Gold seal ring of the Old Realm." }, quote: "* (Secret Grove Discovered! Found Ancient Knight's Signet! +15% Crit!)" }
+          ],
+          foes: [
+            { name: "Forest Highwayman", x: 1010, y: 1160, hp: 65, maxHp: 65, icon: "🥷" },
+            { name: "Wild Barrow Boar", x: 1390, y: 1425, hp: 95, maxHp: 95, icon: "🐗" },
+            { name: "Barrow Warden Shade", x: 1785, y: 1575, hp: 140, maxHp: 140, icon: "👑" }
+          ]
+        },
+        MAP_OAKHAVEN: {
+          villagers: [
+            { id: "VIVIENNE", name: "Baroness Vivienne", role: "LORD", x: 1050, y: 690, tx: 1050, ty: 690, spd: 0 },
+            { id: "BRENDAN", name: "Shipwright Brendan", role: "GUARD", x: 740, y: 520, tx: 740, ty: 520, spd: 0 },
+            { id: "JAGO", name: "Smuggler Jago", role: "ELDER", x: 420, y: 460, tx: 420, ty: 460, spd: 0 },
+            { id: "MARTA", name: "Fishwife Marta", role: "BAKER", x: 860, y: 720, tx: 860, ty: 720, spd: 0 }
+          ],
+          sheep: [],
+          landmarks: [
+            { name: "Gilded Anchor Guildhall", x: 1050, y: 620, rad: 65, text: "* (The Gilded Anchor Guildhall: Blue and gold pennants flutter over mahogany counting desks.)" },
+            { name: "Oakhaven Watermill", x: 480, y: 440, rad: 55, text: "* (The great water wheel churns the roaring river into white foam, grinding grain from the southern swards.)" },
+            { name: "The Salty Sturgeon Tavern", x: 620, y: 780, rad: 55, text: "* (Rowdy barge crews and rivermen sing sea chanteys over tankards of dark porter.)" },
+            { id: "HOLLOW_WILLOW", name: "Hollow Willow Stump", x: 720, y: 390, rad: 40, isQuestObject: true, text: "* (An ancient hollow willow tree dipping its roots into the river shallows. Inside the knot-hole lies a sealed oiled-canvas parcel!)" }
+          ],
+          chests: [
+            { id: "CHEST_SMUGGLER", x: 380, y: 420, opened: false, itemType: "RELIC", item: { name: "River Smuggler's Coin", perk: "+10% Crit, +10G", crit: 10, spd: 0.4, desc: "A tarnished silver token recognized by the river guild." }, quote: "* (Found Smuggler's Cache! Acquired River Smuggler's Coin! +10% Crit!)" }
+          ],
+          foes: [
+            { name: "River Corsair", x: 1450, y: 920, hp: 70, maxHp: 70, icon: "⚓" }
+          ]
+        },
+        MAP_DUNHOLLOW: {
+          villagers: [
+            { id: "MORVATH", name: "Castellan Morvath", role: "LORD", x: 900, y: 660, tx: 900, ty: 660, spd: 0 },
+            { id: "BURL", name: "Foreman Burl", role: "GUARD", x: 1200, y: 560, tx: 1200, ty: 560, spd: 0 },
+            { id: "THORA", name: "Smith Thora", role: "BAKER", x: 580, y: 660, tx: 580, ty: 660, spd: 0 }
+          ],
+          sheep: [],
+          landmarks: [
+            { name: "Dunhollow Gatehouse Bastion", x: 900, y: 580, rad: 65, text: "* (Heavy portcullis of cold-rolled iron guarding the mountain pass.)" },
+            { name: "Blast Smelting Furnaces", x: 520, y: 640, rad: 60, text: "* (Twin blast furnaces pouring streams of molten orange slag into ingot moulds.)" },
+            { id: "DEEP_MINE_ADIT", name: "Deep Iron Mine Shaft", x: 1250, y: 520, rad: 60, text: "* (A dark adit plunging into the granite crags. The rock face vibrates with a deep, eerie purple resonance.)" },
+            { id: "CANARY_GALLERY", name: "Upper Quarry Rockface", x: 1460, y: 460, rad: 40, isQuestObject: true, text: "* (A caged yellow whistling canary sits on a timber scaffold above a vented gas fissure!)" }
+          ],
+          chests: [
+            { id: "CHEST_DUNHOLLOW", x: 1420, y: 480, opened: false, itemType: "ARMOR", item: { name: "Dunhollow Iron Pauldrons", def: 12, desc: "Heavy plate shoulder guards forged in the blast kilns." }, quote: "* (Found Quarry Cache! Acquired Dunhollow Iron Pauldrons (+12 DEF)!)" }
+          ],
+          foes: [
+            { name: "Rogue Quarry Golem", x: 1520, y: 900, hp: 110, maxHp: 110, icon: "🗿" }
+          ]
+        },
+        MAP_HIGH_CAIRN: {
+          villagers: [
+            { id: "ALDOUS", name: "King Aldous III", role: "MONARCH", x: 900, y: 480, tx: 900, ty: 480, spd: 0 },
+            { id: "EAMON", name: "Chancellor Eamon", role: "ELDER", x: 980, y: 490, tx: 980, ty: 490, spd: 0 },
+            { id: "BRANDON", name: "Grand Marshal Brandon", role: "GUARD", x: 740, y: 720, tx: 740, ty: 720, spd: 0 }
+          ],
+          sheep: [],
+          landmarks: [
+            { name: "The Throne of Swords", x: 900, y: 480, rad: 65, text: "* (The Throne of Swords: Forged from melted blades surrendered during the Barrow Wars.)" },
+            { name: "High Cairn Royal Vault", x: 1320, y: 540, rad: 55, text: "* (Reinforced iron doors bearing the royal seal of the Sunken Crown.)" },
+            { id: "ROYAL_ARCHIVES", name: "Royal Chancery Archives", x: 1380, y: 520, rad: 45, isQuestObject: true, text: "* (Carved oak cabinets holding ancient feudal scrolls and charters.)" }
+          ],
+          chests: [
+            { id: "CHEST_ROYAL", x: 640, y: 720, opened: false, itemType: "WEAPON", item: { name: "Royal Vanguard Halberd", atk: 18, desc: "A gilded halberd stamped with the King's lion crest." }, quote: "* (Royal Cache Unlocked! Found Royal Vanguard Halberd (+18 ATK)!)" }
+          ],
+          foes: []
+        },
+        MAP_WEEPING_WEALD: {
+          villagers: [
+            { id: "OAKHOUND", name: "Hermit Oakhound", role: "ELDER", x: 780, y: 580, tx: 780, ty: 580, spd: 0 },
+            { id: "RIFT_TERMINAL", name: "Rift Terminal Altar", role: "LORD", x: 900, y: 560, tx: 900, ty: 560, spd: 0 }
+          ],
+          sheep: [],
+          landmarks: [
+            { name: "The Ancient Dimensional Rift Gate", x: 900, y: 520, rad: 75, text: "* (The Dimensional Rift Gate: An ancient obsidian arch circling a swirling, iridescent vortex between realities.)" },
+            { name: "Obsidian Standing Stones", x: 900, y: 580, rad: 65, text: "* (Monoliths carved with constellations alien to Aethelgard's night sky.)" },
+            { id: "SACRED_MISTLETOE", name: "Ancient Weeping Willow Boughs", x: 660, y: 480, rad: 40, isQuestObject: true, text: "* (Glistening golden mistletoe clusters cling to the high mossy branches.)" }
+          ],
+          chests: [
+            { id: "CHEST_RIFT", x: 1120, y: 480, opened: false, itemType: "RELIC", item: { name: "Void-Warped Hourglass", perk: "+10% Crit, +10 HP", crit: 10, spd: 0.5, desc: "An hourglass whose sands flow in reverse across dimensional folds." }, quote: "* (Rift Cache Opened! Acquired Void-Warped Hourglass!)" }
+          ],
+          foes: [
+            { name: "Rift Aberration", x: 1350, y: 750, hp: 85, maxHp: 85, icon: "🌌" }
+          ]
+        }
+      },
+      activeDialogueChoices: [],
+      activeFoe: null,
+      battle: {
+        enemy: { name: "Forest Highwayman", hp: 65, maxHp: 65, spareable: false },
+        turn: "PLAYER_MENU",
+        selectedBtnIndex: 0,
+        timingPos: 0,
+        timingDir: 1
+      },
+      playerTrail: []
+    };
+
+    // 5. EXTENSIBLE DIMENSION MANAGER & SAVE/LOAD SYSTEM
+    const DimensionManager = {
+      registerDimension(def) {
+        if (!def.id) return false;
+        DIMENSION_REGISTRY[def.id] = def;
+        return true;
+      },
+      validateDimension(dimId) {
+        const d = DIMENSION_REGISTRY[dimId];
+        return Boolean(d && d.name && d.monarch && d.politics);
+      },
+      saveGame() {
+        try {
+          const payload = {
+            hero: STATE.hero,
+            equipment: STATE.equipment,
+            currentMapId: STATE.currentMapId,
+            currentDimensionId: STATE.currentDimensionId,
+            discoveredMaps: STATE.discoveredMaps,
+            reputation: DIMENSION_REGISTRY.dim_aethelgard.reputation,
+            politics: DIMENSION_REGISTRY.dim_aethelgard.politics,
+            npcMemory: STATE.npcMemory,
+            quests: QUEST_REGISTRY,
+            recruitedParty: STATE.recruitedParty.map(c => c.id)
+          };
+          localStorage.setItem("crown_and_crucible_phase2_save", JSON.stringify(payload));
+          return true;
+        } catch (e) {
+          console.error("Save error:", e);
+          return false;
+        }
+      },
+      loadGame() {
+        try {
+          const raw = localStorage.getItem("crown_and_crucible_phase2_save");
+          if (!raw) return false;
+          const data = JSON.parse(raw);
+          if (data.hero) Object.assign(STATE.hero, data.hero);
+          if (data.equipment) Object.assign(STATE.equipment, data.equipment);
+          if (data.currentMapId) STATE.currentMapId = data.currentMapId;
+          if (data.discoveredMaps) STATE.discoveredMaps = data.discoveredMaps;
+          if (data.reputation) Object.assign(DIMENSION_REGISTRY.dim_aethelgard.reputation, data.reputation);
+          if (data.politics) Object.assign(DIMENSION_REGISTRY.dim_aethelgard.politics, data.politics);
+          if (data.npcMemory) Object.assign(STATE.npcMemory, data.npcMemory);
+          if (data.quests) Object.assign(QUEST_REGISTRY, data.quests);
+          if (data.recruitedParty) {
+            STATE.recruitedParty = [];
+            data.recruitedParty.forEach(cid => {
+              const comp = STATE.worldCompanions.find(c => c.id === cid);
+              if (comp) { comp.recruited = true; STATE.recruitedParty.push(comp); }
+            });
+          }
+          recalculateStats();
+          updateGlobalUI();
+          return true;
+        } catch (e) {
+          console.error("Load error:", e);
+          return false;
+        }
+      },
+      exportSave() {
+        return localStorage.getItem("crown_and_crucible_phase2_save") || "";
+      },
+      importSave(jsonStr) {
+        try {
+          JSON.parse(jsonStr);
+          localStorage.setItem("crown_and_crucible_phase2_save", jsonStr);
+          return this.loadGame();
+        } catch (e) {
+          return false;
+        }
+      }
+    };
+
+    function recalculateStats() {
+      const eq = STATE.equipment;
+      const curWpn = eq.weapons[eq.curWeaponIdx];
+      const curArm = eq.armors[eq.curArmorIdx];
+      const curRel = eq.relics[eq.curRelicIdx];
+
+      let atk = STATE.hero.baseAtk + curWpn.atk;
+      let def = STATE.hero.baseDef + curArm.def;
+      let spd = STATE.hero.baseSpd + curRel.spd;
+      let crit = STATE.hero.baseCrit + curRel.crit;
+      let maxHp = 20;
+
+      STATE.recruitedParty.forEach(c => {
+        if (c.type === "CRIT") crit += 20;
+        if (c.type === "DEF") def += 10;
+        if (c.type === "HEAL") maxHp = 30;
+      });
+
+      STATE.hero.atk = atk;
+      STATE.hero.def = def;
+      STATE.hero.spd = spd;
+      STATE.hero.crit = crit;
+      STATE.hero.maxHp = maxHp;
+      STATE.hero.hp = Math.min(STATE.hero.hp, STATE.hero.maxHp);
+
+      updateEquipDOM();
+    }
+
+    function updateEquipDOM() {
+      const eq = STATE.equipment;
+      const curWpn = eq.weapons[eq.curWeaponIdx];
+      const curArm = eq.armors[eq.curArmorIdx];
+      const curRel = eq.relics[eq.curRelicIdx];
+
+      document.getElementById('slot-weapon').textContent = curWpn.name;
+      document.getElementById('slot-weapon-stat').textContent = `+${curWpn.atk} ATK`;
+      document.getElementById('slot-weapon-desc').textContent = curWpn.desc;
+
+      document.getElementById('slot-armor').textContent = curArm.name;
+      document.getElementById('slot-armor-stat').textContent = `+${curArm.def} DEF`;
+      document.getElementById('slot-armor-desc').textContent = curArm.desc;
+
+      document.getElementById('slot-relic').textContent = curRel.name;
+      document.getElementById('slot-relic-stat').textContent = curRel.perk;
+      document.getElementById('slot-relic-desc').textContent = curRel.desc;
+
+      document.getElementById('stat-atk').textContent = STATE.hero.atk;
+      document.getElementById('stat-def').textContent = STATE.hero.def;
+      document.getElementById('stat-spd').textContent = STATE.hero.spd.toFixed(1);
+      document.getElementById('stat-crit').textContent = `${STATE.hero.crit}%`;
+      document.getElementById('stat-maxhp').textContent = `${STATE.hero.maxHp} HP`;
+
+      const partyList = document.getElementById('party-roster-list');
+      partyList.innerHTML = '<div>• Rowan (Knight Vanguard)</div>';
+      STATE.recruitedParty.forEach(c => {
+        partyList.innerHTML += `<div class="text-amber-300">• ${c.name} (${c.title}) - ${c.perk}</div>`;
+      });
+
+      document.getElementById('party-count-val').textContent = STATE.recruitedParty.length + 1;
+
+      let ftr = "Party: Rowan";
+      STATE.recruitedParty.forEach(c => ftr += ` • ${c.name}`);
+      document.getElementById('footer-companions-summary').textContent = ftr;
+    }
+
+    // --- OVERWORLD CANVAS & MOVEMENT ---
+    const owCanvas = document.getElementById('overworld-canvas');
+    const owCtx = owCanvas.getContext('2d');
+    const keysDown = {};
+
+    window.addEventListener('keydown', (e) => {
+      keysDown[e.key] = true;
+
+      if (e.key === 'c' || e.key === 'C') toggleEquip();
+      if (e.key === 'm' || e.key === 'M') toggleKingdomModal();
+      if (e.key === 'q' || e.key === 'Q') toggleQuestModal();
+      if (e.key === 'Escape') {
+        toggleEquip(false);
+        toggleKingdomModal(false);
+        toggleQuestModal(false);
+      }
+
+      if (e.key === 't' || e.key === 'T') {
+        cycleTimeOfDay();
+      }
+
+      if (STATE.mode === "EQUIPMENT") {
+        if (e.key === '1') {
+          STATE.equipment.curWeaponIdx = (STATE.equipment.curWeaponIdx + 1) % STATE.equipment.weapons.length;
+          recalculateStats();
+          sfxMenu();
+        } else if (e.key === '2') {
+          STATE.equipment.curArmorIdx = (STATE.equipment.curArmorIdx + 1) % STATE.equipment.armors.length;
+          recalculateStats();
+          sfxMenu();
+        } else if (e.key === '3') {
+          STATE.equipment.curRelicIdx = (STATE.equipment.curRelicIdx + 1) % STATE.equipment.relics.length;
+          recalculateStats();
+          sfxMenu();
+        }
+      } else if (STATE.mode === "KINGDOM") {
+        if (e.key === '1') setKingdomTab("MONARCH");
+        else if (e.key === '2') setKingdomTab("LORDS");
+        else if (e.key === '3') setKingdomTab("MAP");
+        else if (e.key === '4') setKingdomTab("MULTIVERSE");
+      } else if (STATE.mode === "QUEST") {
+        if (e.key === '1') setQuestTab("MAIN");
+        else if (e.key === '2') setQuestTab("SETTLEMENTS");
+        else if (e.key === '3') setQuestTab("ACCORDS");
+        else if (e.key === '4') setQuestTab("SAVE");
+      } else if (STATE.mode === "OVERWORLD") {
+        if (STATE.activeDialogueChoices.length > 0) {
+          if (e.key === '1' && STATE.activeDialogueChoices[0]) selectDialogueChoice(0);
+          else if (e.key === '2' && STATE.activeDialogueChoices[1]) selectDialogueChoice(1);
+          else if (e.key === '3' && STATE.activeDialogueChoices[2]) selectDialogueChoice(2);
+          else if (e.key === '4' && STATE.activeDialogueChoices[3]) selectDialogueChoice(3);
+        }
+
+        if (e.key === 'z' || e.key === 'Z' || e.code === 'Space' || e.key === 'Enter') {
+          checkOverworldInteraction();
+        }
+      } else if (STATE.mode === "BATTLE") {
+        handleBattleKey(e.key);
+      }
+    });
+
+    window.addEventListener('keyup', (e) => { keysDown[e.key] = false; });
+
+    function cycleTimeOfDay() {
+      STATE.timeOfDay = (STATE.timeOfDay + 1) % 4;
+      const icons = ["🌄 DAWN", "☀️ DAY", "🌅 DUSK", "🌙 NIGHT"];
+      document.getElementById('btn-time-toggle').textContent = icons[STATE.timeOfDay] + " [T]";
+      sfxMenu();
+    }
+    document.getElementById('btn-time-toggle').addEventListener('click', cycleTimeOfDay);
+
+    // Collision check tailored to each Map
+    function checkSolid(x, y) {
+      const mapId = STATE.currentMapId;
+
+      if (mapId === "MAP_STONECROSS") {
+        if (Math.hypot(x - 1200, y - 900) < 32) return true;
+        if (y >= 1290 && y <= 1370) {
+          if (x < 790 || x > 920) return true;
+        }
+        if (x >= 690 && x <= 820 && y >= 490 && y <= 570) return true;
+        if (x >= 1550 && x <= 1710 && y >= 510 && y <= 610) return true;
+        if (x >= 1920 && x <= 2080 && y >= 920 && y <= 1020) return true;
+        if (x >= 560 && x <= 640 && y >= 1350 && y <= 1430) return true;
+      } else if (mapId === "MAP_OAKHAVEN") {
+        if (y < 420 && (x < 680 || x > 840)) return true;
+        if (x >= 430 && x <= 530 && y >= 400 && y <= 500) return true;
+        if (x >= 980 && x <= 1140 && y >= 560 && y <= 660) {
+          // Gate access to Vivienne's Guildhall
+          if (DIMENSION_REGISTRY.dim_aethelgard.reputation.oakhaven < -10 && !STATE.npcMemory.gildedAnchorPasskey) {
+            return true;
+          }
+        }
+        if (x >= 560 && x <= 680 && y >= 720 && y <= 830) return true;
+      } else if (mapId === "MAP_DUNHOLLOW") {
+        if (y < 420) return true;
+        if (x < 140 && (y < 650 || y > 790)) return true;
+        if (x > 1650) return true;
+        if (x >= 840 && x <= 960 && y >= 530 && y <= 630) return true;
+        if (x >= 470 && x <= 600 && y >= 590 && y <= 700) return true;
+      } else if (mapId === "MAP_HIGH_CAIRN") {
+        if (y < 360) return true;
+        if (x < 240 || x > 1560) return true;
+        if (x >= 840 && x <= 960 && y >= 420 && y <= 510) return true;
+        // Royal Vault access
+        if (x >= 1260 && x <= 1380 && y >= 490 && y <= 590) {
+          if (DIMENSION_REGISTRY.dim_aethelgard.reputation.crown < 25 && !STATE.npcMemory.royalVaultUnlocked) {
+            return true;
+          }
+        }
+      } else if (mapId === "MAP_WEEPING_WEALD") {
+        if (Math.hypot(x - 900, y - 520) < 36) return true;
+      }
+      return false;
+    }
+
+    // Map Transition Engine
+    function transitionToMap(targetMapId, spawnX, spawnY, exitLabel) {
+      if (!MAP_REGISTRY[targetMapId]) return;
+      STATE.currentMapId = targetMapId;
+      const targetMap = MAP_REGISTRY[targetMapId];
+
+      STATE.worldW = targetMap.width;
+      STATE.worldH = targetMap.height;
+      STATE.hero.x = spawnX;
+      STATE.hero.y = spawnY;
+
+      if (!STATE.discoveredMaps.includes(targetMapId)) {
+        STATE.discoveredMaps.push(targetMapId);
+      }
+
+      STATE.camera.x = Math.max(0, Math.min(STATE.worldW - owCanvas.width, STATE.hero.x - owCanvas.width / 2));
+      STATE.camera.y = Math.max(0, Math.min(STATE.worldH - owCanvas.height, STATE.hero.y - owCanvas.height / 2));
+
+      document.getElementById('current-location-pill').textContent = `📍 ${targetMap.name} • ${targetMap.rulerTitle}`;
+      document.getElementById('dialogue-text').textContent = `* (Traveled to ${targetMap.name}. ${targetMap.description})`;
+      clearDialogueChoices();
+      sfxRecruit();
+    }
+
+    // Interactive Dialogue Choices Engine
+    function setDialogueChoices(choices) {
+      STATE.activeDialogueChoices = choices;
+      const container = document.getElementById('dialogue-choices');
+      container.innerHTML = "";
+      if (choices.length === 0) {
+        container.classList.add('hidden');
+        return;
+      }
+      container.classList.remove('hidden');
+
+      choices.forEach((c, idx) => {
+        const btn = document.createElement('button');
+        btn.className = "px-2.5 py-1 bg-stone-900 border border-amber-600/70 hover:bg-stone-800 rounded text-amber-300 text-xs font-mono transition flex items-center gap-1.5";
+        btn.innerHTML = `<span class="text-white font-bold">[${idx + 1}]</span> ${c.label}`;
+        btn.onclick = () => selectDialogueChoice(idx);
+        container.appendChild(btn);
+      });
+    }
+
+    function clearDialogueChoices() {
+      STATE.activeDialogueChoices = [];
+      const container = document.getElementById('dialogue-choices');
+      container.innerHTML = "";
+      container.classList.add('hidden');
+    }
+
+    function selectDialogueChoice(idx) {
+      if (STATE.activeDialogueChoices[idx]) {
+        sfxMenu();
+        const action = STATE.activeDialogueChoices[idx].action;
+        clearDialogueChoices();
+        action();
+      }
+    }
+
+    // Overworld Interaction Handler (Living Quests, Decision Paths, and Exploration)
+    function checkOverworldInteraction() {
+      const hx = STATE.hero.x;
+      const hy = STATE.hero.y;
+      const curMap = STATE.mapData[STATE.currentMapId];
+      const aethelgard = DIMENSION_REGISTRY.dim_aethelgard;
+      let handled = false;
+
+      // 1. Check Unrecruited Companions (Stonecross)
+      if (STATE.currentMapId === "MAP_STONECROSS") {
+        STATE.worldCompanions.forEach(c => {
+          if (!c.recruited && Math.hypot(c.x - hx, c.y - hy) < 45) {
+            c.recruited = true;
+            STATE.recruitedParty.push(c);
+            recalculateStats();
+            document.getElementById('dialogue-text').textContent = c.quote;
+            sfxRecruit();
+            handled = true;
+          }
+        });
+      }
+
+      // 2. Check Living NPCs & Major Lords
+      if (!handled && curMap && curMap.villagers) {
+        curMap.villagers.forEach(v => {
+          if (Math.hypot(v.x - hx, v.y - hy) < 48) {
+            handled = true;
+
+            // --- NPC 1: ELDER ALDEN (Stonecross) ---
+            if (v.id === "ALDEN") {
+              const mainQ = QUEST_REGISTRY.MAIN_TIMBER_TARIFF;
+              if (mainQ.stage === 0) {
+                document.getElementById('dialogue-text').textContent = "* Elder Alden clasps your hands: 'Sir Rowan! Chancellor Eamon sent a royal writ demanding 250 Gold for the Lady Day Tithe. The ancient charter legally caps it at 200G! Eamon calls the extra 50G an emergency Rift Surcharge, but our hamlet will starve. Go to Oakhaven Port and seek Baroness Vivienne's counsel!'";
+                mainQ.stage = 1;
+                sfxRecruit();
+              } else if (STATE.npcMemory.timberDisputeOutcome === "EXPOSED_EAMON_TO_ALDOUS") {
+                document.getElementById('dialogue-text').textContent = "* Elder Alden smiles with profound relief: 'Sir Rowan, the King struck down Eamon's false surcharge! The tithe is back to the lawful 200 Gold. You have saved Stonecross from economic ruin!'";
+                sfxBlip();
+              } else if (STATE.npcMemory.timberDisputeOutcome === "GAVE_TO_VIVIENNE") {
+                document.getElementById('dialogue-text').textContent = "* Elder Alden sighs gently: 'Baroness Vivienne broke the royal toll blockades, and timber flows freely. The King is furious at the realm, but our bellies are full.'";
+                sfxBlip();
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Elder Alden: 'Have you spoken with Baroness Vivienne in Oakhaven? The quarter-day bell tolls soon.'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 2: BAKER BEATRICE (Stonecross) ---
+            else if (v.id === "BEATRICE") {
+              if (!STATE.npcMemory.barnabySobered) {
+                document.getElementById('dialogue-text').textContent = "* Baker Beatrice is weeping into her apron: 'My forty-year-old heirloom sourdough yeast pot! It vanished from the bakery windowsill! Farmer Giles's prize sheep Barnaby was seen licking the clay rim!'";
+                QUEST_REGISTRY.STONECROSS_SOURDOUGH_SCANDAL.status = "ACTIVE";
+                sfxBlip();
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Baker Beatrice hands you a warm, crusty brioche: 'Barnaby is safe and my sourdough is bubbling again! You are always welcome at my oven, Sir Rowan!' (+5 HP restore!)";
+                STATE.hero.hp = Math.min(STATE.hero.maxHp, STATE.hero.hp + 5);
+                updateBattleUI();
+                sfxRecruit();
+              }
+            }
+
+            // --- NPC 3: BARNABY THE TIPSILY GRAZING SHEEP (Stonecross) ---
+            else if (v.id === "BARNABY_SHEEP") {
+              if (!STATE.npcMemory.barnabySobered) {
+                document.getElementById('dialogue-text').textContent = "* Barnaby the sheep is wobbling on all four hooves, burping sourdough fumes and chewing clover at odd angles. He ate Beatrice's yeast starter!";
+                const hasDunstan = STATE.recruitedParty.some(c => c.id === "DUNSTAN");
+                const choices = [
+                  {
+                    label: "Scrape sourdough yeast starter residue from Barnaby's fleece",
+                    action: () => {
+                      STATE.npcMemory.barnabySobered = true;
+                      QUEST_REGISTRY.STONECROSS_SOURDOUGH_SCANDAL.status = "COMPLETED";
+                      aethelgard.reputation.stonecross += 10;
+                      document.getElementById('dialogue-text').textContent = "* You carefully scrape a cup of active yeast starter from Barnaby's wool. Beatrice will be able to rekindle her bakery! (+10 Stonecross Rep)";
+                      sfxRecruit();
+                    }
+                  }
+                ];
+                if (hasDunstan) {
+                  choices.push({
+                    label: "Administer Brother Dunstan's Herbal Sobering Brew",
+                    action: () => {
+                      STATE.npcMemory.barnabySobered = true;
+                      QUEST_REGISTRY.STONECROSS_SOURDOUGH_SCANDAL.status = "COMPLETED";
+                      aethelgard.reputation.stonecross += 15;
+                      document.getElementById('dialogue-text').textContent = "* Brother Dunstan feeds Barnaby a concoction of wild mint and barrow dandelion. Barnaby blinks, sneezes, and trots back to the flock completely sober! (+15 Stonecross Rep)";
+                      sfxRecruit();
+                    }
+                  });
+                }
+                setDialogueChoices(choices);
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Barnaby the sheep nudges your leg contentedly. Baaa!";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 4: BARONESS VIVIENNE DE LA TOUR (Oakhaven) ---
+            else if (v.id === "VIVIENNE") {
+              const mainQ = QUEST_REGISTRY.MAIN_TIMBER_TARIFF;
+
+              if (mainQ.stage <= 1) {
+                document.getElementById('dialogue-text').textContent = "* Baroness Vivienne paces her wharf: 'Sir Rowan! You come from Stonecross? Chancellor Eamon's toll cutters seized two of my timber barges under falsified manifests! They demand an illegal 50G surcharge. Interrogate Shipwright Brendan and Smuggler Jago on my docks—find where Eamon hid our manifest!'";
+                mainQ.stage = 2;
+                sfxRecruit();
+              } else if (mainQ.stage >= 2 && !STATE.npcMemory.timberManifestRecovered) {
+                document.getElementById('dialogue-text').textContent = "* Baroness Vivienne: 'Question Brendan and Jago! Find the seized manifest so we can break Eamon's extortion!'";
+                sfxBlip();
+              } else if (STATE.npcMemory.timberManifestRecovered && !STATE.npcMemory.timberDisputeOutcome) {
+                document.getElementById('dialogue-text').textContent = "* Baroness Vivienne's eyes flash with triumph: 'You found the manifest! It proves Eamon was pocketing the surcharge and fabricating contraband charges! Hand it to me, Rowan—I will rally the river fleet and break the royal embargo forever!'";
+                const choices = [
+                  {
+                    label: "Hand the Manifest to Baroness Vivienne (Empower Free River Port)",
+                    action: () => {
+                      STATE.npcMemory.timberDisputeOutcome = "GAVE_TO_VIVIENNE";
+                      mainQ.status = "COMPLETED";
+                      mainQ.resolution = "FREE_TRADE_ALLY";
+                      aethelgard.reputation.oakhaven += 35;
+                      aethelgard.reputation.crown -= 25;
+                      aethelgard.politics.stability += 5;
+                      STATE.npcMemory.gildedAnchorPasskey = true;
+                      STATE.hero.gold += 120;
+                      updateGlobalUI();
+                      document.getElementById('dialogue-text').textContent = "* Baroness Vivienne laughs victoriously and hands you 120 Gold and the GILDED ANCHOR PASSKEY! 'Oakhaven is now a Free River Port! The King's toll boats are expelled! You have a friend for life in the Gilded Anchor.' (+120G, +35 Oakhaven Rep, -25 Crown Rep)";
+                      sfxRecruit();
+                    }
+                  },
+                  {
+                    label: "Refuse: 'This evidence belongs before King Aldous III in High Cairn.'",
+                    action: () => {
+                      document.getElementById('dialogue-text').textContent = "* Vivienne narrows her eyes in sharp calculation: 'Be careful, knight. If you take that to the King, you make a mortal enemy of Chancellor Eamon.'";
+                      sfxBlip();
+                    }
+                  }
+                ];
+                setDialogueChoices(choices);
+              } else if (STATE.npcMemory.timberDisputeOutcome === "GAVE_TO_VIVIENNE") {
+                document.getElementById('dialogue-text').textContent = "* Baroness Vivienne raises a crystal goblet of southern wine: 'My favorite knight! The river flows untaxed, and our timber fleet commands the trade lanes. What can the Gilded Anchor do for you today?' (Merchant prices 25% discounted!)";
+                sfxBlip();
+              } else if (STATE.npcMemory.timberDisputeOutcome === "EXPOSED_EAMON_TO_ALDOUS") {
+                document.getElementById('dialogue-text').textContent = "* Baroness Vivienne regards you with guarded respect: 'So, you gave the proof to King Aldous and had Eamon imprisoned. The King honored our ancient charter, and the surcharge is dead. You have honor, Rowan... even if you serve a crown.'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 5: SHIPWRIGHT BRENDAN (Oakhaven) ---
+            else if (v.id === "BRENDAN") {
+              const mainQ = QUEST_REGISTRY.MAIN_TIMBER_TARIFF;
+              if (mainQ.stage === 2 && !STATE.npcMemory.timberManifestRecovered) {
+                document.getElementById('dialogue-text').textContent = "* Brendan points with an adze: 'The royal cutters dragged the timber crates toward the western marsh shallows. I saw Eamon's sergeant conferring with Smuggler Jago behind the watermill!'";
+                sfxBlip();
+              } else if (!STATE.npcMemory.brendanPinsFound) {
+                document.getElementById('dialogue-text').textContent = "* Brendan grunts: 'Someone stole three heavy brass keel-pins from my crane. The barge can't launch without 'em!'";
+                QUEST_REGISTRY.OAKHAVEN_BRENDAN_PINS.status = "ACTIVE";
+                const choices = [
+                  {
+                    label: "Search the wharf rubble for the brass keel-pins",
+                    action: () => {
+                      STATE.npcMemory.brendanPinsFound = true;
+                      QUEST_REGISTRY.OAKHAVEN_BRENDAN_PINS.status = "COMPLETED";
+                      aethelgard.reputation.oakhaven += 10;
+                      document.getElementById('dialogue-text').textContent = "* You find the heavy brass keel-pins buried under canvas sacks. Brendan beams: 'You saved my launch schedule, lad! Take this River Boatman's Cap!' (Gained boatman relic!)";
+                      STATE.equipment.relics.push({ name: "Boatman's Cap", perk: "+5% Crit, +0.3 SPD", crit: 5, spd: 0.3, desc: "Treated oiled canvas cap worn by rivermen." });
+                      recalculateStats();
+                      sfxRecruit();
+                    }
+                  }
+                ];
+                setDialogueChoices(choices);
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Brendan: 'The barge is caulked and watertight. The river current is fast today!'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 6: SMUGGLER JAGO (Oakhaven) ---
+            else if (v.id === "JAGO") {
+              const mainQ = QUEST_REGISTRY.MAIN_TIMBER_TARIFF;
+              if (mainQ.stage === 2 && !STATE.npcMemory.timberManifestRecovered) {
+                document.getElementById('dialogue-text').textContent = "* Jago puts up his hands defensively: 'Easy, knight! Eamon's toll sergeant paid me 10 silvers to stash the seized manifest in the hollow willow stump along the river shallows (x: 720, y: 390)! Go inspect it yourself, but don't tell Vivienne I had a hand in it!'";
+                mainQ.stage = 3;
+                sfxRecruit();
+              } else if (STATE.npcMemory.timberManifestRecovered) {
+                document.getElementById('dialogue-text').textContent = "* Jago winks: 'You got the parchment? Good. Eamon's sergeant had shifty eyes anyway. Smugglers have standards!'";
+                sfxBlip();
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Jago: 'Need rare goods from foreign ports? Keep your gold ready.'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 7: KING ALDOUS III (High Cairn) ---
+            else if (v.id === "ALDOUS") {
+              const mainQ = QUEST_REGISTRY.MAIN_TIMBER_TARIFF;
+              const hasManifest = STATE.npcMemory.timberManifestRecovered;
+              const hasCharter = STATE.npcMemory.charterRecovered;
+
+              if (hasManifest && !STATE.npcMemory.timberDisputeOutcome) {
+                document.getElementById('dialogue-text').textContent = "* King Aldous III sits forward on the Throne of Swords: 'You return from Oakhaven, Sir Rowan. You hold a sealed royal manifest in your gauntlet. What is the meaning of this?'";
+                const choices = [
+                  {
+                    label: "Present the Falsified Manifest: Expose Chancellor Eamon's Corruption",
+                    action: () => {
+                      STATE.npcMemory.timberDisputeOutcome = "EXPOSED_EAMON_TO_ALDOUS";
+                      STATE.npcMemory.eamonImprisoned = true;
+                      mainQ.status = "COMPLETED";
+                      mainQ.resolution = "CROWN_LOYALIST";
+                      aethelgard.politics.titheDue = 200; // Lawful charter restored!
+                      aethelgard.reputation.crown += 30;
+                      aethelgard.reputation.stonecross += 20;
+                      aethelgard.reputation.oakhaven += 15;
+                      aethelgard.monarch.courtFavor = 50;
+                      STATE.npcMemory.royalVaultUnlocked = true;
+                      document.getElementById('dialogue-text').textContent = "* King Aldous reads the manifest and rises in fury: 'Chancellor Eamon! You dared dishonor the Sunken Crown with extortion while our people bleed?! Guards, strip his chain of office and throw him into the deep oubliette!' King Aldous turns to you: 'Sir Rowan, you have purged a viper from my council. The unlawful surcharge is dead; Lady Day Tithe is 200 Gold! Take the Royal Vanguard Crest!' (+30 Crown Rep, +20 Stonecross Rep, Gained Royal Crest!)";
+                      STATE.equipment.armors.push({ name: "Royal Vanguard Crest", def: 16, desc: "Burnished steel breastplate bearing King Aldous's lion seal." });
+                      STATE.equipment.curArmorIdx = STATE.equipment.armors.length - 1;
+                      recalculateStats();
+                      sfxRecruit();
+                    }
+                  }
+                ];
+                if (hasCharter) {
+                  choices.push({
+                    label: "Present both Manifest and Ancient Charter: Propose Chivalric Feudal Accord",
+                    action: () => {
+                      STATE.npcMemory.timberDisputeOutcome = "CHIVALRIC_COMPROMISE";
+                      STATE.npcMemory.eamonImprisoned = true;
+                      mainQ.status = "COMPLETED";
+                      mainQ.resolution = "CHIVALRIC_COMPROMISE";
+                      aethelgard.politics.titheDue = 200;
+                      aethelgard.reputation.crown += 20;
+                      aethelgard.reputation.stonecross += 20;
+                      aethelgard.reputation.oakhaven += 25;
+                      aethelgard.reputation.dunhollow += 15;
+                      aethelgard.politics.stability = 95;
+                      document.getElementById('dialogue-text').textContent = "* You lay both the Charter of the Four Quarters and the Manifest before the throne. King Aldous bows his crowned head: 'You speak not just as a knight, but as the conscience of Aethelgard. The lawful 200G tithe is codified; Vivienne's timber is granted royal safe passage; Stonecross is granted an emergency granary reserve!' (+20 All Rep, Stability 95%! Acquired Peacemaker's Ring!)";
+                      STATE.equipment.relics.push({ name: "Peacemaker's Signet", perk: "+15% Crit, +20 HP", crit: 15, spd: 0.5, desc: "A gold signet commemorating the Great Feudal Accord." });
+                      recalculateStats();
+                      sfxRecruit();
+                    }
+                  });
+                }
+                setDialogueChoices(choices);
+              } else if (!aethelgard.politics.tithePaid) {
+                const due = aethelgard.politics.titheDue;
+                document.getElementById('dialogue-text').textContent = `* King Aldous III: 'Sir Rowan. The Lady Day Tithe of ${due} Gold is due. Do you bear the realm's tithe?'`;
+                const choices = [];
+                if (STATE.hero.gold >= due) {
+                  choices.push({
+                    label: `Pay Lady Day Tithe (${due} Gold)`,
+                    action: () => {
+                      STATE.hero.gold -= due;
+                      aethelgard.politics.tithePaid = true;
+                      aethelgard.reputation.crown += 25;
+                      aethelgard.monarch.courtFavor += 20;
+                      updateGlobalUI();
+                      document.getElementById('dialogue-text').textContent = `* King Aldous nods gravely: 'Stonecross has fulfilled its chivalric oath. The Sunken Crown acknowledges your honor!' (+25 Crown Rep, Court Favor +20)`;
+                      sfxRecruit();
+                    }
+                  });
+                }
+                choices.push({
+                  label: "Inquire about the waking rifts",
+                  action: () => {
+                    document.getElementById('dialogue-text').textContent = "* King Aldous's voice drops to a grim whisper: 'The earth shakes in Dunhollow; cold mist spills from Weeping Weald. If the rifts tear open again, no wall of stone will save us.'";
+                    sfxBlip();
+                  }
+                });
+                setDialogueChoices(choices);
+              } else {
+                document.getElementById('dialogue-text').textContent = "* King Aldous III: 'The realm stands secure for this season, Rowan. Watch the barrow roads.'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 8: CHANCELLOR EAMON (High Cairn) ---
+            else if (v.id === "EAMON") {
+              if (STATE.npcMemory.eamonImprisoned) {
+                document.getElementById('dialogue-text').textContent = "* (Chancellor Eamon has been stripped of office and dragged to the citadel dungeons!)";
+                sfxBlip();
+              } else if (STATE.npcMemory.timberManifestRecovered && !STATE.npcMemory.timberDisputeOutcome) {
+                document.getElementById('dialogue-text').textContent = "* Chancellor Eamon spots the canvas parcel and turns pale as parchment: 'Wait, Sir Rowan! You... you hold the manifest?! Listen to reason—a kingdom cannot wage war without gold. Name your price! 150 Gold from my personal coffer if you burn that parchment!'";
+                const choices = [
+                  {
+                    label: "Accept Eamon's 150G Bribe (Corrupt Pragmatist)",
+                    action: () => {
+                      STATE.npcMemory.timberDisputeOutcome = "BRIBED_BY_EAMON";
+                      QUEST_REGISTRY.MAIN_TIMBER_TARIFF.status = "COMPLETED";
+                      QUEST_REGISTRY.MAIN_TIMBER_TARIFF.resolution = "CORRUPT_PRAGMATIST";
+                      STATE.hero.gold += 150;
+                      aethelgard.politics.titheDue = 250;
+                      aethelgard.reputation.crown += 10;
+                      aethelgard.reputation.stonecross -= 15;
+                      aethelgard.reputation.oakhaven -= 20;
+                      updateGlobalUI();
+                      document.getElementById('dialogue-text').textContent = "* Eamon breathes a sigh of relief, quickly thrusting 150 Gold into your hands: 'Wise knight. Power belongs to those who know how to calculate value.' (+150G, Stonecross Rep -15, Oakhaven Rep -20)";
+                      sfxRecruit();
+                    }
+                  },
+                  {
+                    label: "Spurn the bribe: 'You will answer to King Aldous!'",
+                    action: () => {
+                      document.getElementById('dialogue-text').textContent = "* Eamon shudders: 'You fool... you chivalric fool!'";
+                      sfxHit();
+                    }
+                  }
+                ];
+                setDialogueChoices(choices);
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Chancellor Eamon sneers: 'The King's decrees are absolute. Stonecross will pay the 250 Gold surcharge, or the royal vanguard will impound your cattle.'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 9: CASTELLAN MORVATH (Dunhollow) ---
+            else if (v.id === "MORVATH") {
+              const mainTremors = QUEST_REGISTRY.MAIN_DUNHOLLOW_TREMORS;
+              if (mainTremors.stage === 0) {
+                document.getElementById('dialogue-text').textContent = "* Castellan Morvath rests his iron fist on the parapet: 'Rowan! Dunhollow is under siege by the earth itself. The deep shaft struck an obsidian vein that hums like a swarm of hornets. The miners won't swing picks until someone investigates the adit!'";
+                mainTremors.stage = 1;
+                mainTremors.status = "ACTIVE";
+                sfxRecruit();
+              } else if (mainTremors.stage === 1 && !STATE.npcMemory.dunhollowMinesWarded) {
+                const hasDunstan = STATE.recruitedParty.some(c => c.id === "DUNSTAN");
+                if (hasDunstan) {
+                  document.getElementById('dialogue-text').textContent = "* Castellan Morvath looks at Brother Dunstan: 'You have brought Friar Dunstan! Brother, the men speak of ancient rites of the Old Church to quiet the deep rock.'";
+                  const choices = [
+                    {
+                      label: "Have Brother Dunstan perform the Sacred Rite of Grounding",
+                      action: () => {
+                        STATE.npcMemory.dunhollowMinesWarded = true;
+                        mainTremors.status = "COMPLETED";
+                        mainTremors.resolution = "MINES_WARDED";
+                        aethelgard.politics.dunhollowMineStatus = "MINES_WARDED";
+                        aethelgard.reputation.dunhollow += 30;
+                        aethelgard.reputation.crown += 15;
+                        aethelgard.politics.stability += 10;
+                        STATE.npcMemory.deepShaftUnlocked = true;
+                        document.getElementById('dialogue-text').textContent = "* Brother Dunstan raises his blessed staff and intones the Litany of Iron and Soil. The purple vibration in the stone softens into tranquil mineral harmony! Morvath clasps your hand: 'The tremors have ceased! Take the DUNHOLLOW BASTION CUIRASS as our eternal thanks!' (+30 Dunhollow Rep, Gained Bastion Cuirass!)";
+                        STATE.equipment.armors.push({ name: "Dunhollow Bastion Cuirass", def: 14, desc: "Quarry plate armor blessed against subterranean tremors." });
+                        STATE.equipment.curArmorIdx = STATE.equipment.armors.length - 1;
+                        recalculateStats();
+                        sfxRecruit();
+                      }
+                    }
+                  ];
+                  setDialogueChoices(choices);
+                } else {
+                  document.getElementById('dialogue-text').textContent = "* Castellan Morvath: 'We need holy wards to quell the obsidian vein. If Brother Dunstan in Stonecross will lend his staff, Dunhollow will stand indebted.'";
+                  sfxBlip();
+                }
+              } else {
+                document.getElementById('dialogue-text').textContent = "* Castellan Morvath: 'The blast furnaces burn hot and true. Our iron shields the kingdom once more.'";
+                sfxBlip();
+              }
+            }
+
+            // --- NPC 10: HERMIT OAKHOUND (Weeping Weald) ---
+            else if (v.id === "OAKHOUND") {
+              const mainCrown = QUEST_REGISTRY.MAIN_SUNKEN_CROWN;
+              document.getElementById('dialogue-text').textContent = "* Hermit Oakhound smiles blindly toward the cosmic arch: 'The bells chime, Rowan! Two centuries ago, the Great Crucible shattered the realm. The true crown fell into the astral rift! What King Aldous wears is merely melted slag to keep the lords on their knees. Step to the Rift Terminal Altar and attune the frequency!'";
+              mainCrown.status = "ACTIVE";
+              mainCrown.stage = 1;
+              const choices = [
+                {
+                  label: "Inquire about the five separated dimensions",
+                  action: () => {
+                    document.getElementById('dialogue-text').textContent = "* Hermit Oakhound: 'Aethelgard received the ash and iron; Vespera received the stars and alchemical mercury; three others lie beyond the cosmic sea. Tune the gate, knight, and hear the stars breathe!'";
+                    sfxBlip();
+                  }
+                }
+              ];
+              setDialogueChoices(choices);
+            }
+
+            // --- NPC 11: RIFT TERMINAL ALTAR (Weeping Weald) ---
+            else if (v.id === "RIFT_TERMINAL") {
+              document.getElementById('dialogue-text').textContent = "* The Ancient Rift Terminal hums with extraterrestrial resonance. Rotating runic rings allow dimensional frequency tuning.";
+              const choices = [
+                {
+                  label: "Tune Frequency: Dimension I (Aethelgard - Ash & Iron)",
+                  action: () => {
+                    aethelgard.politics.riftFrequency = "AETHELGARD";
+                    document.getElementById('dialogue-text').textContent = "* The portal rings click into alignment with Aethelgard. The vortex hums with the scent of damp earth and iron kilns.";
+                    sfxBlip();
+                  }
+                },
+                {
+                  label: "Tune Frequency: Dimension II (Vespera - The Sunless Spires)",
+                  action: () => {
+                    aethelgard.politics.riftFrequency = "VESPERA";
+                    aethelgard.politics.riftInvestigated = true;
+                    QUEST_REGISTRY.MAIN_SUNKEN_CROWN.stage = 2;
+                    document.getElementById('dialogue-text').textContent = "* (A blinding violet flare erupts from the gate! Through the shimmering vortex, you glimpse colossal crystalline towers beneath an astral nebula. The voice of Queen Seraphina echoes across the void: 'Who stirs the astral rift?') (Dimension II Preview Registered in Atlas!)";
+                    sfxRecruit();
+                  }
+                }
+              ];
+              setDialogueChoices(choices);
+            }
+
+            // Generic Villager fallback
+            else {
+              document.getElementById('dialogue-text').textContent = v.text || `* (${v.name} nods politely.)`;
+              sfxBlip();
+            }
+          }
+        });
+      }
+
+      // 3. Check Quest Objects & Interactive Landmarks
+      if (!handled && curMap && curMap.landmarks) {
+        curMap.landmarks.forEach(lm => {
+          if (Math.hypot(lm.x - hx, lm.y - hy) < (lm.rad || 45) + 10) {
+            if (lm.id === "HOLLOW_WILLOW") {
+              // The Seized Manifest Investigation Point!
+              if (!STATE.npcMemory.timberManifestRecovered) {
+                STATE.npcMemory.timberManifestRecovered = true;
+                QUEST_REGISTRY.MAIN_TIMBER_TARIFF.stage = 4;
+                QUEST_REGISTRY.MAIN_TIMBER_TARIFF.evidenceFound = true;
+                document.getElementById('dialogue-text').textContent = "* You reach into the hollow willow knot-hole and withdraw an oiled-canvas parcel. Inside is the FALSIFIED ROYAL MANIFEST! It proves Chancellor Eamon falsified the contraband charges and is pocketing the extra 50G Rift Surcharge into his private offshore vault! (Evidence Acquired!)";
+                sfxRecruit();
+                handled = true;
+                return;
+              }
+            } else if (lm.id === "ROYAL_ARCHIVES") {
+              // Ancient Feudal Charter of the Four Quarters
+              if (!STATE.npcMemory.charterRecovered) {
+                STATE.npcMemory.charterRecovered = true;
+                aethelgard.politics.charterFound = true;
+                QUEST_REGISTRY.HIGH_CAIRN_MISSING_CHARTER.status = "COMPLETED";
+                document.getElementById('dialogue-text').textContent = "* In the lower shelf of the Royal Chancery, you discover the CHARTER OF THE FOUR QUARTERS! Bearing the ancestral wax seal, it codifies that the Lady Day Tithe is legally capped at 200 Gold! (Charter Acquired!)";
+                sfxRecruit();
+                handled = true;
+                return;
+              }
+            } else if (lm.id === "CANARY_GALLERY") {
+              if (!STATE.npcMemory.canaryRescued) {
+                STATE.npcMemory.canaryRescued = true;
+                QUEST_REGISTRY.DUNHOLLOW_TRAPPED_CANARY.status = "COMPLETED";
+                aethelgard.reputation.dunhollow += 15;
+                document.getElementById('dialogue-text').textContent = "* You carefully disarm the loose timber scaffold and retrieve the caged canary! It chirps merrily. Foreman Burl will be overjoyed! (+15 Dunhollow Rep)";
+                sfxRecruit();
+                handled = true;
+                return;
+              }
+            } else if (lm.id === "SACRED_MISTLETOE") {
+              if (!STATE.npcMemory.mistletoeHarvested) {
+                STATE.npcMemory.mistletoeHarvested = true;
+                QUEST_REGISTRY.WEEPING_WEALD_MISTLETOE.status = "COMPLETED";
+                document.getElementById('dialogue-text').textContent = "* You harvest a branch of shimmering golden mistletoe using a silver sickle. Hermit Oakhound will appreciate this sacred offering.";
+                sfxRecruit();
+                handled = true;
+                return;
+              }
+            }
+
+            document.getElementById('dialogue-text').textContent = lm.text;
+            if (lm.name === "Stonecross Town Fountain") {
+              STATE.hero.hp = STATE.hero.maxHp;
+              updateBattleUI();
+            }
+            sfxBlip();
+            handled = true;
+            clearDialogueChoices();
+          }
+        });
+      }
+
+      // 4. Check Treasure Chests on current map
+      if (!handled && curMap && curMap.chests) {
+        curMap.chests.forEach(ch => {
+          if (!ch.opened && Math.hypot(ch.x - hx, ch.y - hy) < 40) {
+            ch.opened = true;
+            if (ch.itemType === "WEAPON") {
+              STATE.equipment.weapons.push(ch.item);
+              STATE.equipment.curWeaponIdx = STATE.equipment.weapons.length - 1;
+            } else if (ch.itemType === "ARMOR") {
+              STATE.equipment.armors.push(ch.item);
+              STATE.equipment.curArmorIdx = STATE.equipment.armors.length - 1;
+            } else if (ch.itemType === "RELIC") {
+              STATE.equipment.relics.push(ch.item);
+              STATE.equipment.curRelicIdx = STATE.equipment.relics.length - 1;
+            }
+            recalculateStats();
+            document.getElementById('dialogue-text').textContent = ch.quote;
+            sfxRecruit();
+            handled = true;
+          }
+        });
+      }
+
+      // 5. Check Foes on current map
+      if (!handled && curMap && curMap.foes) {
+        curMap.foes.forEach(foe => {
+          if (Math.hypot(foe.x - hx, foe.y - hy) < 50) {
+            startBattle(foe);
+            handled = true;
+            clearDialogueChoices();
+          }
+        });
+      }
+
+      if (!handled) {
+        const curMapInfo = MAP_REGISTRY[STATE.currentMapId];
+        document.getElementById('dialogue-text').textContent = `* (${curMapInfo.name} stretches before you. Explore the routes, investigate rumors, and shape the realm's destiny.)`;
+        clearDialogueChoices();
+      }
+    }
+
+    // Modal Toggles
+    function toggleEquip(force) {
+      const modal = document.getElementById('equip-modal');
+      const shouldOpen = (force !== undefined) ? force : modal.classList.contains('hidden');
+      modal.classList.toggle('hidden', !shouldOpen);
+      STATE.mode = shouldOpen ? "EQUIPMENT" : "OVERWORLD";
+      if (shouldOpen) {
+        toggleKingdomModal(false);
+        toggleQuestModal(false);
+      }
+      sfxMenu();
+    }
+    document.getElementById('btn-equip-toggle').addEventListener('click', () => toggleEquip());
+    document.getElementById('btn-close-equip').addEventListener('click', () => toggleEquip(false));
+
+    function toggleKingdomModal(force) {
+      const modal = document.getElementById('kingdom-modal');
+      const shouldOpen = (force !== undefined) ? force : modal.classList.contains('hidden');
+      modal.classList.toggle('hidden', !shouldOpen);
+      STATE.mode = shouldOpen ? "KINGDOM" : "OVERWORLD";
+      if (shouldOpen) {
+        toggleEquip(false);
+        toggleQuestModal(false);
+        renderKingdomModal();
+      }
+      sfxMenu();
+    }
+    document.getElementById('btn-kingdom-toggle').addEventListener('click', () => toggleKingdomModal());
+    document.getElementById('btn-close-kingdom').addEventListener('click', () => toggleKingdomModal(false));
+
+    function toggleQuestModal(force) {
+      const modal = document.getElementById('quest-modal');
+      const shouldOpen = (force !== undefined) ? force : modal.classList.contains('hidden');
+      modal.classList.toggle('hidden', !shouldOpen);
+      STATE.mode = shouldOpen ? "QUEST" : "OVERWORLD";
+      if (shouldOpen) {
+        toggleEquip(false);
+        toggleKingdomModal(false);
+        renderQuestModal();
+      }
+      sfxMenu();
+    }
+    document.getElementById('btn-quest-toggle').addEventListener('click', () => toggleQuestModal());
+    document.getElementById('btn-close-quest').addEventListener('click', () => toggleQuestModal(false));
+
+    function setQuestTab(tab) {
+      STATE.activeQuestTab = tab;
+      const tabBtns = {
+        MAIN: document.getElementById('tab-btn-quest-main'),
+        SETTLEMENTS: document.getElementById('tab-btn-quest-settlements'),
+        ACCORDS: document.getElementById('tab-btn-quest-accords'),
+        SAVE: document.getElementById('tab-btn-quest-save')
+      };
+      Object.keys(tabBtns).forEach(k => {
+        const isSel = (k === tab);
+        tabBtns[k].classList.toggle('border-emerald-500', isSel);
+        tabBtns[k].classList.toggle('text-emerald-300', isSel);
+        tabBtns[k].classList.toggle('border-stone-700', !isSel);
+        tabBtns[k].classList.toggle('text-stone-300', !isSel);
+      });
+      renderQuestModal();
+      sfxMenu();
+    }
+
+    document.getElementById('tab-btn-quest-main').addEventListener('click', () => setQuestTab("MAIN"));
+    document.getElementById('tab-btn-quest-settlements').addEventListener('click', () => setQuestTab("SETTLEMENTS"));
+    document.getElementById('tab-btn-quest-accords').addEventListener('click', () => setQuestTab("ACCORDS"));
+    document.getElementById('tab-btn-quest-save').addEventListener('click', () => setQuestTab("SAVE"));
+
+    // Render Quest Modal Content
+    function renderQuestModal() {
+      const container = document.getElementById('quest-tab-content');
+      const aethelgard = DIMENSION_REGISTRY.dim_aethelgard;
+
+      if (STATE.activeQuestTab === "MAIN") {
+        const mainQ = QUEST_REGISTRY.MAIN_TIMBER_TARIFF;
+        const dunhollowQ = QUEST_REGISTRY.MAIN_DUNHOLLOW_TREMORS;
+        const crownQ = QUEST_REGISTRY.MAIN_SUNKEN_CROWN;
+
+        container.innerHTML = `
+          <div class="space-y-4 text-xs font-mono">
+            <!-- Main Quest 1 -->
+            <div class="p-3 bg-stone-950 border ${mainQ.status === 'COMPLETED' ? 'border-emerald-500/80' : 'border-amber-500/80'} rounded">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-sm font-bold text-amber-300 flex items-center gap-1.5">
+                  <span>⚔️</span> ${mainQ.title}
+                </span>
+                <span class="px-2 py-0.5 ${mainQ.status === 'COMPLETED' ? 'bg-emerald-950 text-emerald-400 border border-emerald-600' : 'bg-amber-950 text-amber-400 border border-amber-600'} rounded text-[10px] font-bold">
+                  ${mainQ.status === 'COMPLETED' ? 'COMPLETED' : 'ACTIVE • ' + mainQ.chapter}
+                </span>
+              </div>
+              <p class="text-stone-300 text-xs font-sans leading-relaxed mb-2">${mainQ.description}</p>
+              
+              <div class="p-2.5 bg-stone-900 border border-stone-800 rounded mb-2">
+                <div class="text-[10px] text-stone-500 uppercase font-bold tracking-wider">Current Objective:</div>
+                <div class="text-amber-300 font-bold mt-0.5">${mainQ.status === 'COMPLETED' ? 'Resolved: ' + (mainQ.resolution || 'Accord Enacted') : mainQ.stages[mainQ.stage]}</div>
+              </div>
+
+              ${mainQ.evidenceFound ? `
+                <div class="p-2 bg-emerald-950/40 border border-emerald-600/50 rounded text-emerald-300 text-[11px] flex items-center gap-2">
+                  <span>📜</span> <strong>Evidence Held:</strong> Falsified Royal Manifest (Exposes Eamon's 50G Surcharge Extortion)
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Main Quest 2 -->
+            <div class="p-3 bg-stone-950 border ${dunhollowQ.status === 'COMPLETED' ? 'border-emerald-500/80' : 'border-stone-800'} rounded">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-stone-300 flex items-center gap-1.5">
+                  <span>⛏️</span> ${dunhollowQ.title}
+                </span>
+                <span class="px-2 py-0.5 ${dunhollowQ.status === 'COMPLETED' ? 'bg-emerald-950 text-emerald-400' : 'bg-stone-900 text-stone-400'} rounded text-[10px]">
+                  ${dunhollowQ.status}
+                </span>
+              </div>
+              <p class="text-stone-400 text-xs font-sans leading-relaxed">${dunhollowQ.description}</p>
+            </div>
+
+            <!-- Main Quest 3 -->
+            <div class="p-3 bg-stone-950 border ${crownQ.status === 'COMPLETED' ? 'border-emerald-500/80' : 'border-stone-800'} rounded">
+              <div class="flex justify-between items-center mb-1">
+                <span class="text-xs font-bold text-stone-300 flex items-center gap-1.5">
+                  <span>🌌</span> ${crownQ.title}
+                </span>
+                <span class="px-2 py-0.5 ${crownQ.status === 'COMPLETED' ? 'bg-emerald-950 text-emerald-400' : 'bg-stone-900 text-stone-400'} rounded text-[10px]">
+                  ${crownQ.status}
+                </span>
+              </div>
+              <p class="text-stone-400 text-xs font-sans leading-relaxed">${crownQ.description}</p>
+            </div>
+          </div>
+        `;
+      } else if (STATE.activeQuestTab === "SETTLEMENTS") {
+        const localQuests = Object.values(QUEST_REGISTRY).filter(q => q.category && q.category.startsWith("LOCAL"));
+        container.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs font-mono">
+            ${localQuests.map(q => `
+              <div class="p-2.5 bg-stone-950 border ${q.status === 'COMPLETED' ? 'border-emerald-600/70' : 'border-stone-800'} rounded flex flex-col justify-between">
+                <div>
+                  <div class="flex justify-between items-center mb-1">
+                    <span class="font-bold ${q.status === 'COMPLETED' ? 'text-emerald-400' : 'text-stone-200'}">${q.title}</span>
+                    <span class="text-[9px] px-1.5 py-0.5 bg-stone-900 border border-stone-800 rounded text-stone-400">${q.settlement}</span>
+                  </div>
+                  <p class="text-[11px] text-stone-400 font-sans leading-relaxed mb-2">${q.description}</p>
+                </div>
+                <div class="text-[10px] flex justify-between items-center border-t border-stone-900 pt-1.5">
+                  <span class="text-stone-500">Status:</span>
+                  <span class="${q.status === 'COMPLETED' ? 'text-emerald-400 font-bold' : (q.status === 'ACTIVE' ? 'text-amber-400 font-bold' : 'text-stone-600')}">${q.status}</span>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      } else if (STATE.activeQuestTab === "ACCORDS") {
+        container.innerHTML = `
+          <div class="space-y-3 text-xs font-mono">
+            <div class="p-3 bg-stone-950 border border-stone-800 rounded">
+              <h4 class="text-xs font-bold text-amber-300 uppercase tracking-wider mb-2">Feudal Memory & Recorded Decisions</h4>
+              <div class="space-y-2 text-[11px]">
+                <div class="p-2 bg-stone-900 rounded flex justify-between items-center">
+                  <span>Timber Surcharge Dispute:</span>
+                  <strong class="text-amber-400">${STATE.npcMemory.timberDisputeOutcome || "PENDING RESOLUTION"}</strong>
+                </div>
+                <div class="p-2 bg-stone-900 rounded flex justify-between items-center">
+                  <span>Ancient Charter Limit (200G):</span>
+                  <strong class="${STATE.npcMemory.charterRecovered ? 'text-emerald-400' : 'text-stone-500'}">${STATE.npcMemory.charterRecovered ? "DISCOVERED IN ARCHIVES" : "UNDISCOVERED"}</strong>
+                </div>
+                <div class="p-2 bg-stone-900 rounded flex justify-between items-center">
+                  <span>Chancellor Eamon Status:</span>
+                  <strong class="${STATE.npcMemory.eamonImprisoned ? 'text-rose-400' : 'text-emerald-400'}">${STATE.npcMemory.eamonImprisoned ? "IMPRISONED IN CITADEL" : "ACTIVE ON COUNCIL"}</strong>
+                </div>
+                <div class="p-2 bg-stone-900 rounded flex justify-between items-center">
+                  <span>Dunhollow Deep Mines:</span>
+                  <strong class="${STATE.npcMemory.dunhollowMinesWarded ? 'text-emerald-400' : 'text-amber-400'}">${STATE.npcMemory.dunhollowMinesWarded ? "WARDED BY FRIAR DUNSTAN" : "UNSTABLE TREMORS"}</strong>
+                </div>
+                <div class="p-2 bg-stone-900 rounded flex justify-between items-center">
+                  <span>Gilded Anchor Passkey:</span>
+                  <strong class="${STATE.npcMemory.gildedAnchorPasskey ? 'text-emerald-400' : 'text-stone-500'}">${STATE.npcMemory.gildedAnchorPasskey ? "GRANTED BY VIVIENNE" : "LOCKED"}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (STATE.activeQuestTab === "SAVE") {
+        container.innerHTML = `
+          <div class="p-4 bg-stone-950 border border-stone-800 rounded space-y-4 text-xs font-mono">
+            <div>
+              <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">Kingdom Persistence & Dimension Manager</h4>
+              <p class="text-stone-400 text-xs font-sans leading-relaxed">
+                Save your world progress, feudal allegiances, quest records, and inventory to browser storage or export state JSON.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-3">
+              <button onclick="saveGameUI()" class="px-4 py-2 bg-emerald-950 border border-emerald-500 hover:bg-emerald-900 text-emerald-300 font-bold rounded transition">
+                💾 Save Kingdom Progress
+              </button>
+              <button onclick="loadGameUI()" class="px-4 py-2 bg-stone-900 border border-stone-700 hover:border-emerald-500 text-stone-300 rounded transition">
+                📂 Load Saved Game
+              </button>
+            </div>
+
+            <div class="pt-2 border-t border-stone-800">
+              <div class="text-[10px] text-stone-500 mb-1">State JSON Export / Import:</div>
+              <textarea id="save-json-box" class="w-full h-24 bg-black border border-stone-800 rounded p-2 text-[10px] font-mono text-stone-300 resize-none" placeholder="Exported JSON will appear here..."></textarea>
+              <div class="flex gap-2 mt-2">
+                <button onclick="exportSaveUI()" class="px-2.5 py-1 bg-stone-900 border border-stone-700 text-stone-300 text-[10px] rounded hover:text-white">Copy Save JSON</button>
+                <button onclick="importSaveUI()" class="px-2.5 py-1 bg-stone-900 border border-stone-700 text-stone-300 text-[10px] rounded hover:text-white">Import From Box</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    window.saveGameUI = function() {
+      if (DimensionManager.saveGame()) {
+        sfxRecruit();
+        alert("Kingdom State Saved Successfully!");
+      }
+    };
+
+    window.loadGameUI = function() {
+      if (DimensionManager.loadGame()) {
+        sfxRecruit();
+        alert("Kingdom State Loaded Successfully!");
+        renderQuestModal();
+      } else {
+        alert("No save file found in storage.");
+      }
+    };
+
+    window.exportSaveUI = function() {
+      const box = document.getElementById('save-json-box');
+      box.value = DimensionManager.exportSave();
+      box.select();
+      sfxMenu();
+    };
+
+    window.importSaveUI = function() {
+      const box = document.getElementById('save-json-box');
+      if (box.value && DimensionManager.importSave(box.value)) {
+        sfxRecruit();
+        alert("Imported State Successfully!");
+        renderQuestModal();
+      } else {
+        alert("Invalid Save JSON!");
+      }
+    };
+
+    // Tab Navigation for Kingdom Modal
+    function setKingdomTab(tab) {
+      STATE.activeTab = tab;
+      const tabBtns = {
+        MONARCH: document.getElementById('tab-btn-monarch'),
+        LORDS: document.getElementById('tab-btn-lords'),
+        MAP: document.getElementById('tab-btn-map'),
+        MULTIVERSE: document.getElementById('tab-btn-multiverse')
+      };
+      Object.keys(tabBtns).forEach(k => {
+        const isSel = (k === tab);
+        tabBtns[k].classList.toggle('border-amber-500', isSel);
+        tabBtns[k].classList.toggle('text-amber-300', isSel);
+        tabBtns[k].classList.toggle('border-stone-700', !isSel);
+        tabBtns[k].classList.toggle('text-stone-300', !isSel);
+      });
+      renderKingdomModal();
+      sfxMenu();
+    }
+
+    document.getElementById('tab-btn-monarch').addEventListener('click', () => setKingdomTab("MONARCH"));
+    document.getElementById('tab-btn-lords').addEventListener('click', () => setKingdomTab("LORDS"));
+    document.getElementById('tab-btn-map').addEventListener('click', () => setKingdomTab("MAP"));
+    document.getElementById('tab-btn-multiverse').addEventListener('click', () => setKingdomTab("MULTIVERSE"));
+
+    function renderKingdomModal() {
+      const container = document.getElementById('tab-content');
+      const aethelgard = DIMENSION_REGISTRY.dim_aethelgard;
+      const monarch = aethelgard.monarch;
+
+      if (STATE.activeTab === "MONARCH") {
+        const titheStatus = aethelgard.politics.tithePaid ? 
+          '<span class="text-emerald-400 font-bold">✅ PAID (Quarter-Day Cleared)</span>' : 
+          `<span class="text-amber-400 font-bold">⚠️ ${aethelgard.politics.titheDue} Gold Due</span>`;
+
+        container.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
+            <div class="p-3 bg-stone-950 border border-amber-600/60 rounded flex flex-col items-center text-center">
+              <div class="w-16 h-16 bg-stone-900 border-2 border-amber-500 rounded-full flex items-center justify-center text-3xl mb-2 shadow-lg">👑</div>
+              <h3 class="text-sm font-bold text-amber-300">${monarch.name}</h3>
+              <div class="text-[10px] text-stone-400 font-sans italic">"${monarch.epithet}"</div>
+              <div class="text-[10px] text-purple-300 mt-1">${monarch.title}</div>
+              <div class="text-[10px] text-stone-500 mt-0.5">Seat: ${monarch.seat} • Age: ${monarch.age}</div>
+
+              <div class="w-full mt-3 p-2 bg-stone-900 border border-stone-800 rounded text-left">
+                <div class="text-[10px] text-stone-400">Royal Court Favor</div>
+                <div class="w-full bg-stone-800 h-2 rounded mt-1 overflow-hidden">
+                  <div class="bg-amber-400 h-full" style="width: ${Math.max(5, Math.min(100, monarch.courtFavor + 50))}%"></div>
+                </div>
+                <div class="text-[10px] text-amber-300 mt-1 text-right font-bold">${monarch.courtFavor > 0 ? '+' : ''}${monarch.courtFavor} / 100 [Vassal in Good Standing]</div>
+              </div>
+            </div>
+
+            <div class="md:col-span-2 space-y-3">
+              <div class="p-3 bg-stone-950 border border-stone-800 rounded">
+                <h4 class="text-xs font-bold text-amber-400 uppercase tracking-wider mb-1">Statecraft & Royal Decree</h4>
+                <p class="text-stone-300 text-xs leading-relaxed font-sans mb-2">${monarch.appearance}</p>
+                <div class="p-2 bg-stone-900 border-l-2 border-amber-500 text-stone-300 italic text-[11px] mb-2 font-sans">${monarch.quote}</div>
+                <div class="grid grid-cols-2 gap-2 text-[11px]">
+                  <div><span class="text-stone-500">Personality:</span> <span class="text-stone-300 font-sans">${monarch.personality}</span></div>
+                  <div><span class="text-stone-500">Secret Fear:</span> <span class="text-rose-400 font-sans">${monarch.fear}</span></div>
+                </div>
+              </div>
+
+              <div class="p-3 bg-stone-950 border border-stone-800 rounded flex justify-between items-center">
+                <div>
+                  <div class="text-xs font-bold text-amber-300">Seasonal Feudal Tithe</div>
+                  <div class="text-[11px] text-stone-400">Base Charter: 200G • Emergency Surcharge: ${aethelgard.politics.titheDue - 200}G</div>
+                </div>
+                <div class="text-right">
+                  <div>${titheStatus}</div>
+                  ${!aethelgard.politics.tithePaid && STATE.hero.gold >= aethelgard.politics.titheDue ? 
+                    `<button onclick="payTitheViaAtlas()" class="mt-1 px-2.5 py-1 bg-amber-950 border border-amber-500 rounded text-amber-300 text-[10px] font-bold hover:bg-amber-900">Pay ${aethelgard.politics.titheDue}G Tithe</button>` : ''}
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (STATE.activeTab === "LORDS") {
+        container.innerHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs font-mono">
+            <div class="p-3 bg-stone-950 border border-stone-800 rounded">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xl">🌾</span>
+                <div>
+                  <h4 class="text-xs font-bold text-emerald-400">Elder Alden</h4>
+                  <div class="text-[10px] text-stone-400">Stonecross Hamlet</div>
+                </div>
+              </div>
+              <p class="text-[11px] text-stone-300 font-sans leading-relaxed mb-2">Protects pastoral traditions and the old church. Pleads for fair taxation.</p>
+              <div class="text-[10px] space-y-1">
+                <div class="flex justify-between"><span>Prosperity:</span> <strong class="text-amber-300">75%</strong></div>
+                <div class="flex justify-between"><span>Reputation:</span> <strong class="text-sky-300">+${aethelgard.reputation.stonecross}</strong></div>
+              </div>
+            </div>
+
+            <div class="p-3 bg-stone-950 border border-stone-800 rounded">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xl">⚓</span>
+                <div>
+                  <h4 class="text-xs font-bold text-sky-400">Baroness Vivienne</h4>
+                  <div class="text-[10px] text-stone-400">Oakhaven River Port</div>
+                </div>
+              </div>
+              <p class="text-[11px] text-stone-300 font-sans leading-relaxed mb-2">Free trade magnate. Fights crown blockades and timber surcharges.</p>
+              <div class="text-[10px] space-y-1">
+                <div class="flex justify-between"><span>Prosperity:</span> <strong class="text-amber-300">${aethelgard.politics.stability}%</strong></div>
+                <div class="flex justify-between"><span>Reputation:</span> <strong class="text-sky-300">${aethelgard.reputation.oakhaven >= 0 ? '+' : ''}${aethelgard.reputation.oakhaven}</strong></div>
+              </div>
+            </div>
+
+            <div class="p-3 bg-stone-950 border border-stone-800 rounded">
+              <div class="flex items-center gap-2 mb-2">
+                <span class="text-xl">⛏️</span>
+                <div>
+                  <h4 class="text-xs font-bold text-amber-400">Castellan Morvath</h4>
+                  <div class="text-[10px] text-stone-400">Dunhollow Fortress</div>
+                </div>
+              </div>
+              <p class="text-[11px] text-stone-300 font-sans leading-relaxed mb-2">Grim veteran holding the iron quarries against deep tremors.</p>
+              <div class="text-[10px] space-y-1">
+                <div class="flex justify-between"><span>Prosperity:</span> <strong class="text-amber-300">52%</strong></div>
+                <div class="flex justify-between"><span>Reputation:</span> <strong class="text-sky-300">+${aethelgard.reputation.dunhollow}</strong></div>
+              </div>
+            </div>
+          </div>
+        `;
+      } else if (STATE.activeTab === "MAP") {
+        container.innerHTML = `
+          <div class="space-y-3 text-xs font-mono">
+            <div class="p-3 bg-stone-950 border border-stone-800 rounded">
+              <div class="flex justify-between items-center mb-2">
+                <h4 class="text-xs font-bold text-purple-400 uppercase tracking-wider">Overland Map of Aethelgard</h4>
+                <span class="text-[10px] text-stone-400">Click discovered settlements to fast travel</span>
+              </div>
+              <div class="bg-black border border-stone-900 rounded p-3 text-[11px] leading-relaxed">
+                <pre class="text-stone-300 text-center font-mono">
+                       [👑 High Cairn Citadel]
+                                  |
+                                  | (Old King's Road)
+                                  |
+        [⚓ Oakhaven Port] --- [🌾 Stonecross Hamlet] --- [⛏️ Dunhollow Quarry]
+             (River Port)         |        |                   (Iron Fortress)
+                                  |        |
+                         (Weald Byway)   (Mistle Glen)
+                                           |
+                                [🌌 The Weeping Weald]
+                                  (Rift Gate Henge)
+                </pre>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+              ${Object.values(MAP_REGISTRY).map(m => {
+                const isCur = (m.id === STATE.currentMapId);
+                const isDiscovered = STATE.discoveredMaps.includes(m.id);
+                return `
+                  <div class="p-2.5 bg-stone-950 border ${isCur ? 'border-amber-500' : 'border-stone-800'} rounded flex justify-between items-center">
+                    <div>
+                      <div class="font-bold ${isCur ? 'text-amber-300' : 'text-white'}">${m.name}</div>
+                      <div class="text-[10px] text-stone-500">${m.region} • ${m.rulerTitle}</div>
+                    </div>
+                    <div>
+                      ${isCur ? '<span class="text-amber-400 text-[10px] font-bold">📍 Here</span>' : 
+                        (isDiscovered ? `<button onclick="fastTravelToMap('${m.id}')" class="px-2 py-1 bg-stone-900 border border-stone-700 hover:border-amber-400 rounded text-amber-300 text-[10px]">Travel</button>` : 
+                        '<span class="text-stone-600 text-[10px]">Undiscovered</span>')}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </div>
+        `;
+      } else if (STATE.activeTab === "MULTIVERSE") {
+        const vespera = DIMENSION_REGISTRY.dim_vespera;
+        container.innerHTML = `
+          <div class="space-y-3 text-xs font-mono">
+            <div class="p-3 bg-stone-950 border border-purple-900/60 rounded">
+              <h4 class="text-xs font-bold text-purple-300 uppercase tracking-wider mb-1 flex items-center gap-1.5">
+                <span>🌌</span> The Great Crucible & The Five Dimensions
+              </h4>
+              <p class="text-stone-300 text-xs font-sans leading-relaxed">
+                Two hundred years ago, the empire was cleaved into mirrored parallel realities by an unknown cataclysm. Each dimension developed along a separate cultural, economic, and political axis.
+              </p>
+              <div class="mt-2 text-[10px] text-stone-400">
+                Current Rift Gate Resonance: <strong class="text-purple-400">${aethelgard.politics.riftFrequency}</strong> • Status: <strong class="text-emerald-400">${aethelgard.politics.riftInvestigated ? 'Active Harmonic Link' : 'Dormant Frequency'}</strong>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="p-3 bg-stone-950 border border-amber-600/60 rounded">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs font-bold text-amber-300">Dimension I: Aethelgard</span>
+                  <span class="px-1.5 py-0.5 bg-amber-950 text-amber-400 text-[9px] rounded font-bold">ACTIVE</span>
+                </div>
+                <div class="text-[10px] text-stone-400 mb-1">${aethelgard.subtitle}</div>
+                <p class="text-[11px] text-stone-300 font-sans leading-relaxed mb-2">${aethelgard.lore}</p>
+              </div>
+
+              <div class="p-3 bg-stone-950 border border-purple-600/60 rounded">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-xs font-bold text-purple-300">Dimension II: Vespera</span>
+                  <span class="px-1.5 py-0.5 bg-purple-950 text-purple-400 text-[9px] rounded font-bold">${aethelgard.politics.riftFrequency === 'VESPERA' ? 'TUNED' : 'REGISTERED'}</span>
+                </div>
+                <div class="text-[10px] text-stone-400 mb-1">${vespera.subtitle}</div>
+                <p class="text-[11px] text-stone-300 font-sans leading-relaxed mb-2">${vespera.lore}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    window.fastTravelToMap = function(mapId) {
+      if (MAP_REGISTRY[mapId]) {
+        toggleKingdomModal(false);
+        const map = MAP_REGISTRY[mapId];
+        transitionToMap(mapId, map.width / 2, map.height / 2, `Fast Traveled to ${map.name}`);
+      }
+    };
+
+    window.payTitheViaAtlas = function() {
+      const aethelgard = DIMENSION_REGISTRY.dim_aethelgard;
+      const due = aethelgard.politics.titheDue;
+      if (STATE.hero.gold >= due && !aethelgard.politics.tithePaid) {
+        STATE.hero.gold -= due;
+        aethelgard.politics.tithePaid = true;
+        aethelgard.reputation.crown += 25;
+        aethelgard.monarch.courtFavor += 20;
+        updateGlobalUI();
+        renderKingdomModal();
+        sfxRecruit();
+      }
+    };
+
+    function startBattle(foe) {
+      STATE.mode = "BATTLE";
+      STATE.activeFoe = foe;
+      document.getElementById('overworld-view').classList.add('hidden');
+      document.getElementById('battle-view').classList.remove('hidden');
+
+      STATE.battle.enemy = {
+        name: foe.name,
+        hp: foe.hp,
+        maxHp: foe.maxHp,
+        spareable: false
+      };
+      STATE.battle.turn = "PLAYER_MENU";
+      STATE.battle.selectedBtnIndex = 0;
+
+      document.getElementById('battle-enemy-name').textContent = foe.name;
+      document.getElementById('battle-enemy-name').classList.remove('text-yellow-400');
+      document.getElementById('battle-enemy-sprite').textContent = foe.icon;
+      document.getElementById('box-content-text').textContent = `* ${foe.name} bars the way! Steel clashes!`;
+
+      updateBattleMenuUI();
+      updateBattleUI();
+      sfxHit();
+    }
+
+    function endBattle(won) {
+      STATE.mode = "OVERWORLD";
+      document.getElementById('battle-view').classList.add('hidden');
+      document.getElementById('overworld-view').classList.remove('hidden');
+
+      if (won) {
+        STATE.hero.gold += 45;
+        document.getElementById('dialogue-text').textContent = `* VICTORY! Earned 45 Gold. The realm is secure.`;
+      } else {
+        STATE.hero.gold += 20;
+        document.getElementById('dialogue-text').textContent = `* MERCY GRANTED! The foe laid down arms and departed peacefully.`;
+      }
+      updateGlobalUI();
+    }
+
+    function updateOverworld() {
+      let dx = 0, dy = 0;
+      if (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['A']) dx -= 1;
+      if (keysDown['ArrowRight'] || keysDown['d'] || keysDown['D']) dx += 1;
+      if (keysDown['ArrowUp'] || keysDown['w'] || keysDown['W']) dy -= 1;
+      if (keysDown['ArrowDown'] || keysDown['s'] || keysDown['S']) dy += 1;
+
+      if (dx !== 0 || dy !== 0) {
+        const len = Math.hypot(dx, dy);
+        const speed = 3.6;
+        const newX = STATE.hero.x + (dx / len) * speed;
+        const newY = STATE.hero.y + (dy / len) * speed;
+
+        if (!checkSolid(newX, STATE.hero.y)) STATE.hero.x = Math.max(30, Math.min(STATE.worldW - 30, newX));
+        if (!checkSolid(STATE.hero.x, newY)) STATE.hero.y = Math.max(30, Math.min(STATE.worldH - 30, newY));
+
+        STATE.playerTrail.unshift({ x: STATE.hero.x, y: STATE.hero.y });
+        if (STATE.playerTrail.length > 80) STATE.playerTrail.pop();
+
+        const curMapInfo = MAP_REGISTRY[STATE.currentMapId];
+        if (curMapInfo && curMapInfo.exits) {
+          curMapInfo.exits.forEach(ex => {
+            if (STATE.hero.x >= ex.x && STATE.hero.x <= ex.x + ex.w &&
+                STATE.hero.y >= ex.y && STATE.hero.y <= ex.y + ex.h) {
+              transitionToMap(ex.targetMap, ex.spawnX, ex.spawnY, ex.label);
+            }
+          });
+        }
+      }
+
+      STATE.camera.x += (STATE.hero.x - owCanvas.width / 2 - STATE.camera.x) * 0.1;
+      STATE.camera.y += (STATE.hero.y - owCanvas.height / 2 - STATE.camera.y) * 0.1;
+      STATE.camera.x = Math.max(0, Math.min(STATE.worldW - owCanvas.width, STATE.camera.x));
+      STATE.camera.y = Math.max(0, Math.min(STATE.worldH - owCanvas.height, STATE.camera.y));
+
+      STATE.recruitedParty.forEach((comp, idx) => {
+        const trailIdx = (idx + 1) * 14;
+        if (STATE.playerTrail[trailIdx]) {
+          const target = STATE.playerTrail[trailIdx];
+          if (!comp.curX) { comp.curX = comp.x; comp.curY = comp.y; }
+          comp.curX += (target.x - comp.curX) * 0.18;
+          comp.curY += (target.y - comp.curY) * 0.18;
+        }
+      });
+
+      const curMap = STATE.mapData[STATE.currentMapId];
+      if (curMap && curMap.villagers) {
+        curMap.villagers.forEach(v => {
+          if (v.spd > 0) {
+            const dist = Math.hypot(v.x - v.tx, v.y - v.ty);
+            if (dist > 3) {
+              v.x += ((v.tx - v.x) / dist) * v.spd;
+              v.y += ((v.ty - v.y) / dist) * v.spd;
+            } else {
+              if (v.role === "ELDER") v.ty = (v.ty === 870) ? 790 : 870;
+              else if (v.role === "GUARD") v.tx = (v.tx === 1110) ? 1040 : 1110;
+            }
+          }
+        });
+      }
+    }
+
+    // --- PROCEDURAL 2D HD ART ENGINE ---
+    function drawDropShadow(ctx, x, y, rx, ry, alpha = 0.35) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0, 0, 0, ${alpha})`;
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function drawCobblestoneRoad(ctx, x, y, w, h) {
+      ctx.save();
+      ctx.fillStyle = '#2d2720';
+      ctx.fillRect(x, y, w, h);
+
+      const step = 14;
+      for (let px = x + 2; px < x + w - 4; px += step) {
+        for (let py = y + 2; py < y + h - 4; py += step) {
+          const shiftX = ((py * 7) % 5);
+          const shiftY = ((px * 11) % 5);
+          const stoneW = step - 2 - (shiftX % 3);
+          const stoneH = step - 2 - (shiftY % 3);
+
+          const shade = 55 + ((px * 13 + py * 17) % 25);
+          ctx.fillStyle = `rgb(${shade + 8}, ${shade + 4}, ${shade})`;
+          ctx.beginPath();
+          ctx.roundRect(px + shiftX * 0.5, py + shiftY * 0.5, stoneW, stoneH, 3);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    function drawArchBridge(ctx, x, y, w, h) {
+      ctx.save();
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.4)';
+      ctx.fillRect(x - 6, y + h - 4, w + 12, 12);
+
+      ctx.fillStyle = '#47433f';
+      ctx.fillRect(x, y, w, h);
+
+      ctx.fillStyle = '#2e2a27';
+      ctx.fillRect(x, y, 10, h);
+      ctx.fillRect(x + w - 10, y, 10, h);
+
+      ctx.fillStyle = '#9e9790';
+      ctx.fillRect(x - 2, y, 14, h);
+      ctx.fillRect(x + w - 12, y, 14, h);
+      ctx.restore();
+    }
+
+    function drawRoadSignpost(ctx, x, y, label) {
+      ctx.save();
+      drawDropShadow(ctx, x, y + 8, 10, 4, 0.4);
+
+      ctx.fillStyle = '#451a03';
+      ctx.fillRect(x - 2, y - 20, 4, 28);
+
+      ctx.fillStyle = '#78350f';
+      ctx.beginPath();
+      ctx.roundRect(x - 22, y - 28, 44, 12, 2);
+      ctx.fill();
+
+      ctx.fillStyle = '#fbbf24';
+      ctx.font = 'bold 8px Courier New';
+      ctx.textAlign = 'center';
+      ctx.fillText(label, x, y - 20);
+      ctx.restore();
+    }
+
+    function drawKnightRowan(ctx, x, y, facing, isMoving, walkAnim) {
+      ctx.save();
+      const bob = isMoving ? Math.sin(walkAnim * 12) * 2.5 : 0;
+      const xsc = (facing === "LEFT") ? -1 : 1;
+
+      ctx.translate(x, y + bob);
+      ctx.scale(xsc, 1);
+
+      drawDropShadow(ctx, 0, 18, 14, 6, 0.45);
+
+      const capeWave = isMoving ? Math.sin(walkAnim * 12) * 4 : 0;
+      ctx.fillStyle = '#991b1b';
+      ctx.beginPath();
+      ctx.moveTo(-6, -6); ctx.lineTo(8, -6);
+      ctx.lineTo(10 + capeWave, 16); ctx.lineTo(-8 + capeWave, 16);
+      ctx.closePath(); ctx.fill();
+
+      ctx.fillStyle = '#64748b';
+      ctx.beginPath(); ctx.roundRect(-8, -12, 16, 20, 3); ctx.fill();
+
+      ctx.fillStyle = '#dc2626';
+      ctx.fillRect(-1, -12, 3, 18);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.beginPath(); ctx.roundRect(-7, -26, 14, 15, [5, 5, 2, 2]); ctx.fill();
+
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(-5, -20, 10, 3);
+
+      ctx.restore();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 9px Courier New';
+      ctx.textAlign = 'center';
+      ctx.fillText('Sir Rowan', x, y - 36);
+    }
+
+    function drawVillagerNPC(ctx, v, t) {
+      ctx.save();
+      drawDropShadow(ctx, v.x, v.y + 14, 11, 5, 0.4);
+
+      if (v.role === "MONARCH") {
+        ctx.fillStyle = '#1e293b';
+        ctx.beginPath(); ctx.roundRect(v.x - 8, v.y - 12, 16, 22, 3); ctx.fill();
+        ctx.fillStyle = '#991b1b'; ctx.fillRect(v.x - 6, v.y - 12, 12, 16);
+        ctx.fillStyle = '#fed7aa'; ctx.beginPath(); ctx.arc(v.x, v.y - 18, 5.5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = '#fbbf24'; ctx.fillRect(v.x - 6, v.y - 25, 12, 5);
+      } else if (v.role === "LORD") {
+        ctx.fillStyle = '#1e3a8a';
+        ctx.beginPath(); ctx.roundRect(v.x - 7, v.y - 11, 14, 21, 3); ctx.fill();
+        ctx.fillStyle = '#fed7aa'; ctx.beginPath(); ctx.arc(v.x, v.y - 17, 5, 0, Math.PI * 2); ctx.fill();
+      } else if (v.role === "ELDER") {
+        ctx.fillStyle = '#6b21a8';
+        ctx.beginPath(); ctx.roundRect(v.x - 7, v.y - 10, 14, 20, 3); ctx.fill();
+        ctx.fillStyle = '#fed7aa'; ctx.beginPath(); ctx.arc(v.x, v.y - 16, 5, 0, Math.PI * 2); ctx.fill();
+      } else if (v.role === "BAKER") {
+        ctx.fillStyle = '#2563eb'; ctx.beginPath(); ctx.roundRect(v.x - 7, v.y - 10, 14, 20, 3); ctx.fill();
+        ctx.fillStyle = '#fed7aa'; ctx.beginPath(); ctx.arc(v.x, v.y - 16, 5, 0, Math.PI * 2); ctx.fill();
+      } else {
+        ctx.fillStyle = '#166534'; ctx.beginPath(); ctx.roundRect(v.x - 7, v.y - 10, 14, 20, 3); ctx.fill();
+        ctx.fillStyle = '#fed7aa'; ctx.beginPath(); ctx.arc(v.x, v.y - 16, 5, 0, Math.PI * 2); ctx.fill();
+      }
+
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '9px Courier New';
+      ctx.textAlign = 'center';
+      ctx.fillText(v.name, v.x, v.y - 27);
+      ctx.restore();
+    }
+
+    // =========================================================================
+    // MASTER OVERWORLD RENDER LOOP
+    // =========================================================================
+    function renderOverworld() {
+      const cx = STATE.camera.x;
+      const cy = STATE.camera.y;
+      const t = performance.now() / 1000;
+      const mapId = STATE.currentMapId;
+      const curMapData = STATE.mapData[mapId];
+
+      if (mapId === "MAP_STONECROSS") {
+        owCtx.fillStyle = '#142718';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+
+        owCtx.fillStyle = '#1c3d23';
+        owCtx.fillRect(450 - cx, 270 - cy, 1500, 1050);
+
+        owCtx.fillStyle = '#0f2434';
+        owCtx.fillRect(0 - cx, 1290 - cy, 1400, 80);
+        drawArchBridge(owCtx, 800 - cx, 1275 - cy, 110, 110);
+
+        drawCobblestoneRoad(owCtx, 1060 - cx, 790 - cy, 280, 220);
+        drawCobblestoneRoad(owCtx, 1180 - cx, 710 - cy, 40, 200);
+        drawCobblestoneRoad(owCtx, 720 - cx, 540 - cy, 460, 30);
+        drawCobblestoneRoad(owCtx, 1220 - cx, 710 - cy, 380, 30);
+
+        // Buildings & Landmarks
+        drawRoadSignpost(owCtx, 1200 - cx, 220 - cy, "NORTH: High Cairn");
+        drawRoadSignpost(owCtx, 180 - cx, 1360 - cy, "WEST: Oakhaven Port");
+        drawRoadSignpost(owCtx, 2240 - cx, 930 - cy, "EAST: Dunhollow");
+        drawRoadSignpost(owCtx, 1860 - cx, 220 - cy, "NE: Weeping Weald");
+
+      } else if (mapId === "MAP_OAKHAVEN") {
+        owCtx.fillStyle = '#1e293b';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+
+        owCtx.fillStyle = '#0f2b3c';
+        owCtx.fillRect(0 - cx, 100 - cy, 1800, 340);
+
+        drawCobblestoneRoad(owCtx, 400 - cx, 440 - cy, 1000, 220);
+        drawCobblestoneRoad(owCtx, 950 - cx, 660 - cy, 200, 300);
+
+        // Hollow Willow Landmark on Riverbank
+        owCtx.fillStyle = '#3f2818';
+        owCtx.beginPath();
+        owCtx.arc(720 - cx, 390 - cy, 16, 0, Math.PI * 2);
+        owCtx.fill();
+        owCtx.fillStyle = '#15803d';
+        owCtx.beginPath();
+        owCtx.arc(720 - cx, 375 - cy, 22, 0, Math.PI * 2);
+        owCtx.fill();
+
+        if (!STATE.npcMemory.timberManifestRecovered) {
+          owCtx.fillStyle = '#fde047';
+          owCtx.beginPath();
+          owCtx.arc(720 - cx, 390 - cy, 4 + Math.sin(t * 8) * 2, 0, Math.PI * 2);
+          owCtx.fill();
+        }
+
+        drawRoadSignpost(owCtx, 1660 - cx, 720 - cy, "EAST: Stonecross");
+
+      } else if (mapId === "MAP_DUNHOLLOW") {
+        owCtx.fillStyle = '#1c1917';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+
+        owCtx.fillStyle = '#292524';
+        owCtx.fillRect(0 - cx, 0 - cy, 1800, 380);
+        owCtx.fillRect(0 - cx, 0 - cy, 140, 1400);
+        owCtx.fillRect(1660 - cx, 0 - cy, 140, 1400);
+
+        drawCobblestoneRoad(owCtx, 140 - cx, 680 - cy, 1520, 60);
+
+        drawRoadSignpost(owCtx, 180 - cx, 720 - cy, "WEST: Stonecross");
+
+      } else if (mapId === "MAP_HIGH_CAIRN") {
+        owCtx.fillStyle = '#0f172a';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+
+        drawCobblestoneRoad(owCtx, 300 - cx, 400 - cy, 1200, 750);
+        drawCobblestoneRoad(owCtx, 840 - cx, 450 - cy, 120, 800);
+
+        drawRoadSignpost(owCtx, 900 - cx, 1220 - cy, "SOUTH: Stonecross");
+
+      } else if (mapId === "MAP_WEEPING_WEALD") {
+        owCtx.fillStyle = '#130e1c';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+
+        owCtx.fillStyle = '#1e162d';
+        owCtx.beginPath();
+        owCtx.ellipse(900 - cx, 550 - cy, 320, 220, 0, 0, Math.PI * 2);
+        owCtx.fill();
+
+        drawRoadSignpost(owCtx, 900 - cx, 1220 - cy, "SOUTH: Stonecross");
+      }
+
+      // Landmarks & Objects
+      if (curMapData && curMapData.landmarks) {
+        curMapData.landmarks.forEach(lm => {
+          if (lm.isQuestObject && Math.hypot(lm.x - STATE.hero.x, lm.y - STATE.hero.y) < 50) {
+            owCtx.fillStyle = '#38bdf8';
+            owCtx.font = 'bold 9px Courier New';
+            owCtx.textAlign = 'center';
+            owCtx.fillText('[Z] Inspect', lm.x - cx, lm.y - cy - 12);
+          }
+        });
+      }
+
+      // Chests
+      if (curMapData && curMapData.chests) {
+        curMapData.chests.forEach(ch => {
+          const rx = ch.x - cx, ry = ch.y - cy;
+          drawDropShadow(owCtx, rx, ry + 10, 14, 5, 0.4);
+          owCtx.fillStyle = ch.opened ? '#3e2e21' : '#854d0e';
+          owCtx.beginPath(); owCtx.roundRect(rx - 12, ry - 8, 24, 18, 3); owCtx.fill();
+          if (!ch.opened && Math.hypot(ch.x - STATE.hero.x, ch.y - STATE.hero.y) < 40) {
+            owCtx.fillStyle = '#38bdf8';
+            owCtx.font = 'bold 9px Courier New';
+            owCtx.textAlign = 'center';
+            owCtx.fillText('[Z] Open', rx, ry + 22);
+          }
+        });
+      }
+
+      // Villagers
+      if (curMapData && curMapData.villagers) {
+        curMapData.villagers.forEach(v => {
+          drawVillagerNPC(owCtx, { x: v.x - cx, y: v.y - cy, name: v.name, role: v.role }, t);
+          if (Math.hypot(v.x - STATE.hero.x, v.y - STATE.hero.y) < 48) {
+            owCtx.fillStyle = '#fbbf24';
+            owCtx.font = 'bold 9px Courier New';
+            owCtx.textAlign = 'center';
+            owCtx.fillText('[Z] Talk', v.x - cx, v.y - cy + 22);
+          }
+        });
+      }
+
+      // Foes
+      if (curMapData && curMapData.foes) {
+        curMapData.foes.forEach(foe => {
+          const rx = foe.x - cx, ry = foe.y - cy;
+          drawDropShadow(owCtx, rx, ry + 14, 14, 5, 0.45);
+          owCtx.fillStyle = '#1e293b';
+          owCtx.beginPath(); owCtx.roundRect(rx - 8, ry - 9, 16, 18, 3); owCtx.fill();
+          owCtx.fillStyle = '#f87171';
+          owCtx.font = 'bold 9px Courier New';
+          owCtx.textAlign = 'center';
+          owCtx.fillText(foe.name, rx, ry - 28);
+          if (Math.hypot(foe.x - STATE.hero.x, foe.y - STATE.hero.y) < 50) {
+            owCtx.fillStyle = '#ef4444';
+            owCtx.font = 'bold 9px Courier New';
+            owCtx.fillText('[Z] Battle!', rx, ry + 22);
+          }
+        });
+      }
+
+      // Hero Rowan
+      const isMoving = (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['A'] ||
+                        keysDown['ArrowRight'] || keysDown['d'] || keysDown['D'] ||
+                        keysDown['ArrowUp'] || keysDown['w'] || keysDown['W'] ||
+                        keysDown['ArrowDown'] || keysDown['s'] || keysDown['S']);
+      const facing = (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['A']) ? "LEFT" : "RIGHT";
+      drawKnightRowan(owCtx, STATE.hero.x - cx, STATE.hero.y - cy, facing, isMoving, t);
+
+      // Day / Night Lighting
+      if (STATE.timeOfDay === 0) {
+        owCtx.fillStyle = 'rgba(245, 158, 11, 0.12)';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+      } else if (STATE.timeOfDay === 2) {
+        owCtx.fillStyle = 'rgba(180, 83, 9, 0.22)';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+      } else if (STATE.timeOfDay === 3) {
+        owCtx.save();
+        owCtx.fillStyle = 'rgba(10, 16, 30, 0.65)';
+        owCtx.fillRect(0, 0, owCanvas.width, owCanvas.height);
+        const radGrad = owCtx.createRadialGradient(STATE.hero.x - cx, STATE.hero.y - cy, 2, STATE.hero.x - cx, STATE.hero.y - cy, 65);
+        radGrad.addColorStop(0, 'rgba(251, 191, 36, 0.35)');
+        radGrad.addColorStop(1, 'rgba(251, 191, 36, 0)');
+        owCtx.fillStyle = radGrad;
+        owCtx.beginPath();
+        owCtx.arc(STATE.hero.x - cx, STATE.hero.y - cy, 65, 0, Math.PI * 2);
+        owCtx.fill();
+        owCtx.restore();
+      }
+    }
+
+
+    // --- BATTLE SYSTEM: FIGHT, ACT, ITEM, MERCY ---
+    const buttons = document.querySelectorAll('.ut-btn');
+
+    function updateBattleMenuUI() {
+      buttons.forEach((btn, idx) => {
+        const isSel = (idx === STATE.battle.selectedBtnIndex);
+        btn.classList.toggle('border-amber-400', isSel);
+        btn.classList.toggle('text-amber-400', isSel);
+        btn.classList.toggle('border-amber-800', !isSel);
+        btn.classList.toggle('text-stone-400', !isSel);
+
+        let iconSpan = btn.querySelector('span');
+        if (iconSpan) {
+          if (idx === 0) iconSpan.textContent = isSel ? '❤️' : '⚔️';
+          else if (idx === 1) iconSpan.textContent = isSel ? '❤️' : '💬';
+          else if (idx === 2) iconSpan.textContent = isSel ? '❤️' : '🎒';
+          else if (idx === 3) iconSpan.textContent = isSel ? '❤️' : '🕊️';
+        }
+
+        if (idx === 3 && STATE.battle.enemy.spareable) {
+          btn.classList.add('text-yellow-400');
+        }
+      });
+    }
+
+    function handleBattleKey(key) {
+      if (STATE.battle.turn === "PLAYER_MENU") {
+        if (key === 'ArrowLeft' || key === 'a' || key === 'A') {
+          STATE.battle.selectedBtnIndex = (STATE.battle.selectedBtnIndex - 1 + 4) % 4;
+          sfxMenu();
+          updateBattleMenuUI();
+        } else if (key === 'ArrowRight' || key === 'd' || key === 'D') {
+          STATE.battle.selectedBtnIndex = (STATE.battle.selectedBtnIndex + 1) % 4;
+          sfxMenu();
+          updateBattleMenuUI();
+        } else if (key === 'z' || key === 'Z' || key === 'Enter' || key === ' ') {
+          confirmBattleAction();
+        }
+      } else if (STATE.battle.turn === "FIGHT_TIMING") {
+        if (key === 'z' || key === 'Z' || key === 'Enter' || key === ' ') {
+          resolveFightTiming();
+        }
+      }
+    }
+
+    function confirmBattleAction() {
+      const idx = STATE.battle.selectedBtnIndex;
+      sfxMenu();
+
+      if (idx === 0) { // FIGHT
+        STATE.battle.turn = "FIGHT_TIMING";
+        document.getElementById('box-content-text').classList.add('hidden');
+        document.getElementById('strike-area').classList.remove('hidden');
+        STATE.battle.timingPos = 0;
+        STATE.battle.timingDir = 1;
+      } else if (idx === 1) { // ACT
+        STATE.battle.enemy.spareable = true;
+        document.getElementById('box-content-text').textContent = 
+          "* (You reasoned with the foe. They lower their weapon. MERCY is unlocked!)";
+        document.getElementById('battle-enemy-name').classList.add('text-yellow-400');
+        updateBattleMenuUI();
+        setTimeout(startEnemyDodgeTurn, 1500);
+      } else if (idx === 2) { // ITEM
+        STATE.hero.hp = Math.min(STATE.hero.maxHp, STATE.hero.hp + 12);
+        updateBattleUI();
+        document.getElementById('box-content-text').textContent = "* You consumed Blessed Monastery Mead! Recovered 12 HP.";
+        setTimeout(startEnemyDodgeTurn, 1500);
+      } else if (idx === 3) { // MERCY
+        if (STATE.battle.enemy.spareable) {
+          endBattle(false);
+        } else {
+          document.getElementById('box-content-text').textContent = "* You offered quarter, but the enemy is still aggressive!";
+          setTimeout(startEnemyDodgeTurn, 1500);
+        }
+      }
+    }
+
+    function resolveFightTiming() {
+      STATE.battle.turn = "ANIMATING";
+      document.getElementById('strike-area').classList.add('hidden');
+      document.getElementById('box-content-text').classList.remove('hidden');
+
+      const distFromCenter = Math.abs(STATE.battle.timingPos - 175);
+      let dmgMultiplier = Math.max(0.5, 1.5 - (distFromCenter / 175));
+      const isCrit = (Math.random() * 100 < STATE.hero.crit);
+      if (isCrit) dmgMultiplier *= 1.5;
+
+      const damage = Math.round(STATE.hero.atk * dmgMultiplier);
+
+      sfxSlash();
+      STATE.battle.enemy.hp = Math.max(0, STATE.battle.enemy.hp - damage);
+      updateBattleUI();
+
+      document.getElementById('box-content-text').textContent = 
+        isCrit ? `* CRITICAL STRIKE! Slashed for ${damage} damage!` : `* Slashed for ${damage} damage!`;
+
+      if (STATE.battle.enemy.hp <= 0) {
+        setTimeout(() => endBattle(true), 1200);
+      } else {
+        setTimeout(startEnemyDodgeTurn, 1200);
+      }
+    }
+
+    // --- ENEMY DODGE TURN ---
+    let dodgeActive = false;
+    let dodgeTimer = 4.0;
+    let bullets = [];
+    let soul = { x: 220, y: 67, speed: 3.6 };
+    const dCanvas = document.getElementById('dodge-canvas');
+    const dCtx = dCanvas.getContext('2d');
+
+    function startEnemyDodgeTurn() {
+      STATE.battle.turn = "DODGE";
+      document.getElementById('box-content-text').classList.add('hidden');
+      dCanvas.classList.remove('hidden');
+
+      dodgeActive = true;
+      dodgeTimer = 4.0;
+      soul.x = 220; soul.y = 67;
+      bullets = [];
+    }
+
+    function updateDodge(dt) {
+      if (!dodgeActive) return;
+
+      dodgeTimer -= dt;
+
+      let dx = 0, dy = 0;
+      if (keysDown['ArrowLeft'] || keysDown['a'] || keysDown['A']) dx -= 1;
+      if (keysDown['ArrowRight'] || keysDown['d'] || keysDown['D']) dx += 1;
+      if (keysDown['ArrowUp'] || keysDown['w'] || keysDown['W']) dy -= 1;
+      if (keysDown['ArrowDown'] || keysDown['s'] || keysDown['S']) dy += 1;
+
+      soul.x = Math.max(12, Math.min(dCanvas.width - 12, soul.x + dx * STATE.hero.spd));
+      soul.y = Math.max(12, Math.min(dCanvas.height - 12, soul.y + dy * STATE.hero.spd));
+
+      if (Math.random() < 0.18) {
+        bullets.push({
+          x: Math.random() * dCanvas.width,
+          y: -4,
+          vx: (Math.random() - 0.5) * 1.6,
+          vy: 2.2 + Math.random() * 1.4,
+          radius: 3.5
+        });
+      }
+
+      for (let i = bullets.length - 1; i >= 0; i--) {
+        const b = bullets[i];
+        b.x += b.vx;
+        b.y += b.vy;
+
+        if (Math.hypot(b.x - soul.x, b.y - soul.y) < b.radius + 5) {
+          const hitDmg = Math.max(1, 4 - Math.floor(STATE.hero.def / 5));
+          STATE.hero.hp = Math.max(0, STATE.hero.hp - hitDmg);
+          updateBattleUI();
+          sfxHit();
+          bullets.splice(i, 1);
+          continue;
+        }
+
+        if (b.y > dCanvas.height + 10) bullets.splice(i, 1);
+      }
+
+      dCtx.fillStyle = '#000000';
+      dCtx.fillRect(0, 0, dCanvas.width, dCanvas.height);
+
+      dCtx.fillStyle = '#ffffff';
+      bullets.forEach(b => {
+        dCtx.beginPath();
+        dCtx.arc(b.x, b.y, b.radius, 0, Math.PI * 2);
+        dCtx.fill();
+      });
+
+      dCtx.fillStyle = '#ef4444';
+      dCtx.fillRect(soul.x - 5, soul.y - 5, 10, 10);
+      dCtx.fillStyle = '#fca5a5';
+      dCtx.fillRect(soul.x - 2, soul.y - 2, 4, 4);
+
+      dCtx.fillStyle = '#94a3b8';
+      dCtx.font = '10px Courier New';
+      dCtx.fillText(`DEFEND: ${Math.max(0, dodgeTimer).toFixed(1)}s`, 10, 15);
+
+      if (dodgeTimer <= 0) {
+        endDodgeTurn();
+      }
+    }
+
+    function endDodgeTurn() {
+      dodgeActive = false;
+      dCanvas.classList.add('hidden');
+      document.getElementById('box-content-text').classList.remove('hidden');
+      document.getElementById('box-content-text').textContent = "* The enemy readies their posture for the next exchange.";
+
+      STATE.battle.turn = "PLAYER_MENU";
+      updateBattleMenuUI();
+    }
+
+    function updateBattleUI() {
+      document.getElementById('battle-enemy-hp').textContent = `${STATE.battle.enemy.hp}/${STATE.battle.enemy.maxHp}`;
+      document.getElementById('hero-hp-text').textContent = `${STATE.hero.hp} / ${STATE.hero.maxHp}`;
+      document.getElementById('hero-hp-bar').style.width = `${Math.max(0, (STATE.hero.hp / STATE.hero.maxHp) * 100)}%`;
+    }
+
+    function updateGlobalUI() {
+      document.getElementById('gold-val').textContent = `${STATE.hero.gold}G`;
+      document.getElementById('lv-val').textContent = STATE.hero.lv;
+      recalculateStats();
+    }
+
+    // --- MAIN TICK ---
+    let lastTime = performance.now();
+    function tick(now) {
+      const dt = (now - lastTime) / 1000;
+      lastTime = now;
+
+      if (STATE.mode === "OVERWORLD") {
+        updateOverworld();
+        renderOverworld();
+      } else if (STATE.mode === "BATTLE") {
+        if (STATE.battle.turn === "FIGHT_TIMING") {
+          STATE.battle.timingPos += STATE.battle.timingDir * 7;
+          if (STATE.battle.timingPos >= 350) STATE.battle.timingDir = -1;
+          if (STATE.battle.timingPos <= 0) STATE.battle.timingDir = 1;
+          document.getElementById('strike-bar').style.left = `${STATE.battle.timingPos}px`;
+        } else if (STATE.battle.turn === "DODGE") {
+          updateDodge(dt);
+        }
+      }
+
+      requestAnimationFrame(tick);
+    }
+
+    recalculateStats();
+    updateGlobalUI();
+    updateBattleUI();
+    requestAnimationFrame(tick);
+  </script>
+</body>
+</html>
