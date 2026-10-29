@@ -1,729 +1,407 @@
 # CROWN & CRUCIBLE
-## OFFICIAL STORY BIBLE & WORLD COMPENDIUM
-### Master Narrative Reference, Faction Lore, Character Encyclopedia & Sandbox Design Reconciliation
+## STORY BIBLE & WRITER’S ROOM
+### A living medieval archipelago • Canon reconstruction
+*Owner-approved foundation • 29 October 2026*  
+*Common-born beginnings. Inherited power. A war that does not wait.*
 
-*Authoritative Edition — Canonical Universe Reference*  
-*Classification Standard: Verified Native Implementation vs. Design Proposals*  
-*Target Documentation Repository: docs/STORY_BIBLE.md*
-
----
-
-> ### EDITORIAL PRESENTATION & PALETTE NOTE
-> **Editorial Theme**: Imperial Charcoal (`#1F2421`), Deep Burgundy (`#5C1D24`), Muted Antiqued Gold (`#C5A059`), Vellum Cream (`#F4EEDD`).  
-> **Classification Badges**:
-> - `[VERIFIED IMPLEMENTATION]`: Active, verified native GML code and assets executing in the GameMaker 2024.14 runtime with automated test backing.
-> - `[PROPOSAL]`: High-level architectural or design specification proposed for expansion; grounded in design documents and code hooks, pending native development.
-> - `[OPEN DECISION]`: Strategic creative or technical fork requiring final project owner determination.
+> **Authority & Baseline**: This edition replaces conflicting fantasy canon and governs future narrative work. Existing prototype content is evidence of implementation, not approval of its lore.  
+> **Source baseline**: `crown-and-crucible`, main `73fe672`. Repository and technical dossier reviewed read-only; neither was changed for this edition.
 
 ---
 
-## TABLE OF CONTENTS
-1. [Executive Vision & Canon Taxonomy](#executive-vision--canon-taxonomy)
-2. [Section I: Cosmology, The Great Fracture & Dimensional Shards](#section-i-cosmology-the-great-fracture--dimensional-shards)
-3. [Section II: The Realm of Aethelgard & Feudal Geography](#section-ii-the-realm-of-aethelgard--feudal-geography)
-4. [Section III: Protagonist Canon: Sir Rowan](#section-iii-protagonist-canon-sir-rowan)
-5. [Section IV: Factions & The Aethelgard Civil War](#section-iv-factions--the-aethelgard-civil-war)
-6. [Section V: Character Encyclopedia & Retinue Roster](#section-v-character-encyclopedia--retinue-roster)
-7. [Section VI: Narrative Arcs, Quests & Freelance Commissions](#section-vi-narrative-arcs-quests--freelance-commissions)
-8. [Section VII: The Hidden War Clock & Regional Degradation](#section-vii-the-hidden-war-clock--regional-degradation)
-9. [Section VIII: The Four Civil War Endings](#section-viii-the-four-civil-war-endings)
-10. [Section IX: Writer's Room Guidelines & Owner Scratchpads](#section-ix-writers-room-guidelines--owner-scratchpads)
-
----
-
-## EXECUTIVE VISION & CANON TAXONOMY
-
-**Crown & Crucible** is a grounded medieval sandbox RPG synthesizing the intimate town life and pastoral rhythms of *Stardew Valley*, the moral weight and timing-driven combat of *Undertale*, the tactical depth of card-driven armory scaling, and the emergent systemic politics of a living feudal conflict.
-
-Set in the broken world of **Aethelgard** two centuries after a cosmic cataclysm known as the **Great Fracture**, the narrative rejects simplistic binary morality. Kings are not arbitrary tyrants; rebels are not saintly liberators; mercenaries are not hollow cutthroats. Every lord, merchant, monk, and peasant acts out of survival, systemic pressure, economic self-interest, and generational memory.
-
-### Systems vs. Narrative Reconciliation
-During the evolution from early design briefs to native GameMaker implementation, several critical mechanics and narrative threads were refined:
-1. **Setting Reconciliation (`VERIFIED IMPLEMENTATION` + `CANON`)**: The playable settlement is **Stonecross**, a historic fortified market hamlet, parish center, and strategic crossroads situated in the fertile river basin known canonically as **The Greenmere Vale** (or the Greenmere Marches) in the kingdom of Aethelgard.
-2. **Combat Engine (`VERIFIED IMPLEMENTATION`)**: The active combat system is a 5-weapon dexterity-based action system (Sword timing bar, Greatsword charge release, Dagger rhythm marks, Bow dual-axis aim, Spear range release) coupled with an Undertale-style central Soul dodge arena. The early *Might × Fervor* card engine remains active as an equipment socket scaling system (12 typed socket cards modifying base hero statistics).
-3. **The Tithe Mystery (`VERIFIED IMPLEMENTATION` + `CANON`)**: The ancient lawful Lady Day base tithe is **200 Gold** under the sacred *Charter of the Four Quarters*. Chancellor Eamon unilaterally levied an unlawful **+50 Gold "Emergency Rift Defense Surcharge"** (totaling 250G) while skimming the proceeds into river caches, proven by the *Falsified Royal Manifest*.
-4. **Feudal Warfare vs. War Clock (`VERIFIED IMPLEMENTATION` vs `PROPOSAL`)**: The feudal war simulation in GML runs on an autonomous 3600-frame cycle advancing faction treasuries, armories, granaries, and territory (`VERIFIED IMPLEMENTATION`). The "War Clock" with realm exhaustion (0–100), famine thresholds, and kingdom collapse leading to the four endings is a comprehensive design specification (`PROPOSAL`).
-
----
-
-## SECTION I: COSMOLOGY, THE GREAT FRACTURE & DIMENSIONAL SHARDS
-
-```
-+---------------------------------------------------------------------------------+
-|                       THE COSMIC FRACTURE (200 YEARS AGO)                       |
-|                          THE GREAT CRUCIBLE CATACLYSM                           |
-+---------------------------------------------------------------------------------+
-          |                                  |                                  |
-          v                                  v                                  v
-+-------------------+              +-------------------+              +-------------------+
-|   DIMENSION I:    |              |   DIMENSION II:   |              |  DIMENSIONS III-V |
-|    AETHELGARD     | <~~~~~~~~~~> |      VESPERA      | <~~~~~~~~~~> |  CAELUM, NIVEA,   |
-| "The Sunken Crown"|  Obsidian    |"Sunless Spires"   |   Resonant   |     TARTARUS      |
-| Cold Iron, Ash,   |  Rift Gates  | Astral Nebula,    |  Harmonics   |   (Shattered      |
-| Peat & Feudal War | (x:1600, 400)| Twilight Alchemy  |              |    Multiverse)    |
-+-------------------+              +-------------------+              +-------------------+
-```
-
-### 1. The Pre-Fracture Ancestral Empire
-Before the cataclysm, the known world was unified under the **Aethelgardian Solar Empire**, ruled from the mythical Sunken Citadel. Architecture of this golden age was characterized by cyclopean white granite, resonant obsidian conduits, and crucible furnaces capable of refining astral glass and self-tempering spring-steel. The Emperor-Kings maintained cosmic harmony through the **Ancestral Crown**, an artifact forged from fallen meteoritic star-ore that stabilized terrestrial gravitational and spiritual currents.
-
-### 2. The Great Crucible Event (200 Years Ago)
-Two centuries ago, an apocalyptic dimensional event known as the **Great Crucible** shattered the terrestrial realm into five parallel, mirrored dimensional shards. The cause of the Fracture remains shrouded in contradictory myth:
-- **High Cairn Court Lore**: Chroniclers claim that heretical alchemists attempted to smelt the core of an astral fallen star within the Imperial Crucible, cracking the mortal fabric.
-- **Church of the Sunken Crown**: Friars preach that the Fracture was divine punishment for imperial hubris, casting the true crown into an abyssal rift and drowning the golden capital.
-- **Vesperan Star-Gazers**: Astrologers in the mirror realm believe our mortal sphere collided with an elder celestial body, cleaving reality across harmonic fault lines.
-
-Because the Fracture occurred across spacetime, each shard experienced a divergent manifestation of the catastrophe:
-- While Aethelgard retained the soil, ash, iron, and damp bogs, it lost its celestial warmth and stars.
-- Other shards received perpetual twilight, floating landmasses, or eternal winter.
-
-### 3. The Five Parallel Dimensional Shards
-
-| Dimension Shard | Epithet | Planetary Theme & Elements | Ruling Power & Philosophy | Status |
-|---|---|---|---|---|
-| **Dimension I: Aethelgard** | *The Sunken Crown* | Cold damp earth, peat bogs, granite scarps, iron mines, scarred battlefields. | **King Aldous III** (*The Sunken Monarch*). Philosophy: Martial law, feudal order, iron defense against the void. | `VERIFIED IMPLEMENTATION` |
-| **Dimension II: Vespera** | *The Sunless Spires* | Endless twilight, violet nebulae, crystalline spires, alchemical mercury, star-glass. | **Queen Seraphina** (*The Star-Gazer*). Philosophy: Celestial divination, arcane metallurgy, rift exploration. | `PROPOSAL / EXPANSION LAYER` |
-| **Dimension III: Caelum** | *The Shattered Skylands* | Floating archipelagos, whistling gale ravines, buoyant sky-iron, tethered skiffs. | **The Winged Conclave of Castellan Hawk**. Philosophy: Freedom from terrestrial mud, wind-borne commerce. | `PROPOSAL` |
-| **Dimension IV: Nivea** | *The Frostbitten Wastes* | Permafrost tundras, glacial chasms, frozen mammoth barrows, rime-forged steel. | **High Jarl Valdemar of the Rime**. Philosophy: Brutal survival of the fittest, preservation against rot. | `PROPOSAL` |
-| **Dimension V: Tartarus** | *The Core Crucible* | Subterranean magma seas, basalt monoliths, raw molten crucible fire, demonic shades. | **The Slag Council of the Deep**. Philosophy: The cosmic engine itself; raw, unshaped matter awaiting refinement. | `PROPOSAL` |
-
-### 4. The Obsidian Rift Gates & Harmonic Resonances
-Scattered across the wild borderlands of Aethelgard stand the ancient **Obsidian Rift Gates**—monumental heptagonal archways carved from extraterrestrial glass that does not weather or corrode.
-- **Overworld Location**: The Northern Rift Gate in Aethelgard stands at `x: 1600, y: 400` in the dense timberland north of Stonecross (`VERIFIED IMPLEMENTATION`).
-- **Harmonic Activation**: The gates resonate at subtle audio frequencies. In `QUEST_COUNTERFEIT`, Peddler Corin sells an authentic astronomical shard recovered from a Great Fracture burial dolmen. When Rowan brings this talisman to Brother Dunstan's Solar Altar in the Eastern Stone Chapel (`x: 1304, y: 2634`), holy consecration stabilizes its dimensional wavelength. Placing the consecrated talisman into the Northern Gate causes the monolith to ignite with violet astral flame, granting +50 XP and +15 Crown favor (`VERIFIED IMPLEMENTATION`).
-- **The Whisper of Vespera**: When attuned to Dimension II, the rift reflects the silhouette of colossal crystalline towers, and the celestial voice of Queen Seraphina echoes across the threshold: *"Who stirs the astral rift?"* (`PROPOSAL / POC CANON`).
-
----
-
-## SECTION II: THE REALM OF AETHELGARD & FEUDAL GEOGRAPHY
-
-```
-+---------------------------------------------------------------------------------+
-|                   REGIONAL MAP OF THE KINGDOM OF AETHELGARD                     |
-+---------------------------------------------------------------------------------+
-                                      [ NORTH ]
-                               HIGH CAIRN CITADEL
-                         (Seat of King Aldous III)
-                       Royal Chancery & Throne of Swords
-                                      |
-                                      | King's Highroad
-                                      v
-  [ NORTH-WEST ]             +------------------+            [ NORTH-EAST ]
- MASTER ODO'S FORGE -------- | STONECROSS PLAZA | -------- THE BOAR & FLAGON
-(Quenching Anvil & Secret    | (Town Fountain & |          (Tavern Hearth, Minstrel
-   Knight's Grove)           |  Market Stalls)  |             Margery & Dice Table)
-                             +------------------+
-                                      |
-                     Crossroads       | Route 4
-                     Guidepost        | King's Highroad
-                     (1600, 1400)     v
-                               KING'S BRIDGE OUTPOST
-                           (Contested Checkpoint: Crown)
-                                      |
-          +---------------------------+---------------------------+
-          |                                                       |
-          v                                                       v
-  [ SOUTH-WEST ]                                            [ SOUTH-EAST ]
-OLD WATCHTOWER FIEF                                     RED SIKE RIVER WHARF
-(Sir Galahalt's Campfire,                              (Contested: River League)
- Sir Rowan's Fief Writ)                                           |
-          |                                                       v
-          v                                            WHISPERING BARROWS DEFILE
-  OAKHAVEN WHARFS                                      (Contested: Iron Council /
-(Timber Guild, Vivienne)                                 Crypt of Warden Shade)
-```
-
-### 1. Setting Reconciliation: The Greenmere Vale & Stonecross Hamlet
-A crucial reconciliation between the early design briefs and the authoritative native codebase concerns the regional nomenclature:
-- **The Greenmere Vale (The Greenmere Marches)** is the grand geographic province of southern Aethelgard. Renowned for its rich loamy topsoil, deep oak and pine groves, limestone riverbanks, and marshy hollows, it has long served as the breadbasket and buffer frontier between the mountain quarries and the coast.
-- **Stonecross** is the fortified market hamlet, parish center, and primary crossroads settlement nestled in the very heart of the Greenmere Vale. Named for the ancient weathered granite marker raised at the convergence of the four imperial roads, Stonecross is the sole fully realized playable overland settlement in the native GameMaker build.
-- **Sir Rowan's Standing**: Sir Rowan begins as an unlanded hedge knight of the Greenmere Marches, arriving in Stonecross with an empty purse, battered gambeson, and a rusty shortsword.
-
-### 2. Topography of Stonecross Hamlet (Playable Overworld: Room1)
-`Room1` is an expansive 3200 × 3072 pixel canvas divided into a vibrant outdoor landscape (`y: 0–2400`) and a dedicated interior simulation strip (`y: 2400–3072`).
-
-#### A. Outdoor Landmarks & Districts
-- **Stonecross Forum Plaza (`x: 1400–1800, y: 1050–1350`)**: The communal hub. Features the ancient **Town Fountain** (restores hero HP to maximum and refills Monastery Mead flasks), the village **Notice Board** (where royal proclamations and contracts are posted), Baker Beatrice's stall, and Farmer Giles's sheep pasture.
-- **Master Odo's Forge (`x: 800–1000, y: 650–850`)**: Heavy stone smithy on Route 1. Features an outdoor roaring hearth, quenching trough, heavy anvil, and Master Odo's weapon racks. Directly behind the woodpile lies the **Secret Knight's Grove**, housing an iron chest containing the *Ancient Knight's Signet* (+15% Critical Strike Chance).
-- **The Boar & Flagon Exterior (`x: 2000–2250, y: 700–900`)**: A two-story Tudor-style timber inn with leaded glass windows, hanging sign, horse hitching posts, and an outdoor patio where Margery the Minstrel busks during the day.
-- **Eastern Stone Chapel & Churchyard (`x: 2500–2750, y: 1300–1500`)**: A solemn gothic chapel of ashlar granite with a rose window, bell-cot, lavender flower beds, and ancient weathered gravestones. Brother Dunstan tends the brewing vats in the courtyard.
-- **The Crossroads Guidepost (`x: 1600, y: 1400`)**: A four-way timber signpost directing travelers North to the Plaza, West to the Forge and Watchtower, South-West to the King's Bridge, and South-East to the River Landing and Whispering Barrows.
-- **King's Highroad Outpost & Bridge (`x: 1040, y: 1720`)**: A fortified arched stone bridge spanning the torrential River Stonecross. Controlled by Crown Bailiff Sir Guy; levies a 5 Gold toll unless Rowan holds high standing or bypasses sentries.
-- **The Ruined Watchtower Camp (`x: 800–900, y: 1800–1950`)**: The crumbling remains of an imperial signal tower. Sir Galahalt camps beside the fire here. Upon attaining Chivalric Rank 3, Rowan is granted the *Old Watchtower Fief Writ*, establishing this site as his personal fortified manor.
-- **Red Sike River Landing (`x: 1950–2100, y: 1800–1950`)**: A covert wharf hidden among marsh willows where River League barges dock. Factor Malo, Lady Cecily, and Smuggler Jago operate contraband shipping here.
-- **Eastern Barrow Defile & Crypts (`x: 2350–2600, y: 1750–2000`)**: A desolate grey landscape flanked by ancient burial mounds, pagan dolmens, and skeletal trees. Home to roaming Barrow Boars and the terrifying **Barrow Warden Shade** guarding the ancestral crypts.
-
-#### B. The Interior Strip (`y >= 2400`)
-Seamlessly baked below the overworld to ensure instant, zero-loading transitions:
-- **Tavern Bar & Hearth (`x: 110–529, y: 2630–2864`)**: Warm cedar-paneled interior with roaring stone hearth, gaming table (Crown & Bones dice), and bar serving spiced cider (+6 HP for 5G).
-- **The Forge Smithy (`x: 750–1050, y: 2600–2850`)**: Master Odo's inner workshop containing the Great Anvil (`x: 810, y: 2710`) where contraband spring-steel is delivered.
-- **Eastern Chapel Nave & Solar Altar (`x: 1174–1433, y: 2610–2876`)**: Cathedral interior lit by candle glow. Features the **Solar Altar** (`x: 1304, y: 2634`) for spiritual blessings and relic consecration, and Sister Agnes's recuperation cot.
-- **Rowan's Cottage Bedroom (`x: 1750–1950, y: 2600–2800`)**: A modest private bedchamber. Resting in the Cottage Bed (`x: 1834, y: 2682`) advances the day/night cycle, processes daily companion wages, and accelerates the feudal war simulation.
-
-### 3. The Wider Regions of Aethelgard
-While Stonecross is the primary playable overland stage, the living feudal simulation and quest ledger interface continuously with the three capital settlements of the realm:
-
-#### A. Oakhaven Port & The River Marches
-- **Geography**: Downriver estuary where the River Stonecross widens into the tidal salt-flats. A sprawling timber harbor built upon massive sunken oak pilings.
-- **Specialization**: Shipwright drydocks, sawmills, deep-water merchant caravels, textile dyeing, and illicit contraband warehouses.
-- **Culture**: Cosmopolitan, defiant, profit-driven, and proudly independent. Guild burghers wear foreign dyed silks and openly mock royal tax collectors.
-
-#### B. Dunhollow Bastion & The Granite Defiles
-- **Geography**: The rugged eastern mountain spine. A sheer citadel carved directly into the living granite of Mount Morvath, surrounded by deep open-pit iron mines, smoking coke ovens, and slag terraces.
-- **Specialization**: Bog iron smelting, heavy siege weapons, armor forging, architectural masonry, and granite quarrying.
-- **Culture**: Austere, militaristic, communal, and grim. Dunhollow men-at-arms eat hard barley biscuits, revere the sledgehammer, and despise royal courtiers who have never bled in a collapse.
-
-#### C. High Cairn Citadel & The Throne of Swords
-- **Geography**: The ancient imperial high-seat perched atop a craggy plateau overlooking the southern plains. Surrounded by triple concentric curtain walls of dressed limestone.
-- **Specialization**: The Royal Chancery, the Imperial Archives, the Central Mint, the Church of the Sunken Crown, and the Grand Vanguard Armory.
-- **Culture**: Stately, paranoid, ritualistic, and suffocating with court protocol. Knights speak in archaic legal formulas, and bailiffs enforce tax writs under threat of the dungeon oubliette.
-
-#### D. The Weeping Weald & The Whispering Barrows
-- **Geography**: The primeval tangled forest and foggy marshlands separating the civilized vales from the ancient Fracture fault line.
-- **Specialization**: Sacred druidic mistletoe, rare alchemical bog fungi, and unexcavated imperial tombs.
-- **Culture**: Avoided by sensible folk. Only hermits, outlaws, and mad rift-watchers dare sleep under its weeping willow canopy.
-
----
-
-## SECTION III: PROTAGONIST CANON: SIR ROWAN
-
-```
-+---------------------------------------------------------------------------------+
-|                  SIR ROWAN: THE FOUR CHIVALRIC ADVANCEMENT RANKS                |
-+---------------------------------------------------------------------------------+
-
-  [ RANK 0: WANDERING HEDGE KNIGHT ]
-  - Requirement: 0 Renown / 0 Faction Standing
-  - Status: Disenfranchised wanderer; unaligned; rusty equipment; no fief.
-  - Title: "Sir Rowan the Wanderer"
-
-                    | +50 Chivalric Renown
-                    v
-
-  [ RANK 1: RECOGNIZED FREEBLADE CAPTAIN ]
-  - Requirement: 50 Renown
-  - Status: Respected mercenary captain; high-tier commissions; 20% tavern discount.
-  - Title: "Sir Rowan Iron-Arm, Freeblade Captain"
-
-                    | +100 Chivalric Renown & >= 40 Faction Standing
-                    v
-
-  [ RANK 2: SWORN KNIGHT-BANNERET ]
-  - Requirement: 100 Renown + 40 Faction Standing (Crown, River League, or Iron Council)
-  - Status: Sworn vassal; wearable faction war cloak; 25% faction shop discount;
-    can summon faction man-at-arms reinforcements in battle!
-  - Titles:
-    * Crown: "Sir Rowan, Crown Vanguard Knight"
-    * River League: "Sir Rowan, River Guild Champion"
-    * Iron Council: "Sir Rowan, Iron Castellan's Warden"
-
-                    | +200 Chivalric Renown & >= 70 Faction Standing
-                    v
-
-  [ RANK 3: LANDED MARCHER CASTELLAN ]
-  - Requirement: 200 Renown + 70 Highest Faction Standing
-  - Status: Sovereign feudal lord; granted Old Watchtower Fief Writ (x: 800, y: 1890);
-    personal blazon standard; receives +50 Gold weekly tribute every war cycle!
-  - Title: "Lord Rowan of the Western March"
-```
-
-### 1. Origins & Persona
-Sir Rowan is a disenfranchised hedge knight whose ancestral manor was swallowed during the border skirmishes following the Great Fracture. Stripped of lands and retinue, Rowan rides into Stonecross carrying only an ancestral signet, a dented kettle-helm, and an unbroken moral core.
-- **The Wanderer's Philosophy**: Unlike noble lords who command from cushioned solar rooms, Rowan walks the mud of the highroads. Rowan understands the value of an eight-gold sack of grain, the desperation of a starving farmer whose prize sow is stolen, and the terror of facing a barrow shade in the dark.
-- **The Code of Chivalry vs. Survival Realism**: Rowan is defined by player agency:
-  - Will Rowan remain a paragon of ancient chivalric honor, sparing defeated highwaymen, shielding commoners, and exposing chancery fraud?
-  - Or will Rowan embrace the brutal pragmatism of the era, pocketing smuggler bribes, betraying royal warrants, and rising to power through cold steel and cunning?
-
-### 2. Verified Progression Engine (`scr_feudal_hierarchy.gml`)
-Chivalric progression is not merely narrative flavor; it is an active mechanical state machine tracked across global variables and persisted in `save_crown_and_crucible.json`:
-- `global.chivalric_renown`: Earned by fulfilling knight contracts (+20 to +30), winning archery competitions, resolving village grievances, and surviving skirmishes.
-- `global.feudal_rank`: Ranks 0 through 3, unlocked automatically via `cc_hierarchy_check_promotion()`.
-- `global.player_title`: Dynamically updated in dialogue, HUD banners, and save files.
-- `global.fief_owned` & `global.weekly_fief_income`: At Rank 3, Rowan becomes a landed lord of the realm, receiving 50 Gold delivered directly to his purse at every war simulation interval (`3600` frames).
-
-### 3. Equipment & Socket Card Philosophy
-Rowan's combat capabilities are defined entirely by his loadout:
-- **Weapon Classes**: Sword, Greatsword, Dagger, Bow, Spear. Each weapon activates a unique rhythmic or timing-based FIGHT minigame.
-- **Socketed Equipment Cards**: Weapons, armors, and relics hold typed card sockets (`OFFENSE`, `DEFENSE`, `UTILITY`, `SPECIAL`). Sockets accept the 12 verified cards in `cc_card_definitions()` (e.g., *Iron Edge*, *Heavy Handed*, *Keen Point*, *Steady Hand*, *Lucky Penny*, *Silver Tongue*, *Fleet Foot*, *Light Step*, *Vigor*, *Second Wind*, *Oak Guard*, *Iron Skin*), dynamically altering attack velocity, soul movement, critical chance, and damage mitigation.
-
----
-
-## SECTION IV: FACTIONS & THE AETHELGARD CIVIL WAR
-
-```
-+---------------------------------------------------------------------------------+
-|                       THE TRIPARTITE FEUDAL CIVIL WAR                           |
-+---------------------------------------------------------------------------------+
-
-                      THE ROYAL CROWN OF HIGH CAIRN
-                       Leader: King Aldous III
-                      "The Sunken Monarch"
-                     Seat: High Cairn Citadel
-                   [Power: 85 | Treasury: 1400 | Territory: 45%]
-                               /        \
-       Toll Enforcements     /            \    Excise & Tax Raids
-       & Garrison Marches   /              \   against Iron Defiles
-                          /                  \
-                         v                    v
-          THE RIVER LEAGUE                    THE IRON COUNCIL
-            OF OAKHAVEN                         OF DUNHOLLOW
-    Leader: Baroness Vivienne              Leader: Castellan Morvath
-       "The River Viper"                      "The Iron Castellan"
-     Seat: Oakhaven Wharfs                   Seat: Dunhollow Bastion
-   [Power: 65 | Treasury: 2200]             [Power: 75 | Treasury: 800]
-   [Territory: 30% | Rich: Food]            [Territory: 25% | Starving: Food]
-                         ^                    ^
-                          \                  /
-                           \   Trade Silver / Non-Aggression
-                            \  & Smuggled Grain Barter
-                             \              /
-                              +------------+
-                                     |
-                                     v
-                        THE COMMONS OF STONECROSS
-                         Leader: Elder Alden
-                       Pastoral Market Hamlet
-                      Caught in the Crossfire
-```
-
-### 1. The Faction Roster & Strategic Doctrines
-
-#### A. The Royal Crown of High Cairn (`crown`)
-- **Monarch**: **King Aldous III "The Sunken Monarch"** (Age 54). A grim, haggard ruler haunted by nightmares of waking dimensional rifts. He believes that only absolute royal centralization, fortified border checkpoints, and heavy tithes can finance the grand warding rituals necessary to prevent Aethelgard from collapsing into the void.
-- **Emissaries**: **Chancellor Eamon** (Corrupt Royal Bursar), **Bailiff Sir Guy** (Arrogant Highroad Commander), **Grand Marshal Brandon** (Vanguard Commander).
-- **Banner Symbol**: Solar Crown (`👑`). Colors: Gold (`#EAB308`) and Dark Umber (`#713F12`).
-- **Military Doctrine**: Heavy chivalric cavalry, disciplined royal halberdiers, fortified stone toll gates, and formal chivalric proclamations.
-- **Starting Statistics**: Power: 85 | Treasury: 1400 Gold | Food Reserves: 90 | Iron Reserves: 45 | Territorial Control: 45%.
-- **Strategic Stance**: `DEFENSIVE_EXPANSION`. Ambition: Suppress river merchant independence, subjugate quarry strikes, and enforce the 250G emergency tithe across all marches.
-
-#### B. The River League of Oakhaven (`river_league`)
-- **Leader**: **Baroness Vivienne de la Tour "The River Viper"** (Age 36). A brilliant, ruthless merchant-aristocrat who inherited the Oakhaven timber docks. She views the Crown as a decaying parasite bleeding the realm's wealth to maintain empty court ceremonies.
-- **Emissaries**: **Lady Cecily** (Diplomatic Agent & Spymistress), **Captain Malor** (River Corsair), **Factor Malo** (Smuggler Merchant), **Shipwright Brendan**.
-- **Banner Symbol**: Silver Pike (`🐟`). Colors: Sky Blue (`#38BDF8`) and Deep Navy (`#0C4A6E`).
-- **Military Doctrine**: Fast river corsair galleasses, hired crossbow mercenaries, agile poignard skirmishers, and deep purses capable of bribing rival commanders.
-- **Starting Statistics**: Power: 65 | Treasury: 2200 Gold (Wealthiest faction) | Food Reserves: 60 | Iron Reserves: 30 | Territorial Control: 30%.
-- **Strategic Stance**: `MERCANTILE_DEFIANCE`. Ambition: Expel royal bailiffs, break toll chains at King's Bridge, form an autonomous Free River Republic, and dominate maritime commerce.
-
-#### C. The Iron Council of Dunhollow (`iron_council`)
-- **Leader**: **Castellan Morvath "The Iron Castellan"** (Age 48). A battle-hardened veteran who lost his right arm in the quarry wars, replaced with an iron gauntlet plate. He speaks for the quarrymen, miners, and smiths who sweat in subterranean darkness while High Cairn lords drink vintage wine.
-- **Emissaries**: **Sapper Vane** (Field Engineer), **Foreman Brand** (Master Mason), **Smith Thora**, **Miner Hobb**.
-- **Banner Symbol**: Obsidian Pick (`⚒️`). Colors: Crimson (`#EF4444`) and Dark Blood-Red (`#7F1D1D`).
-- **Military Doctrine**: Heavy iron-plated sappers, crushing two-handed claymores, trench fortifications, and devastating explosive mining powder.
-- **Starting Statistics**: Power: 75 | Treasury: 800 Gold (Poorest faction) | Food Reserves: 40 (Critically starving!) | Iron Reserves: 95 (Vast armory wealth) | Territorial Control: 25%.
-- **Strategic Stance**: `RESOURCE_EXPANSION`. Ambition: Seize the fertile lowland grain fields of Stonecross by sword-point to feed starving miners, fortify mountain defiles, and dictate iron trade terms to the realm.
-
-#### D. The Commons of Stonecross (`stonecross`)
-- **Leader**: **Elder Alden** (Township Elder) & **Baker Beatrice**.
-- **Population**: Farmers, millers, shepherds, weavers, and displaced war refugees.
-- **Philosophy**: Neutrality, survival, and pastoral resilience. They care nothing for royal prestige or merchant charters; they want only to harvest their crops, shear their sheep, and live free from marching boots and burned granaries.
-
-### 2. Autonomous Feudal Simulation Mechanics (`scr_feudal_warfare.gml`)
-Every 3,600 frames (60 seconds at 60 fps), or whenever Rowan rests in the Cottage Bed, the feudal state machine executes an autonomous campaign tick:
-1. **Economic Drifts**: Factions collect tax revenue and expend provisions. The Crown consumes grain (-10 Food); the River League consumes iron (-8 Iron); Dunhollow gains massive iron (+15 Iron) but burns scarce food (-12 Food).
-2. **Autonomous Campaign Events**: The engine rolls a four-way event matrix:
-   - *River League Supply Ambush*: Vivienne's corsairs hijack a royal grain barge &rarr; Crown loses 15 Food; Stonecross wheat prices spike by +35%!
-   - *Iron Council Foraging Raid*: Dunhollow sappers raid eastern swards &rarr; Morvath captures grain; territory expands +3%; Oakhaven iron prices spike by +30%!
-   - *Crown Punitive Expedition*: King Aldous's vanguard pushes river outlaws back from King's Bridge &rarr; Crown territory expands +4%; power increases.
-   - *Diplomatic Bribery*: Vivienne pays 120 Gold to Morvath &rarr; Dunhollow and River League form an anti-Crown non-aggression pact, politically isolating the King.
-3. **Contested Checkpoint Dynamics**:
-   - If Crown territory is &ge; 40%, King's Bridge is occupied by royal halberdiers who levy a 5G toll.
-   - If Crown territory falls below 40%, River League corsairs seize the bridge, waiving all tolls and welcoming free traders.
-4. **War Chronicle**: Dispatches are pushed dynamically to `global.war_chronicle`, displaying floating headlines on Rowan's screen.
-
----
-
-## SECTION V: CHARACTER ENCYCLOPEDIA & RETINUE ROSTER
-
-```
-+---------------------------------------------------------------------------------+
-|                        THE KNIGHT'S RETINUE ROSTER                              |
-+---------------------------------------------------------------------------------+
-                                  SIR ROWAN
-                                (Party Leader)
-                                      |
-         +----------------------------+----------------------------+
-         |                                                         |
-         v                                                         v
- [ NAMED COMPANIONS ]                                      [ SELLSWORDS ]
- - Sir Galahalt (Knight, Ashen Lance)                      - Hob Ashby (Soldier, Spear)
- - Margery (Minstrel, Boar & Flagon)                       - Wenna Fletch (Archer, Bow)
- - Brother Dunstan (Friar, Eastern Chapel)                 - Tam Reedy (Scout, Staff)
- - Isolde Venn (Exiled Herald, High Cairn)                 - Sister Agnes (Field Healer)
-                                                                   |
-                                                                   v
-                                                           [ MISSION ALLY ]
-                                                           - Corporal Hale (Militia)
-```
-
-### 1. The Named Companions (Core Roster)
-
-#### A. Sir Galahalt — "The Rust-Worn Knight"
-- **Specialty / Weapon Class**: Knight / SWORD (`ashen_lance_longsword`, `dented_plate`).
-- **Archetype & Traits**: Honorable, Cynical, Stubborn.
-- **Lore**: The last surviving knight of the broken *Order of the Ashen Lance*, slaughtered eleven years ago in the Whispering Barrows when the royal vanguard withdrew without warning. Bitter, battle-scarred, and deeply skeptical of lordly oaths, he camps beside his fire at the Ruined Watchtower (`x: 846, y: 1884`).
-- **Combat Support Ability**: *Shield Wall* (Trigger: `SOUL_HIT`). Steps in front of incoming attacks during the Soul defense phase, reducing damage by 3 points.
-- **Moral Alignment**: Likes `DUTY`, `VALOR`, `OATH`, `COMMONS`. Dislikes `DECEIT`, `SMUGGLING`, `BETRAYAL`, `COWARDICE`. Refuses to participate in smuggling or betrayal missions.
-- **Personal Quest**: `FALLEN_BANNER` (*The Fallen Banner*). Unlocked at approval &ge; 25. Rowan must journey into the Whispering Barrows with Galahalt and defeat the Barrow Warden Shade to recover the lost standard of his order. Completing it promotes Galahalt to *Sir Galahalt, Oathbound* and binds his loyalty forever.
-
-#### B. Margery — "Minstrel & Opportunist"
-- **Specialty / Weapon Class**: Minstrel / DAGGER (`twin_daggers`, `leather_doublet`).
-- **Archetype & Traits**: Witty, Reckless, Generous.
-- **Lore**: A sharp-tongued wandering minstrel and rogue found at the Boar & Flagon tavern (`x: 2120, y: 830`). She sings for her supper, cheats drovers at Crown & Bones, and distributes her winnings to refugee orphans. She claims she follows Rowan only because heroes make better verses than cowards.
-- **Combat Support Ability**: *Rousing Ballad* (Trigger: `BATTLE_START`). Plays a stirring verse that increases Rowan's Critical Strike Chance by +10% for the encounter.
-- **Moral Alignment**: Likes `GAMBLE`, `ADVENTURE`, `MERCY`, `COMMONS`, `VICTORY`. Dislikes `TYRANNY`, `CROWN_TAX`, `BORING`, `CRUELTY`. Refuses to enforce tax collections.
-- **Personal Quest**: `SONG_WORTH_SINGING` (*A Song Worth Singing*). Margery accompanies Rowan to witness three great deeds (victories, quests, contracts), then composes *The Ballad of Sir Rowan*, performing it before a roaring tavern crowd to raise Stonecross standing by +5.
-
-#### C. Brother Dunstan — "Brewer of the Eastern Chapel"
-- **Specialty / Weapon Class**: Friar / SPEAR (`oak_staff`, `friar_habit`).
-- **Archetype & Traits**: Jovial, Gluttonous, Devout.
-- **Lore**: A hearty friar who tends the altar and brews potent abbey mead at the Eastern Stone Chapel (`x: 1304, y: 2668`). Dunstan believes God is found in hot mutton pies, honest mercy, and a cool flagon. His staff has broken up dozens of drunken fights, and his herbal salves can cure anything from barrow rot to a sour conscience.
-- **Combat Support Ability**: *Blessed Mead* (Trigger: `PLAYER_TURN`). Pulls a flask of consecrated abbey mead, restoring 4 HP to Rowan once per battle.
-- **Moral Alignment**: Likes `MERCY`, `CHARITY`, `FEAST`, `PIETY`, `COMMONS`. Dislikes `CRUELTY`, `SACRILEGE`, `BETRAYAL`, `HUNGER`. Refuses sacrilege.
-- **Personal Quest**: `ALMSHOUSE` (*Bread for the Almshouse*). Unlocked at approval &ge; 15. Requires showing mercy or charity three times with Dunstan present (sparing foes, feeding refugees). Completing it establishes the Stonecross Almshouse, raising Dunstan to *Almoner of Stonecross* and granting +4 township standing.
-
-#### D. Isolde Venn — "Exiled Herald of High Cairn"
-- **Specialty / Weapon Class**: Herald / SWORD (`herald_sabre`, `faded_tabard`).
-- **Archetype & Traits**: Proud, Principled, Sharp-tongued.
-- **Lore**: Formerly the Third Voice of the Royal Chancery in High Cairn. When Chancellor Eamon ordered her to proclaim that the +50G Rift Surcharge was an ancient lawful tithe, she refused to read the forged parchment and ripped her royal tabard in half before the court. Stripped of office, she fled south to Stonecross (`x: 1724, y: 1160`), determined to preserve the unvarnished truth.
-- **Recruitment Gate**: Requires Rowan to reach Level 2 or possess Crown favor &ge; 20 before she will deign to follow him.
-- **Combat Support Ability**: *Herald's Parley* (Trigger: `BATTLE_START`). Formally proclaims terms before blades clash, moving the enemy 15% closer to peaceful MERCY.
-- **Moral Alignment**: Likes `CROWN`, `ORDER`, `OATH`, `DUTY`. Dislikes `DECEIT`, `SMUGGLING`, `CHAOS`, `BETRAYAL`. Refuses smuggling.
-- **Personal Quest**: `HERALD_WITHOUT_HOUSE` (*A Herald Without a House*). When Crown favor reaches 40 (or Stonecross reaches 60), Isolde rides to High Cairn alone with a satchel of evidence, clearing her name in the Royal Archives before returning as *Isolde Venn, Herald Restored*, bearing a 30 Gold royal settlement.
-
----
-
-### 2. The Hired Sellswords & Mission Allies
-
-| Name | Role | Location | Contract Terms | Traits & Combat Ability |
-|---|---|---|---|---|
-| **Hob Ashby** | Soldier (Spear) | Boar & Flagon Bar (`x: 420, y: 2706`) | 40G sign-on + 6G/day (5 days) | Boastful, steady. *Hold the Line*: Spear brace reduces first hit taken in defense phase by -2 damage. |
-| **Wenna Fletch** | Archer (Bow) | Archery Range (`x: 1286, y: 1214`) | 55G sign-on + 8G/day (5 days) | Quiet, proud. *Covering Volley*: Opens fight with a precision arrow dealing 6 instant damage to the foe. |
-| **Tam Reedy** | Scout (Support) | Stable Yard (`x: 2296, y: 862`) | 30G sign-on + 4G/day (6 days) | Cheerful, light-fingered. *Ambush Warning*: Non-combat scout; slows the initial enemy projectile wave in defense. |
-| **Sister Agnes** | Field Healer | Chapel Sickbed (`x: 1400, y: 2858`) | 25G sign-on + 5G/day (5 days) | Brisk, dry. Starts injured. *Field Dressing*: Binds wounds after battle, restoring +6 HP automatically. |
-| **Corporal Hale** | Mission Ally | Barrows Road (`x: 1950, y: 1830`) | Free temporary militia escort | Nervous, dutiful. Joins once for the Barrows patrol; departs after one victory or a full day. |
-
----
-
-### 3. Living Villagers & Frontier Figures
-
-1. **Elder Alden**: Village patriarch of Stonecross. Paces between the plaza and northern gates, offering historical wisdom and commenting on regional war smoke.
-2. **Baker Beatrice**: Beloved baker who bakes honey-crust loaves (+6 HP daily bread gift), cares for refugees, and worries over her tipsy sourdough sheep Barnaby.
-3. **Militia Guard Donald**: Watchful gatekeeper armed with an iron halberd. Directs travelers and guards the western bridge.
-4. **Farmer Giles**: Anxious sheep farmer whose prize breeding sow Clover goes missing in `QUEST_PIG`.
-5. **Old Mallow**: Stubborn elderly farmer across the brook who hoards turnips and grumbles about Giles's rotten wattle fences.
-6. **Scribe Pippin**: Trembling clerk who lost his 40G rent money to Wulf in Crown & Bones and fears having his writing hand broken.
-7. **Wulf the Smuggler**: Pragmatic river rogue sitting at the Boar & Flagon dice table. Hustler who plays balanced dice.
-8. **Sir Balin**: A boastful, aging knight nursing an arthritic knee at the tavern bar. Challenged a barrow mercenary while drunk and needs Rowan to stand as his second.
-9. **Peddler Corin**: Traveling merchant at the crossroads wagon selling curious trinkets, regional trade goods, and the mysterious astral relic.
-10. **Master Odo**: Master blacksmith of the Greenmere Vale. Quenches crucible spring-steel and enhances weapons.
-11. **Refugee Mira**: Displaced commoner warming her hands at the southern campfire, commenting on who controls King's Bridge.
-12. **Barrow Mercenary Grim**: Hardened veteran stationed at the barrow crossing (`x: 1040, y: 1600`), waiting to test Balin's chivalric vow.
-13. **Foreman Brand**: Stonecross master mason celebrating the early completion of the river bridge with tapped wine.
-14. **Factor Malo**: Shrewd Oakhaven timber factor seeking discreet transport for heavy brine barrels.
-15. **Bailiff Sir Guy**: Royal commissioner at King's Bridge Outpost, collecting tolls and issuing bounties for corsairs.
-16. **Lady Cecily**: Elegant River League emissary stationed at Red Sike Landing, offering lucrative bribes for contraband transport.
-17. **Sapper Vane**: Iron Council military engineer guarding the eastern defile, demanding grain for his starving miners.
-
----
-
-## SECTION VI: NARRATIVE ARCS, QUESTS & FREELANCE COMMISSIONS
-
-```
-+---------------------------------------------------------------------------------+
-|                       ACT I: FEUDAL DISCORD FLOWCHART                           |
-+---------------------------------------------------------------------------------+
-
-                      [ STONECROSS: ELDER ALDEN ]
-                   Discovers Unlawful 250G Tithe Writ
-                  (Chancellor Eamon's Threat to Hamlet)
-                                   |
-                                   v
-                    [ OAKHAVEN: BARONESS VIVIENNE ]
-                Protests Seizure of Her Timber Barges;
-                 Demands Interrogation on River Docks
-                                   |
-                                   v
-             [ SHIPWRIGHT BRENDAN ] ---> [ SMUGGLER JAGO ]
-           Points to Marsh Shallows     Confesses Hollow Willow Knot
-                                              |
-                                              v
-                              [ RECOVER EVIDENCE ]
-                         Falsified Royal Manifest Acquired!
-                         (Proves Eamon's 50G Surcharge Skim)
-                                   |
-                                   +-----------------------+
-                                   |                       |
-                                   v                       v
-                   [ HIGH CAIRN: CHANCELLOR EAMON ]    [ ROYAL ARCHIVES ]
-                   Offers 150G Bribe to Burn Evidence  Discovers Ancient 200G
-                                   |                   Charter of Four Quarters
-                                   |                       |
-                                   +-----------+-----------+
-                                               |
-                                               v
-                                [ KING ALDOUS III IN HIGH CAIRN ]
-                                   The Threefold Climax Branch
-                                               |
-         +-------------------------------------+-------------------------------------+
-         |                                     |                                     |
-         v                                     v                                     v
-[ PATH A: CROWN LOYALIST ]          [ PATH B: FREE RIVER PORT ]           [ PATH C: PEACEMAKER ACCORD ]
-- Rowan Exposes Eamon to King       - Rowan Sells Proof to Vivienne       - Rowan Mediates Tripartite Pact
-- Eamon Cast into Oubliette         - Vivienne Rallies River Fleet        - 200G Lawful Charter Enacted
-- Lawful 200G Tithe Restored        - Royal Toll Boats Expelled           - Vivienne Granted Safe Passage
-- +30 Crown, +20 Stonecross Rep     - +35 Oakhaven, -25 Crown Rep         - Dunhollow Granted Grain Quota
-- Royal Vanguard Crest (+16 DEF)    - 120G & Gilded Anchor Passkey        - Peacemaker's Signet (+15% Crit)
-                                    - 25% Port Merchant Discount          - Realm Stability Raised to 95%
-```
-
-### 1. Act I Narrative Arc: The Timber Tariff & The Truth of the Tithe
-The central political conflict of Act I reconciles the economic crisis gripping Stonecross:
-- **The Core Grievance**: Every quarter-day, Stonecross must render its tithe to High Cairn. When King Aldous's bailiffs arrive, they demand **250 Gold**, threatening to seize the township's livestock and timber if unpaid.
-- **The Truth of the Tithe**: In ancient times, the *Charter of the Four Quarters* codified the lawful base Lady Day tithe at **200 Gold**. Fearing the awakening rifts, King Aldous granted emergency powers to his chancellor. Chancellor Eamon seized upon the King's paranoia to forge an unauthorized **+50 Gold "Emergency Rift Defense Surcharge"**, skimming the illicit proceeds into river smuggling caches.
-- **The Investigation**: Rowan travels from Stonecross to Oakhaven, questioning Baroness Vivienne, Shipwright Brendan, and Smuggler Jago. Jago confesses that the original customs parchment was hidden inside a hollow willow tree along the river shallows (`x: 720, y: 390`).
-- **The Three Branching Resolutions**:
-  1. **Crown Loyalist Path (`CROWN_LOYALIST`)**: Rowan brings the *Falsified Royal Manifest* directly to King Aldous III in High Cairn. Eamon is stripped of his chain of office and cast into the deep oubliette. The lawful 200G tithe is restored, Stonecross is saved, and Rowan receives the *Royal Vanguard Crest* (+16 DEF) and +30 Crown favor.
-  2. **Free River Port Path (`FREE_TRADE_ALLY`)**: Rowan delivers the manifest to Baroness Vivienne de la Tour. Armed with proof of chancery corruption, Vivienne expels the King's revenue cutters, declares Oakhaven a sovereign Free Port, and rewards Rowan with 120 Gold, the *Gilded Anchor Passkey*, and a permanent 25% discount across all river merchants.
-  3. **The Peacemaker Compromise (`CHIVALRIC_COMPROMISE`)**: Rowan recovers both the *Falsified Royal Manifest* and the ancient *Charter of the Four Quarters* from the Chancery Archives. Standing before King Aldous, Baroness Vivienne, and Castellan Morvath, Rowan proposes a grand feudal concordat: the 200G lawful tithe is restored, Vivienne's timber barges receive royal safe passage, Dunhollow is guaranteed low-cost grain, and Rowan receives the *Peacemaker's Signet* (+15% Crit, +20 HP), elevating realm stability to 95%.
-
----
-
-### 2. The Six Handcrafted Chronicles of Stonecross (`scr_living_world.gml`)
-
-```
-+---------------------------------------------------------------------------------------------------+
-| QUEST ID / TITLE        | GIVER & LOCATION      | CORE OBJECTIVE & BRANCHES | REWARDS             |
-+---------------------------------------------------------------------------------------------------+
-| QUEST_PIG               | Farmer Giles          | Track trot-prints across  | +45 Gold, +80 XP,   |
-| The Missing Sow of      | (x: 1750, y: 1340)    | brook to Old Mallow's     | +15 Stonecross Rep  |
-| Stonecross              | Sheep Pasture         | turnip patch; persuade or |                     |
-|                         |                       | sneak Clover back.        |                     |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| QUEST_GAMBLER           | Scribe Pippin         | Challenge Wulf to Crown & | +30 Gold, +100 XP,  |
-| The Scribe's Dice Debt  | (x: 2020, y: 780)     | Bones at the tavern table | +10 Stonecross Rep, |
-|                         | Near Boar & Flagon    | to win back Pippin's 40G  | +10 Oakhaven Rep,   |
-|                         |                       | debt note.                | +30 Pippin Affinity |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| QUEST_COUNTERFEIT       | Peddler Corin         | Identify authentic astral | +50 Gold, +120 XP,  |
-| The Peddler's Astral    | (x: 1650, y: 1100)    | shard; consecrate at Solar| +15 Stonecross Rep, |
-| Relic                   | Crossroads Wagon      | Altar; awaken the Northern| +10 Crown Rep,      |
-|                         |                       | Rift Gate!                | Rift Gate Awakened  |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| QUEST_DRUNKEN_KNIGHT    | Sir Balin             | Balin drunkenly challenged| +60 Gold, +140 XP,  |
-| The Boast of Sir Balin  | (x: 2060, y: 760)     | Mercenary Grim at the     | +15 Crown Rep,      |
-|                         | Tavern Bar            | barrow crossing; stand as | Spare Gorget        |
-|                         |                       | his second to save honor. |                     |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| QUEST_MISSING_WINE      | Foreman Brand /       | Masons celebrated bridge  | +55 Gold, +110 XP,  |
-| The Quarrymen's Tapped  | Castellan Morvath     | completion with royal wine| +20 Dunhollow Rep   |
-| Cask                    | (x: 2750, y: 1420)    | obtain Sapper Vane's      |                     |
-|                         |                       | Overtime Defense Writ.    |                     |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| QUEST_SMUGGLER_RUN      | Factor Malo           | Haul heavy brine barrel   | +80 Gold, +150 XP,  |
-| The Smuggler's Run      | (x: 1880, y: 1820)    | past King's Bridge sentry | +20 Oakhaven Rep,   |
-|                         | River Wharf           | to Master Odo's Great     | -10 Crown Rep,      |
-|                         |                       | Anvil (crucible steel).   | Master Odo Hone     |
-+---------------------------------------------------------------------------------------------------+
-```
-
----
-
-### 3. The Four Freelance Knight Commissions & Betrayal Engine (`scr_knight_contracts.gml`)
-
-Freelance contracts represent systemic chivalric commissions offered by faction emissaries at the War Pavilion and regional checkpoints. Unlike standard quests, contracts incorporate a **Betrayal Engine**: Rowan can honor the original contract or defect to a rival faction for higher bribes and shifted favor.
-
-```
-+---------------------------------------------------------------------------------------------------+
-| CONTRACT / EMPLOYER     | MISSION & TARGET      | HONORABLE TURN-IN         | BETRAYAL DEFECT-IN  |
-+---------------------------------------------------------------------------------------------------+
-| CONTRACT_BOUNTY_MALOR   | Hunt river corsair    | Deliver badge to Bailiff  | Warn Malor; deliver |
-| Employer: Bailiff Guy   | Captain Malor at      | Sir Guy: +85 Gold,        | seal to Lady Cecily:|
-| Faction: Crown          | Ruined River Landing  | +160 XP, +25 Renown,      | +120 Gold bribe,    |
-| (x: 1040, y: 1720)      | (x: 1950, y: 1900)    | +20 Crown, -15 Oakhaven   | +25 Oakhaven,       |
-|                         |                       | Rep.                      | -25 Crown Rep.      |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| CONTRACT_CONTRABAND_RUN | Smuggle unmarked      | Deliver steel to Master   | Turn contraband over|
-| Employer: Lady Cecily   | crate of crucible     | Odo's forge bench:        | to Bailiff Sir Guy: |
-| Faction: River League   | steel past crown      | +100 Gold, +180 XP,       | +75 Gold, +180 XP,  |
-| (x: 2020, y: 1850)      | checkpoint.           | +30 Renown, +25 Oakhaven, | +30 Crown Rep,      |
-|                         | Target: (975, 740)    | -15 Crown Rep.            | -25 Oakhaven Rep.   |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| CONTRACT_QUARRY_DEFENSE | Defend Dunhollow grain| Escort cart to eastern    | [NO BETRAYAL]       |
-| Employer: Sapper Vane   | cart from scavengers  | defile: +90 Gold,         | Starving miners     |
-| Faction: Iron Council   | and barrow shades.    | +150 XP, +25 Renown,      | must be fed.        |
-| (x: 2450, y: 1850)      | Target: (2350, 1750)  | +25 Dunhollow, +10 Stone. |                     |
-|-------------------------+-----------------------+---------------------------+---------------------|
-| CONTRACT_SCOUT_PAVILION | Approach within 70    | Return sentry shifts to   | [NO BETRAYAL]       |
-| Employer: Lady Cecily   | paces of King's Bridge| Lady Cecily: +60 Gold,    | Pure reconnaissance.|
-| Faction: River League   | to scout garrison and | +120 XP, +20 Renown,      |                     |
-| (x: 2020, y: 1850)      | artillery positions.  | +20 Oakhaven Rep.         |                     |
-+---------------------------------------------------------------------------------------------------+
-```
-
----
-
-### 4. Complete 21-Settlement Quest Ledger (`docs/GEMINI_GAME_DESIGN_DOCUMENT.md`)
-
-```
-+---------------------------------------------------------------------------------------------------+
-| SETTLEMENT   | QUEST ID / TITLE                 | CATEGORY | GIVER & NARRATIVE HOOK               |
-+---------------------------------------------------------------------------------------------------+
-| Stonecross   | MAIN_TIMBER_TARIFF               | Main     | Elder Alden: Expose 50G extortion.   |
-| Stonecross   | STONECROSS_ANCESTRAL_CRYPT       | Major    | Dunstan: Quell Sir Jocelyn's shade.  |
-| Stonecross   | STONECROSS_SOURDOUGH_SCANDAL     | Optional | Beatrice: Recover Barnaby the sheep! |
-| Stonecross   | STONECROSS_SMITH_BELLOWS         | Optional | Odo: Procure Oakhaven bog-leather.   |
-| Stonecross   | STONECROSS_STOLEN_BALLAD         | Optional | Margery: Retrieve stolen songbook.   |
-| Oakhaven     | OAKHAVEN_RIVER_AUTONOMY          | Major    | Vivienne: Break royal toll chains.   |
-| Oakhaven     | OAKHAVEN_BRENDAN_PINS            | Optional | Brendan: Recover stolen keel-pins.   |
-| Oakhaven     | OAKHAVEN_FISH_CHOWDER            | Optional | Marta: Supply shallots and pike.     |
-| Oakhaven     | OAKHAVEN_CONTRABAND_CASK         | Optional | Jago: Retrieve hidden moonshine.     |
-| Dunhollow    | MAIN_DUNHOLLOW_TREMORS           | Main     | Morvath: Quiet humming rift vein.    |
-| Dunhollow    | DUNHOLLOW_TEMPERING_SLAG         | Optional | Thora: Retrieve rare volcanic slag.  |
-| Dunhollow    | DUNHOLLOW_STRIKE_PETITION        | Optional | Hobb: Mediate quarry union dispute.  |
-| Dunhollow    | DUNHOLLOW_TRAPPED_CANARY         | Optional | Burl: Disarm scaffold to save bird.  |
-| High Cairn   | HIGH_CAIRN_MARSHAL_DUEL          | Major    | Brandon: Chivalric sparring duel.    |
-| High Cairn   | HIGH_CAIRN_MISSING_CHARTER       | Optional | Archivist: Find ancient tithe charter|
-| High Cairn   | HIGH_CAIRN_SOVEREIGN_INSOMNIA    | Optional | Herbalist: Brew tea for King's sleep.|
-| High Cairn   | HIGH_CAIRN_OUBLIETTE_KEY         | Optional | Jailer: Find lost dungeon key.       |
-| Weeping Weald| MAIN_SUNKEN_CROWN                | Main     | Oakhound: Tune rift to Dimension II. |
-| Weeping Weald| WEEPING_WEALD_MISTLETOE          | Optional | Hermit: Cut golden mistletoe branch.  |
-| Weeping Weald| WEEPING_WEALD_ACOUSTIC_HENGE     | Optional | Henge: Play megalithic stone chord.  |
-| Weeping Weald| WEEPING_WEALD_VOID_WISP          | Optional | Bog: Escort lost wisp to barrow.     |
-+---------------------------------------------------------------------------------------------------+
-```
-
----
-
-## SECTION VII: THE HIDDEN WAR CLOCK & REGIONAL DEGRADATION
-
-> ### CLASSIFICATION NOTE
-> The autonomous 3600-frame feudal warfare state machine is a `[VERIFIED IMPLEMENTATION]` operating in GML. The **Hidden War Clock**, Realm Exhaustion meter, and systemic degradation thresholds detailed below represent the authoritative design specification (`[PROPOSAL]`) designed to drive the sandbox toward its definitive endings.
-
-```
-+---------------------------------------------------------------------------------+
-|                       THE WAR CLOCK & COLLAPSE METRICS                          |
-+---------------------------------------------------------------------------------+
-
-       REALM EXHAUSTION (0 - 100)           ECONOMIC COLLAPSE (0 - 100)
-    [|||||||||||||||||||||...........]   [||||||||||||||||...............]
-        Fatigue: Marching Casualties         Supply Chain Blockades & Inflation
-
-                                      |
-                                      v
-                        TERRITORIAL DEVASTATION (0 - 100)
-                      [||||||||||||||||||||||||||||....]
-                       Burned Mills, Salted Soil & Graves
-
-                                      |
-                 +--------------------+--------------------+
-                 |                                         |
-                 v                                         v
-        CRITICAL THRESHOLD: 80%                   COLLAPSE THRESHOLD: 100%
-  - Famine: Wheat prices x3.0               - Complete Royal Breakdown
-  - Iron Deficit: Weapons unforgeable       - Crypt Shades Overrun Frontiers
-  - Desertion: Sellswords flee              - Triggers Ending 4: Ashen Kingdom
-```
-
-### 1. The Three Pressure Gauges
-In the expanded design architecture, the kingdom does not fight indefinitely without consequence. Every campaign skirmish, foraging raid, and tariff blockade accumulates systemic pressure across three realm gauges:
-1. **Realm Exhaustion (`0–100`)**: Measures demographic and military attrition. Every war cycle increases exhaustion by +1. Faction battles, mercenary recruitment, and checkpoint captures add +2 to +5. As exhaustion crosses 50, militia patrol sizes dwindle, and peasant deserters turn into roaming highwaymen.
-2. **Economic Collapse (`0–100`)**: Measures inflation, trade disruption, and currency debasement. Raiding grain trains or blockading river wharfs drives this gauge upward. At high levels, merchant gold purses dwindle, trade spreads widen from 15% to 40%, and basic commodities become scarce luxuries.
-3. **Territorial Devastation (`0–100`)**: Measures physical ruin across the Greenmere Vale. Foraging raids burn outlying fences; abandoned mills rot; barrow shades encroach upon abandoned farmsteads.
-
-### 2. Scarcity Dynamics: Grain Famine & Iron Deficit
-- **Grain Famine**: If Dunhollow's Food reserve drops below 20, or if Stonecross wheat caravans are plundered twice consecutively, a **Grain Famine** strikes. Commoners in Stonecross queue at Baker Beatrice's bakery; Beatrice ceases handing out free daily bread; tavern food costs quadruple; and commoner loyalty plummets.
-- **Iron Deficit**: If Oakhaven privateers strangle Dunhollow ore shipments, royal smithies run dry. Weapon forge costs double; repair materials become unobtainable; and Crown halberdier units are replaced by poorly equipped conscripts.
-
-### 3. Price Shocks & Smuggling Arbitrage
-The regional commodity trading engine responds dynamically to the War Clock. When a faction suffers an economic shock:
-- Wheat spikes in Stonecross (+35%) when Oakhaven ambushes supply convoys.
-- Iron spikes in Oakhaven (+30%) when Dunhollow launches foraging raids.
-- Canny players can exploit these price shocks through high-risk smuggling runs, hauling cargo through contested checkpoints to reap massive arbitrage margins while the realm burns.
-
----
-
-## SECTION VIII: THE FOUR CIVIL WAR ENDINGS
-
-```
-+---------------------------------------------------------------------------------+
-|                       THE FOUR CIVIL WAR RESOLUTIONS                            |
-+---------------------------------------------------------------------------------+
-
-        FACTION ALIGNMENT                               REALM CONDITIONS
-  [ Rowan Champions One Cause ]                     [ War Clock & Negotiations ]
-               |                                                 |
-       +-------+-------+                                 +-------+-------+
-       |               |                                 |               |
-       v               v                                 v               v
-  ENDING 1:        ENDING 2:                         ENDING 3:       ENDING 4:
-REBEL VICTORY   LOYALIST ORDER                   SECRET SETTLEMENT ASHEN KINGDOM
- (River League)  (Royal Crown)                     (Peacemaker)    (Cataclysm)
-```
-
-### 1. Ending 1: Rebel Victory — "The Free River Republic"
-- **Narrative Premise**: Rowan aligns with Baroness Vivienne de la Tour and the River League. Rowan leads a daring river raid, shattering the iron toll chains at King's Bridge and seizing the Crown's royal customs barges.
-- **Climax**: King Aldous's punitive vanguard is surrounded in the river shallows. Facing financial insolvency and mutinous mercenaries, the King is compelled to sign the **Maritime Concordat**.
-- **Aftermath**: Oakhaven is declared a sovereign Free Port; royal tariffs on timber and fish are abolished; the River League expands its council across the marches; and Rowan is named *Grand Admiral-General of the River Guild*.
-- **The Cost**: Without crown cohesion, border defense collapses; the northern marches become vulnerable to foreign corsairs; and commoners find themselves ruled by merchant cartels whose greed matches any royal tax collector.
-
-### 2. Ending 2: Loyalist Restoration — "The Iron Crown Victorious"
-- **Narrative Premise**: Rowan acts as the King's royal champion, exposing Chancellor Eamon's corruption, subduing the River League privateers, and lifting the siege on the royal granaries.
-- **Climax**: Rowan leads the Royal Vanguard in a decisive counter-offensive at King's Bridge, shattering the River League fleet and arresting the ringleaders of the Dunhollow mining revolt.
-- **Aftermath**: King Aldous III re-establishes centralized authority across all baronies. The lawful 200G tithe is enforced by royal decree; border garrisons are heavily reinforced; and Rowan is knighted as *Lord Commander of the Sunken Vanguard*, gifted the grand fortress of High Cairn's western gate.
-- **The Cost**: An iron peace descends. Curfews are instituted; independent river trade is crushed under royal monopoly; and the prisons of High Cairn echo with the groans of displaced commoners.
-
-### 3. Ending 3: Secret Settlement — "The Peacemaker Accord"
-- **Narrative Premise**: Rowan uncovers both the *Falsified Royal Manifest* and the ancient *Charter of the Four Quarters*, leveraging this dual truth to force all three faction leaders to the negotiating table before total exhaustion occurs.
-- **Climax**: In a tense tripartite council convened at the Stonecross Crossroads, Rowan reveals Eamon's embezzlement, proves that Dunhollow's miners are starving due to merchant hoarders, and exposes the Crown's hollow treasury.
-- **Aftermath**: The **Chivalric Feudal Accord** is signed:
-  - The ancient 200G Lady Day tithe is permanently codified.
-  - Oakhaven receives customs exemptions for regional timber in exchange for subsidizing the royal navy.
-  - Dunhollow is guaranteed a fixed grain quota from Stonecross lowlands in exchange for supplying the realm with standardized steel plows and armor.
-  - Realm Stability surges to 95%, and Rowan is venerated across all kingdoms as *The Peacemaker of Stonecross*, receiving the *Peacemaker's Signet*.
-- **The Triumph**: The rarest and most challenging resolution. Preserves the prosperity of commoners, protects ancient charters, and unites the realm against the looming threat of the waking rifts.
-
-### 4. Ending 4: Ashen Kingdom — "The Great Collapse & The Barrow Shroud"
-- **Narrative Premise**: The War Clock expires (`Realm Exhaustion >= 100` or `Territorial Devastation >= 100`) due to unchecked warfare, famine, and resource depletion. Rowan pursues selfish mercenary wealth or fails to mediate before the realm collapses.
-- **Climax**: Starving and bankrupt, the garrisons abandon the checkpoints. The ancient seals at the Whispering Barrows disintegrate, and the **Barrow Warden Shade** leads an unending horde of undead legionaries across the fertile vales. Simultaneously, the unattended Northern Rift Gate destabilizes, spilling icy void-fog across the land.
-- **Aftermath**: High Cairn is abandoned; Oakhaven's docks burn; and Stonecross is swallowed in perpetual ash and twilight. Rowan walks the empty cobblestones alone—a lord of weeds, stone cairns, and whispering ghosts—mirroring the tragic fall of Sir Galahalt's ancient order.
-
----
-
-## SECTION IX: WRITER'S ROOM GUIDELINES & OWNER SCRATCHPADS
-
-### 1. Narrative Voice & Linguistic Philosophy
-- **Tone**: Gritty medieval realism blended with pastoral warmth. Dialogue should evoke the cadence of Middle English chronicles and chivalric romances without resorting to archaic parody (*avoid "thou art", "doth", and Shakespearean flourishes*).
-- **Style Rules**:
-  - Ground dialogue in sensory reality: smell of peat smoke, clank of rusted mail, sour taste of cider, cold rain running inside a gorget.
-  - Every character should speak from their economic and social class:
-    - *High Cairn Nobility*: Speak in formal legalisms, feudal hierarchy, chancery vocabulary, and imperial precedent (*"codified", "excise", "vanguard", "writ", "precedent"*).
-    - *Oakhaven Merchants*: Speak with maritime sharpness, cynical financial wit, and contractual precision (*"margin", "cargo", "draft", "keel", "specie", "concordat"*).
-    - *Dunhollow Quarrymen*: Speak in blunt, heavy, laconic sentences stripped of diplomatic grace (*"strike", "slag", "pick", "belly", "iron", "rock"*).
-    - *Greenmere Commons*: Speak with earthy pastoral metaphors, reverence for the soil, and cautious suspicion of outsiders (*"furrow", "wattle", "brook", "hearth", "tithe"*).
-
-### 2. Dialogue Reference Samples
-
-> **King Aldous III**:  
-> *"An iron peace is better than a golden war, Rowan. Every toll collector at King's Bridge, every sack of barley rendered to High Cairn, is another course of dressed stone between our children and the void. If I soften my hand, the lords will tear this kingdom into five bleeding carcasses. Do you hold the Lady Day tithe, or must I send halberdiers to count Giles's sheep?"*
-
-> **Baroness Vivienne de la Tour**:  
-> *"Aldous sits on his Throne of Swords and imagines he rules a kingdom. He rules a graveyard, Rowan. The timber that caulks his navy comes from my sawmills; the grain that feeds his garrisons floats on my barges. I will not pay a fifty-gold surcharge to subsidize a mad king's fear of ghosts. Bring me the manifest, knight, and I will show you how a river breaks its banks."*
-
-> **Castellan Morvath**:  
-> *"You speak of charters, knight? The stone doesn't give a damn about charters. When the deep shaft collapsed on Level Four, we dug out seven lads with our bare hands. High Cairn sent us condolences and an audit for missing ore. If Stonecross will not sell us flour for honest silver, my sappers will come down with sledgehammers and take it. Men cannot eat iron."*
-
-> **Elder Alden**:  
-> *"The lords have forgotten the smell of wet earth in spring, Rowan. They look at our valley and see taxes, timber, and soldiers. But the soil remembers. The kings who built High Cairn are dust beneath the barrows, and the grass grows over their swords just the same. Walk gently among us, knight. We have buried many heroes."*
-
----
-
-### 3. Owner Scratchpads & Unresolved World Hooks (`[OPEN DECISION]`)
-
-The following hooks are reserved for the Project Owner's creative direction:
-- **Hook 1: The Identity of the True Astral Emperor**: Is the Emperor who fell during the Great Crucible truly dead, or does his consciousness survive within the central obsidian core of the Northern Rift Gate?
-- **Hook 2: The Fifth Tincture (Sable / Royal Astral)**: In the early card combat drafts, five tinctures were defined. Should the fifth tincture represent extraterrestrial star-magic (Vesperan astral glass), or dark necromantic energy drawn from the Whispering Barrows?
-- **Hook 3: Archipelago Maritime Expansion**: Once the continental civil war is reconciled, will Rowan board Vivienne's sea-galleasses to explore the shattered outer island archipelagos, introducing naval boarding combat and island fiefdoms?
-- **Hook 4: The Fate of Queen Seraphina**: When Dimension II is bridged, will Vespera arrive as an enlightened celestial ally, or will Seraphina's star-cult attempt to harvest Aethelgard's iron core to fuel their dying spires?
-
----
-*End of Story Bible & World Compendium. Authoritative narrative master file for Crown & Crucible.*
+## 01 · Executive overview
+
+Crown & Crucible is a living medieval sandbox set in Aethelgard, a culturally diverse archipelago under King Aldous III. Rowan arrives as a common-born, experienced man-at-arms: capable with weapons, limited by money and status, and unknown to the powerful. He has no knighthood, hereditary title, estate, privileged audience, or foretold destiny.
+
+The setting draws principally from European societies of approximately 1150–1350. Its conflicts arise from people and institutions: disputed obligations, inherited privileges, military service, local loyalties, contested justice, and the cost of prolonged violence. Religious conviction and folklore matter because people believe and act on them. No supernatural explanation is objectively true in the world.
+
+The player may seek military employment, trade, agriculture, wealth, property, relationships, or a quieter personal life. These are freedoms of design, not a claim that every career is implemented. Rowan may become influential; he is never the world’s only source of action. Communities and factions pursue their own interests while civil war develops systemically.
+
+Authority: the owner’s thirteen numbered positions take precedence over the old Story Bible, the technical dossier, repository dialogue, and interface labels. Rules 1–12 are LOCKED CANON. Rule 13, economic organization, is an OPEN DECISION. Existing names, biographies, institutions, and quest details remain PROVISIONAL unless explicitly locked below.
+
+### Reading and navigation
+
+Use the Google Docs outline or the linked chapter guide below. Sections 02–03 define canon and status; Sections 04–14 guide writing; [Section 15](#15--implementation-reconciliation) distinguishes source evidence from design; [Section 16](#16--open-creative-decisions) holds decisions reserved to the owner.
+
+- [02 Canon at a glance](#02--canon-at-a-glance) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.nrkplysly3m1))
+- [03 Status and editorial authority](#03--status-and-editorial-authority) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.3o0abc9kqhjn))
+- [04 Geography and the archipelago](#04--geography-and-the-archipelago) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.9gts7snvrev))
+- [05 History and the unfinished wars](#05--history-and-the-unfinished-wars) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.r2npyhjcot9v))
+- [06 Monarchy, nobility and Rowan’s place](#06--monarchy-nobility-and-rowans-place) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.uubi84sxk6dg))
+- [07 Law and personal obligations](#07--law-and-personal-obligations) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.lm8v6qsft8gi))
+- [08 Religion, belief and disputed wonders](#08--religion-belief-and-disputed-wonders) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.tzsm4p94ljwq))
+- [09 Culture and regional society](#09--culture-and-regional-society) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.2a3atcp5yfie))
+- [10 Military institutions and mercenary service](#10--military-institutions-and-mercenary-service) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.s71hb4giotsx))
+- [11 Character room](#11--character-room) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.1mk4zqgo2gcl))
+- [12 Factions and the civil war](#12--factions-and-the-civil-war) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.4tq1m8p2oato))
+- [13 Quest room and grounded mysteries](#13--quest-room-and-grounded-mysteries) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.jw2vsr4ka1zl))
+- [14 Gameplay-related narrative systems](#14--gameplay-related-narrative-systems) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.cvcb8or9pk1m))
+- [15 Implementation reconciliation](#15--implementation-reconciliation) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.qj5x4f90ybx8))
+- [16 Open creative decisions](#16--open-creative-decisions) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.ckr06nxu8uvp))
+- [17 Writer’s room and maintenance](#17--writers-room-and-maintenance) ([GDoc](https://docs.google.com/document/d/1ivArzIU4SJwu-xI2CWtGX-MZKDu7Mo7EipUothLWW5Q/edit#heading=h.7kltpmbh0y8o))
+
+## 02 · Canon at a glance
+
+The numbered positions below are the controlling summary. The fuller sections explain their consequences without assigning unapproved island identities or economic models.
+
+| Rule | Controlling position | Status |
+| --- | --- | --- |
+| **1 · Realism** | No actual magic, supernatural intervention, fantasy species, dimensional travel, resurrection, enchanted gear, or divine powers. Belief is human; modifiers are nonmagical. | `LOCKED CANON` |
+| **2 · Period** | Primarily c. 1150–1350 European medieval society; feudalism, castles, mail, heraldry, guilds, monasteries, warfare. No widespread Renaissance technology or firearms. | `LOCKED CANON` |
+| **3 · Monarchy** | Aldous III is legitimate; fealty, noble families, custom, and decentralized obligations constrain him. He is not absolute. | `LOCKED CANON` |
+| **4 · Religion** | Broad shared traditions with regional customs, clergy, festivals, institutions, and politics. Exact theology remains open. | `LOCKED CANON` |
+| **5 · Nobility** | Hereditary nobility is inherited and exceptionally hard to enter. Knighthood, property, influence, and wealth do not automatically ennoble Rowan. | `LOCKED CANON` |
+| **6 · Law** | Royal, noble, religious, and chartered-town jurisdictions overlap. Protections, duties, sanctions, and corruption vary. | `LOCKED CANON` |
+| **7 · Social systems** | Serfdom, free tenancy, merchant rights, service, and obligations vary. Borders do not erase duties. Island assignments require approval. | `LOCKED CANON` |
+| **8 · Cultures** | Aethelgard is a diverse archipelago with distinct languages, customs, identities, grievances, and roughly a century of intermittent warfare. | `LOCKED CANON` |
+| **9 · Unfinished war** | Uneven peace and continuing violence precede escalation. Rowan lacks elite access; the civil war progresses independently. | `LOCKED CANON` |
+| **10 · Rowan** | Common-born, experienced man-at-arms. No starting knighthood, noble birth, land, destiny, or political influence; career and allegiance depend on choices. | `LOCKED CANON` |
+| **11 · Armed forces** | Feudal levies, professional household retinues, town militias, and mercenary companies coexist in regionally different arrangements. | `LOCKED CANON` |
+| **12 · Mercenaries** | Attitudes depend on local experience and authority. Employment and reputation have social/geographic consequences; attitude does not equal allegiance. | `LOCKED CANON` |
+| **13 · Economy** | NOT DECIDED. Economic organization is reserved for owner approval. | `OPEN DECISION` |
+
+
+
+## 03 · Status and editorial authority
+
+| Label | Meaning |
+| --- | --- |
+| `LOCKED CANON` | Explicitly approved by the project owner; supersedes conflicting legacy material. |
+| `PROVISIONAL` | Compatible prior material or an editorial proposal; not owner-approved canon. |
+| `OPEN DECISION` | A choice reserved to the owner. Do not fill it silently. |
+| `VERIFIED IMPLEMENTATION` | Named native source inspected and confirmed to exist; scope and limitations must be stated. |
+| `PLANNED SYSTEM` | Established design direction or designed behavior not verified as complete native implementation. |
+
+
+
+Use one label for each claim. Where design authority and implementation need separate statements, split them: “LOCKED CANON: Rowan begins common-born” and “VERIFIED IMPLEMENTATION: the current rank initializer still calls him Sir Rowan.” A shipped contradiction does not become canon through repetition.
+
+Approval practice: only an explicit owner decision promotes PROVISIONAL or OPEN DECISION material to LOCKED CANON. Only inspection of a named native source path supports VERIFIED IMPLEMENTATION. A data definition, UI description, or HTML prototype alone does not prove that its promised gameplay runs.
+
+The technical dossier remains a read-only historical reference for this assignment. Several descriptions differ from native code, including card effects and the scope of political progression. The repository is authoritative for what exists; this bible is authoritative for what the world is meant to be.
+
+## 04 · Geography and the archipelago
+
+### The kingdom
+
+LOCKED CANON: Aethelgard is an archipelago. Its islands possess distinct languages, customs, identities, and historical grievances. Do not describe the realm as one uniform mainland culture or treat sea travel as a later conversion from a continental setting.
+
+OPEN DECISION: the island roster, names, coastlines, relative distances, sea routes, and the placement of named settlements. No current region has been definitively assigned to a particular island, tenancy regime, language, or mercenary attitude.
+
+### The playable locality
+
+VERIFIED IMPLEMENTATION: Stonecross and its surrounding landscape occupy Room1; the outdoor map shares that room with an interior strip for the tavern, forge, chapel, and cottages. This technical arrangement is not evidence that the whole archipelago is explorable or that every distant settlement has a native map.
+
+PROVISIONAL: retain Stonecross as the local community and the Greenmere Vale / Greenmere Marches as a regional name. Retain the Boar & Flagon, Master Odo’s forge, the eastern chapel, the old watchtower, bridges, wharves, woodland, and burial mounds as useful human-scale places. “Marches” does not yet settle a constitutional status.
+
+PROVISIONAL: High Cairn, Oakhaven, Dunhollow, the Weeping Weald, Red Sike, and the Whispering Barrows remain useful place names. Older overland diagrams, north/south placements, and resource specializations do not establish their final island geography. Do not turn former alternate dimensions into newly approved islands.
+
+### Travel as a social act
+
+LOCKED CANON: crossing an island boundary does not automatically extinguish obligations. A traveler may encounter different customs and jurisdictions while still owing service, rent, debt, or other duties elsewhere. Exact rules for enforcement and recognition remain OPEN DECISION.
+
+PLANNED SYSTEM: routes, passage, local introductions, and knowledge should support organic discovery. Neither instant worldwide access nor a mandatory route through every political capital is assumed.
+
+## 05 · History and the unfinished wars
+
+LOCKED CANON: the kingdom has experienced roughly a century of warfare. This need not be one continuous conflict. Some communities remember decades of relative peace; others have endured raids, feuds, sieges, and border fighting within living memory.
+
+LOCKED CANON: political instability precedes the main civil war’s escalation. “The war never truly ended” describes uneven security and unresolved grievances, not a uniformly burning kingdom or a universal ceasefire shattered by Rowan’s arrival.
+
+PROVISIONAL: earlier references to ruined watchtowers, abandoned defenses, displaced households, broken military loyalties, and contested tolls remain compatible foundations. Their dates, causes, perpetrators, and local interpretations require confirmation before becoming fixed history.
+
+OPEN DECISION: the chronology of campaigns, dynastic disputes, treaties, successions, and family grievances. Build a dated history only after the owner approves its major events.
+
+The old cosmic catastrophe, ancestral cosmic empire, and parallel-world chronology are withdrawn from factual history. No real-world disaster, forgotten empire, or hidden scientific explanation is substituted by default. An old legend may be reused only as a clearly attributed belief if it serves a grounded story and receives appropriate editorial approval.
+
+## 06 · Monarchy, nobility and Rowan’s place
+
+### Aldous III and negotiated kingship
+
+LOCKED CANON: King Aldous III is Aethelgard’s legitimate monarch. His authority rests on fealty, powerful noble families, customary rights, and decentralized military obligations. He cannot simply legislate away every charter, command every household, or extract unlimited resources through an absolute bureaucracy.
+
+PROVISIONAL: High Cairn remains the royal seat; a royal chancery, bailiffs, household officers, seals, and petitions remain useful institutional material. Their exact powers, appointments, and relationship to local rights remain subject to the owner’s settlement of law and economy.
+
+Political writing should give royal officials incentives and constraints. A disputed levy may concern jurisdiction, custom, accounting, or the limits of delegated authority. The King’s legitimacy does not make every official honest or every royal demand lawful; opposition to an official does not automatically constitute rejection of the monarchy.
+
+### Birth, knighthood, office and property
+
+LOCKED CANON: hereditary nobility is inherited and extremely difficult for commoners to obtain. Knighthood is separate from hereditary aristocracy. An earned military honor, purchased holding, tenancy, salaried office, or personal fortune does not automatically confer noble birth or hereditary jurisdiction.
+
+LOCKED CANON: Rowan begins common-born and already experienced as a man-at-arms. He is not yet a knight, aristocrat, landowner, chosen one, or influential political actor. Use “Rowan” at the start; reserve “Sir Rowan” for a later, actually conferred knighthood.
+
+OPEN DECISION: Rowan’s birthplace, family circumstances, previous employer, exact age, and the procedure through which he could earn knighthood. Do not retain the dispossessed ancestral manor or noble signet as proof of hidden aristocratic descent.
+
+PLANNED SYSTEM: military advancement, property, wealth, patronage, and legal standing should be tracked as distinct achievements. Existing rank thresholds and the watchtower reward are prototype mechanics to reconcile, not a canon ladder from commoner to hereditary lord.
+
+### Access to power
+
+LOCKED CANON: Rowan’s common status limits direct access to kings and powerful nobles. Influence must be earned or mediated. PROVISIONAL approaches include a credible sponsor, household service, a formal petition, an intermediary, or sufficiently important evidence; none guarantees an audience or a universal access rule.
+
+## 07 · Law and personal obligations
+
+LOCKED CANON: royal courts, noble courts, religious institutions, and chartered towns exercise overlapping jurisdictions. Rights, duties, punishments, corruption, and practical access to justice vary by territory.
+
+LOCKED CANON: islands differ in serfdom, free tenancy, merchant privileges, military service, and personal obligations. No definitive assignment of these systems to named islands is approved. Avoid blanket statements that every peasant is a serf, every town is free, or every contract is recognized everywhere.
+
+PROVISIONAL: legal quests can turn on who has standing, which court can hear a case, whether a document is authentic, what a charter actually grants, and who can enforce a judgment. Evidence may persuade one institution while exposing its holder to risk before another.
+
+OPEN DECISION: the forms of religious jurisdiction, sanctuary, appeals, inheritance, criminal procedure, fines, imprisonment, and recognition of foreign judgments. Do not import a complete modern legal code or a single medieval model as kingdom-wide fact.
+
+Writing rule: identify the relevant authority and obligation in each scene. A passport-like token, faction friendship, or island crossing cannot silently cancel an oath, debt, tenure, or accusation.
+
+## 08 · Religion, belief and disputed wonders
+
+LOCKED CANON: the kingdom shares broad religious traditions, but islands and communities differ in institutions, clergy, festivals, observance, and religious politics. The precise theology is OPEN DECISION.
+
+LOCKED CANON: religion, superstition, folklore, alleged miracles, and arguments over them may shape behavior. No miracle, curse, resurrection, divine power, or supernatural intervention is confirmed by the narrator, rules, or objective outcome.
+
+PROVISIONAL: monasteries, parish clergy, charitable houses, local shrines, brewing, hospitality, manuscript work, and religious disputes remain compatible elements. Existing “Brother” and “Sister” roles are retained as character concepts, without fixing a universal hierarchy, doctrine, or historical denomination.
+
+A blessing can comfort a frightened person; charity can purchase food; practiced care can help someone recover. Neither prayer nor a consecrated object closes wounds, raises the dead, opens another world, or adds a literal supernatural force to a weapon.
+
+OPEN DECISION: the names and structure of religious traditions, their theology, regional holy days, institutional rivalries, and their precise relationship to secular courts. Existing solar, astral, or crown-centered theology is not retained as approved doctrine.
+
+### Belief is not a compulsory hidden explanation
+
+Writers may preserve uncertainty about an accusation or a person’s motives without preserving uncertainty about whether actual magic exists. Not every old fantasy plot needs to survive as an elaborate fraud. A supposed wonder may be rumor, error, political deception, or simply removed; the specific explanation requires approval where it would create major new lore.
+
+## 09 · Culture and regional society
+
+LOCKED CANON: island cultures differ in language, custom, identity, and remembered grievance. Those differences must matter socially, but no map of cultural traits has yet been approved.
+
+PROVISIONAL: local terms of address, songs, food, dress, household traditions, commemorations, and attitudes toward outsiders can provide texture. Use them as proposals tied to named communities rather than declaring a whole island uniformly devout, warlike, commercial, or hostile.
+
+Class, occupation, household affiliation, birthplace, and military employer can pull a person in different directions. A merchant may defend customary royal authority; a royal retainer may resent a particular tax; two villages on one island may remember the same campaign differently.
+
+LOCKED CANON: mercenary reputation is regional and socially contingent. A community’s welcome or distrust of hired soldiers is not an automatic civil-war allegiance. Distinguish trust in Rowan personally, an employer’s reputation, a company’s conduct, and memories of past campaigns.
+
+### Economic organization — reserved
+
+OPEN DECISION — Rule 13: the kingdom’s economic organization is NOT DECIDED. Do not establish an economic constitution, landholding model, guild monopoly, labor regime, tax schedule, universal currency policy, or island resource assignment through descriptive prose.
+
+VERIFIED IMPLEMENTATION: the prototype contains gold, commodity prices, merchant stocks, cargo, paid contracts, wages, and faction resource counters. Their existence does not approve a final social or economic model. Keep earlier fixed tithe amounts, universal merchant discounts, and faction-wide trade ideologies provisional pending owner approval.
+
+## 10 · Military institutions and mercenary service
+
+LOCKED CANON: military institutions include feudal levies, professional household retinues, town militias, and mercenary companies. Their organization, obligations, recruitment, and relations with civil authority vary regionally.
+
+The setting’s principal reference period is approximately 1150–1350. Mail, helmets, shields, spears, swords, bows, crossbows, castles, siegecraft, heraldry, and household service form an appropriate starting vocabulary. Verify details against the chosen local period before fixing them; do not casually combine every medieval century.
+
+LOCKED CANON: widespread Renaissance technology, firearms, and anachronistic military equipment do not belong in the setting. Withdraw explosive mining powder, gunpowder military formations, late-period naval assumptions, and ubiquitous full plate from older faction descriptions. Large greatswords and other existing weapon classes require period-sensitive naming and presentation rather than automatic approval of later weapons.
+
+PROVISIONAL: obligations of service, limited campaigning seasons, provisioning, ransom, discipline, safe-conduct, and military pay are useful sources of decisions. Their exact rules and economic arrangements remain open.
+
+PLANNED SYSTEM: employment should have geographic and social consequences. Serving a household or company may gain an introduction in one place and suspicion elsewhere. A reputation number should not erase distinctions among militia membership, paid service, fealty, and hereditary status.
+
+## 11 · Character room
+
+The roster preserves useful personalities and relationships. Names and roles below appear in native data or established drafts; biographies remain PROVISIONAL except for Rowan’s explicitly locked origins. Existing chivalric titles belong to those characters, not automatically to Rowan.
+
+### Rowan
+
+LOCKED CANON: a common-born, experienced man-at-arms at the beginning of play. Competence comes from experience, not supernatural favor. His career, employer, allegiance, property, and eventual honors depend on decisions. His origins do not mandate poverty in every scene or forbid later prosperity; they deny an inherited estate and elite standing at the start.
+
+### Companions and hired people
+
+PROVISIONAL — Sir Galahalt: a disillusioned knight associated with the old watchtower and a broken military order. Keep his severity about duty, oaths, and betrayal. The lost standard and a disputed withdrawal can sustain his personal story; an undead enemy and inevitable lifelong loyalty cannot. Exact events, date, order history, and the banner’s destination need approval.
+
+PROVISIONAL — Margery: a witty, reckless, generous minstrel and opportunist at the Boar & Flagon. Preserve her songs, appetite for risk, concern for ordinary people, and uneasy friendships. Her morale effects are human; her approval does not prove a single mandatory political allegiance.
+
+PROVISIONAL — Brother Dunstan: a convivial, charitable religious brewer with practical experience tending people. Preserve his concern for mercy and hunger. Remove miraculous cures, empowered relics, and confirmed divine intervention. His institution and theology remain open.
+
+PROVISIONAL — Isolde Venn: a proud herald or former official whose commitment to lawful authority conflicts with dishonest orders. Preserve her damaged career and need for trustworthy testimony. Her exact role in the disputed surcharge story remains provisional; she is not a shortcut to unconditional royal access.
+
+PROVISIONAL — Hob Ashby: a boastful, steady hired soldier whose loyalty is affected by pay and treatment. Wenna Fletch: a quiet, proud archer who expects professional respect. Tam Reedy: a cheerful, nosy scout with useful local knowledge and questionable habits. Sister Agnes: a brisk field carer recovering from an injury. Corporal Hale: a dutiful, inexperienced militia ally on temporary service.
+
+VERIFIED IMPLEMENTATION: the native retinue has recruitment, party membership, wages, morale, approval, memories, routines, injuries, temporary absence, and personal quest state. Combat support definitions and fighter-selection APIs exist; an authored support description alone does not prove its battle effect is connected. See Section 15.
+
+### Community and frontier cast
+
+PROVISIONAL: retain Elder Alden, Baker Beatrice, Farmer Giles, Old Mallow, Guard Donald, Scribe Pippin, Wulf, Sir Balin, Peddler Corin, Master Odo, Refugee Mira, Mercenary Grim, Foreman Brand, Factor Malo, Bailiff Sir Guy, Lady Cecily, and Sapper Vane. They supply compatible disputes over food, debt, service, honor, authority, building work, and transport.
+
+Preserve useful contrasts: Pippin’s fear of a creditor; Wulf’s practical self-interest; Balin’s injured pride; Odo’s skilled labor; Beatrice’s concern for displaced people; Mira’s experience of insecurity. Corin’s trade in curiosities survives; a genuinely empowered astral object does not.
+
+## 12 · Factions and the civil war
+
+LOCKED CANON: the civil war unfolds within an already unstable kingdom and does not suspend itself until Rowan accepts a main quest. The King is legitimate, but royal agents, noble households, towns, religious institutions, military companies, and communities do not all share one interest.
+
+### Existing political blocs
+
+VERIFIED IMPLEMENTATION: native faction data contains the Crown, River League, and Iron Council, with King Aldous III, Baroness Vivienne de la Tour, and Castellan Morvath as leaders. This is the prototype’s faction model, not proof of a complete constitution or final island map.
+
+PROVISIONAL — Crown: royal authority, fealty, customary revenues, security, and competing obligations. Preserve divisions between the monarch, his household, local loyalists, and self-serving officials. Remove the motive of financing rituals against a cosmic void; reject the assumption that legitimate kingship means absolute power.
+
+PROVISIONAL — River League: Vivienne, Cecily, factors, carriers, and allied interests can sustain disputes over privileges, tolls, safe passage, and local autonomy. Do not lock a republic, an island culture, a universal free-trade creed, or a final economic organization through the faction description.
+
+PROVISIONAL — Iron Council: Morvath, Vane, Brand, and their associates retain conflicts over provisioning, work, defense, and local authority. The Council’s legal basis, relationship to hereditary nobles, and representation of workers remain open. Modern labor institutions and advanced weapons are not default substitutes.
+
+PROVISIONAL — Stonecross community: households share exposure to soldiers and disrupted livelihoods without forming one unanimously neutral political actor. Alden and Beatrice can advocate for neighbors; they do not automatically speak for everyone.
+
+### Deterioration and agency
+
+PLANNED SYSTEM: the civil war must produce economic and physical consequences: stalled shipments, scarcity, rising prices, refugees, changing checkpoints, deserted routes, damaged buildings, and burning settlements. NPC and faction decisions contribute independently of Rowan.
+
+LOCKED CANON: systemic deterioration and four possible civil-war outcomes are established design direction. Their complete native implementation is not verified. PROVISIONAL: the existing pressure concepts of exhaustion, economic disruption, and devastation remain useful; exact counters, thresholds, timing, trigger mission, and recovery rules require owner decisions.
+
+PLANNED SYSTEM: signal danger through believable reports and visible consequences. Allow meaningful optional pursuits and enough response time; do not disguise an arbitrary short deadline or blame the player for an unavoidable collapse. The exact balance between a quiet introductory period and escalation is OPEN DECISION.
+
+### Four planned outcomes
+
+PLANNED SYSTEM — Rebel victory: a successful opposition coalition defeats or compels the Crown’s position. Preserve factional costs and competing interests. A free republic, specific treaty, territorial settlement, and Rowan’s reward are PROVISIONAL; victory does not automatically ennoble him.
+
+PLANNED SYSTEM — Loyalist restoration: royal supporters re-establish a workable settlement under Aldous III. This is not unlimited absolutism, the automatic justice of every royal action, or a guaranteed hereditary title for Rowan.
+
+PLANNED SYSTEM — Secret negotiated settlement: evidence, relationships, and concessions create a difficult route out of general conflict. Preserve the nonbinary structure. The negotiators, legal instruments, concessions, and access requirements remain PROVISIONAL; Rowan cannot simply summon the rulers because he holds a clue.
+
+PLANNED SYSTEM — Catastrophic collapse / Ashen Kingdom: insufficient intervention permits systemic ruin through prolonged fighting, destroyed livelihoods, scarcity, displacement, and failure of effective authority. No supernatural army or cosmic event causes the ending. “Ashen” refers to material destruction. This is the fourth distinct outcome, not an automatically delayed epilogue.
+
+OPEN DECISION: exact ending conditions, post-ending play, and any small metatextual callbacks in a new run. Such callbacks, if approved, must not imply reincarnation, resurrection, or supernatural memories.
+
+## 13 · Quest room and grounded mysteries
+
+### The disputed levy and evidence structure
+
+PROVISIONAL: preserve the compatible intrigue surrounding Eamon, an allegedly unlawful surcharge, a disputed charter, a concealed manifest, and intermediaries who can help or exploit Rowan. The old 200/250-gold figures, named feast-day tax, annual-versus-quarterly schedule, legal conclusion, and final distribution of money are not locked. They depend on Rule 13 and the owner’s choice of jurisdiction.
+
+PLANNED SYSTEM: investigation may offer several approaches—testimony, records, negotiation, exposure, payment, or service—without making each approach available in every quest. Access to archives or rulers must respect class, patronage, and institutional procedures. Old versions claiming that this whole multi-city arc is already playable are superseded; the native code inspected does not establish that complete arc.
+
+### Six native side-quest foundations
+
+VERIFIED IMPLEMENTATION: six side-quest definitions and interaction hooks exist in scr_living_world, scr_world_simulation, and obj_game. The descriptions below preserve their compatible structures without claiming every proposed branch is playable.
+
+- The Missing Sow of Stonecross — Giles, Clover, Mallow, and a local dispute. Keep the search, property, and neighborly stakes; proposed persuasion or stealth branches require separate implementation evidence.
+- The Scribe’s Dice Debt — Pippin, Wulf, a debt note, tavern gambling, and a hand-in. Keep the vulnerability and creditor relationship; do not assume one game erases every legally enforceable obligation.
+- The Peddler’s Relic / QUEST_COUNTERFEIT — native legacy content still depicts an astral object with supernatural effects, in conflict with the new canon. Preserve Corin, a disputed object, and the potential for competing testimony. Its authentic nature, fraud, provenance, nonmagical purpose, and revised title are OPEN DECISION; no definitive replacement mystery is invented here.
+- The Boast of Sir Balin — an injured knight, a boast, Grim, and someone acting in his stead. Keep questions of honor and service. Rowan can assist a knight without being one; native dialogue resolution is not proof of an implemented duel.
+- The Quarrymen’s Tapped Cask — Brand, disputed wine, Vane, and a request for protection or a writ. Preserve the workplace and jurisdictional conflict. Terms of pay, ownership, and any legal pardon remain provisional.
+- The Crate of ‘Cured Hams’ / Smuggler’s Run — Malo, concealed cargo, a checkpoint, and Odo. Preserve transport, risk, and conflicting authorities. Exact metallurgy, customs law, and alternative resolutions require approval; a collection of region names does not prove a cross-island transport system.
+### Contracts and companion stories
+
+VERIFIED IMPLEMENTATION: the native contract ledger includes bounty, contraband, defense, and reconnaissance foundations, with completion and betrayal logic. Retinue state includes personal stories about Galahalt’s banner, Margery’s ballad, Dunstan’s charity, and Isolde’s standing. These can support grounded consequences without prescribing Rowan’s birth status, allegiance, or access to elites.
+
+PROVISIONAL: keep rival offers, competing duties, damaged trust, witnesses, and enforceable obligations. Do not present betrayal as merely a larger payout or assume an employer’s permission removes a third party’s rights.
+
+### Compatible hooks retained from the older wider-world ledger
+
+PROVISIONAL — Stonecross: the disputed timber levy, Beatrice’s missing animal, Odo’s damaged bellows or missing material, and Margery’s stolen songbook. A burial-site investigation can remain a grounded possibility; Sir Jocelyn’s returning spirit is withdrawn.
+
+PROVISIONAL — Oakhaven: a dispute over river privileges, Brendan’s missing keel-pins, Marta’s ingredients, and Jago’s concealed cask. The old moonshine wording needs period review rather than automatic approval of widespread distilled spirits.
+
+PROVISIONAL — Dunhollow: Thora’s material problem, a petition over quarry conditions, and a trapped bird or unsafe scaffold. The humming magical vein is withdrawn; no geological, mechanical, or conspiratorial replacement is fixed.
+
+PROVISIONAL — High Cairn: Brandon’s sparring encounter, a missing charter, a household herbal remedy for sleeplessness, and a lost jail key. Each needs plausible access, consequences, and period-appropriate medicine; none is a guaranteed route for an unknown commoner to meet the King.
+
+PROVISIONAL — Weald: an herbal gathering errand may survive after the plant, ownership, and religious significance are approved. The dimensional main quest, stone-chord gate puzzle, and escort of an actual spirit are withdrawn. A replacement henge investigation or lost-person quest is not approved by implication.
+
+## 14 · Gameplay-related narrative systems
+
+### Discovery and guidance
+
+LOCKED CANON: organic exploration, minimal handholding after a short contextual introduction, and multiple possible approaches guide the sandbox. No compulsory quest markers, glowing objective arrows, or automatically filled journals. Finding a person, reading a proclamation, hearing a rumor, or noticing a local change should create opportunities without prescribing a heroic itinerary.
+
+PLANNED SYSTEM: keep contextual control instructions concise and make journals serve discovered information rather than reveal undiscovered content. Military, commercial, agricultural, and personal ambitions remain valid design directions; agriculture and other careers must not be labeled implemented merely because the world depicts farms.
+
+### Combat as an interface, not supernatural physics
+
+VERIFIED IMPLEMENTATION: FIGHT selects sword timing, greatsword charge-and-release, dagger cadence, bow aim/draw, or spear range; ACT, ITEM, MERCY, and enclosed projectile dodging are present in the native controller. The “Soul” is an interface abstraction for vulnerability, positioning, and attention—not a literal detached soul.
+
+PROVISIONAL: explain Ward as guard, cover, armor, and tactical positioning. Treat HP as an abstraction incorporating fatigue and the capacity to continue, not a claim that a drink repairs a fatal wound. Critical results reflect skilled placement, preparation, or opportunity. Major injuries require time and care in the fiction.
+
+VERIFIED IMPLEMENTATION: the current prototype has a supernatural-looking Shade, magical gate and relic text, instantaneous healing abstractions, and defeat recovery. Those remain implementation conflicts, not exceptions to Rule 1. A full heal on recovery does not canonize resurrection; future recovery writing must distinguish survival from death.
+
+### Cards, equipment and heraldry
+
+LOCKED CANON: modifiers have nonmagical explanations. PROVISIONAL editorial model: cards are the player-facing organization of learned techniques, preparation, physical conditioning, equipment adjustments, and fighting habits. Sockets organize choices; they do not represent rune-powered holes or enchanted jewels. Their final diegetic representation remains OPEN DECISION.
+
+VERIFIED IMPLEMENTATION: the native disciplines are STRENGTH, FINESSE, QUICK, LUCK, HEALTH, and SHIELD, with WILD compatibility. The card set includes Iron Edge, Heavy Handed, Keen Point, Steady Hand, Lucky Penny, Silver Tongue, Fleet Foot, Light Step, Vigor, Second Wind, Oak Guard, and Iron Skin.
+
+Use physical explanations consistent with the actual mechanic. Second Wind currently restores HP after a surviving defense wave; it is not a lethal resurrection. Lucky Penny’s retry is an abstract opportunity, not reversed time or proof that a charm changes reality. Vigor’s recovery must not imply wounds sealing during an attack.
+
+PROVISIONAL: “Fervor” can mean morale or commitment and “Blazon” can mean heraldic identity if those terms are retained. Neither authorizes divine power or supernatural tinctures. The current scaling interface includes hooks; it does not prove the complete earlier Might × Fervor or Blazon design is implemented.
+
+### Social and economic consequences
+
+PLANNED SYSTEM: reputation, employer, location, class, and specific conduct should influence interactions. A commoner’s wealth does not buy an inherited genealogy. A royalist employment record does not dictate how every village treats him. A higher numerical rank cannot silently discharge a personal duty or replace a formal grant.
+
+## 15 · Implementation reconciliation
+
+This register records source inspection at main 73fe672, not a new build or gameplay certification. VERIFIED IMPLEMENTATION means the named native logic or data exists. It does not mean this reconstruction has changed it or that every promise in a tooltip is functional.
+
+| Area / Native Source | What Exists at Inspected Revision | Canon / Migration Consequence |
+| --- | --- | --- |
+| **Combat · controller and weapon mechanics** | Five weapon interactions, ACT/ITEM/MERCY, telegraphed dodge patterns. ACT currently enables Mercy immediately. | Keep the interaction structure. Soul and Ward are abstractions; per-enemy social depth is not established by the ACT label. |
+| **Cards · equipment definitions** | Twelve typed cards; actual disciplines and effects are in native definitions. Second Wind heals after a surviving wave. | Use nonmagical preparation/technique explanations. No confirmed enchantment, resurrection, or time reversal. |
+| **Rowan · hero initialization and rank rules** | “Sir Rowan” and hedge-knight starting titles; numerical promotions grant banneret/castellan titles and a fief. | These conflict with the common-born man-at-arms start. Separate knighthood, office, property, and hereditary nobility. |
+| **Legacy mystery · world interactions** | Relic consecration and a gate interaction explicitly describe supernatural light and Seraphina’s voice; no actual interdimensional map travel is established. | Remove objective supernatural claims in a future code pass. Final grounded replacements require owner approval. |
+| **Encounters and recovery · combat rules** | A Shade foe, HP recovery, defeat recovery, and timed foe respawn exist. | The Shade’s current presentation conflicts with canon. Recovery and respawn are prototype mechanics, not returning dead or miraculous medicine. |
+| **Retinue · companion modules** | Recruitment, wages, memories, routines, injuries, temporary allies, personal quest state, and combat-facing APIs. | Preserve people and social consequences. Support definitions do not by themselves verify controller integration or every advertised bonus. |
+| **War · campaign and contract rules** | Autonomous resource/campaign cycles, price modifiers, checkpoints, contracts, and betrayal logic. | These are a foundation. They do not verify a full War Clock, terminal deterioration, all physical consequences, or four ending sequences. |
+| **World and economy · Room1 and living-world rules** | One playable local map and interiors; commodity data, transactions, regional price tables, quests, save/load. | Not a completed archipelago, farming career, final legal system, or approved Rule 13 economic model. |
+| **Narrative discovery · quest and journal logic** | Quest definitions and a journal exist; current UI and text retain guided/prototype elements. | The minimal-guidance, organically discovered journal philosophy is a target to reconcile, not proof of current compliance. |
+
+
+
+### What has actually been superseded
+
+The following are removed as factual world lore: the Great Crucible / Great Fracture cosmology; parallel dimensions and travel between them; astral emperors and empowered crowns; necromancy and returning dead; genuine gate activation; enchanted objects and supernatural tinctures; nonhuman supernatural species; prophecy and chosen-one origins.
+
+Vespera, Caelum, Nivea, Tartarus, Queen Seraphina’s celestial voice, and the old cosmic rulers are not silently reassigned to islands or human courts. They are withdrawn concepts unless the owner separately approves a grounded reuse. There is no obligation to explain every removed concept inside the new story.
+
+Grounded reuse is possible only with a clear status and function: an attributed rumor, fabricated relic, forged document, local legend, or political accusation may be proposed. Do not preserve an objective magical effect and merely call it superstition.
+
+### Source references
+
+- [Native repository — inspected baseline `73fe672`](https://github.com/elilentz6-blip/crown-and-crucible)
+- [Master Design & Technical Dossier — read-only reference](https://docs.google.com/document/d/1ulsREbm3-9J14xsvC9Wwun1GTXEgl1USZ-PM1WRiXkY)
+Useful native paths: objects/obj_game/Create_0.gml and Step_0.gml; scripts/scr_combat_controller; scripts/scr_weapon_minigames; scripts/scr_equipment_cards; scripts/scr_world_simulation; scripts/scr_living_world; scripts/scr_feudal_hierarchy; scripts/scr_feudal_warfare; scripts/scr_knight_contracts; scripts/scr_retinue*. The HTML proof of concept is not native implementation evidence.
+
+## 16 · Open creative decisions
+
+OPEN DECISION — Economic organization (Rule 13). No model has been chosen. Reserve taxation, land and labor arrangements, currency, guild powers, property structures, and the relationship between markets and political privilege for owner approval.
+
+OPEN DECISION — Island atlas. Decide island identities, settlement placements, sailing distances, routes, languages, and historical grievances before assigning political or social systems geographically.
+
+OPEN DECISION — Regional obligations. Choose local tenancy, serfdom/free status, merchant rights, military service, and cross-border recognition without assuming one uniform legal order.
+
+OPEN DECISION — Religion. Set theology, institutional structure, local variations, religious law, festivals, and relations with secular authorities. Supernatural powers remain excluded regardless of the decision.
+
+OPEN DECISION — Rowan’s biography and advancement. Choose birthplace, prior service, starting circumstances, and the requirements for knighthood, patronage, offices, and property. None changes his locked common-born start.
+
+OPEN DECISION — Political constitution and faction specifics. Approve noble houses, Vivienne’s and Morvath’s exact authority, town charters, councils, and demands. Aldous III’s legitimacy and nonabsolute feudal kingship remain fixed.
+
+OPEN DECISION — Chronology. Establish the conflicts and intervals of peace within the approximately century-long history of warfare.
+
+OPEN DECISION — Levy mystery. Set the charge’s legal basis, alleged fraud, evidence chain, amounts, responsible officials, access requirements, and possible resolutions.
+
+OPEN DECISION — Legacy mysteries. Decide which gate, relic, burial-site, and former fantasy hooks deserve grounded reuse and which should disappear. Their final human explanations must not be invented as settled canon.
+
+OPEN DECISION — War pacing and outcomes. Choose the escalation trigger, thresholds, interventions, warning cadence, ending details, and any future-run callbacks. Systemic deterioration and all four outcome categories remain established design direction.
+
+OPEN DECISION — Nonmagical modifier presentation. Choose how cards and sockets are represented in-world, period-sensitive gear terminology, and the fiction of injury, treatment, surrender, and defeat recovery.
+
+## 17 · Writer’s room and maintenance
+
+### Voice and point of view
+
+PROVISIONAL editorial guidance: keep pastoral warmth alongside material hardship. Write concrete details—wet wool, a worn seal, a cold hearth, a requisitioned cart—rather than cosmological exposition. Differentiate speakers by education, duty, relationships, and local experience; do not reduce all nobles to villains, merchants to cynics, clergy to miracle-workers, or laborers to one political voice.
+
+Use accessible language rather than theatrical archaism. Attribute claims: “the witness says,” “the household asserts,” “the villagers call it haunted.” The omniscient narrator must not confirm a miracle or announce an unapproved legal fact.
+
+### Compatible voice sketches
+
+PROVISIONAL — Aldous: “A levy written on parchment is not a levy gathered. Every lord tells me what his fathers owed. Few tell me what they will send.”
+
+PROVISIONAL — Vivienne: “Show me the seal, and the clause beneath it. A royal name does not make every collector honest.”
+
+PROVISIONAL — Morvath: “I have men to feed and a road I cannot keep open. Tell me whose promise fills a cart.”
+
+PROVISIONAL — Alden: “Some here remember quiet years. Others arrived with nothing but what they could carry. Ask which before you speak of peace.”
+
+### Maintaining this bible
+
+- Keep owner-approved facts in Section 02 and refer back to them instead of rewriting different versions across chapters.
+- Place proposed lore in its relevant chapter with PROVISIONAL, and put the actual unresolved choice in Section 16.
+- Record native source paths and the inspected revision for implementation claims. Do not turn old documentation claims into new evidence.
+- When the owner approves a decision, update every dependent character, quest, faction, and system description together.
+- Treat this document’s reconstruction as a narrative and editorial change only. Repository migration and technical-dossier reconciliation are separate assignments.
