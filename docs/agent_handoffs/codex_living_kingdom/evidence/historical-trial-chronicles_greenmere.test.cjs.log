@@ -1,0 +1,48 @@
+PASS a new game starts on day one with the Greenmere people, places and the barge on its way
+PASS Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied
+PASS long speeches page through the box three lines at a time and replies come on the last page
+PASS the calendar moves only in the overworld, and the barge arrival silently starts the War Clock
+PASS the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once
+PASS refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan
+PASS mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war
+PASS stripping the lead pays and costs: standing falls and the tower cannot be mended this season
+PASS the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once
+PASS doing nothing about the barge is a choice too: the bailiff seizes it on his own
+PASS selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer
+PASS the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves
+PASS the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once
+PASS Guy only discusses the household orders with a man the Crown trusts
+PASS the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill
+PASS at the end of the season one of four provisional endings is told once and play continues
+PASS the old random war cycle waits for the War Clock and its dispatches become news
+PASS lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden
+PASS rumours are heard one at a time and kept in the notebook; J opens and closes the notebook
+PASS asking for the old talk from a conversation hands the person back to their quest
+PASS Ebbe's advance is an obligation that survives: repay it or be written down as a deserter
+PASS save and load keep the calendar, flags, notes, papers, schedule and the War Clock
+PASS a save from before the Chronicles loads cleanly and the region starts fresh
+FAIL content integrity: every reply leads somewhere, every id is handled, every page fits the box
+/private/tmp/cc_trial/tests/chronicles_greenmere.test.cjs:12
+  catch (error) { console.error('FAIL ' + name); throw error; }
+                                                 ^
+
+AssertionError [ERR_ASSERTION]: alden.cf_result tx cf_levy_result
+    at /private/tmp/cc_trial/tests/chronicles_greenmere.test.cjs:552:24
+    at test (/private/tmp/cc_trial/tests/chronicles_greenmere.test.cjs:11:9)
+    at Object.<anonymous> (/private/tmp/cc_trial/tests/chronicles_greenmere.test.cjs:537:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Module._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.22.0

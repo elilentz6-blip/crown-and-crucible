@@ -1,0 +1,478 @@
+{
+  "scripts/scr_frontend/scr_frontend.gml": [
+    {
+      "name": "frontend_tips",
+      "line": 5
+    },
+    {
+      "name": "frontend_ready",
+      "line": 40
+    },
+    {
+      "name": "frontend_active",
+      "line": 41
+    },
+    {
+      "name": "frontend_init",
+      "line": 44
+    },
+    {
+      "name": "frontend_open_pause",
+      "line": 53
+    },
+    {
+      "name": "frontend_menu",
+      "line": 60
+    },
+    {
+      "name": "frontend_begin_loading",
+      "line": 68
+    },
+    {
+      "name": "frontend_choose",
+      "line": 78
+    },
+    {
+      "name": "frontend_step",
+      "line": 102
+    },
+    {
+      "name": "frontend_background",
+      "line": 160
+    },
+    {
+      "name": "frontend_parchment",
+      "line": 169
+    },
+    {
+      "name": "frontend_draw",
+      "line": 184
+    }
+  ],
+  "scripts/scr_chronicle_followthrough/scr_chronicle_followthrough.gml": [
+    {
+      "name": "cf_seed",
+      "line": 4
+    },
+    {
+      "name": "cf_open_hearing",
+      "line": 19
+    },
+    {
+      "name": "gm_world_refresh",
+      "line": 27
+    },
+    {
+      "name": "gm_barge_resolve",
+      "line": 37
+    },
+    {
+      "name": "gm_event_fire",
+      "line": 43
+    },
+    {
+      "name": "gm_person",
+      "line": 98
+    },
+    {
+      "name": "gm_cond_one",
+      "line": 104
+    },
+    {
+      "name": "gm_fx",
+      "line": 121
+    },
+    {
+      "name": "gm_text",
+      "line": 185
+    },
+    {
+      "name": "gm_tree",
+      "line": 220
+    },
+    {
+      "name": "gm_doc_desc",
+      "line": 292
+    },
+    {
+      "name": "cf_heard_news",
+      "line": 306
+    },
+    {
+      "name": "gm_tree_for_legacy",
+      "line": 316
+    },
+    {
+      "name": "cf_qa_check",
+      "line": 325
+    },
+    {
+      "name": "cf_qa_step",
+      "line": 330
+    }
+  ],
+  "scripts/scr_chronicle_core/scr_chronicle_core.gml": [
+    {
+      "name": "chron_init",
+      "line": 24
+    },
+    {
+      "name": "chron_ready",
+      "line": 39
+    },
+    {
+      "name": "chron_get",
+      "line": 47
+    },
+    {
+      "name": "chron_flag",
+      "line": 53
+    },
+    {
+      "name": "chron_set",
+      "line": 58
+    },
+    {
+      "name": "chron_add",
+      "line": 63
+    },
+    {
+      "name": "chron_reward_once",
+      "line": 71
+    },
+    {
+      "name": "chron_has_note",
+      "line": 85
+    },
+    {
+      "name": "chron_note",
+      "line": 93
+    },
+    {
+      "name": "chron_doc_has",
+      "line": 102
+    },
+    {
+      "name": "chron_doc_give",
+      "line": 107
+    },
+    {
+      "name": "chron_doc_take",
+      "line": 113
+    },
+    {
+      "name": "chron_heard",
+      "line": 121
+    },
+    {
+      "name": "chron_hear",
+      "line": 125
+    },
+    {
+      "name": "chron_news",
+      "line": 132
+    },
+    {
+      "name": "chron_scheduled",
+      "line": 142
+    },
+    {
+      "name": "chron_schedule",
+      "line": 150
+    },
+    {
+      "name": "chron_unschedule",
+      "line": 155
+    },
+    {
+      "name": "chron_step",
+      "line": 166
+    },
+    {
+      "name": "chron_sleep_until_dawn",
+      "line": 183
+    },
+    {
+      "name": "chron_new_day",
+      "line": 197
+    },
+    {
+      "name": "chron_save_pack",
+      "line": 225
+    },
+    {
+      "name": "chron_load_restore",
+      "line": 238
+    }
+  ],
+  "scripts/scr_conversation/scr_conversation.gml": [
+    {
+      "name": "convo_init",
+      "line": 21
+    },
+    {
+      "name": "cv",
+      "line": 28
+    },
+    {
+      "name": "cvo",
+      "line": 29
+    },
+    {
+      "name": "cvl",
+      "line": 31
+    },
+    {
+      "name": "convo_redirect",
+      "line": 34
+    },
+    {
+      "name": "convo_is_open",
+      "line": 38
+    },
+    {
+      "name": "convo_open",
+      "line": 42
+    },
+    {
+      "name": "convo_goto",
+      "line": 58
+    },
+    {
+      "name": "convo_paginate",
+      "line": 89
+    },
+    {
+      "name": "convo_last_page",
+      "line": 101
+    },
+    {
+      "name": "convo_close",
+      "line": 106
+    },
+    {
+      "name": "convo_choose",
+      "line": 115
+    },
+    {
+      "name": "convo_step",
+      "line": 132
+    },
+    {
+      "name": "convo_reply_window",
+      "line": 167
+    },
+    {
+      "name": "convo_draw",
+      "line": 172
+    },
+    {
+      "name": "notebook_open",
+      "line": 220
+    },
+    {
+      "name": "notebook_step",
+      "line": 227
+    },
+    {
+      "name": "notebook_draw",
+      "line": 236
+    }
+  ],
+  "scripts/scr_vis_interiors/scr_vis_interiors.gml": [
+    {
+      "name": "vis_interiors_define",
+      "line": 20
+    },
+    {
+      "name": "vis_interiors_init",
+      "line": 64
+    },
+    {
+      "name": "vis_interior_sync_party",
+      "line": 109
+    },
+    {
+      "name": "vis_interior_snap_camera",
+      "line": 121
+    },
+    {
+      "name": "vis_interior_teleport_in",
+      "line": 128
+    },
+    {
+      "name": "vis_interior_teleport_out",
+      "line": 144
+    },
+    {
+      "name": "vis_interior_step",
+      "line": 160
+    }
+  ],
+  "scripts/scr_combat_render/scr_combat_render.gml": [
+    {
+      "name": "cc_combat_renderers",
+      "line": 39
+    },
+    {
+      "name": "cbt_state",
+      "line": 47
+    },
+    {
+      "name": "cbt_rand",
+      "line": 62
+    },
+    {
+      "name": "cbt_foe_art",
+      "line": 68
+    },
+    {
+      "name": "cbt_fx_add",
+      "line": 82
+    },
+    {
+      "name": "cbt_fx_spark",
+      "line": 87
+    },
+    {
+      "name": "cbt_fx_number",
+      "line": 91
+    },
+    {
+      "name": "cbt_fx_motes",
+      "line": 95
+    },
+    {
+      "name": "cbt_fx_foe_hit",
+      "line": 104
+    },
+    {
+      "name": "cbt_tick",
+      "line": 117
+    },
+    {
+      "name": "cbt_demo_step",
+      "line": 182
+    },
+    {
+      "name": "cbt_draw",
+      "line": 194
+    },
+    {
+      "name": "cbt_big",
+      "line": 199
+    },
+    {
+      "name": "cbt_ribbon",
+      "line": 221
+    },
+    {
+      "name": "cbt_center",
+      "line": 227
+    },
+    {
+      "name": "cbt_band",
+      "line": 232
+    },
+    {
+      "name": "cbt_ally",
+      "line": 239
+    },
+    {
+      "name": "cbt_draw_ambience",
+      "line": 249
+    },
+    {
+      "name": "cbt_draw_char",
+      "line": 262
+    },
+    {
+      "name": "cbt_draw_fighters",
+      "line": 267
+    },
+    {
+      "name": "cbt_draw_arena",
+      "line": 331
+    },
+    {
+      "name": "cc_draw_sword",
+      "line": 341
+    },
+    {
+      "name": "cc_draw_greatsword",
+      "line": 367
+    },
+    {
+      "name": "cc_draw_dagger",
+      "line": 392
+    },
+    {
+      "name": "cc_draw_bow",
+      "line": 414
+    },
+    {
+      "name": "cc_draw_spear",
+      "line": 466
+    },
+    {
+      "name": "cbt_pattern_name",
+      "line": 499
+    },
+    {
+      "name": "cbt_draw_warning",
+      "line": 505
+    },
+    {
+      "name": "cbt_draw_bullet",
+      "line": 525
+    },
+    {
+      "name": "cbt_draw_defence",
+      "line": 537
+    },
+    {
+      "name": "cbt_draw_foe_plate",
+      "line": 582
+    },
+    {
+      "name": "cbt_draw_corners",
+      "line": 604
+    },
+    {
+      "name": "cbt_draw_hero_plate",
+      "line": 616
+    },
+    {
+      "name": "cbt_draw_message",
+      "line": 653
+    },
+    {
+      "name": "cbt_draw_buttons",
+      "line": 682
+    },
+    {
+      "name": "cbt_draw_fx",
+      "line": 712
+    },
+    {
+      "name": "cbt_draw_result",
+      "line": 731
+    },
+    {
+      "name": "cbt_draw_crit_flash",
+      "line": 749
+    },
+    {
+      "name": "cc_draw_combat_outro",
+      "line": 760
+    },
+    {
+      "name": "cbt_draw_outro_banner",
+      "line": 772
+    },
+    {
+      "name": "cc_draw_combat",
+      "line": 800
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+Options: /Users/Shared/GameMakerStudio2/Cache/runtimes/runtime-2024.14.4.268/bin/platform_setting_defaults.json
+Options: /Users/elilentz/Library/Application Support/GameMakerStudio2/elilentz6_5139243/local_settings.json
+Setting up the Asset compiler
+Found Project Format 2
++++ GMSC serialisation:  SUCCESSFUL LOAD AND LINK TIME: 243.988ms
+Success
+finished adding assets from /Users/elilentz/GameMakerProjects/BLANK GAME/BLANK GAME.yyp.
+Release build
+Options: /tmp/cc_igor_main/cache/PlatformOptions.json
+homedir : /Users/elilentz
+remote_install_path : /Users/elilentz/gamemakerstudio2/GM_MAC/BLANK_GAME
+Options: /tmp/cc_igor_main/cache/ExtensionOptions.json
+PlatformOptions
+Looking for built-in fallback image in /Users/Shared/GameMakerStudio2/Cache/runtimes/runtime-2024.14.4.268/bin/BuiltinImages
+Compile Constants...finished.
+Remove DnD...finished.
+Compile Scripts...finished.
+Compile Rooms...finished..... 0 CC empty
+finished..... 0 CC empty
+Compile Objects...finished.... 0 empty events
+Compile Timelines...finished.
+Compile Triggers...finished.
+Compile Extensions...Compile UI Layers...finished.
+Global scripts...finished.
+collapsing enums.
+Final Compile...Final Compile finished.
+Saving IFF file... /tmp/cc_igor_main/out/game.zip
+Writing Chunk... GEN8 size ... -0.00 MB
+option_game_speed=60
+Writing Chunk... OPTN size ... 0.00 MB
+Writing Chunk... LANG size ... 0.00 MB
+Writing Chunk... EXTN size ... 0.00 MB
+Writing Chunk... SOND size ... 0.00 MB
+Writing Chunk... AGRP size ... 0.00 MB
+Writing Chunk... SPRT size ... 0.00 MB
+Writing Chunk... BGND size ... 0.04 MB
+Writing Chunk... PATH size ... 0.00 MB
+Writing Chunk... SCPT size ... 0.00 MB
+Writing Chunk... GLOB size ... 0.01 MB
+Writing Chunk... SHDR size ... 0.00 MB
+Writing Chunk... FONT size ... 0.00 MB
+Writing Chunk... TMLN size ... 0.00 MB
+Writing Chunk... OBJT size ... 0.00 MB
+Writing Chunk... FEDS size ... 0.00 MB
+Writing Chunk... ACRV size ... 0.00 MB
+Writing Chunk... SEQN size ... 0.00 MB
+Writing Chunk... TAGS size ... 0.00 MB
+Writing Chunk... ROOM size ... 0.00 MB
+Writing Chunk... UILR size ... 0.00 MB
+Writing Chunk... DAFL size ... 0.00 MB
+Writing Chunk... EMBI size ... 0.00 MB
+Writing Chunk... PSEM size ... 0.00 MB
+Writing Chunk... PSYS size ... 0.00 MB
+Writing Chunk... TPAGE size ... 0.00 MB
+Texture Group - __YY__0fallbacktexture.png_YYG_AUTO_GEN_TEX_GROUP_NAME_
+Texture Group - Default
+Writing Chunk... TGIN size ... 0.05 MB
+Writing Chunk... CODE size ... 0.00 MB
+Writing Chunk... VARI size ... 0.74 MB
+Writing Chunk... FUNC size ... 0.08 MB
+Writing Chunk... FEAT size ... 0.02 MB
+Writing Chunk... STRG size ... 0.00 MB
+Writing Chunk... TXTR size ... 0.29 MB
+0 Compressing texture... writing texture __yy__0fallbacktexture.png_yyg_auto_gen_tex_group_name__0.yytex... 
+1 Compressing texture... writing texture default_0.yytex... 
+2 Compressing texture... writing texture default_1.yytex... 
+Writing Chunk... AUDO size ... 0.99 MB
+Stats : GMA : Elapsed=2678.942
+Stats : GMA : sp=300,au=4,bk=0,pt=0,sc=1268,sh=0,fo=0,tl=0,ob=4,ro=1,da=1,ex=0,ma=6,fm=0x921D69A666B0
+DoSplash
+${base_options_dir}/mac/splash/splash.png
+DoInstallerBackground
+${base_options_dir}/mac/splash/installer_background.png
+IsMacConnected
+InstallApplicationOvenOnMac
+
+
+DONE
+InstallRunnerOnMac
+
+
+CreateMacExecutable
+2026-10-30 13:30:45.919 Application Oven[64149:3176808] The folder “Provisioning Profiles” doesn’t exist.
+2026-10-30 13:30:45.920 Application Oven[64149:3176808] Temporary directory is /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys
+2026-10-30 13:30:45.920 Application Oven[64149:3176808] /usr/bin/unzip -o /Users/elilentz/gamemakerstudio2/GM_MAC/BLANK_GAME/BLANK GAME -d /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/GMSzip
+2026-10-30 13:30:45.942 Application Oven[64149:3176808] Archive:  /Users/elilentz/gamemakerstudio2/GM_MAC/BLANK_GAME/BLANK GAME.zip
+  inflating: /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/GMSzip/assets/game.ios  
+  inflating: /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/GMSzip/assets/options.ini  
+  inflating: /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/GMSzip/assets/splash.png  
+ extracting: /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/GMSzip/assets/.gitkeep  
+2026-10-30 13:30:45.950 Application Oven[64149:3176808] “splash.png” couldn’t be copied to “Resources” because an item with the same name already exists.
+2026-10-30 13:30:45.951 Application Oven[64149:3176808] /usr/bin/defaults write /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info CFBundleIdentifier com.company.game
+2026-10-30 13:30:45.962 Application Oven[64149:3176808] /usr/bin/defaults write /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info LSApplicationCategoryType public.app-category.games
+2026-10-30 13:30:45.968 Application Oven[64149:3176808] /usr/bin/defaults write /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info CFBundleShortVersionString 1.0.0
+2026-10-30 13:30:45.974 Application Oven[64149:3176808] /usr/bin/defaults write /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info CFBundleVersion 1.0.0
+2026-10-30 13:30:45.980 Application Oven[64149:3176808] /usr/bin/defaults write /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info CFBundleDisplayName BLANK GAME
+2026-10-30 13:30:45.985 Application Oven[64149:3176808] /usr/bin/defaults write /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info NSHumanReadableCopyright "'(c) 2022 YoYo Games Ltd.'"
+2026-10-30 13:30:45.990 Application Oven[64149:3176808] /bin/chmod 644 /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Info.plist
+2026-10-30 13:30:45.998 Application Oven[64149:3176808] Scaling image to size 1024 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_512x512@2x.png
+2026-10-30 13:30:46.362 Application Oven[64149:3176808] Scaling image to size 512 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_512x512.png
+2026-10-30 13:30:46.441 Application Oven[64149:3176808] Scaling image to size 512 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_256x256@2x.png
+2026-10-30 13:30:46.520 Application Oven[64149:3176808] Scaling image to size 256 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_256x256.png
+2026-10-30 13:30:46.548 Application Oven[64149:3176808] Scaling image to size 256 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_128x128@2x.png
+2026-10-30 13:30:46.575 Application Oven[64149:3176808] Scaling image to size 128 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_128x128.png
+2026-10-30 13:30:46.585 Application Oven[64149:3176808] Scaling image to size 64 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_32x32@2x.png
+2026-10-30 13:30:46.591 Application Oven[64149:3176808] Scaling image to size 32 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_32x32.png
+2026-10-30 13:30:46.596 Application Oven[64149:3176808] Scaling image to size 32 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_16x16@2x.png
+2026-10-30 13:30:46.596 Application Oven[64149:3176808] Scaling image to size 16 saving to file /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset/icon_16x16.png
+2026-10-30 13:30:46.601 Application Oven[64149:3176808] /usr/bin/iconutil -c icns -o /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/runner.app/Contents/Resources/icon.icns /var/folders/3g/7w8gkn_s15x_4fg2w7rgcq5w0000gn/T/App-Oven.XaCYys/Icon.iconset
+2026-10-30 13:30:46.753 Application Oven[64149:3176808] Finished converting icons
+
+
+App Oven Result: 0
+CopyAPPFromMacTo
+Igor Debug: ~/gamemakerstudio2/GM_MAC/BLANK_GAME
+Igor Debug: BLANK GAME
+Debug Igor: installzipshpath: /Users/Shared/GameMakerStudio2/Cache/runtimes/runtime-2024.14.4.268/mac/zip_app.sh
+security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain.
+
+
+Error : Could not find matching certificate for Developer ID Application:, please check your 'Signing Identifier' in your macOS Options
+Igor complete.

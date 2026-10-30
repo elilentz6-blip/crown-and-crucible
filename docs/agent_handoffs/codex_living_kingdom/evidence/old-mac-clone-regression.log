@@ -1,0 +1,144 @@
+
+=== challenger_m2_adversarial.test.cjs
+================================================================
+CHALLENGER M2: ADVERSARIAL STRESS & EMPIRICAL VERIFICATION SUITE
+================================================================
+
+--- SUITE 1: AUDIO WRAPPER ROBUSTNESS ---
+PASS [1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing
+PASS [2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN
+PASS [3] AUDIO.3: Active audio environment mock handles extreme inputs safely
+[EMPIRICAL AUDIT] scr_audio.gml clamp() present: true
+[EMPIRICAL AUDIT] scr_audio.gml min/max present: false
+PASS [4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml
+
+--- SUITE 2: DIALOGUE DISMISSAL BOUNCE SUPPRESSION ---
+PASS [5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)
+PASS [6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open
+PASS [7] DIALOGUE.3: Filler text "You look across the wide realm" never bounces open when pressing Space in empty space
+PASS [8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes
+
+--- SUITE 3: ENTITY DEPTH SORTING STABILITY & BOUNDARIES ---
+PASS [9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset
+PASS [10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter
+PASS [11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates
+PASS [12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN
+PASS [13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly
+
+--- SUITE 4: PRESENTATION DEBT & UI INVARIANTS ---
+PASS [14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout
+PASS [15] UI.2: Trade menu cursor clamping and navigation with vk_down
+PASS [16] UI.3: Contract acceptance returns prior contract to AVAILABLE status
+PASS [17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN
+PASS [18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load
+PASS [19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active
+
+================================================================
+TOTAL ADVERSARIAL TESTS: 19
+PASSED: 19
+FAILED: 0
+================================================================
+(node:74707) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== chronicles_greenmere.test.cjs
+PASS a new game starts on day one with the Greenmere people, places and the barge on its way
+PASS Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied
+PASS long speeches page through the box three lines at a time and replies come on the last page
+PASS the calendar moves only in the overworld, and the barge arrival silently starts the War Clock
+PASS the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once
+PASS refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan
+PASS mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war
+PASS stripping the lead pays and costs: standing falls and the tower cannot be mended this season
+PASS the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once
+PASS doing nothing about the barge is a choice too: the bailiff seizes it on his own
+PASS selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer
+PASS the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves
+PASS the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once
+PASS Guy only discusses the household orders with a man the Crown trusts
+PASS the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill
+PASS at the end of the season one of four provisional endings is told once and play continues
+PASS the old random war cycle waits for the War Clock and its dispatches become news
+PASS lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden
+PASS rumours are heard one at a time and kept in the notebook; J opens and closes the notebook
+PASS asking for the old talk from a conversation hands the person back to their quest
+PASS Ebbe's advance is an obligation that survives: repay it or be written down as a deserter
+PASS save and load keep the calendar, flags, notes, papers, schedule and the War Clock
+PASS a save from before the Chronicles loads cleanly and the region starts fresh
+FAIL content integrity: every reply leads somewhere, every id is handled, every page fits the box
+/Users/elilentz/Documents/Codex/2026-10-29/project-location-the-active-gamemaker-project/work/chronicles-native/tests/chronicles_greenmere.test.cjs:12
+  catch (error) { console.error('FAIL ' + name); throw error; }
+                                                 ^
+
+AssertionError [ERR_ASSERTION]: alden.cf_result tx cf_levy_result
+    at /Users/elilentz/Documents/Codex/2026-10-29/project-location-the-active-gamemaker-project/work/chronicles-native/tests/chronicles_greenmere.test.cjs:552:24
+    at test (/Users/elilentz/Documents/Codex/2026-10-29/project-location-the-active-gamemaker-project/work/chronicles-native/tests/chronicles_greenmere.test.cjs:11:9)
+    at Object.<anonymous> (/Users/elilentz/Documents/Codex/2026-10-29/project-location-the-active-gamemaker-project/work/chronicles-native/tests/chronicles_greenmere.test.cjs:537:1)
+    at Module._compile (node:internal/modules/cjs/loader:1706:14)
+    at Module._extensions..js (node:internal/modules/cjs/loader:1839:10)
+    at Module.load (node:internal/modules/cjs/loader:1441:32)
+    at Module._load (node:internal/modules/cjs/loader:1263:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:328:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:237:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.22.0
+
+=== equipment_cards.test.cjs
+PASS starter gear keeps legacy stats and exposes all six socket types
+PASS wrong type and unknown cards leave the current build untouched
+PASS six starter cards all reach combat stats without healing
+PASS moving a unique card releases its socket on backpack gear
+PASS duplicate or invalid saved socket entries cannot stack effects
+PASS emptying a socket returns its stat contribution
+PASS Wild accepts every card category
+PASS armor HP and companion HP add without cumulative stat inflation
+PASS swapping HP cards cannot be used for free healing
+PASS shield absorbs whole and partial hits before HP
+PASS shield begins once per encounter and never refills per dodge wave
+PASS precision changes actual reticle speed; quick cards change actual soul speed
+PASS chests unlock every advanced card once and offer a socket sidegrade
+PASS gold cards change both victory and mercy settlement
+PASS Second Wind triggers on surviving a wave and respects HP maximum
+PASS fatal waves end in defeat before regeneration can revive the hero
+PASS keyboard navigation assigns and removes a card from the selected socket
+PASS every catalog card can be assigned without breaking stat calculation
+18 equipment/card regression tests passed.
+(node:78784) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== feudal_warfare.test.cjs
+PASS factions initialize with leaders, military power, treasuries, and ambitions
+PASS contested checkpoints initialize with controlling factions and defense levels
+PASS autonomous war simulation advances cycle, shifts economy and logs chronicle dispatches
+PASS freelance knight contracts initialize with bounties, escorts, and reconnaissance missions
+PASS contract acceptance, fulfillment, rewards, and renown progression
+PASS contract betrayal awards rival faction favors, higher bribes, and logs defection dispatch
+PASS military standing advances without automatic knighthood, allegiance or inherited land
+PASS multi-agent retinue bonus and temporary military reinforcements provide combat stats
+PASS legacy fief flags cannot mint tribute during war cycles
+PASS realm save/load persists war cycle, faction stats, active contracts, and chivalric rank
+10 feudal warfare tests passed.
+(node:78912) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== gml_translator.test.cjs
+PASS mod, div, and/or/not and hex literals evaluate like GML
+PASS repeat, begin/end and accessors translate
+PASS strings, comments and struct keys are left alone
+PASS macros become constants
+PASS every project script and obj_game event parses after translation
+5 translator tests passed.
+(node:78926) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== grounded_canon_r3_r4.test.cjs
+(node:78975) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

@@ -1,0 +1,354 @@
+
+=== challenger_m2_adversarial.test.cjs
+================================================================
+CHALLENGER M2: ADVERSARIAL STRESS & EMPIRICAL VERIFICATION SUITE
+================================================================
+
+--- SUITE 1: AUDIO WRAPPER ROBUSTNESS ---
+PASS [1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing
+PASS [2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN
+PASS [3] AUDIO.3: Active audio environment mock handles extreme inputs safely
+[EMPIRICAL AUDIT] scr_audio.gml clamp() present: true
+[EMPIRICAL AUDIT] scr_audio.gml min/max present: false
+PASS [4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml
+
+--- SUITE 2: DIALOGUE DISMISSAL BOUNCE SUPPRESSION ---
+PASS [5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)
+PASS [6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open
+PASS [7] DIALOGUE.3: Filler text "You look across the wide realm" never bounces open when pressing Space in empty space
+PASS [8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes
+
+--- SUITE 3: ENTITY DEPTH SORTING STABILITY & BOUNDARIES ---
+PASS [9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset
+PASS [10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter
+PASS [11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates
+PASS [12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN
+PASS [13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly
+
+--- SUITE 4: PRESENTATION DEBT & UI INVARIANTS ---
+PASS [14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout
+PASS [15] UI.2: Trade menu cursor clamping and navigation with vk_down
+PASS [16] UI.3: Contract acceptance returns prior contract to AVAILABLE status
+PASS [17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN
+PASS [18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load
+PASS [19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active
+
+================================================================
+TOTAL ADVERSARIAL TESTS: 19
+PASSED: 19
+FAILED: 0
+================================================================
+(node:73706) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== chronicles_followthrough.test.cjs
+PASS military standing does not create an oath, knighthood, noble birth or land
+PASS legacy automatic lordship migrates without losing earned rank or minting tribute
+PASS the Oakhaven clerk arrives independently and a cargo finding takes real days
+PASS ignoring the hearing preserves counterclaims and fires its consequence only once
+PASS filing does not launder stolen grain; explicit restitution is charged once
+PASS restitution after judgment records a later payment without erasing the original finding
+PASS cartage inquiry needs evidence, does not repeat copy fees, and preserves the remaining assessment
+PASS the whole inquiry is reachable through Alden, Oswin and Fenner conversations
+PASS public refusal and immediate collection have different, nonrepeatable consequences
+PASS an unanswered cartage question leads to distress without inventing personal debt
+PASS the assessment is issued and collected even when Rowan never asks about it
+PASS news reaches the notebook only after a conversation, persists and is never heard twice
+PASS the local nominee receives assent and appears at the tower without ennobling Rowan
+PASS pending hearings, evidence and deadlines survive a realm save/load without duplicate people
+PASS elapsed time and dawn on one frame advance both calendars once
+PASS sharing the cargo earns lodging without requiring unrelated reputation
+PASS long reply lists stay bounded and the last reply remains visible
+PASS all new papers have readable names and every conversation destination exists
+PASS the frontend pauses simulation and new journey does not overwrite a save on entry
+PASS Continue loads saved state; new journey confirmation and controls preserve the file
+PASS corrupt saves return safely to title and held confirm input cannot leak into play
+PASS the loading catalog and all artwork are registered GameMaker resources with complete frames
+PASS the native walkthrough driver follows live conversations without writing a player save
+23 Chronicles follow-through/frontend tests passed.
+(node:73772) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== chronicles_greenmere.test.cjs
+PASS a new game starts on day one with the Greenmere people, places and the barge on its way
+PASS Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied
+PASS long speeches page through the box three lines at a time and replies come on the last page
+PASS the calendar moves only in the overworld, and the barge arrival silently starts the War Clock
+PASS the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once
+PASS refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan
+PASS mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war
+PASS stripping the lead pays and costs: standing falls and the tower cannot be mended this season
+PASS the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once
+PASS doing nothing about the barge is a choice too: the bailiff seizes it on his own
+PASS selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer
+PASS the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves
+PASS the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once
+PASS Guy only discusses the household orders with a man the Crown trusts
+PASS the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill
+PASS at the end of the season one of four provisional endings is told once and play continues
+PASS the old random war cycle waits for the War Clock and its dispatches become news
+PASS lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden
+PASS rumours are heard one at a time and kept in the notebook; J opens and closes the notebook
+PASS asking for the old talk from a conversation hands the person back to their quest
+PASS Ebbe's advance is an obligation that survives: repay it or be written down as a deserter
+PASS save and load keep the calendar, flags, notes, papers, schedule and the War Clock
+PASS a save from before the Chronicles loads cleanly and the region starts fresh
+PASS content integrity: every reply leads somewhere, every id is handled, every page fits the box
+PASS canon wording: no supernatural titles, no "Sir Rowan", no "Baroness", no map coordinates in speech
+25 Chronicles/Greenmere tests passed.
+(node:73856) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== equipment_cards.test.cjs
+PASS starter gear keeps legacy stats and exposes all six socket types
+PASS wrong type and unknown cards leave the current build untouched
+PASS six starter cards all reach combat stats without healing
+PASS moving a unique card releases its socket on backpack gear
+PASS duplicate or invalid saved socket entries cannot stack effects
+PASS emptying a socket returns its stat contribution
+PASS Wild accepts every card category
+PASS armor HP and companion HP add without cumulative stat inflation
+PASS swapping HP cards cannot be used for free healing
+PASS shield absorbs whole and partial hits before HP
+PASS shield begins once per encounter and never refills per dodge wave
+PASS precision changes actual reticle speed; quick cards change actual soul speed
+PASS chests unlock every advanced card once and offer a socket sidegrade
+PASS gold cards change both victory and mercy settlement
+PASS Second Wind triggers on surviving a wave and respects HP maximum
+PASS fatal waves end in defeat before regeneration can revive the hero
+PASS keyboard navigation assigns and removes a card from the selected socket
+PASS every catalog card can be assigned without breaking stat calculation
+18 equipment/card regression tests passed.
+(node:73868) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== feudal_warfare.test.cjs
+PASS factions initialize with leaders, military power, treasuries, and ambitions
+PASS contested checkpoints initialize with controlling factions and defense levels
+PASS autonomous war simulation advances cycle, shifts economy and logs chronicle dispatches
+PASS freelance knight contracts initialize with bounties, escorts, and reconnaissance missions
+PASS contract acceptance, fulfillment, rewards, and renown progression
+PASS contract betrayal awards rival faction favors, higher bribes, and logs defection dispatch
+PASS military standing advances without automatic knighthood, allegiance or inherited land
+PASS multi-agent retinue bonus and temporary military reinforcements provide combat stats
+PASS legacy fief flags cannot mint tribute during war cycles
+PASS realm save/load persists war cycle, faction stats, active contracts, and chivalric rank
+10 feudal warfare tests passed.
+(node:73966) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== gml_translator.test.cjs
+PASS mod, div, and/or/not and hex literals evaluate like GML
+PASS repeat, begin/end and accessors translate
+PASS strings, comments and struct keys are left alone
+PASS macros become constants
+PASS every project script and obj_game event parses after translation
+5 translator tests passed.
+(node:73971) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== grounded_canon_r3_r4.test.cjs
+(node:73975) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+TAP version 13
+# Subtest: R1.1: Zero supernatural/cosmic lore strings in active game scripts and objects
+ok 1 - R1.1: Zero supernatural/cosmic lore strings in active game scripts and objects
+  ---
+  duration_ms: 62.940042
+  type: 'test'
+  ...
+# Subtest: R1.2: Rowan initializes as common-born Man-at-Arms with dynamic military promotions
+ok 2 - R1.2: Rowan initializes as common-born Man-at-Arms with dynamic military promotions
+  ---
+  duration_ms: 771.514708
+  type: 'test'
+  ...
+# Subtest: R1.3: QUEST_COUNTERFEIT resolves through grounded medieval investigation
+ok 3 - R1.3: QUEST_COUNTERFEIT resolves through grounded medieval investigation
+  ---
+  duration_ms: 205.003417
+  type: 'test'
+  ...
+# Subtest: R2.1: Modern Armory wiring and UI Kit 9-slice panel rendering
+ok 4 - R2.1: Modern Armory wiring and UI Kit 9-slice panel rendering
+  ---
+  duration_ms: 306.675792
+  type: 'test'
+  ...
+# Subtest: R2.2: Audio wrapper bounds clamping and safe fallback
+ok 5 - R2.2: Audio wrapper bounds clamping and safe fallback
+  ---
+  duration_ms: 234.866791
+  type: 'test'
+  ...
+# Subtest: R3.1: Stonecross villager dialogue dynamically reacts to war cycle count
+ok 6 - R3.1: Stonecross villager dialogue dynamically reacts to war cycle count
+  ---
+  duration_ms: 149.354458
+  type: 'test'
+  ...
+# Subtest: R3.2: Commodity market price multipliers shift villager dialogues
+ok 7 - R3.2: Commodity market price multipliers shift villager dialogues
+  ---
+  duration_ms: 120.651209
+  type: 'test'
+  ...
+# Subtest: R3.3: Ambient tavern banter in Boar & Flagon produces rich feudal rumors
+ok 8 - R3.3: Ambient tavern banter in Boar & Flagon produces rich feudal rumors
+  ---
+  duration_ms: 134.845875
+  type: 'test'
+  ...
+# Subtest: R3.4: All 6 side quests log chronicle dispatches upon completion
+ok 9 - R3.4: All 6 side quests log chronicle dispatches upon completion
+  ---
+  duration_ms: 140.4375
+  type: 'test'
+  ...
+# Subtest: R4.1: Save Schema v2 persists dynamic war cycle, active contracts, and companion state
+ok 10 - R4.1: Save Schema v2 persists dynamic war cycle, active contracts, and companion state
+  ---
+  duration_ms: 146.348792
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2303.411208
+
+=== living_world_minigames.test.cjs
+PASS faction reputations initialize for all four factions
+PASS all six side quests are defined with title, region, giver and gold reward
+PASS quest start, advance and complete pay gold and reputation once
+PASS dice hand evaluator ranks trinity > straight > pair > sum
+PASS dice opponent AI holds a rolled pair
+PASS commodity trade buys at local price and sells at 85% of the destination price
+PASS trade refuses purchases the hero cannot afford
+PASS archery range starts with a full quiver
+PASS realm save/load restores gold and reputation
+9 living world/minigame tests passed.
+(node:73985) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== m2_presentation.test.cjs
+PASS audio assets exist as genuine 16-bit PCM WAV files and have valid .yy descriptors
+PASS scr_audio safe wrapper cc_sfx_play is registered and handles fallbacks gracefully
+PASS BLANK GAME.yyp registers scr_audio and all 4 sound assets
+PASS Armory screen delegates to ui_equipment_draw and initializes card layout
+PASS Accepting a contract returns previously active contracts to AVAILABLE status
+PASS Trade menu cursor navigates with vk_down and safely clamps on empty list
+PASS Dismissing dialogue records dismissal frame and prevents same-frame re-trigger
+PASS Trade menu, Quest log, and Contracts menus contain 0 emoji characters
+PASS Entity depth sorting anchor uses player.y without artificial offset
+
+================================================================
+MILESTONE 2 TESTS: 9 passed, 0 failed.
+================================================================
+(node:74029) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== retinue.test.cjs
+PASS the roster has the named companions, a new companion and four sellswords, each with a world body
+PASS talking greets first, talking again recruits, and the old stat bonus still applies
+PASS the party holds two companions besides Rowan, dismissing keeps relationships, and they rejoin
+PASS companions keep routines: they move between spots by time of day while Rowan is away
+PASS a sellsword signs for a fee, draws wages each day, and deserts when unpaid
+PASS an expiring contract asks to be renewed, and an unanswered request lets the merc go
+PASS Isolde will not follow an unknown knight
+PASS sparing a highwayman pleases Dunstan, annoys Galahalt, and they fall out over it
+PASS defeat injures someone; the Barrow Warden takes a captive, and beating it frees them
+PASS Galahalt refuses smuggling contracts and steps aside until the mission ends
+PASS watching Gemini's contracts: accepting one starts a mission, finishing it ends it
+PASS combat interface: fighters, supports scaled by morale, and the healer patches Rowan
+PASS requests: Margery's dice debt can be paid and she remembers it
+PASS the ledger opens with P, Z dismisses the selected companion, and P closes it
+PASS save and load keep the party, feelings, memories, contracts and the chronicle
+PASS an old save without retinue data still loads and keeps the legacy party
+PASS a day of companion life produces chronicle entries and requests without breaking anything
+PASS in-combat retinue support abilities trigger appropriately on battle start, soul hit, and player turn
+
+18 retinue tests passed.
+(node:74035) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== stability_fixes.test.cjs
+PASS XP rewards apply every level-up they earn and each level needs more XP
+PASS battle ITEM uses a limited flask and an empty press costs no turn
+PASS the fountain refills mead flasks
+PASS a beaten foe leaves the map and cannot be fought again until it respawns
+PASS the Overgrown Border Redoubt pays its XP and Crown favor only once
+PASS The Counterfeit Coin quest can be started at Corin, assayed at Odo's anvil, and resolved at the Border Redoubt
+PASS The Scribe's Dice Debt completes when the slip is returned to Pippin
+PASS Wulf, Sir Balin and the dice table are inside the tavern interior, not its walls
+PASS in the trade menu S sells without also moving the cursor
+PASS battle helpers exist straight after Create
+PASS Farmer Giles's Missing Sow requires finding Clover or Old Mallow before completing
+PASS The Boast of Sir Balin requires confronting Grim before Balin will complete it
+PASS The Quarrymen's Tapped Cask requires obtaining the pardon writ from Sapper Vane
+PASS The Smuggler's Run can be started at Factor Malo and completed at Master Odo's anvil
+PASS Baker Beatrice gives fresh bread (+6 HP) on first talk and remembers
+
+15 stability tests passed.
+(node:74074) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+=== weapon_combat.test.cjs
+PASS SWORD supports a perfect skill result
+PASS SWORD ends without input and never applies idle damage
+PASS GREATSWORD supports a perfect skill result
+PASS GREATSWORD ends without input and never applies idle damage
+PASS DAGGER supports a perfect skill result
+PASS DAGGER ends without input and never applies idle damage
+PASS BOW supports a perfect skill result
+PASS BOW ends without input and never applies idle damage
+PASS SPEAR supports a perfect skill result
+PASS SPEAR ends without input and never applies idle damage
+PASS Sword honors multiple authored timing windows
+PASS Sword endpoint hit is a miss rather than guaranteed damage
+PASS Greatsword release without charging is ignored
+PASS Greatsword undercharging and overcharging both reduce performance
+PASS Dagger missing a mark breaks the consecutive combo
+PASS Dagger holding the key does not auto-hit notes
+PASS Dagger early tap spam consumes marks as misses
+PASS Bow aim moves in both dimensions and stays inside the target field
+PASS Bow accuracy and draw strength are independently required
+PASS Bow shot at the deadline completes its flight with its original result
+PASS Spear rejects early and late range releases
+PASS Finesse widens perfect windows for all five weapons
+PASS Steady Hand slows the sword sweep without changing the draw mechanics
+PASS Quick adds a dagger strike and changes the combo cadence
+PASS Luck retries one miss only and still requires a skilled second attempt
+PASS Might times Fervor and the injected Blazon multiplier stay in the damage pipeline
+PASS Perfect Strength attack breaks armor and heavy bonus affects greatswords only
+PASS Performance scoring is stable at 30, 60 and 120 updates per second
+PASS Long frame pauses are bounded and completed attacks cannot resolve twice
+PASS New registry entries use their own callback without changing the dispatcher
+PASS Unknown weapon classes fall back to the playable sword minigame
+PASS Every owned weapon class launches its own minigame in a real encounter
+PASS FIGHT selection press and its held frames cannot trigger or time out an attack
+PASS Real attack results deal damage once and transition through impact to defense
+PASS Health and Shield cards heal and generate Ward on the actual result path
+PASS ACT, ITEM, refused MERCY and accepted MERCY retain their encounter behavior
+PASS Encounter metadata and hooks are preserved for world and dungeon callers
+PASS Each enemy chooses a distinct telegraphed pattern and keeps a navigable gap
+PASS Diagonal Soul movement is normalized and arena bounds hold
+PASS Swept collision catches fast crossing shots and invulnerability prevents stacked hits
+PASS Rendering every weapon and phase is read-only with respect to combat state
+PASS Realm save/load round trip preserves world fields, weapon IDs, profiles, cards and sockets
+PASS Legacy realm saves remain loadable and invalid old indices cannot crash stats
+PASS Level HP survives realm load and subsequent equipment recalculation
+PASS Malformed equipment payloads are rejected before mutating the live inventory
+PASS Loaded sockets obey the same single-copy, ownership and type rules as the armory
+PASS Equipment saves exclude attack callbacks and restore selection by ID after inventory reordering
+47 weapon/combat tests passed.
+(node:74118) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+12/12 suites passed.
+(node:73693) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

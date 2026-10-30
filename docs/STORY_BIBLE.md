@@ -509,3 +509,25 @@ season epilogues are local consequences with continued play, not completed kingd
 were rendered from translated GML with native sprites/fonts. No native compile or manual GameMaker
 walkthrough was available in the Linux environment. The opt-in native QA driver and Mac runner helper
 are prepared for that gate; their presence does not count as passing it.
+
+
+## Argon independent-audit handoff — 30 October 2026
+
+The complete Codex implementation handoff is in
+`docs/agent_handoffs/codex_living_kingdom/ARGON_START_HERE.md`, with implementation report,
+architecture, actual-diff manifest, test evidence, prioritized issues and coordination history.
+It supersedes earlier verification snapshots only where explicitly stated. The recovered
+implementation is `5926006` over main `47f045c`; the handoff is on
+`agent/codex-living-kingdom-handoff`, not merged into main.
+
+Fresh Mac Node checks pass (12/12 regression suites; stress 14/14 and 26/26). This exact project
+also reached GameMaker's Final Compile finished, but Igor exited 1 during the final archive copy
+outside writable roots. Packaging, safe native smoke and a manual walkthrough remain incomplete.
+Older Linux/native status notes above describe earlier attempts, not this newly observed compile
+stage. No runtime certification follows from the compiler message.
+
+Active Mac map/icons and presentation changes are documented as external/inherited work, not
+silently included or owned by Codex. The live board was read but its mutation was denied by the
+environment; pending claims/status/messages are written in the handoff, not falsely marked sent.
+Argon must independently audit, establish authorized claims and preserve Claude/Gemini work.
+Theology and Rule 13 remain open; no new lore approval or merge/publication authority is granted.
