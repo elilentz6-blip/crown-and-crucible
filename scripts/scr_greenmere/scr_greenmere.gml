@@ -36,9 +36,107 @@
 // Setup
 // --------------------------------------------------------------------------------------------
 
+// Schedule Matrix for Stonecross Inhabitants: [DAWN, DAY, DUSK, NIGHT]
+function gm_npc_schedules_init() {
+    global.npc_schedules = {
+        ALDEN: {
+            role: "ELDER",
+            posts: [
+                [456, 3032],    // DAWN: Inside Manor, council table
+                [1600, 1100],   // DAY: Town square stroll
+                [1470, 1252],   // DUSK: Town square bench
+                [166, 3040]     // NIGHT: Inside Manor, sleeping
+            ]
+        },
+        BEATRICE: {
+            role: "BAKER",
+            posts: [
+                [2090, 2672],   // DAWN: Inside Bakery, kneading dough & stoking oven
+                [1515, 1165],   // DAY: Market square stall, selling fresh loaves
+                [2000, 2700],   // DUSK: Inside Bakery, cooling racks
+                [2126, 2740]    // NIGHT: Inside Bakery quarters, sleeping
+            ]
+        },
+        ODO: {
+            role: "BLACKSMITH",
+            posts: [
+                [975, 760],     // DAWN: Forge yard, checking coal & trough
+                [810, 2710],    // DAY: Inside Forge, hammering at anvil
+                [300, 2706],    // DUSK: Inside Boar & Flagon, drinking ale by the hearth
+                [930, 2690]     // NIGHT: Inside Forge quarters, sleeping
+            ]
+        },
+        GILES: {
+            role: "FARMER",
+            posts: [
+                [1750, 1340],   // DAWN: Farm pen, feeding Clover & sheep
+                [2050, 1450],   // DAY: Crop fields, weeding wheat rows
+                [2180, 1390],   // DUSK: Inside Tithe Barn, inspecting harvest sacks
+                [1308, 3060]    // NIGHT: Inside Farmhouse, meal table & bed
+            ]
+        },
+        PIPPIN: {
+            role: "SCHOLAR",
+            posts: [
+                [1304, 2668],   // DAWN: Inside Eastern Chapel, reading book-chest rolls
+                [2020, 780],    // DAY: Tavern porch writing desk, copying charters
+                [416, 2760],    // DUSK: Inside Boar & Flagon, nervously watching dice
+                [1744, 2682]    // NIGHT: Inside Stonecross Cottage, sleeping
+            ]
+        },
+        DONALD: {
+            role: "GUARD",
+            posts: [
+                [2720, 3100],   // DAWN: Inside Gatehouse, checking toll barrier
+                [1420, 1200],   // DAY: Town square / bridge approach patrol
+                [1286, 1214],   // DUSK: Archery butts, inspecting fletchings
+                [3040, 2740]    // NIGHT: Inside Guardhouse barracks, resting
+            ]
+        },
+        WULF: {
+            role: "GAMBLER",
+            posts: [
+                [2020, 1850],   // DAWN: Red Sike river landing, checking boat lines
+                [2016, 800],    // DAY: Tavern yard shadow, sizing up merchants
+                [452, 2772],    // DUSK: Inside Boar & Flagon, rolling Crown & Bones
+                [452, 2772]     // NIGHT: Inside Boar & Flagon, counting silver
+            ]
+        },
+        DUNSTAN: {
+            role: "FRIAR",
+            posts: [
+                [1304, 2668],   // DAWN: Inside Eastern Chapel, morning prayers at altar
+                [2640, 1382],   // DAY: Chapel yard, brewing barley mead
+                [236, 2706],    // DUSK: Inside Boar & Flagon, sharing supper
+                [1304, 2760]    // NIGHT: Inside Eastern Chapel, keeping candle vigil
+            ]
+        },
+        BALIN: {
+            role: "KNIGHT",
+            posts: [
+                [1040, 1600],   // DAWN: King's Highroad verge, gazing toward Cairn
+                [2180, 832],    // DAY: Tavern bench, nursing swollen knee in the sun
+                [160, 2792],    // DUSK: Inside Boar & Flagon, drinking spiced cider
+                [200, 2800]     // NIGHT: Inside Boar & Flagon, sleeping in corner
+            ]
+        },
+        CORIN: {
+            role: "MERCHANT",
+            posts: [
+                [1640, 3146],   // DAWN: Inside Livery Stables, harnessing pack mule
+                [1650, 1100],   // DAY: Crossroads wagon stall, peddling goods
+                [2380, 2730],   // DUSK: Inside General Store, balancing coin ledger
+                [330, 2700]     // NIGHT: Inside Boar & Flagon, lodging for the night
+            ]
+        }
+    };
+}
+
 /// Called once from obj_game Create after every other subsystem.
 function gm_init() {
-    global.gm = { legacy_force: false, legacy_skip: false, last_rumour: "", last_tod: -1, checkpoint_side: 0, legacy_vid: "" };
+    var _init_tod = instance_exists(obj_game) ? obj_game.time_of_day : 0;
+    global.gm = { legacy_force: false, legacy_skip: false, last_rumour: "", last_tod: _init_tod, checkpoint_side: 0, legacy_vid: "" };
+    gm_npc_schedules_init();
     if (!instance_exists(obj_game)) return;
     var _g = obj_game;
     // the existing townsfolk get their own drawn faces
@@ -71,9 +169,11 @@ function gm_ready() {
 
 /// Removes everything this module put in the world (before a load rebuilds it).
 function gm_world_reset() {
-    if (!variable_global_exists("gm") || !is_struct(global.gm)) global.gm = { legacy_force: false, legacy_skip: false, last_rumour: "", last_tod: -1, checkpoint_side: 0, legacy_vid: "" };
+    var _init_tod = instance_exists(obj_game) ? obj_game.time_of_day : 0;
+    if (!variable_global_exists("gm") || !is_struct(global.gm)) global.gm = { legacy_force: false, legacy_skip: false, last_rumour: "", last_tod: _init_tod, checkpoint_side: 0, legacy_vid: "" };
     global.gm.legacy_force = false;
     global.gm.legacy_skip = false;
+    global.gm.last_tod = _init_tod;
     if (!instance_exists(obj_game)) return;
     var _g = obj_game;
     for (var _i = array_length(_g.world_villagers) - 1; _i >= 0; _i--) if (_g.world_villagers[_i][$ "chron"] == true) array_delete(_g.world_villagers, _i, 1);
@@ -135,6 +235,25 @@ function gm_world_refresh_greenmere() {
         }
     }
 
+    // Bind 4-phase schedules to world villagers
+    if (!variable_global_exists("npc_schedules")) gm_npc_schedules_init();
+    for (var _i = 0; _i < array_length(_g.world_villagers); _i++) {
+        var _v = _g.world_villagers[_i];
+        if (variable_struct_exists(global.npc_schedules, _v.id)) {
+            _v.posts = global.npc_schedules[$ _v.id].posts;
+        }
+    }
+    var _has_odo = false;
+    for (var _i = 0; _i < array_length(_V); _i++) {
+        if (_V[_i].id == "ODO") { _has_odo = true; break; }
+    }
+    if (!_has_odo) {
+        var _odo = gm_person_entity("ODO", "Master Odo", "brand", 810, 2710, "");
+        _odo.text = "* (Master Odo bellows over his anvil.) 'An iron blade is only as loyal as the smith who tempered it. Keep your edge true, traveler!'";
+        _odo.posts = global.npc_schedules.ODO.posts;
+        array_push(_V, _odo);
+    }
+
     // deserters and hungry men on the roads come back sooner once companies are unpaid
     _g.foe_respawn_ms = (_stage >= 2 && !chron_flag("tower_watch")) ? 150000 : 300000;
 }
@@ -162,12 +281,53 @@ function gm_step(_dt) {
         }
     }
     // people keep their own hours
+    if (!variable_global_exists("npc_schedules")) gm_npc_schedules_init();
     var _tod = _g.time_of_day;
-    if (_tod != global.gm.last_tod) {
+    var _tod_changed = (_tod != global.gm.last_tod);
+    if (_tod_changed) {
         global.gm.last_tod = _tod;
         for (var _i = 0; _i < array_length(_g.world_villagers); _i++) {
             var _v = _g.world_villagers[_i];
-            if (_v[$ "chron"] == true && is_array(_v[$ "posts"])) { _v.target_x = _v.posts[_tod][0]; _v.target_y = _v.posts[_tod][1]; }
+            if (is_array(_v[$ "posts"])) {
+                var _tx = _v.posts[_tod][0];
+                var _ty = _v.posts[_tod][1];
+                _v.target_x = _tx;
+                _v.target_y = _ty;
+                if (_v.role == "ELDER") _v.speed = (_tod == 1) ? 0.8 : 0;
+                else if (_v.role == "GUARD") _v.speed = (_tod == 1) ? 0.9 : 0;
+                else if (_v.role == "FARMER") _v.speed = (_tod == 1) ? 0.5 : 0;
+                else if (_v[$ "chron"] != true) _v.speed = 0.6;
+            }
+        }
+    }
+    // smooth off-screen repositioning: if an NPC is off-screen, snap to target
+    if (instance_exists(obj_player)) {
+        var _px = obj_player.x, _py = obj_player.y;
+        for (var _i = 0; _i < array_length(_g.world_villagers); _i++) {
+            var _v = _g.world_villagers[_i];
+            if (is_array(_v[$ "posts"])) {
+                var _tx = _v.posts[_tod][0];
+                var _ty = _v.posts[_tod][1];
+                if (_v.target_x == _tx && _v.target_y == _ty && (_v.x != _tx || _v.y != _ty)) {
+                    if (point_distance(_px, _py, _v.x, _v.y) >= 360 && point_distance(_px, _py, _tx, _ty) >= 360) {
+                        _v.x = _tx;
+                        _v.y = _ty;
+                        _v.moving = false;
+                        if (_v.role == "ELDER") _v.speed = (_tod == 1) ? 0.8 : 0;
+                        else if (_v.role == "GUARD") _v.speed = (_tod == 1) ? 0.9 : 0;
+                        else if (_v.role == "FARMER") _v.speed = (_tod == 1) ? 0.5 : 0;
+                        else if (_v[$ "chron"] != true) _v.speed = 0;
+                    } else if (point_distance(_v.x, _v.y, _tx, _ty) <= 4) {
+                        _v.x = _tx;
+                        _v.y = _ty;
+                        _v.moving = false;
+                        if (_v.role == "ELDER") _v.speed = (_tod == 1) ? 0.8 : 0;
+                        else if (_v.role == "GUARD") _v.speed = (_tod == 1) ? 0.9 : 0;
+                        else if (_v.role == "FARMER") _v.speed = (_tod == 1) ? 0.5 : 0;
+                        else if (_v[$ "chron"] != true) _v.speed = 0;
+                    }
+                }
+            }
         }
     }
     if (!instance_exists(obj_player)) return;

@@ -471,9 +471,13 @@ function vis_place_layout() {
         var _info = V.art.buildings[$ _bd.key];
         vis_add_static(_info.spr, 0, _bd.x, _bd.y, 3);
         var _iid = _bd[$ "interior"];
+        var _ddx = 0;
         if (_iid != undefined) {
-            var _ddx = _bd[$ "door_dx"] ?? (_info[$ "door"] ?? 0);
-            array_push(V.doors, { x: _bd.x + _ddx, y: _bd.y, interior: _iid, title: _bd[$ "title"] ?? "" });
+            _ddx = _bd[$ "door_dx"] ?? (_info[$ "door"] ?? 0);
+            var _door_struct = { x: _bd.x + _ddx, y: _bd.y, interior: _iid, title: _bd[$ "title"] ?? "" };
+            if (variable_struct_exists(_bd, "return_x")) _door_struct.return_x = _bd.return_x;
+            if (variable_struct_exists(_bd, "return_y")) _door_struct.return_y = _bd.return_y;
+            array_push(V.doors, _door_struct);
         }
         array_push(V.glows, { spr: _info.spr, img: 1, x: _bd.x, y: _bd.y, always: false });
         for (var _l = 0; _l < array_length(_info.lights); _l++) {
@@ -492,6 +496,21 @@ function vis_place_layout() {
                 var _cb = _custom[_c];
                 vis_solid_add(_bd.x + _cb[0], _bd.y + _cb[1], _bd.x + _cb[2], _bd.y + _cb[3]);
             }
+        } else if (_bd.solid && _iid != undefined) {
+            // Enterable solid building: leave a 28px doorway gap at the front threshold so player probe doesn't bounce
+            var _door_x = _bd.x + _ddx;
+            var _bx1 = _bd.x - _info.fw / 2;
+            var _bx2 = _bd.x + _info.fw / 2;
+            var _by1 = _bd.y - _info.fd;
+            var _by2 = _bd.y;
+            var _gx1 = max(_bx1, _door_x - 14);
+            var _gx2 = min(_bx2, _door_x + 14);
+            // Left wall segment
+            if (_gx1 > _bx1) vis_solid_add(_bx1, _by1, _gx1, _by2);
+            // Right wall segment
+            if (_bx2 > _gx2) vis_solid_add(_gx2, _by1, _bx2, _by2);
+            // Rear wall block (above doorway gap)
+            vis_solid_add(_gx1, _by1, _gx2, _by2 - 16);
         } else if (_bd.solid) vis_solid_add(_bd.x - _info.fw / 2, _bd.y - _info.fd, _bd.x + _info.fw / 2, _bd.y);
     }
     // ground layer

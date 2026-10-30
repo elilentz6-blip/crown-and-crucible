@@ -200,7 +200,7 @@ function baseShims(extra = {}) {
   const g = {
     global: {}, noone: -4, all: -3, pi: Math.PI, infinity: Infinity, NaN,
     pointer_null: null, current_time: 0, delta_time: 1000000 / 60, fps: 60,
-    room_width: 3200, room_height: 2400,
+    room_width: 3200, room_height: 3600,
     c_red: 0x0000ff, c_aqua: 0xffff00, c_yellow: 0x00ffff, c_lime: 0x00ff00,
     c_white: 0xffffff, c_black: 0, c_gray: 0x808080, c_dkgray: 0x404040, c_ltgray: 0xc0c0c0,
     c_orange: 0x40a0ff, c_green: 0x008000, c_blue: 0xff0000, c_fuchsia: 0xff00ff,
@@ -213,7 +213,7 @@ function baseShims(extra = {}) {
     vk_f1: 112, vk_f2: 113, vk_f3: 114, vk_f4: 115, vk_f5: 116, vk_f6: 117,
     vk_f7: 118, vk_f8: 119, vk_f9: 120, vk_f10: 121, vk_f11: 122, vk_f12: 123,
     matrix_view: 0, matrix_projection: 1, matrix_world: 2, // GML built-in matrix type constants
-    view_camera: [0],
+    view_camera: [0], view_visible: [true, false, false, false, false, false, false, false],
     randomize() {}, random: n => n * 0.5, random_range: (a, b) => (a + b) / 2,
     irandom: n => Math.floor(n / 2), irandom_range: (a, b) => Math.floor((a + b) / 2),
     choose: (...a) => a[0], random_set_seed() {}, random_get_seed: () => 0,
@@ -318,13 +318,24 @@ const STUB_PREFIXES = /^(draw_|gpu_|surface_|sprite_|texture_|font_|shader_|audi
 
 function stubMissing(ctx, sources) {
   const called = new Set();
-  for (const src of sources) for (const m of src.matchAll(/\b([A-Za-z_]\w*)\s*\(/g)) called.add(m[1]);
+  const assetMatches = new Set();
+  for (const src of sources) {
+    for (const m of src.matchAll(/\b([A-Za-z_]\w*)\s*\(/g)) called.add(m[1]);
+    for (const m of src.matchAll(/\b(spr_|snd_|fnt_|shd_|rm_|obj_)([A-Za-z0-9_]+)\b/g)) assetMatches.add(m[0]);
+  }
   const stubbed = [];
   for (const name of called) {
     if (!STUB_PREFIXES.test(name)) continue;
     if (vm.runInContext(`typeof ${name}`, ctx) !== 'undefined') continue;
     ctx[name] = () => -1;
     stubbed.push(name);
+  }
+  let assetId = 1000;
+  for (const name of assetMatches) {
+    if (vm.runInContext(`typeof ${name}`, ctx) === 'undefined') {
+      ctx[name] = assetId++;
+      stubbed.push(name);
+    }
   }
   return stubbed;
 }
