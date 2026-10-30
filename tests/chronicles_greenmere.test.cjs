@@ -570,7 +570,7 @@ test('content integrity: every reply leads somewhere, every id is handled, every
   for (const s of ['scr_greenmere', 'scr_war_clock', 'scr_chronicle_core', 'scr_conversation']) {
     const yy = JSON.parse(fs.readFileSync(path.join(ROOT, `scripts/${s}/${s}.yy`), 'utf8'));
     assert.equal(yy.isDnD, false);
-    assert.ok(fs.readFileSync(path.join(ROOT, 'BLANK GAME.yyp'), 'utf8').includes(`"path":"scripts/${s}/${s}.yy"`), s + ' registered');
+    assert.ok(new RegExp(String.raw`"path":\s*"scripts/${s}/${s}\.yy"`).test(fs.readFileSync(path.join(ROOT, 'BLANK GAME.yyp'), 'utf8')), s + ' registered'); // tolerate IDE-formatted yyp
   }
 });
 
