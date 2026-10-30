@@ -194,6 +194,11 @@ function convo_step(_dt) {
 }
 
 /// Speaker name and portrait for a person key (see gm_person()).
+function convo_reply_window(_count, _cursor) {
+    var _n = min(6, _count);
+    return {first:clamp(_cursor - _n + 1, 0, max(0, _count - _n)), count:_n};
+}
+
 function convo_draw() {
     if (!variable_global_exists("convo")) return;
     var V = global.convo;
@@ -214,15 +219,16 @@ function convo_draw() {
     }
     // replies panel above the dialogue box
     var _n = array_length(V.opts);
-    var _row = 30;
+    var _row = 50;
+    var _window = convo_reply_window(_n, V.cursor);
     var _w = 760;
     for (var _i = 0; _i < _n; _i++) _w = max(_w, ui_text_width(string(_i + 1) + ".  " + V.opts[_i].t, "body") + 70);
     _w = min(_w, 1000);
-    var _h = 26 + _n * _row;
+    var _h = 26 + _window.count * _row;
     var _x = 1183 - _w, _y = 600 - _h;
     ui_panel("parchment", _x, _y, _w, _h);
-    for (var _i = 0; _i < _n; _i++) {
-        var _yy = _y + 14 + _i * _row;
+    for (var _i = _window.first; _i < _window.first + _window.count; _i++) {
+        var _yy = _y + 14 + (_i - _window.first) * _row;
         var _sel = (_i == V.cursor);
         if (_sel) {
             draw_set_alpha(0.18);
@@ -233,6 +239,7 @@ function convo_draw() {
         }
         ui_text_draw(_x + 22, _yy + 2, string(_i + 1) + ".  " + V.opts[_i].t, _sel ? "body_bold" : "body", _sel ? UI_COL_INK : UI_COL_INK_SOFT, _w - 44);
     }
+    if (_n > _window.count) ui_text_draw(_x + _w - 210, _y - 22, string(_window.first + 1) + "-" + string(_window.first + _window.count) + " of " + string(_n), "small_outline", UI_COL_PARCHMENT);
     // above the replies, clear of the speaker's name plate
     ui_key_hints(_x + 4, _y - 28, [[["W", "S"], "Move"], [["Z"], "Choose"], [["Esc"], "Leave"]], UI_COL_PARCHMENT, true, "small_outline");
 }
@@ -291,7 +298,8 @@ function notebook_draw() {
     } else {
         var _r = gm_rumours_heard();
         for (var _i = 0; _i < array_length(_r); _i++) array_push(_lines, _r[_i]);
-        for (var _i = 0; _i < array_length(C.news); _i++) array_push(_lines, ["Day " + string(C.news[_i].day), C.news[_i].text]);
+        var _news = cf_heard_news();
+        for (var _i = 0; _i < array_length(_news); _i++) array_push(_lines, _news[_i]);
         if (array_length(_lines) == 0) array_push(_lines, ["Quiet", "You have not heard much yet. Taverns and markets are where news gets told."]);
     }
     V.nb_scroll = clamp(V.nb_scroll, 0, max(0, array_length(_lines) - 1));

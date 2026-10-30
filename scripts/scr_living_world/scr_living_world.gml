@@ -788,6 +788,7 @@ function cc_load_game() {
 
     // Chronicles state; saves from before it existed start the region fresh from today
     if (chron_ready()) chron_load_restore(_data[$ "chronicle"]);
+    cc_hierarchy_reconcile(true);
 
     global.game_mode = "OVERWORLD";
     var _px = instance_exists(obj_player) ? obj_player.x : 683;

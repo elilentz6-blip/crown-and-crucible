@@ -1,0 +1,3059 @@
+{
+  "warning": "Repeated standalone suites overlap run_all; do not sum as unique coverage. Interrupted run has no invented result.",
+  "runs": [
+    {
+      "command": "node tests/run_all.cjs",
+      "worktree": "recovered branch 5926006",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "PASS",
+      "observed_total": "12/12 suites",
+      "evidence": "evidence/mac-regression.log",
+      "cases": [
+        {
+          "test_name": "[1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing",
+          "status": "PASS",
+          "evidence_line": 8
+        },
+        {
+          "test_name": "[2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN",
+          "status": "PASS",
+          "evidence_line": 9
+        },
+        {
+          "test_name": "[3] AUDIO.3: Active audio environment mock handles extreme inputs safely",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [3] AUDIO.3: Active audio environment mock handles extreme inputs safely",
+          "status": "PASS",
+          "evidence_line": 10
+        },
+        {
+          "test_name": "[4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml",
+          "status": "PASS",
+          "evidence_line": 13
+        },
+        {
+          "test_name": "[5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)",
+          "status": "PASS",
+          "evidence_line": 16
+        },
+        {
+          "test_name": "[6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open",
+          "status": "PASS",
+          "evidence_line": 17
+        },
+        {
+          "test_name": "[7] DIALOGUE.3: Filler text \"You look across the wide realm\" never bounces open when pressing Space in empty space",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [7] DIALOGUE.3: Filler text \"You look across the wide realm\" never bounces open when pressing Space in empty space",
+          "status": "PASS",
+          "evidence_line": 18
+        },
+        {
+          "test_name": "[8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes",
+          "status": "PASS",
+          "evidence_line": 19
+        },
+        {
+          "test_name": "[9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset",
+          "status": "PASS",
+          "evidence_line": 22
+        },
+        {
+          "test_name": "[10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter",
+          "status": "PASS",
+          "evidence_line": 23
+        },
+        {
+          "test_name": "[11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates",
+          "status": "PASS",
+          "evidence_line": 24
+        },
+        {
+          "test_name": "[12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN",
+          "status": "PASS",
+          "evidence_line": 25
+        },
+        {
+          "test_name": "[13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly",
+          "status": "PASS",
+          "evidence_line": 26
+        },
+        {
+          "test_name": "[14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout",
+          "status": "PASS",
+          "evidence_line": 29
+        },
+        {
+          "test_name": "[15] UI.2: Trade menu cursor clamping and navigation with vk_down",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [15] UI.2: Trade menu cursor clamping and navigation with vk_down",
+          "status": "PASS",
+          "evidence_line": 30
+        },
+        {
+          "test_name": "[16] UI.3: Contract acceptance returns prior contract to AVAILABLE status",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [16] UI.3: Contract acceptance returns prior contract to AVAILABLE status",
+          "status": "PASS",
+          "evidence_line": 31
+        },
+        {
+          "test_name": "[17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN",
+          "status": "PASS",
+          "evidence_line": 32
+        },
+        {
+          "test_name": "[18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load",
+          "status": "PASS",
+          "evidence_line": 33
+        },
+        {
+          "test_name": "[19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active",
+          "status": "PASS",
+          "evidence_line": 34
+        },
+        {
+          "test_name": "military standing does not create an oath, knighthood, noble birth or land",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS military standing does not create an oath, knighthood, noble birth or land",
+          "status": "PASS",
+          "evidence_line": 45
+        },
+        {
+          "test_name": "legacy automatic lordship migrates without losing earned rank or minting tribute",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS legacy automatic lordship migrates without losing earned rank or minting tribute",
+          "status": "PASS",
+          "evidence_line": 46
+        },
+        {
+          "test_name": "the Oakhaven clerk arrives independently and a cargo finding takes real days",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the Oakhaven clerk arrives independently and a cargo finding takes real days",
+          "status": "PASS",
+          "evidence_line": 47
+        },
+        {
+          "test_name": "ignoring the hearing preserves counterclaims and fires its consequence only once",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS ignoring the hearing preserves counterclaims and fires its consequence only once",
+          "status": "PASS",
+          "evidence_line": 48
+        },
+        {
+          "test_name": "filing does not launder stolen grain; explicit restitution is charged once",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS filing does not launder stolen grain; explicit restitution is charged once",
+          "status": "PASS",
+          "evidence_line": 49
+        },
+        {
+          "test_name": "restitution after judgment records a later payment without erasing the original finding",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS restitution after judgment records a later payment without erasing the original finding",
+          "status": "PASS",
+          "evidence_line": 50
+        },
+        {
+          "test_name": "cartage inquiry needs evidence, does not repeat copy fees, and preserves the remaining assessment",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS cartage inquiry needs evidence, does not repeat copy fees, and preserves the remaining assessment",
+          "status": "PASS",
+          "evidence_line": 51
+        },
+        {
+          "test_name": "the whole inquiry is reachable through Alden, Oswin and Fenner conversations",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the whole inquiry is reachable through Alden, Oswin and Fenner conversations",
+          "status": "PASS",
+          "evidence_line": 52
+        },
+        {
+          "test_name": "public refusal and immediate collection have different, nonrepeatable consequences",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS public refusal and immediate collection have different, nonrepeatable consequences",
+          "status": "PASS",
+          "evidence_line": 53
+        },
+        {
+          "test_name": "an unanswered cartage question leads to distress without inventing personal debt",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS an unanswered cartage question leads to distress without inventing personal debt",
+          "status": "PASS",
+          "evidence_line": 54
+        },
+        {
+          "test_name": "the assessment is issued and collected even when Rowan never asks about it",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the assessment is issued and collected even when Rowan never asks about it",
+          "status": "PASS",
+          "evidence_line": 55
+        },
+        {
+          "test_name": "news reaches the notebook only after a conversation, persists and is never heard twice",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS news reaches the notebook only after a conversation, persists and is never heard twice",
+          "status": "PASS",
+          "evidence_line": 56
+        },
+        {
+          "test_name": "the local nominee receives assent and appears at the tower without ennobling Rowan",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the local nominee receives assent and appears at the tower without ennobling Rowan",
+          "status": "PASS",
+          "evidence_line": 57
+        },
+        {
+          "test_name": "pending hearings, evidence and deadlines survive a realm save/load without duplicate people",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS pending hearings, evidence and deadlines survive a realm save/load without duplicate people",
+          "status": "PASS",
+          "evidence_line": 58
+        },
+        {
+          "test_name": "elapsed time and dawn on one frame advance both calendars once",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS elapsed time and dawn on one frame advance both calendars once",
+          "status": "PASS",
+          "evidence_line": 59
+        },
+        {
+          "test_name": "sharing the cargo earns lodging without requiring unrelated reputation",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS sharing the cargo earns lodging without requiring unrelated reputation",
+          "status": "PASS",
+          "evidence_line": 60
+        },
+        {
+          "test_name": "long reply lists stay bounded and the last reply remains visible",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS long reply lists stay bounded and the last reply remains visible",
+          "status": "PASS",
+          "evidence_line": 61
+        },
+        {
+          "test_name": "all new papers have readable names and every conversation destination exists",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS all new papers have readable names and every conversation destination exists",
+          "status": "PASS",
+          "evidence_line": 62
+        },
+        {
+          "test_name": "the frontend pauses simulation and new journey does not overwrite a save on entry",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the frontend pauses simulation and new journey does not overwrite a save on entry",
+          "status": "PASS",
+          "evidence_line": 63
+        },
+        {
+          "test_name": "Continue loads saved state; new journey confirmation and controls preserve the file",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Continue loads saved state; new journey confirmation and controls preserve the file",
+          "status": "PASS",
+          "evidence_line": 64
+        },
+        {
+          "test_name": "corrupt saves return safely to title and held confirm input cannot leak into play",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS corrupt saves return safely to title and held confirm input cannot leak into play",
+          "status": "PASS",
+          "evidence_line": 65
+        },
+        {
+          "test_name": "the loading catalog and all artwork are registered GameMaker resources with complete frames",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the loading catalog and all artwork are registered GameMaker resources with complete frames",
+          "status": "PASS",
+          "evidence_line": 66
+        },
+        {
+          "test_name": "the native walkthrough driver follows live conversations without writing a player save",
+          "source_suite": "chronicles_followthrough.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the native walkthrough driver follows live conversations without writing a player save",
+          "status": "PASS",
+          "evidence_line": 67
+        },
+        {
+          "test_name": "a new game starts on day one with the Greenmere people, places and the barge on its way",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a new game starts on day one with the Greenmere people, places and the barge on its way",
+          "status": "PASS",
+          "evidence_line": 73
+        },
+        {
+          "test_name": "Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied",
+          "status": "PASS",
+          "evidence_line": 74
+        },
+        {
+          "test_name": "long speeches page through the box three lines at a time and replies come on the last page",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS long speeches page through the box three lines at a time and replies come on the last page",
+          "status": "PASS",
+          "evidence_line": 75
+        },
+        {
+          "test_name": "the calendar moves only in the overworld, and the barge arrival silently starts the War Clock",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the calendar moves only in the overworld, and the barge arrival silently starts the War Clock",
+          "status": "PASS",
+          "evidence_line": 76
+        },
+        {
+          "test_name": "the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once",
+          "status": "PASS",
+          "evidence_line": 77
+        },
+        {
+          "test_name": "refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan",
+          "status": "PASS",
+          "evidence_line": 78
+        },
+        {
+          "test_name": "mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war",
+          "status": "PASS",
+          "evidence_line": 79
+        },
+        {
+          "test_name": "stripping the lead pays and costs: standing falls and the tower cannot be mended this season",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS stripping the lead pays and costs: standing falls and the tower cannot be mended this season",
+          "status": "PASS",
+          "evidence_line": 80
+        },
+        {
+          "test_name": "the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once",
+          "status": "PASS",
+          "evidence_line": 81
+        },
+        {
+          "test_name": "doing nothing about the barge is a choice too: the bailiff seizes it on his own",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS doing nothing about the barge is a choice too: the bailiff seizes it on his own",
+          "status": "PASS",
+          "evidence_line": 82
+        },
+        {
+          "test_name": "selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer",
+          "status": "PASS",
+          "evidence_line": 83
+        },
+        {
+          "test_name": "the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves",
+          "status": "PASS",
+          "evidence_line": 84
+        },
+        {
+          "test_name": "the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once",
+          "status": "PASS",
+          "evidence_line": 85
+        },
+        {
+          "test_name": "Guy only discusses the household orders with a man the Crown trusts",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Guy only discusses the household orders with a man the Crown trusts",
+          "status": "PASS",
+          "evidence_line": 86
+        },
+        {
+          "test_name": "the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill",
+          "status": "PASS",
+          "evidence_line": 87
+        },
+        {
+          "test_name": "at the end of the season one of four provisional endings is told once and play continues",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS at the end of the season one of four provisional endings is told once and play continues",
+          "status": "PASS",
+          "evidence_line": 88
+        },
+        {
+          "test_name": "the old random war cycle waits for the War Clock and its dispatches become news",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the old random war cycle waits for the War Clock and its dispatches become news",
+          "status": "PASS",
+          "evidence_line": 89
+        },
+        {
+          "test_name": "lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden",
+          "status": "PASS",
+          "evidence_line": 90
+        },
+        {
+          "test_name": "rumours are heard one at a time and kept in the notebook; J opens and closes the notebook",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS rumours are heard one at a time and kept in the notebook; J opens and closes the notebook",
+          "status": "PASS",
+          "evidence_line": 91
+        },
+        {
+          "test_name": "asking for the old talk from a conversation hands the person back to their quest",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS asking for the old talk from a conversation hands the person back to their quest",
+          "status": "PASS",
+          "evidence_line": 92
+        },
+        {
+          "test_name": "Ebbe's advance is an obligation that survives: repay it or be written down as a deserter",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Ebbe's advance is an obligation that survives: repay it or be written down as a deserter",
+          "status": "PASS",
+          "evidence_line": 93
+        },
+        {
+          "test_name": "save and load keep the calendar, flags, notes, papers, schedule and the War Clock",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS save and load keep the calendar, flags, notes, papers, schedule and the War Clock",
+          "status": "PASS",
+          "evidence_line": 94
+        },
+        {
+          "test_name": "a save from before the Chronicles loads cleanly and the region starts fresh",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a save from before the Chronicles loads cleanly and the region starts fresh",
+          "status": "PASS",
+          "evidence_line": 95
+        },
+        {
+          "test_name": "content integrity: every reply leads somewhere, every id is handled, every page fits the box",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS content integrity: every reply leads somewhere, every id is handled, every page fits the box",
+          "status": "PASS",
+          "evidence_line": 96
+        },
+        {
+          "test_name": "canon wording: no supernatural titles, no \"Sir Rowan\", no \"Baroness\", no map coordinates in speech",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS canon wording: no supernatural titles, no \"Sir Rowan\", no \"Baroness\", no map coordinates in speech",
+          "status": "PASS",
+          "evidence_line": 97
+        },
+        {
+          "test_name": "starter gear keeps legacy stats and exposes all six socket types",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS starter gear keeps legacy stats and exposes all six socket types",
+          "status": "PASS",
+          "evidence_line": 103
+        },
+        {
+          "test_name": "wrong type and unknown cards leave the current build untouched",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS wrong type and unknown cards leave the current build untouched",
+          "status": "PASS",
+          "evidence_line": 104
+        },
+        {
+          "test_name": "six starter cards all reach combat stats without healing",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS six starter cards all reach combat stats without healing",
+          "status": "PASS",
+          "evidence_line": 105
+        },
+        {
+          "test_name": "moving a unique card releases its socket on backpack gear",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS moving a unique card releases its socket on backpack gear",
+          "status": "PASS",
+          "evidence_line": 106
+        },
+        {
+          "test_name": "duplicate or invalid saved socket entries cannot stack effects",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS duplicate or invalid saved socket entries cannot stack effects",
+          "status": "PASS",
+          "evidence_line": 107
+        },
+        {
+          "test_name": "emptying a socket returns its stat contribution",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS emptying a socket returns its stat contribution",
+          "status": "PASS",
+          "evidence_line": 108
+        },
+        {
+          "test_name": "Wild accepts every card category",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Wild accepts every card category",
+          "status": "PASS",
+          "evidence_line": 109
+        },
+        {
+          "test_name": "armor HP and companion HP add without cumulative stat inflation",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS armor HP and companion HP add without cumulative stat inflation",
+          "status": "PASS",
+          "evidence_line": 110
+        },
+        {
+          "test_name": "swapping HP cards cannot be used for free healing",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS swapping HP cards cannot be used for free healing",
+          "status": "PASS",
+          "evidence_line": 111
+        },
+        {
+          "test_name": "shield absorbs whole and partial hits before HP",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS shield absorbs whole and partial hits before HP",
+          "status": "PASS",
+          "evidence_line": 112
+        },
+        {
+          "test_name": "shield begins once per encounter and never refills per dodge wave",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS shield begins once per encounter and never refills per dodge wave",
+          "status": "PASS",
+          "evidence_line": 113
+        },
+        {
+          "test_name": "precision changes actual reticle speed; quick cards change actual soul speed",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS precision changes actual reticle speed; quick cards change actual soul speed",
+          "status": "PASS",
+          "evidence_line": 114
+        },
+        {
+          "test_name": "chests unlock every advanced card once and offer a socket sidegrade",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS chests unlock every advanced card once and offer a socket sidegrade",
+          "status": "PASS",
+          "evidence_line": 115
+        },
+        {
+          "test_name": "gold cards change both victory and mercy settlement",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS gold cards change both victory and mercy settlement",
+          "status": "PASS",
+          "evidence_line": 116
+        },
+        {
+          "test_name": "Second Wind triggers on surviving a wave and respects HP maximum",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Second Wind triggers on surviving a wave and respects HP maximum",
+          "status": "PASS",
+          "evidence_line": 117
+        },
+        {
+          "test_name": "fatal waves end in defeat before regeneration can revive the hero",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS fatal waves end in defeat before regeneration can revive the hero",
+          "status": "PASS",
+          "evidence_line": 118
+        },
+        {
+          "test_name": "keyboard navigation assigns and removes a card from the selected socket",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS keyboard navigation assigns and removes a card from the selected socket",
+          "status": "PASS",
+          "evidence_line": 119
+        },
+        {
+          "test_name": "every catalog card can be assigned without breaking stat calculation",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS every catalog card can be assigned without breaking stat calculation",
+          "status": "PASS",
+          "evidence_line": 120
+        },
+        {
+          "test_name": "factions initialize with leaders, military power, treasuries, and ambitions",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS factions initialize with leaders, military power, treasuries, and ambitions",
+          "status": "PASS",
+          "evidence_line": 126
+        },
+        {
+          "test_name": "contested checkpoints initialize with controlling factions and defense levels",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS contested checkpoints initialize with controlling factions and defense levels",
+          "status": "PASS",
+          "evidence_line": 127
+        },
+        {
+          "test_name": "autonomous war simulation advances cycle, shifts economy and logs chronicle dispatches",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS autonomous war simulation advances cycle, shifts economy and logs chronicle dispatches",
+          "status": "PASS",
+          "evidence_line": 128
+        },
+        {
+          "test_name": "freelance knight contracts initialize with bounties, escorts, and reconnaissance missions",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS freelance knight contracts initialize with bounties, escorts, and reconnaissance missions",
+          "status": "PASS",
+          "evidence_line": 129
+        },
+        {
+          "test_name": "contract acceptance, fulfillment, rewards, and renown progression",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS contract acceptance, fulfillment, rewards, and renown progression",
+          "status": "PASS",
+          "evidence_line": 130
+        },
+        {
+          "test_name": "contract betrayal awards rival faction favors, higher bribes, and logs defection dispatch",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS contract betrayal awards rival faction favors, higher bribes, and logs defection dispatch",
+          "status": "PASS",
+          "evidence_line": 131
+        },
+        {
+          "test_name": "military standing advances without automatic knighthood, allegiance or inherited land",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS military standing advances without automatic knighthood, allegiance or inherited land",
+          "status": "PASS",
+          "evidence_line": 132
+        },
+        {
+          "test_name": "multi-agent retinue bonus and temporary military reinforcements provide combat stats",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS multi-agent retinue bonus and temporary military reinforcements provide combat stats",
+          "status": "PASS",
+          "evidence_line": 133
+        },
+        {
+          "test_name": "legacy fief flags cannot mint tribute during war cycles",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS legacy fief flags cannot mint tribute during war cycles",
+          "status": "PASS",
+          "evidence_line": 134
+        },
+        {
+          "test_name": "realm save/load persists war cycle, faction stats, active contracts, and chivalric rank",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS realm save/load persists war cycle, faction stats, active contracts, and chivalric rank",
+          "status": "PASS",
+          "evidence_line": 135
+        },
+        {
+          "test_name": "mod, div, and/or/not and hex literals evaluate like GML",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS mod, div, and/or/not and hex literals evaluate like GML",
+          "status": "PASS",
+          "evidence_line": 141
+        },
+        {
+          "test_name": "repeat, begin/end and accessors translate",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS repeat, begin/end and accessors translate",
+          "status": "PASS",
+          "evidence_line": 142
+        },
+        {
+          "test_name": "strings, comments and struct keys are left alone",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS strings, comments and struct keys are left alone",
+          "status": "PASS",
+          "evidence_line": 143
+        },
+        {
+          "test_name": "macros become constants",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS macros become constants",
+          "status": "PASS",
+          "evidence_line": 144
+        },
+        {
+          "test_name": "every project script and obj_game event parses after translation",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS every project script and obj_game event parses after translation",
+          "status": "PASS",
+          "evidence_line": 145
+        },
+        {
+          "test_name": "R1.1: Zero supernatural/cosmic lore strings in active game scripts and objects",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 1 - R1.1: Zero supernatural/cosmic lore strings in active game scripts and objects",
+          "status": "PASS",
+          "evidence_line": 155
+        },
+        {
+          "test_name": "R1.2: Rowan initializes as common-born Man-at-Arms with dynamic military promotions",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 2 - R1.2: Rowan initializes as common-born Man-at-Arms with dynamic military promotions",
+          "status": "PASS",
+          "evidence_line": 161
+        },
+        {
+          "test_name": "R1.3: QUEST_COUNTERFEIT resolves through grounded medieval investigation",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 3 - R1.3: QUEST_COUNTERFEIT resolves through grounded medieval investigation",
+          "status": "PASS",
+          "evidence_line": 167
+        },
+        {
+          "test_name": "R2.1: Modern Armory wiring and UI Kit 9-slice panel rendering",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 4 - R2.1: Modern Armory wiring and UI Kit 9-slice panel rendering",
+          "status": "PASS",
+          "evidence_line": 173
+        },
+        {
+          "test_name": "R2.2: Audio wrapper bounds clamping and safe fallback",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 5 - R2.2: Audio wrapper bounds clamping and safe fallback",
+          "status": "PASS",
+          "evidence_line": 179
+        },
+        {
+          "test_name": "R3.1: Stonecross villager dialogue dynamically reacts to war cycle count",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 6 - R3.1: Stonecross villager dialogue dynamically reacts to war cycle count",
+          "status": "PASS",
+          "evidence_line": 185
+        },
+        {
+          "test_name": "R3.2: Commodity market price multipliers shift villager dialogues",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 7 - R3.2: Commodity market price multipliers shift villager dialogues",
+          "status": "PASS",
+          "evidence_line": 191
+        },
+        {
+          "test_name": "R3.3: Ambient tavern banter in Boar & Flagon produces rich feudal rumors",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 8 - R3.3: Ambient tavern banter in Boar & Flagon produces rich feudal rumors",
+          "status": "PASS",
+          "evidence_line": 197
+        },
+        {
+          "test_name": "R3.4: All 6 side quests log chronicle dispatches upon completion",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 9 - R3.4: All 6 side quests log chronicle dispatches upon completion",
+          "status": "PASS",
+          "evidence_line": 203
+        },
+        {
+          "test_name": "R4.1: Save Schema v2 persists dynamic war cycle, active contracts, and companion state",
+          "source_suite": "grounded_canon_r3_r4.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "ok 10 - R4.1: Save Schema v2 persists dynamic war cycle, active contracts, and companion state",
+          "status": "PASS",
+          "evidence_line": 209
+        },
+        {
+          "test_name": "faction reputations initialize for all four factions",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS faction reputations initialize for all four factions",
+          "status": "PASS",
+          "evidence_line": 225
+        },
+        {
+          "test_name": "all six side quests are defined with title, region, giver and gold reward",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS all six side quests are defined with title, region, giver and gold reward",
+          "status": "PASS",
+          "evidence_line": 226
+        },
+        {
+          "test_name": "quest start, advance and complete pay gold and reputation once",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS quest start, advance and complete pay gold and reputation once",
+          "status": "PASS",
+          "evidence_line": 227
+        },
+        {
+          "test_name": "dice hand evaluator ranks trinity > straight > pair > sum",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS dice hand evaluator ranks trinity > straight > pair > sum",
+          "status": "PASS",
+          "evidence_line": 228
+        },
+        {
+          "test_name": "dice opponent AI holds a rolled pair",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS dice opponent AI holds a rolled pair",
+          "status": "PASS",
+          "evidence_line": 229
+        },
+        {
+          "test_name": "commodity trade buys at local price and sells at 85% of the destination price",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS commodity trade buys at local price and sells at 85% of the destination price",
+          "status": "PASS",
+          "evidence_line": 230
+        },
+        {
+          "test_name": "trade refuses purchases the hero cannot afford",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS trade refuses purchases the hero cannot afford",
+          "status": "PASS",
+          "evidence_line": 231
+        },
+        {
+          "test_name": "archery range starts with a full quiver",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS archery range starts with a full quiver",
+          "status": "PASS",
+          "evidence_line": 232
+        },
+        {
+          "test_name": "realm save/load restores gold and reputation",
+          "source_suite": "living_world_minigames.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS realm save/load restores gold and reputation",
+          "status": "PASS",
+          "evidence_line": 233
+        },
+        {
+          "test_name": "audio assets exist as genuine 16-bit PCM WAV files and have valid .yy descriptors",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS audio assets exist as genuine 16-bit PCM WAV files and have valid .yy descriptors",
+          "status": "PASS",
+          "evidence_line": 239
+        },
+        {
+          "test_name": "scr_audio safe wrapper cc_sfx_play is registered and handles fallbacks gracefully",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS scr_audio safe wrapper cc_sfx_play is registered and handles fallbacks gracefully",
+          "status": "PASS",
+          "evidence_line": 240
+        },
+        {
+          "test_name": "BLANK GAME.yyp registers scr_audio and all 4 sound assets",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS BLANK GAME.yyp registers scr_audio and all 4 sound assets",
+          "status": "PASS",
+          "evidence_line": 241
+        },
+        {
+          "test_name": "Armory screen delegates to ui_equipment_draw and initializes card layout",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Armory screen delegates to ui_equipment_draw and initializes card layout",
+          "status": "PASS",
+          "evidence_line": 242
+        },
+        {
+          "test_name": "Accepting a contract returns previously active contracts to AVAILABLE status",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Accepting a contract returns previously active contracts to AVAILABLE status",
+          "status": "PASS",
+          "evidence_line": 243
+        },
+        {
+          "test_name": "Trade menu cursor navigates with vk_down and safely clamps on empty list",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Trade menu cursor navigates with vk_down and safely clamps on empty list",
+          "status": "PASS",
+          "evidence_line": 244
+        },
+        {
+          "test_name": "Dismissing dialogue records dismissal frame and prevents same-frame re-trigger",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Dismissing dialogue records dismissal frame and prevents same-frame re-trigger",
+          "status": "PASS",
+          "evidence_line": 245
+        },
+        {
+          "test_name": "Trade menu, Quest log, and Contracts menus contain 0 emoji characters",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Trade menu, Quest log, and Contracts menus contain 0 emoji characters",
+          "status": "PASS",
+          "evidence_line": 246
+        },
+        {
+          "test_name": "Entity depth sorting anchor uses player.y without artificial offset",
+          "source_suite": "m2_presentation.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Entity depth sorting anchor uses player.y without artificial offset",
+          "status": "PASS",
+          "evidence_line": 247
+        },
+        {
+          "test_name": "the roster has the named companions, a new companion and four sellswords, each with a world body",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the roster has the named companions, a new companion and four sellswords, each with a world body",
+          "status": "PASS",
+          "evidence_line": 256
+        },
+        {
+          "test_name": "talking greets first, talking again recruits, and the old stat bonus still applies",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS talking greets first, talking again recruits, and the old stat bonus still applies",
+          "status": "PASS",
+          "evidence_line": 257
+        },
+        {
+          "test_name": "the party holds two companions besides Rowan, dismissing keeps relationships, and they rejoin",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the party holds two companions besides Rowan, dismissing keeps relationships, and they rejoin",
+          "status": "PASS",
+          "evidence_line": 258
+        },
+        {
+          "test_name": "companions keep routines: they move between spots by time of day while Rowan is away",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS companions keep routines: they move between spots by time of day while Rowan is away",
+          "status": "PASS",
+          "evidence_line": 259
+        },
+        {
+          "test_name": "a sellsword signs for a fee, draws wages each day, and deserts when unpaid",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a sellsword signs for a fee, draws wages each day, and deserts when unpaid",
+          "status": "PASS",
+          "evidence_line": 260
+        },
+        {
+          "test_name": "an expiring contract asks to be renewed, and an unanswered request lets the merc go",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS an expiring contract asks to be renewed, and an unanswered request lets the merc go",
+          "status": "PASS",
+          "evidence_line": 261
+        },
+        {
+          "test_name": "Isolde will not follow an unknown knight",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Isolde will not follow an unknown knight",
+          "status": "PASS",
+          "evidence_line": 262
+        },
+        {
+          "test_name": "sparing a highwayman pleases Dunstan, annoys Galahalt, and they fall out over it",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS sparing a highwayman pleases Dunstan, annoys Galahalt, and they fall out over it",
+          "status": "PASS",
+          "evidence_line": 263
+        },
+        {
+          "test_name": "defeat injures someone; the Barrow Warden takes a captive, and beating it frees them",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS defeat injures someone; the Barrow Warden takes a captive, and beating it frees them",
+          "status": "PASS",
+          "evidence_line": 264
+        },
+        {
+          "test_name": "Galahalt refuses smuggling contracts and steps aside until the mission ends",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Galahalt refuses smuggling contracts and steps aside until the mission ends",
+          "status": "PASS",
+          "evidence_line": 265
+        },
+        {
+          "test_name": "watching Gemini's contracts: accepting one starts a mission, finishing it ends it",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS watching Gemini's contracts: accepting one starts a mission, finishing it ends it",
+          "status": "PASS",
+          "evidence_line": 266
+        },
+        {
+          "test_name": "combat interface: fighters, supports scaled by morale, and the healer patches Rowan",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS combat interface: fighters, supports scaled by morale, and the healer patches Rowan",
+          "status": "PASS",
+          "evidence_line": 267
+        },
+        {
+          "test_name": "requests: Margery's dice debt can be paid and she remembers it",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS requests: Margery's dice debt can be paid and she remembers it",
+          "status": "PASS",
+          "evidence_line": 268
+        },
+        {
+          "test_name": "the ledger opens with P, Z dismisses the selected companion, and P closes it",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the ledger opens with P, Z dismisses the selected companion, and P closes it",
+          "status": "PASS",
+          "evidence_line": 269
+        },
+        {
+          "test_name": "save and load keep the party, feelings, memories, contracts and the chronicle",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS save and load keep the party, feelings, memories, contracts and the chronicle",
+          "status": "PASS",
+          "evidence_line": 270
+        },
+        {
+          "test_name": "an old save without retinue data still loads and keeps the legacy party",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS an old save without retinue data still loads and keeps the legacy party",
+          "status": "PASS",
+          "evidence_line": 271
+        },
+        {
+          "test_name": "a day of companion life produces chronicle entries and requests without breaking anything",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a day of companion life produces chronicle entries and requests without breaking anything",
+          "status": "PASS",
+          "evidence_line": 272
+        },
+        {
+          "test_name": "in-combat retinue support abilities trigger appropriately on battle start, soul hit, and player turn",
+          "source_suite": "retinue.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS in-combat retinue support abilities trigger appropriately on battle start, soul hit, and player turn",
+          "status": "PASS",
+          "evidence_line": 273
+        },
+        {
+          "test_name": "XP rewards apply every level-up they earn and each level needs more XP",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS XP rewards apply every level-up they earn and each level needs more XP",
+          "status": "PASS",
+          "evidence_line": 280
+        },
+        {
+          "test_name": "battle ITEM uses a limited flask and an empty press costs no turn",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS battle ITEM uses a limited flask and an empty press costs no turn",
+          "status": "PASS",
+          "evidence_line": 281
+        },
+        {
+          "test_name": "the fountain refills mead flasks",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the fountain refills mead flasks",
+          "status": "PASS",
+          "evidence_line": 282
+        },
+        {
+          "test_name": "a beaten foe leaves the map and cannot be fought again until it respawns",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a beaten foe leaves the map and cannot be fought again until it respawns",
+          "status": "PASS",
+          "evidence_line": 283
+        },
+        {
+          "test_name": "the Overgrown Border Redoubt pays its XP and Crown favor only once",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the Overgrown Border Redoubt pays its XP and Crown favor only once",
+          "status": "PASS",
+          "evidence_line": 284
+        },
+        {
+          "test_name": "The Counterfeit Coin quest can be started at Corin, assayed at Odo's anvil, and resolved at the Border Redoubt",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS The Counterfeit Coin quest can be started at Corin, assayed at Odo's anvil, and resolved at the Border Redoubt",
+          "status": "PASS",
+          "evidence_line": 285
+        },
+        {
+          "test_name": "The Scribe's Dice Debt completes when the slip is returned to Pippin",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS The Scribe's Dice Debt completes when the slip is returned to Pippin",
+          "status": "PASS",
+          "evidence_line": 286
+        },
+        {
+          "test_name": "Wulf, Sir Balin and the dice table are inside the tavern interior, not its walls",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Wulf, Sir Balin and the dice table are inside the tavern interior, not its walls",
+          "status": "PASS",
+          "evidence_line": 287
+        },
+        {
+          "test_name": "in the trade menu S sells without also moving the cursor",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS in the trade menu S sells without also moving the cursor",
+          "status": "PASS",
+          "evidence_line": 288
+        },
+        {
+          "test_name": "battle helpers exist straight after Create",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS battle helpers exist straight after Create",
+          "status": "PASS",
+          "evidence_line": 289
+        },
+        {
+          "test_name": "Farmer Giles's Missing Sow requires finding Clover or Old Mallow before completing",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Farmer Giles's Missing Sow requires finding Clover or Old Mallow before completing",
+          "status": "PASS",
+          "evidence_line": 290
+        },
+        {
+          "test_name": "The Boast of Sir Balin requires confronting Grim before Balin will complete it",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS The Boast of Sir Balin requires confronting Grim before Balin will complete it",
+          "status": "PASS",
+          "evidence_line": 291
+        },
+        {
+          "test_name": "The Quarrymen's Tapped Cask requires obtaining the pardon writ from Sapper Vane",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS The Quarrymen's Tapped Cask requires obtaining the pardon writ from Sapper Vane",
+          "status": "PASS",
+          "evidence_line": 292
+        },
+        {
+          "test_name": "The Smuggler's Run can be started at Factor Malo and completed at Master Odo's anvil",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS The Smuggler's Run can be started at Factor Malo and completed at Master Odo's anvil",
+          "status": "PASS",
+          "evidence_line": 293
+        },
+        {
+          "test_name": "Baker Beatrice gives fresh bread (+6 HP) on first talk and remembers",
+          "source_suite": "stability_fixes.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Baker Beatrice gives fresh bread (+6 HP) on first talk and remembers",
+          "status": "PASS",
+          "evidence_line": 294
+        },
+        {
+          "test_name": "SWORD supports a perfect skill result",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SWORD supports a perfect skill result",
+          "status": "PASS",
+          "evidence_line": 301
+        },
+        {
+          "test_name": "SWORD ends without input and never applies idle damage",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SWORD ends without input and never applies idle damage",
+          "status": "PASS",
+          "evidence_line": 302
+        },
+        {
+          "test_name": "GREATSWORD supports a perfect skill result",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS GREATSWORD supports a perfect skill result",
+          "status": "PASS",
+          "evidence_line": 303
+        },
+        {
+          "test_name": "GREATSWORD ends without input and never applies idle damage",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS GREATSWORD ends without input and never applies idle damage",
+          "status": "PASS",
+          "evidence_line": 304
+        },
+        {
+          "test_name": "DAGGER supports a perfect skill result",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS DAGGER supports a perfect skill result",
+          "status": "PASS",
+          "evidence_line": 305
+        },
+        {
+          "test_name": "DAGGER ends without input and never applies idle damage",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS DAGGER ends without input and never applies idle damage",
+          "status": "PASS",
+          "evidence_line": 306
+        },
+        {
+          "test_name": "BOW supports a perfect skill result",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS BOW supports a perfect skill result",
+          "status": "PASS",
+          "evidence_line": 307
+        },
+        {
+          "test_name": "BOW ends without input and never applies idle damage",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS BOW ends without input and never applies idle damage",
+          "status": "PASS",
+          "evidence_line": 308
+        },
+        {
+          "test_name": "SPEAR supports a perfect skill result",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SPEAR supports a perfect skill result",
+          "status": "PASS",
+          "evidence_line": 309
+        },
+        {
+          "test_name": "SPEAR ends without input and never applies idle damage",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SPEAR ends without input and never applies idle damage",
+          "status": "PASS",
+          "evidence_line": 310
+        },
+        {
+          "test_name": "Sword honors multiple authored timing windows",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Sword honors multiple authored timing windows",
+          "status": "PASS",
+          "evidence_line": 311
+        },
+        {
+          "test_name": "Sword endpoint hit is a miss rather than guaranteed damage",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Sword endpoint hit is a miss rather than guaranteed damage",
+          "status": "PASS",
+          "evidence_line": 312
+        },
+        {
+          "test_name": "Greatsword release without charging is ignored",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Greatsword release without charging is ignored",
+          "status": "PASS",
+          "evidence_line": 313
+        },
+        {
+          "test_name": "Greatsword undercharging and overcharging both reduce performance",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Greatsword undercharging and overcharging both reduce performance",
+          "status": "PASS",
+          "evidence_line": 314
+        },
+        {
+          "test_name": "Dagger missing a mark breaks the consecutive combo",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Dagger missing a mark breaks the consecutive combo",
+          "status": "PASS",
+          "evidence_line": 315
+        },
+        {
+          "test_name": "Dagger holding the key does not auto-hit notes",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Dagger holding the key does not auto-hit notes",
+          "status": "PASS",
+          "evidence_line": 316
+        },
+        {
+          "test_name": "Dagger early tap spam consumes marks as misses",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Dagger early tap spam consumes marks as misses",
+          "status": "PASS",
+          "evidence_line": 317
+        },
+        {
+          "test_name": "Bow aim moves in both dimensions and stays inside the target field",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Bow aim moves in both dimensions and stays inside the target field",
+          "status": "PASS",
+          "evidence_line": 318
+        },
+        {
+          "test_name": "Bow accuracy and draw strength are independently required",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Bow accuracy and draw strength are independently required",
+          "status": "PASS",
+          "evidence_line": 319
+        },
+        {
+          "test_name": "Bow shot at the deadline completes its flight with its original result",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Bow shot at the deadline completes its flight with its original result",
+          "status": "PASS",
+          "evidence_line": 320
+        },
+        {
+          "test_name": "Spear rejects early and late range releases",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Spear rejects early and late range releases",
+          "status": "PASS",
+          "evidence_line": 321
+        },
+        {
+          "test_name": "Finesse widens perfect windows for all five weapons",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Finesse widens perfect windows for all five weapons",
+          "status": "PASS",
+          "evidence_line": 322
+        },
+        {
+          "test_name": "Steady Hand slows the sword sweep without changing the draw mechanics",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Steady Hand slows the sword sweep without changing the draw mechanics",
+          "status": "PASS",
+          "evidence_line": 323
+        },
+        {
+          "test_name": "Quick adds a dagger strike and changes the combo cadence",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Quick adds a dagger strike and changes the combo cadence",
+          "status": "PASS",
+          "evidence_line": 324
+        },
+        {
+          "test_name": "Luck retries one miss only and still requires a skilled second attempt",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Luck retries one miss only and still requires a skilled second attempt",
+          "status": "PASS",
+          "evidence_line": 325
+        },
+        {
+          "test_name": "Might times Fervor and the injected Blazon multiplier stay in the damage pipeline",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Might times Fervor and the injected Blazon multiplier stay in the damage pipeline",
+          "status": "PASS",
+          "evidence_line": 326
+        },
+        {
+          "test_name": "Perfect Strength attack breaks armor and heavy bonus affects greatswords only",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Perfect Strength attack breaks armor and heavy bonus affects greatswords only",
+          "status": "PASS",
+          "evidence_line": 327
+        },
+        {
+          "test_name": "Performance scoring is stable at 30, 60 and 120 updates per second",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Performance scoring is stable at 30, 60 and 120 updates per second",
+          "status": "PASS",
+          "evidence_line": 328
+        },
+        {
+          "test_name": "Long frame pauses are bounded and completed attacks cannot resolve twice",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Long frame pauses are bounded and completed attacks cannot resolve twice",
+          "status": "PASS",
+          "evidence_line": 329
+        },
+        {
+          "test_name": "New registry entries use their own callback without changing the dispatcher",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS New registry entries use their own callback without changing the dispatcher",
+          "status": "PASS",
+          "evidence_line": 330
+        },
+        {
+          "test_name": "Unknown weapon classes fall back to the playable sword minigame",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Unknown weapon classes fall back to the playable sword minigame",
+          "status": "PASS",
+          "evidence_line": 331
+        },
+        {
+          "test_name": "Every owned weapon class launches its own minigame in a real encounter",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Every owned weapon class launches its own minigame in a real encounter",
+          "status": "PASS",
+          "evidence_line": 332
+        },
+        {
+          "test_name": "FIGHT selection press and its held frames cannot trigger or time out an attack",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS FIGHT selection press and its held frames cannot trigger or time out an attack",
+          "status": "PASS",
+          "evidence_line": 333
+        },
+        {
+          "test_name": "Real attack results deal damage once and transition through impact to defense",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Real attack results deal damage once and transition through impact to defense",
+          "status": "PASS",
+          "evidence_line": 334
+        },
+        {
+          "test_name": "Health and Shield cards heal and generate Ward on the actual result path",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Health and Shield cards heal and generate Ward on the actual result path",
+          "status": "PASS",
+          "evidence_line": 335
+        },
+        {
+          "test_name": "ACT, ITEM, refused MERCY and accepted MERCY retain their encounter behavior",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS ACT, ITEM, refused MERCY and accepted MERCY retain their encounter behavior",
+          "status": "PASS",
+          "evidence_line": 336
+        },
+        {
+          "test_name": "Encounter metadata and hooks are preserved for world and dungeon callers",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Encounter metadata and hooks are preserved for world and dungeon callers",
+          "status": "PASS",
+          "evidence_line": 337
+        },
+        {
+          "test_name": "Each enemy chooses a distinct telegraphed pattern and keeps a navigable gap",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Each enemy chooses a distinct telegraphed pattern and keeps a navigable gap",
+          "status": "PASS",
+          "evidence_line": 338
+        },
+        {
+          "test_name": "Diagonal Soul movement is normalized and arena bounds hold",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Diagonal Soul movement is normalized and arena bounds hold",
+          "status": "PASS",
+          "evidence_line": 339
+        },
+        {
+          "test_name": "Swept collision catches fast crossing shots and invulnerability prevents stacked hits",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Swept collision catches fast crossing shots and invulnerability prevents stacked hits",
+          "status": "PASS",
+          "evidence_line": 340
+        },
+        {
+          "test_name": "Rendering every weapon and phase is read-only with respect to combat state",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Rendering every weapon and phase is read-only with respect to combat state",
+          "status": "PASS",
+          "evidence_line": 341
+        },
+        {
+          "test_name": "Realm save/load round trip preserves world fields, weapon IDs, profiles, cards and sockets",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Realm save/load round trip preserves world fields, weapon IDs, profiles, cards and sockets",
+          "status": "PASS",
+          "evidence_line": 342
+        },
+        {
+          "test_name": "Legacy realm saves remain loadable and invalid old indices cannot crash stats",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Legacy realm saves remain loadable and invalid old indices cannot crash stats",
+          "status": "PASS",
+          "evidence_line": 343
+        },
+        {
+          "test_name": "Level HP survives realm load and subsequent equipment recalculation",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Level HP survives realm load and subsequent equipment recalculation",
+          "status": "PASS",
+          "evidence_line": 344
+        },
+        {
+          "test_name": "Malformed equipment payloads are rejected before mutating the live inventory",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Malformed equipment payloads are rejected before mutating the live inventory",
+          "status": "PASS",
+          "evidence_line": 345
+        },
+        {
+          "test_name": "Loaded sockets obey the same single-copy, ownership and type rules as the armory",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Loaded sockets obey the same single-copy, ownership and type rules as the armory",
+          "status": "PASS",
+          "evidence_line": 346
+        },
+        {
+          "test_name": "Equipment saves exclude attack callbacks and restore selection by ID after inventory reordering",
+          "source_suite": "weapon_combat.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Equipment saves exclude attack callbacks and restore selection by ID after inventory reordering",
+          "status": "PASS",
+          "evidence_line": 347
+        }
+      ]
+    },
+    {
+      "command": "node tests/challenger_stress.cjs",
+      "worktree": "recovered branch 5926006",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "PASS",
+      "observed_total": "14/14",
+      "evidence": "evidence/mac-stress.log",
+      "cases": [
+        {
+          "test_name": "B12.1: Interacting with Elder Alden when rep < 30 and war cycle >= 3 selects war alert without crash",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS B12.1: Interacting with Elder Alden when rep < 30 and war cycle >= 3 selects war alert without crash",
+          "status": "PASS",
+          "evidence_line": 6
+        },
+        {
+          "test_name": "B12.2: War cycle boundary progression with rep < 30 (cycles 1, 2, 3, 4, 10)",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS B12.2: War cycle boundary progression with rep < 30 (cycles 1, 2, 3, 4, 10)",
+          "status": "PASS",
+          "evidence_line": 7
+        },
+        {
+          "test_name": "B12.3: Reputation boundary progression with war cycle >= 3 (rep 0, 29, 30, 31, 100, -20)",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS B12.3: Reputation boundary progression with war cycle >= 3 (rep 0, 29, 30, 31, 100, -20)",
+          "status": "PASS",
+          "evidence_line": 8
+        },
+        {
+          "test_name": "B12.4: Counter-example Oracle: verify pre-fix code crashes on undefined global.feudal_war",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS B12.4: Counter-example Oracle: verify pre-fix code crashes on undefined global.feudal_war",
+          "status": "PASS",
+          "evidence_line": 9
+        },
+        {
+          "test_name": "SAVE.1: Missing save file returns false cleanly without mutating game state",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.1: Missing save file returns false cleanly without mutating game state",
+          "status": "PASS",
+          "evidence_line": 12
+        },
+        {
+          "test_name": "SAVE.2: Corrupted, non-JSON or empty payloads are rejected cleanly",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.2: Corrupted, non-JSON or empty payloads are rejected cleanly",
+          "status": "PASS",
+          "evidence_line": 13
+        },
+        {
+          "test_name": "SAVE.3: Non-object JSON root types (scalars, arrays, null) are rejected",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.3: Non-object JSON root types (scalars, arrays, null) are rejected",
+          "status": "PASS",
+          "evidence_line": 14
+        },
+        {
+          "test_name": "SAVE.4: Incompatible future save versions (> CC_SAVE_VERSION) are rejected",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.4: Incompatible future save versions (> CC_SAVE_VERSION) are rejected",
+          "status": "PASS",
+          "evidence_line": 15
+        },
+        {
+          "test_name": "SAVE.5: Mid-battle, mid-dice, and mid-archery states refuse both saving and loading",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.5: Mid-battle, mid-dice, and mid-archery states refuse both saving and loading",
+          "status": "PASS",
+          "evidence_line": 16
+        },
+        {
+          "test_name": "SAVE.6: Adversarial / negative / extreme numeric payloads in hero struct are safely bounded",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.6: Adversarial / negative / extreme numeric payloads in hero struct are safely bounded",
+          "status": "PASS",
+          "evidence_line": 17
+        },
+        {
+          "test_name": "SAVE.7: Corrupted quest payloads (invalid stages, unknown statuses, nulls) are safely filtered",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.7: Corrupted quest payloads (invalid stages, unknown statuses, nulls) are safely filtered",
+          "status": "PASS",
+          "evidence_line": 18
+        },
+        {
+          "test_name": "SAVE.8: Corrupted NPC payloads (non-numeric affinity, mixed memories) do not crash",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.8: Corrupted NPC payloads (non-numeric affinity, mixed memories) do not crash",
+          "status": "PASS",
+          "evidence_line": 19
+        },
+        {
+          "test_name": "SAVE.9: Corrupted player location coordinates are clamped to room bounds",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.9: Corrupted player location coordinates are clamped to room bounds",
+          "status": "PASS",
+          "evidence_line": 20
+        },
+        {
+          "test_name": "SAVE.10: Full round-trip persistence preserves world, inventory, reputation, warfare, and quests",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS SAVE.10: Full round-trip persistence preserves world, inventory, reputation, warfare, and quests",
+          "status": "PASS",
+          "evidence_line": 21
+        }
+      ]
+    },
+    {
+      "command": "node tests/challenger_m2_stress.cjs",
+      "worktree": "recovered branch 5926006",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "PASS",
+      "observed_total": "26/26",
+      "evidence": "evidence/mac-m2-stress.log",
+      "cases": [
+        {
+          "test_name": "[1] Contracts: Initial contract state has all contracts AVAILABLE and no active contract",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [1] Contracts: Initial contract state has all contracts AVAILABLE and no active contract",
+          "status": "PASS",
+          "evidence_line": 6
+        },
+        {
+          "test_name": "[2] Contracts: Rapid sequential switching keeps exactly 1 active and reverts prior to AVAILABLE",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [2] Contracts: Rapid sequential switching keeps exactly 1 active and reverts prior to AVAILABLE",
+          "status": "PASS",
+          "evidence_line": 7
+        },
+        {
+          "test_name": "[3] Contracts: High-throughput stress test (5,000 rapid switches) has no leaks or duplicates",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [3] Contracts: High-throughput stress test (5,000 rapid switches) has no leaks or duplicates",
+          "status": "PASS",
+          "evidence_line": 8
+        },
+        {
+          "test_name": "[4] Contracts: Re-accepting the currently ACTIVE contract is rejected (returns false)",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [4] Contracts: Re-accepting the currently ACTIVE contract is rejected (returns false)",
+          "status": "PASS",
+          "evidence_line": 9
+        },
+        {
+          "test_name": "[5] Contracts: Completed and betrayed contracts are terminal and cannot be re-accepted",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [5] Contracts: Completed and betrayed contracts are terminal and cannot be re-accepted",
+          "status": "PASS",
+          "evidence_line": 10
+        },
+        {
+          "test_name": "[6] Contracts: Boundary / malformed inputs to cc_contract_accept safely return false",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [6] Contracts: Boundary / malformed inputs to cc_contract_accept safely return false",
+          "status": "PASS",
+          "evidence_line": 11
+        },
+        {
+          "test_name": "[7] Contracts: Overworld waypoint check completes active scout contract",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [7] Contracts: Overworld waypoint check completes active scout contract",
+          "status": "PASS",
+          "evidence_line": 12
+        },
+        {
+          "test_name": "[8] Trade Menu: Cursor wraps circularly with vk_up and vk_down without drift",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [8] Trade Menu: Cursor wraps circularly with vk_up and vk_down without drift",
+          "status": "PASS",
+          "evidence_line": 15
+        },
+        {
+          "test_name": "[9] Trade Menu: S key sells selected commodity without advancing cursor index",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [9] Trade Menu: S key sells selected commodity without advancing cursor index",
+          "status": "PASS",
+          "evidence_line": 16
+        },
+        {
+          "test_name": "[10] Trade Menu: Out-of-bounds initial cursor index is clamped automatically",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [10] Trade Menu: Out-of-bounds initial cursor index is clamped automatically",
+          "status": "PASS",
+          "evidence_line": 17
+        },
+        {
+          "test_name": "[11] Trade Menu: Empty commodity list boundary does not crash on navigation",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [11] Trade Menu: Empty commodity list boundary does not crash on navigation",
+          "status": "PASS",
+          "evidence_line": 18
+        },
+        {
+          "test_name": "[12] Trade Menu: Empty commodity list rejects Buy action and does NOT corrupt cargo or stock with NaN",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [12] Trade Menu: Empty commodity list rejects Buy action and does NOT corrupt cargo or stock with NaN",
+          "status": "PASS",
+          "evidence_line": 19
+        },
+        {
+          "test_name": "[13] Trade Menu: Empty commodity list rejects Sell action and does NOT corrupt cargo or stock with NaN",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [13] Trade Menu: Empty commodity list rejects Sell action and does NOT corrupt cargo or stock with NaN",
+          "status": "PASS",
+          "evidence_line": 20
+        },
+        {
+          "test_name": "[14] Trade Menu: Drawing trade menu with empty commodity list succeeds without error",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [14] Trade Menu: Drawing trade menu with empty commodity list succeeds without error",
+          "status": "PASS",
+          "evidence_line": 21
+        },
+        {
+          "test_name": "[15] Save Schema v2: Mid-battle, mid-dice, and mid-archery states refuse saving and loading",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [15] Save Schema v2: Mid-battle, mid-dice, and mid-archery states refuse saving and loading",
+          "status": "PASS",
+          "evidence_line": 24
+        },
+        {
+          "test_name": "[16] Save Schema v2: Active contract status is preserved across save and load",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [16] Save Schema v2: Active contract status is preserved across save and load",
+          "status": "PASS",
+          "evidence_line": 25
+        },
+        {
+          "test_name": "[17] Save Schema v2: Presentation fields (dialogue frame, player title, time) round-trip cleanly",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [17] Save Schema v2: Presentation fields (dialogue frame, player title, time) round-trip cleanly",
+          "status": "PASS",
+          "evidence_line": 26
+        },
+        {
+          "test_name": "[18] Save Schema v2: Backward compatibility loads legacy save without version tag",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [18] Save Schema v2: Backward compatibility loads legacy save without version tag",
+          "status": "PASS",
+          "evidence_line": 27
+        },
+        {
+          "test_name": "[19] Save Schema v2: Incompatible future version (> 2) is safely rejected",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [19] Save Schema v2: Incompatible future version (> 2) is safely rejected",
+          "status": "PASS",
+          "evidence_line": 28
+        },
+        {
+          "test_name": "[20] Armory: ui_screen_armory calls ui_equipment_draw and preserves gear stats",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [20] Armory: ui_screen_armory calls ui_equipment_draw and preserves gear stats",
+          "status": "PASS",
+          "evidence_line": 31
+        },
+        {
+          "test_name": "[21] UI Kit: Zero Unicode emojis in Trade, Quest Log, and Contracts menus",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [21] UI Kit: Zero Unicode emojis in Trade, Quest Log, and Contracts menus",
+          "status": "PASS",
+          "evidence_line": 32
+        },
+        {
+          "test_name": "[22] Audio: 4 CC0 procedural sound files have valid RIFF PCM WAV headers and .yy metadata",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [22] Audio: 4 CC0 procedural sound files have valid RIFF PCM WAV headers and .yy metadata",
+          "status": "PASS",
+          "evidence_line": 35
+        },
+        {
+          "test_name": "[23] Audio: cc_sfx_play gracefully returns -1 on all invalid sound assets",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [23] Audio: cc_sfx_play gracefully returns -1 on all invalid sound assets",
+          "status": "PASS",
+          "evidence_line": 36
+        },
+        {
+          "test_name": "[24] Audio: cc_sfx_play clamps pitch and gain bounds when audio hardware is active",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [24] Audio: cc_sfx_play clamps pitch and gain bounds when audio hardware is active",
+          "status": "PASS",
+          "evidence_line": 37
+        },
+        {
+          "test_name": "[25] Dialogue: Dismissal frame suppresses same-frame interaction re-trigger",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [25] Dialogue: Dismissal frame suppresses same-frame interaction re-trigger",
+          "status": "PASS",
+          "evidence_line": 38
+        },
+        {
+          "test_name": "[26] Depth Sorting: Rowan uses player.y without artificial +10 offset",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [26] Depth Sorting: Rowan uses player.y without artificial +10 offset",
+          "status": "PASS",
+          "evidence_line": 39
+        }
+      ]
+    },
+    {
+      "command": "node tests/challenger_m2_adversarial.test.cjs",
+      "worktree": "recovered branch 5926006",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "PASS",
+      "observed_total": "19/19",
+      "evidence": "evidence/mac-adversarial.log",
+      "cases": [
+        {
+          "test_name": "[1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing",
+          "status": "PASS",
+          "evidence_line": 6
+        },
+        {
+          "test_name": "[2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN",
+          "status": "PASS",
+          "evidence_line": 7
+        },
+        {
+          "test_name": "[3] AUDIO.3: Active audio environment mock handles extreme inputs safely",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [3] AUDIO.3: Active audio environment mock handles extreme inputs safely",
+          "status": "PASS",
+          "evidence_line": 8
+        },
+        {
+          "test_name": "[4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml",
+          "status": "PASS",
+          "evidence_line": 11
+        },
+        {
+          "test_name": "[5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)",
+          "status": "PASS",
+          "evidence_line": 14
+        },
+        {
+          "test_name": "[6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open",
+          "status": "PASS",
+          "evidence_line": 15
+        },
+        {
+          "test_name": "[7] DIALOGUE.3: Filler text \"You look across the wide realm\" never bounces open when pressing Space in empty space",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [7] DIALOGUE.3: Filler text \"You look across the wide realm\" never bounces open when pressing Space in empty space",
+          "status": "PASS",
+          "evidence_line": 16
+        },
+        {
+          "test_name": "[8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes",
+          "status": "PASS",
+          "evidence_line": 17
+        },
+        {
+          "test_name": "[9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset",
+          "status": "PASS",
+          "evidence_line": 20
+        },
+        {
+          "test_name": "[10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter",
+          "status": "PASS",
+          "evidence_line": 21
+        },
+        {
+          "test_name": "[11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates",
+          "status": "PASS",
+          "evidence_line": 22
+        },
+        {
+          "test_name": "[12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN",
+          "status": "PASS",
+          "evidence_line": 23
+        },
+        {
+          "test_name": "[13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly",
+          "status": "PASS",
+          "evidence_line": 24
+        },
+        {
+          "test_name": "[14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout",
+          "status": "PASS",
+          "evidence_line": 27
+        },
+        {
+          "test_name": "[15] UI.2: Trade menu cursor clamping and navigation with vk_down",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [15] UI.2: Trade menu cursor clamping and navigation with vk_down",
+          "status": "PASS",
+          "evidence_line": 28
+        },
+        {
+          "test_name": "[16] UI.3: Contract acceptance returns prior contract to AVAILABLE status",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [16] UI.3: Contract acceptance returns prior contract to AVAILABLE status",
+          "status": "PASS",
+          "evidence_line": 29
+        },
+        {
+          "test_name": "[17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN",
+          "status": "PASS",
+          "evidence_line": 30
+        },
+        {
+          "test_name": "[18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load",
+          "status": "PASS",
+          "evidence_line": 31
+        },
+        {
+          "test_name": "[19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active",
+          "status": "PASS",
+          "evidence_line": 32
+        }
+      ]
+    },
+    {
+      "command": "node tests/chronicles_greenmere.test.cjs",
+      "worktree": "recovered branch 5926006",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "PASS",
+      "observed_total": "25/25",
+      "evidence": "evidence/mac-greenmere.log",
+      "cases": [
+        {
+          "test_name": "a new game starts on day one with the Greenmere people, places and the barge on its way",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a new game starts on day one with the Greenmere people, places and the barge on its way",
+          "status": "PASS",
+          "evidence_line": 1
+        },
+        {
+          "test_name": "Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied",
+          "status": "PASS",
+          "evidence_line": 2
+        },
+        {
+          "test_name": "long speeches page through the box three lines at a time and replies come on the last page",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS long speeches page through the box three lines at a time and replies come on the last page",
+          "status": "PASS",
+          "evidence_line": 3
+        },
+        {
+          "test_name": "the calendar moves only in the overworld, and the barge arrival silently starts the War Clock",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the calendar moves only in the overworld, and the barge arrival silently starts the War Clock",
+          "status": "PASS",
+          "evidence_line": 4
+        },
+        {
+          "test_name": "the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once",
+          "status": "PASS",
+          "evidence_line": 5
+        },
+        {
+          "test_name": "refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan",
+          "status": "PASS",
+          "evidence_line": 6
+        },
+        {
+          "test_name": "mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war",
+          "status": "PASS",
+          "evidence_line": 7
+        },
+        {
+          "test_name": "stripping the lead pays and costs: standing falls and the tower cannot be mended this season",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS stripping the lead pays and costs: standing falls and the tower cannot be mended this season",
+          "status": "PASS",
+          "evidence_line": 8
+        },
+        {
+          "test_name": "the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once",
+          "status": "PASS",
+          "evidence_line": 9
+        },
+        {
+          "test_name": "doing nothing about the barge is a choice too: the bailiff seizes it on his own",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS doing nothing about the barge is a choice too: the bailiff seizes it on his own",
+          "status": "PASS",
+          "evidence_line": 10
+        },
+        {
+          "test_name": "selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer",
+          "status": "PASS",
+          "evidence_line": 11
+        },
+        {
+          "test_name": "the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves",
+          "status": "PASS",
+          "evidence_line": 12
+        },
+        {
+          "test_name": "the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once",
+          "status": "PASS",
+          "evidence_line": 13
+        },
+        {
+          "test_name": "Guy only discusses the household orders with a man the Crown trusts",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Guy only discusses the household orders with a man the Crown trusts",
+          "status": "PASS",
+          "evidence_line": 14
+        },
+        {
+          "test_name": "the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill",
+          "status": "PASS",
+          "evidence_line": 15
+        },
+        {
+          "test_name": "at the end of the season one of four provisional endings is told once and play continues",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS at the end of the season one of four provisional endings is told once and play continues",
+          "status": "PASS",
+          "evidence_line": 16
+        },
+        {
+          "test_name": "the old random war cycle waits for the War Clock and its dispatches become news",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the old random war cycle waits for the War Clock and its dispatches become news",
+          "status": "PASS",
+          "evidence_line": 17
+        },
+        {
+          "test_name": "lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden",
+          "status": "PASS",
+          "evidence_line": 18
+        },
+        {
+          "test_name": "rumours are heard one at a time and kept in the notebook; J opens and closes the notebook",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS rumours are heard one at a time and kept in the notebook; J opens and closes the notebook",
+          "status": "PASS",
+          "evidence_line": 19
+        },
+        {
+          "test_name": "asking for the old talk from a conversation hands the person back to their quest",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS asking for the old talk from a conversation hands the person back to their quest",
+          "status": "PASS",
+          "evidence_line": 20
+        },
+        {
+          "test_name": "Ebbe's advance is an obligation that survives: repay it or be written down as a deserter",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Ebbe's advance is an obligation that survives: repay it or be written down as a deserter",
+          "status": "PASS",
+          "evidence_line": 21
+        },
+        {
+          "test_name": "save and load keep the calendar, flags, notes, papers, schedule and the War Clock",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS save and load keep the calendar, flags, notes, papers, schedule and the War Clock",
+          "status": "PASS",
+          "evidence_line": 22
+        },
+        {
+          "test_name": "a save from before the Chronicles loads cleanly and the region starts fresh",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a save from before the Chronicles loads cleanly and the region starts fresh",
+          "status": "PASS",
+          "evidence_line": 23
+        },
+        {
+          "test_name": "content integrity: every reply leads somewhere, every id is handled, every page fits the box",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS content integrity: every reply leads somewhere, every id is handled, every page fits the box",
+          "status": "PASS",
+          "evidence_line": 24
+        },
+        {
+          "test_name": "canon wording: no supernatural titles, no \"Sir Rowan\", no \"Baroness\", no map coordinates in speech",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS canon wording: no supernatural titles, no \"Sir Rowan\", no \"Baroness\", no map coordinates in speech",
+          "status": "PASS",
+          "evidence_line": 25
+        }
+      ]
+    },
+    {
+      "command": "node tests/gml_translator.test.cjs",
+      "worktree": "recovered branch 5926006",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "PASS",
+      "observed_total": "5/5",
+      "evidence": "evidence/mac-translator.log",
+      "cases": [
+        {
+          "test_name": "mod, div, and/or/not and hex literals evaluate like GML",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS mod, div, and/or/not and hex literals evaluate like GML",
+          "status": "PASS",
+          "evidence_line": 1
+        },
+        {
+          "test_name": "repeat, begin/end and accessors translate",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS repeat, begin/end and accessors translate",
+          "status": "PASS",
+          "evidence_line": 2
+        },
+        {
+          "test_name": "strings, comments and struct keys are left alone",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS strings, comments and struct keys are left alone",
+          "status": "PASS",
+          "evidence_line": 3
+        },
+        {
+          "test_name": "macros become constants",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS macros become constants",
+          "status": "PASS",
+          "evidence_line": 4
+        },
+        {
+          "test_name": "every project script and obj_game event parses after translation",
+          "source_suite": null,
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS every project script and obj_game event parses after translation",
+          "status": "PASS",
+          "evidence_line": 5
+        }
+      ]
+    },
+    {
+      "command": "node tests/run_all.cjs in older Mac clone",
+      "worktree": "older Mac clone",
+      "method": "Node GML-to-JS VM harness; not native runtime",
+      "status": "INTERRUPTED",
+      "observed_total": "no final total; exit 130",
+      "evidence": "evidence/old-mac-clone-regression.log",
+      "cases": [
+        {
+          "test_name": "[1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing",
+          "status": "PASS",
+          "evidence_line": 8
+        },
+        {
+          "test_name": "[2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN",
+          "status": "PASS",
+          "evidence_line": 9
+        },
+        {
+          "test_name": "[3] AUDIO.3: Active audio environment mock handles extreme inputs safely",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [3] AUDIO.3: Active audio environment mock handles extreme inputs safely",
+          "status": "PASS",
+          "evidence_line": 10
+        },
+        {
+          "test_name": "[4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml",
+          "status": "PASS",
+          "evidence_line": 13
+        },
+        {
+          "test_name": "[5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)",
+          "status": "PASS",
+          "evidence_line": 16
+        },
+        {
+          "test_name": "[6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open",
+          "status": "PASS",
+          "evidence_line": 17
+        },
+        {
+          "test_name": "[7] DIALOGUE.3: Filler text \"You look across the wide realm\" never bounces open when pressing Space in empty space",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [7] DIALOGUE.3: Filler text \"You look across the wide realm\" never bounces open when pressing Space in empty space",
+          "status": "PASS",
+          "evidence_line": 18
+        },
+        {
+          "test_name": "[8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes",
+          "status": "PASS",
+          "evidence_line": 19
+        },
+        {
+          "test_name": "[9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset",
+          "status": "PASS",
+          "evidence_line": 22
+        },
+        {
+          "test_name": "[10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter",
+          "status": "PASS",
+          "evidence_line": 23
+        },
+        {
+          "test_name": "[11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates",
+          "status": "PASS",
+          "evidence_line": 24
+        },
+        {
+          "test_name": "[12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN",
+          "status": "PASS",
+          "evidence_line": 25
+        },
+        {
+          "test_name": "[13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly",
+          "status": "PASS",
+          "evidence_line": 26
+        },
+        {
+          "test_name": "[14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout",
+          "status": "PASS",
+          "evidence_line": 29
+        },
+        {
+          "test_name": "[15] UI.2: Trade menu cursor clamping and navigation with vk_down",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [15] UI.2: Trade menu cursor clamping and navigation with vk_down",
+          "status": "PASS",
+          "evidence_line": 30
+        },
+        {
+          "test_name": "[16] UI.3: Contract acceptance returns prior contract to AVAILABLE status",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [16] UI.3: Contract acceptance returns prior contract to AVAILABLE status",
+          "status": "PASS",
+          "evidence_line": 31
+        },
+        {
+          "test_name": "[17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN",
+          "status": "PASS",
+          "evidence_line": 32
+        },
+        {
+          "test_name": "[18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load",
+          "status": "PASS",
+          "evidence_line": 33
+        },
+        {
+          "test_name": "[19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active",
+          "source_suite": "challenger_m2_adversarial.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS [19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active",
+          "status": "PASS",
+          "evidence_line": 34
+        },
+        {
+          "test_name": "a new game starts on day one with the Greenmere people, places and the barge on its way",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a new game starts on day one with the Greenmere people, places and the barge on its way",
+          "status": "PASS",
+          "evidence_line": 45
+        },
+        {
+          "test_name": "Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Z opens a conversation, the overworld waits, and Esc leaves it with nothing applied",
+          "status": "PASS",
+          "evidence_line": 46
+        },
+        {
+          "test_name": "long speeches page through the box three lines at a time and replies come on the last page",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS long speeches page through the box three lines at a time and replies come on the last page",
+          "status": "PASS",
+          "evidence_line": 47
+        },
+        {
+          "test_name": "the calendar moves only in the overworld, and the barge arrival silently starts the War Clock",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the calendar moves only in the overworld, and the barge arrival silently starts the War Clock",
+          "status": "PASS",
+          "evidence_line": 48
+        },
+        {
+          "test_name": "the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the tower levy: inspect, find the chapel copy, Pippin copies and writes, the petition is answered once",
+          "status": "PASS",
+          "evidence_line": 49
+        },
+        {
+          "test_name": "refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS refusing Maud is real: she goes to High Cairn herself and the petition is answered without Rowan",
+          "status": "PASS",
+          "evidence_line": 50
+        },
+        {
+          "test_name": "mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS mending the tower needs Harrow timber, takes days, and then keeps a watch that slows the war",
+          "status": "PASS",
+          "evidence_line": 51
+        },
+        {
+          "test_name": "stripping the lead pays and costs: standing falls and the tower cannot be mended this season",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS stripping the lead pays and costs: standing falls and the tower cannot be mended this season",
+          "status": "PASS",
+          "evidence_line": 52
+        },
+        {
+          "test_name": "the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the barge can be shared out only with the Ordel hearing and the Harrow toll, and it resolves once",
+          "status": "PASS",
+          "evidence_line": 53
+        },
+        {
+          "test_name": "doing nothing about the barge is a choice too: the bailiff seizes it on his own",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS doing nothing about the barge is a choice too: the bailiff seizes it on his own",
+          "status": "PASS",
+          "evidence_line": 54
+        },
+        {
+          "test_name": "selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS selling the barge to Rusk is theft: paid, but every other party is angered and war comes nearer",
+          "status": "PASS",
+          "evidence_line": 55
+        },
+        {
+          "test_name": "the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the Barrow Cut: three witnesses, a late dispatch, and Rowan decides what it proves",
+          "status": "PASS",
+          "evidence_line": 56
+        },
+        {
+          "test_name": "the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the dispatch appears only after the renegade is gone, and telling Galahalt the truth is rewarded once",
+          "status": "PASS",
+          "evidence_line": 57
+        },
+        {
+          "test_name": "Guy only discusses the household orders with a man the Crown trusts",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Guy only discusses the household orders with a man the Crown trusts",
+          "status": "PASS",
+          "evidence_line": 58
+        },
+        {
+          "test_name": "the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the War Clock shows itself through the world: recruiter, refugees, Piers, checkpoint, prices, the mill",
+          "status": "PASS",
+          "evidence_line": 59
+        },
+        {
+          "test_name": "at the end of the season one of four provisional endings is told once and play continues",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS at the end of the season one of four provisional endings is told once and play continues",
+          "status": "PASS",
+          "evidence_line": 60
+        },
+        {
+          "test_name": "the old random war cycle waits for the War Clock and its dispatches become news",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS the old random war cycle waits for the War Clock and its dispatches become news",
+          "status": "PASS",
+          "evidence_line": 61
+        },
+        {
+          "test_name": "lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS lodging: Hawise asks his name, the bed costs coin and a night, the cottage needs Alden",
+          "status": "PASS",
+          "evidence_line": 62
+        },
+        {
+          "test_name": "rumours are heard one at a time and kept in the notebook; J opens and closes the notebook",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS rumours are heard one at a time and kept in the notebook; J opens and closes the notebook",
+          "status": "PASS",
+          "evidence_line": 63
+        },
+        {
+          "test_name": "asking for the old talk from a conversation hands the person back to their quest",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS asking for the old talk from a conversation hands the person back to their quest",
+          "status": "PASS",
+          "evidence_line": 64
+        },
+        {
+          "test_name": "Ebbe's advance is an obligation that survives: repay it or be written down as a deserter",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Ebbe's advance is an obligation that survives: repay it or be written down as a deserter",
+          "status": "PASS",
+          "evidence_line": 65
+        },
+        {
+          "test_name": "save and load keep the calendar, flags, notes, papers, schedule and the War Clock",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS save and load keep the calendar, flags, notes, papers, schedule and the War Clock",
+          "status": "PASS",
+          "evidence_line": 66
+        },
+        {
+          "test_name": "a save from before the Chronicles loads cleanly and the region starts fresh",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS a save from before the Chronicles loads cleanly and the region starts fresh",
+          "status": "PASS",
+          "evidence_line": 67
+        },
+        {
+          "test_name": "content integrity: every reply leads somewhere, every id is handled, every page fits the box",
+          "source_suite": "chronicles_greenmere.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "FAIL content integrity: every reply leads somewhere, every id is handled, every page fits the box",
+          "status": "FAIL",
+          "evidence_line": 68
+        },
+        {
+          "test_name": "starter gear keeps legacy stats and exposes all six socket types",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS starter gear keeps legacy stats and exposes all six socket types",
+          "status": "PASS",
+          "evidence_line": 95
+        },
+        {
+          "test_name": "wrong type and unknown cards leave the current build untouched",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS wrong type and unknown cards leave the current build untouched",
+          "status": "PASS",
+          "evidence_line": 96
+        },
+        {
+          "test_name": "six starter cards all reach combat stats without healing",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS six starter cards all reach combat stats without healing",
+          "status": "PASS",
+          "evidence_line": 97
+        },
+        {
+          "test_name": "moving a unique card releases its socket on backpack gear",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS moving a unique card releases its socket on backpack gear",
+          "status": "PASS",
+          "evidence_line": 98
+        },
+        {
+          "test_name": "duplicate or invalid saved socket entries cannot stack effects",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS duplicate or invalid saved socket entries cannot stack effects",
+          "status": "PASS",
+          "evidence_line": 99
+        },
+        {
+          "test_name": "emptying a socket returns its stat contribution",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS emptying a socket returns its stat contribution",
+          "status": "PASS",
+          "evidence_line": 100
+        },
+        {
+          "test_name": "Wild accepts every card category",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Wild accepts every card category",
+          "status": "PASS",
+          "evidence_line": 101
+        },
+        {
+          "test_name": "armor HP and companion HP add without cumulative stat inflation",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS armor HP and companion HP add without cumulative stat inflation",
+          "status": "PASS",
+          "evidence_line": 102
+        },
+        {
+          "test_name": "swapping HP cards cannot be used for free healing",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS swapping HP cards cannot be used for free healing",
+          "status": "PASS",
+          "evidence_line": 103
+        },
+        {
+          "test_name": "shield absorbs whole and partial hits before HP",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS shield absorbs whole and partial hits before HP",
+          "status": "PASS",
+          "evidence_line": 104
+        },
+        {
+          "test_name": "shield begins once per encounter and never refills per dodge wave",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS shield begins once per encounter and never refills per dodge wave",
+          "status": "PASS",
+          "evidence_line": 105
+        },
+        {
+          "test_name": "precision changes actual reticle speed; quick cards change actual soul speed",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS precision changes actual reticle speed; quick cards change actual soul speed",
+          "status": "PASS",
+          "evidence_line": 106
+        },
+        {
+          "test_name": "chests unlock every advanced card once and offer a socket sidegrade",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS chests unlock every advanced card once and offer a socket sidegrade",
+          "status": "PASS",
+          "evidence_line": 107
+        },
+        {
+          "test_name": "gold cards change both victory and mercy settlement",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS gold cards change both victory and mercy settlement",
+          "status": "PASS",
+          "evidence_line": 108
+        },
+        {
+          "test_name": "Second Wind triggers on surviving a wave and respects HP maximum",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS Second Wind triggers on surviving a wave and respects HP maximum",
+          "status": "PASS",
+          "evidence_line": 109
+        },
+        {
+          "test_name": "fatal waves end in defeat before regeneration can revive the hero",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS fatal waves end in defeat before regeneration can revive the hero",
+          "status": "PASS",
+          "evidence_line": 110
+        },
+        {
+          "test_name": "keyboard navigation assigns and removes a card from the selected socket",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS keyboard navigation assigns and removes a card from the selected socket",
+          "status": "PASS",
+          "evidence_line": 111
+        },
+        {
+          "test_name": "every catalog card can be assigned without breaking stat calculation",
+          "source_suite": "equipment_cards.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS every catalog card can be assigned without breaking stat calculation",
+          "status": "PASS",
+          "evidence_line": 112
+        },
+        {
+          "test_name": "factions initialize with leaders, military power, treasuries, and ambitions",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS factions initialize with leaders, military power, treasuries, and ambitions",
+          "status": "PASS",
+          "evidence_line": 118
+        },
+        {
+          "test_name": "contested checkpoints initialize with controlling factions and defense levels",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS contested checkpoints initialize with controlling factions and defense levels",
+          "status": "PASS",
+          "evidence_line": 119
+        },
+        {
+          "test_name": "autonomous war simulation advances cycle, shifts economy and logs chronicle dispatches",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS autonomous war simulation advances cycle, shifts economy and logs chronicle dispatches",
+          "status": "PASS",
+          "evidence_line": 120
+        },
+        {
+          "test_name": "freelance knight contracts initialize with bounties, escorts, and reconnaissance missions",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS freelance knight contracts initialize with bounties, escorts, and reconnaissance missions",
+          "status": "PASS",
+          "evidence_line": 121
+        },
+        {
+          "test_name": "contract acceptance, fulfillment, rewards, and renown progression",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS contract acceptance, fulfillment, rewards, and renown progression",
+          "status": "PASS",
+          "evidence_line": 122
+        },
+        {
+          "test_name": "contract betrayal awards rival faction favors, higher bribes, and logs defection dispatch",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS contract betrayal awards rival faction favors, higher bribes, and logs defection dispatch",
+          "status": "PASS",
+          "evidence_line": 123
+        },
+        {
+          "test_name": "military standing advances without automatic knighthood, allegiance or inherited land",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS military standing advances without automatic knighthood, allegiance or inherited land",
+          "status": "PASS",
+          "evidence_line": 124
+        },
+        {
+          "test_name": "multi-agent retinue bonus and temporary military reinforcements provide combat stats",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS multi-agent retinue bonus and temporary military reinforcements provide combat stats",
+          "status": "PASS",
+          "evidence_line": 125
+        },
+        {
+          "test_name": "legacy fief flags cannot mint tribute during war cycles",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS legacy fief flags cannot mint tribute during war cycles",
+          "status": "PASS",
+          "evidence_line": 126
+        },
+        {
+          "test_name": "realm save/load persists war cycle, faction stats, active contracts, and chivalric rank",
+          "source_suite": "feudal_warfare.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS realm save/load persists war cycle, faction stats, active contracts, and chivalric rank",
+          "status": "PASS",
+          "evidence_line": 127
+        },
+        {
+          "test_name": "mod, div, and/or/not and hex literals evaluate like GML",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS mod, div, and/or/not and hex literals evaluate like GML",
+          "status": "PASS",
+          "evidence_line": 133
+        },
+        {
+          "test_name": "repeat, begin/end and accessors translate",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS repeat, begin/end and accessors translate",
+          "status": "PASS",
+          "evidence_line": 134
+        },
+        {
+          "test_name": "strings, comments and struct keys are left alone",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS strings, comments and struct keys are left alone",
+          "status": "PASS",
+          "evidence_line": 135
+        },
+        {
+          "test_name": "macros become constants",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS macros become constants",
+          "status": "PASS",
+          "evidence_line": 136
+        },
+        {
+          "test_name": "every project script and obj_game event parses after translation",
+          "source_suite": "gml_translator.test.cjs",
+          "expected_behavior": "The behavior/assertion contract named by this test must hold; inspect the actual test source for exact inputs.",
+          "observed_behavior": "PASS every project script and obj_game event parses after translation",
+          "status": "PASS",
+          "evidence_line": 137
+        }
+      ]
+    }
+  ]
+}

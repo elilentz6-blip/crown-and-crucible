@@ -1,0 +1,188 @@
+commit c988274766178381a8459a0548e1c11c7086f125
+Author: eli lentz <266093719+elilentz6-blip@users.noreply.github.com>
+Date:   Fri Oct 30 10:54:14 2026 -0400
+
+    fix(vis): replace magical portal arch, dais, and additive glow with grounded Overgrown Border Redoubt ruins
+
+diff --git a/scripts/scr_vis_artdata/scr_vis_artdata.gml b/scripts/scr_vis_artdata/scr_vis_artdata.gml
+index a98b2a6..b094398 100644
+--- a/scripts/scr_vis_artdata/scr_vis_artdata.gml
++++ b/scripts/scr_vis_artdata/scr_vis_artdata.gml
+@@ -49,9 +49,18 @@ function vis_artdata() {
+             mine_entrance: { spr: spr_bld_mine_entrance, fw: 120, fd: 56, lights: [[-23, -46, 50, make_color_rgb(255, 196, 110)], [-1, -10, 40, make_color_rgb(255, 170, 90)]], smoke: [], door: undefined, solids: undefined },
+             ruin_cottage: { spr: spr_bld_ruin_cottage, fw: 80, fd: 60, lights: [], smoke: [], door: undefined, solids: undefined },
+             ruin_house: { spr: spr_bld_ruin_house, fw: 96, fd: 70, lights: [], smoke: [], door: undefined, solids: undefined },
++            border_redoubt: { spr: spr_bld_ruin_house, fw: 96, fd: 70, lights: [[-1, -20, 60, make_color_rgb(255, 180, 100)]], smoke: [], door: undefined, solids: undefined },
+             weald_arch: { spr: spr_bld_weald_arch, fw: 90, fd: 36, lights: [[-1, -50, 70, make_color_rgb(120, 255, 220)]], smoke: [], door: undefined, solids: undefined },
+         },
+         characters: {
++            malo: { spr: spr_char_malo, portrait: spr_portrait_malo, shadow: spr_char_shadow, name: "Factor Malo", floats: false, idle_fps: 4, walk_fps: 8 },
++            brand: { spr: spr_char_brand, portrait: spr_portrait_brand, shadow: spr_char_shadow, name: "Foreman Brand", floats: false, idle_fps: 4, walk_fps: 8 },
++            grim: { spr: spr_char_grim, portrait: spr_portrait_grim, shadow: spr_char_shadow, name: "Barrow Mercenary Grim", floats: false, idle_fps: 4, walk_fps: 8 },
++            mallow: { spr: spr_char_mallow, portrait: spr_portrait_mallow, shadow: spr_char_shadow, name: "Old Mallow", floats: false, idle_fps: 4, walk_fps: 8 },
++            mira: { spr: spr_char_mira, portrait: spr_portrait_mira, shadow: spr_char_shadow, name: "Refugee Mira", floats: false, idle_fps: 4, walk_fps: 8 },
++            vane: { spr: spr_char_vane, portrait: spr_portrait_vane, shadow: spr_char_shadow, name: "Sapper Vane", floats: false, idle_fps: 4, walk_fps: 8 },
++            cecily: { spr: spr_char_cecily, portrait: spr_portrait_cecily, shadow: spr_char_shadow, name: "Lady Cecily", floats: false, idle_fps: 4, walk_fps: 8 },
++            guy: { spr: spr_char_guy, portrait: spr_portrait_guy, shadow: spr_char_shadow, name: "Bailiff Sir Guy", floats: false, idle_fps: 4, walk_fps: 8 },
+             alden: { spr: spr_char_alden, portrait: spr_portrait_alden, shadow: spr_char_shadow, name: "Elder Alden", floats: false, idle_fps: 4, walk_fps: 8 },
+             beatrice: { spr: spr_char_beatrice, portrait: spr_portrait_beatrice, shadow: spr_char_shadow, name: "Baker Beatrice", floats: false, idle_fps: 4, walk_fps: 8 },
+             boar: { spr: spr_char_boar, portrait: spr_portrait_boar, shadow: spr_char_shadow_beast, name: "Wild Boar", floats: false, idle_fps: 4, walk_fps: 8 },
+diff --git a/scripts/scr_vis_draw/scr_vis_draw.gml b/scripts/scr_vis_draw/scr_vis_draw.gml
+index bbe49d3..1f51804 100644
+--- a/scripts/scr_vis_draw/scr_vis_draw.gml
++++ b/scripts/scr_vis_draw/scr_vis_draw.gml
+@@ -53,7 +53,7 @@ function vis_draw_world() {
+     }
+     }
+ 
+-    // 3. ground-level art (bridges, portal dais)
++    // 3. ground-level art (bridges, river jetties)
+     for (var _g = 0; _g < array_length(V.ground); _g++) {
+         var _gd = V.ground[_g];
+         draw_sprite(_gd.spr, 0, _gd.x, _gd.y);
+@@ -111,7 +111,7 @@ function vis_draw_world() {
+     // 7b. fog banks over the lit scene (lamp glows still punch through below)
+     vis_weather_draw_fog(vis_weather_ambient(V.ambient_col));
+ 
+-    // 8. additive glows: lit windows, lamps, runes, fire, portal halo, glowing particles
++    // 8. additive glows: lit windows, lamps, fire, glowing particles
+     gpu_set_blendmode(bm_add);
+     var _gk = vis_weather_glow_k();
+     if (_gk > 0.02) {
+@@ -122,8 +122,6 @@ function vis_draw_world() {
+             draw_sprite_ext(_gl.spr, _gl.img, _gl.x, _gl.y, 1, 1, 0, c_white, _gk * (0.85 + 0.15 * sin(_t * 3 + _gl.x)));
+         }
+     }
+-    var _po = V.portal;
+-    draw_sprite_ext(spr_portal_arch, 1, _po.x, _po.y, 1, 1, 0, c_white, 0.4);
+     vis_particles_draw(true);
+     vis_weather_draw_sky();
+     gpu_set_blendmode(bm_normal);
+@@ -246,7 +244,7 @@ function vis_draw_lighting() {
+     var _amb = vis_weather_ambient(V.ambient_col);
+     var _k = vis_weather_light_k();
+     if (_k < 0.01 && _amb == c_white) {
+-        // daytime: lights still bloom very softly around the portal
++        // daytime: lights still bloom very softly around the redoubt and hearths
+         return;
+     }
+     var _w = ceil(V.view_w) + 2, _h = ceil(V.view_h) + 2;
+diff --git a/scripts/scr_vis_stonecross/scr_vis_stonecross.gml b/scripts/scr_vis_stonecross/scr_vis_stonecross.gml
+index 059d089..6b9b51e 100644
+--- a/scripts/scr_vis_stonecross/scr_vis_stonecross.gml
++++ b/scripts/scr_vis_stonecross/scr_vis_stonecross.gml
+@@ -148,14 +148,14 @@ function vis_layout_stonecross() {
+             { key: "gatehouse", x: 1148, y: 1990, solid: true },
+             { key: "ruin_cottage", x: 2120, y: 2060, solid: true },
+             { key: "ruin_house", x: 2760, y: 2120, solid: true },
++            { key: "border_redoubt", x: 1600, y: 380, solid: true },
+             { key: "weald_arch", x: 640, y: 560, solid: true },
+         ],
+ 
+-        // Ground-level art drawn under actors (bridges, portal dais).
++        // Ground-level art drawn under actors (bridges, river jetties).
+         ground: [
+             { spr: spr_prop_bridge, x: 1142, y: 1712 },
+             { spr: spr_prop_bridge_small, x: 2060, y: 1712 },
+-            { spr: spr_portal_dais, x: 1600, y: 380 },
+             { spr: spr_prop_jetty, x: 2470, y: 1726 },
+             { spr: spr_prop_rowboat, x: 2522, y: 1788 },
+         ],
+@@ -226,7 +226,10 @@ function vis_layout_stonecross() {
+             [spr_veg_reeds, 0, 1095, 1270, 0, 0],
+             [spr_veg_reeds, 0, 1205, 1330, 0, 0],
+             [spr_prop_rock_s, 0, 1210, 1262, 20, 8],
+-            // border redoubt ruins standing stones
++            // border redoubt ruins standing stones & illicit coining den
++            [spr_prop_barrels, 0, 1540, 420, 30, 8],
++            [spr_prop_crates, 0, 1660, 415, 30, 10],
++            [spr_prop_campfire, 0, 1600, 440, 18, 8],
+             [spr_prop_rock_l, 0, 1430, 470, 36, 12],
+             [spr_prop_rock_l, 0, 1770, 470, 36, 12],
+             [spr_prop_rock_s, 0, 1460, 330, 20, 8],
+diff --git a/scripts/scr_vis_world/scr_vis_world.gml b/scripts/scr_vis_world/scr_vis_world.gml
+index ef90332..e5bca7f 100644
+--- a/scripts/scr_vis_world/scr_vis_world.gml
++++ b/scripts/scr_vis_world/scr_vis_world.gml
+@@ -173,7 +173,7 @@ function vis_tour_step(_dt) {
+         [1600, 1280, 1, 2, "square_day"], [1280, 860, 1, 2, "west_lane_day"], [1310, 1060, 2, 2, "west_lane_dusk"],
+         [2060, 1080, 1, 2, "east_lane_day"], [2290, 900, 1, 2, "stable_day"], [2200, 1460, 1, 2, "farm_barn_day"],
+         [2330, 1690, 0, 2, "mill_dawn"], [1148, 2060, 1, 2, "gatehouse_day"], [1148, 2060, 3, 2, "gatehouse_night"],
+-        [2180, 2110, 2, 2, "ruins_dusk"], [660, 640, 3, 2, "grove_arch_night"], [1600, 500, 3, 2, "portal_night"],
++        [2180, 2110, 2, 2, "ruins_dusk"], [660, 640, 3, 2, "grove_arch_night"], [1600, 500, 3, 2, "border_redoubt_night"],
+         [2130, 870, 2, 2, "tavern_dusk"], [1800, 1150, 1, 1, "overview_day"], [1800, 1150, 3, 1, "overview_night"],
+         [0, 0, 1, 2, "int_tavern"], [0, 0, 1, 2, "int_forge"], [0, 0, 1, 2, "int_chapel"], [0, 0, 1, 2, "int_cottage"],
+         [2130, 800, 1, 2, "fadein_tavern"], [2130, 800, 1, 2, "fadeout_tavern"], [1515, 1205, 1, 2, "dialogue"],
+@@ -449,7 +449,7 @@ function vis_bake_chunk(_ci, _cj) {
+ // Static scene
+ // ---------------------------------------------------------------------------------------------
+ 
+-/// kind: 0 sprite, 1 swaying tree, 2 animated, 3 building, 4 portal arch, 5 lamp
++/// kind: 0 sprite, 1 swaying tree, 2 animated, 3 building, 4 redoubt ruins, 5 lamp
+ function vis_add_static(_spr, _img, _x, _y, _kind, _sy = undefined) {
+     var V = global.vis;
+     var _e = { spr: _spr, img: _img, x: _x, y: _y, kind: _kind, sy: _sy ?? _y, seed: vis_hash(_x, _y, 3) * 10 };
+@@ -553,10 +553,9 @@ function vis_place_layout() {
+     // the border redoubt ruins
+     var _po = L.portal;
+     V.portal = _po;
+-    vis_add_static(spr_portal_arch, 0, _po.x, _po.y, 4);
+-    array_push(V.lights, { x: _po.x, y: _po.y - 90, r: 240, col: make_color_rgb(180, 160, 120), k: 0.8, flicker: 0.04, always: true });
+-    array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 160, col: make_color_rgb(200, 180, 130), k: 0.6, flicker: 0.03, always: true });
+-    array_push(V.emitters, { type: "dust", x: _po.x, y: _po.y - 60, rate: 8, acc: 0 });
++    // Grounded Border Redoubt: rendered via L.buildings (border_redoubt) and L.props
++    array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 160, col: make_color_rgb(255, 190, 110), k: 0.6, flicker: 0.03, always: true });
++    array_push(V.emitters, { type: "dust", x: _po.x, y: _po.y - 60, rate: 4, acc: 0 });
+ }
+ 
+ function vis_keepout(_x, _y, _r) {
+@@ -719,6 +718,14 @@ function vis_char_key(_e) {
+     if (_id == "CORIN") return "corin";
+     if (_id == "DUNSTAN") return "dunstan";
+     if (_id == "GALAHALT") return "galahalt";
++    if (_id == "BAILIFF_GUY") return "guy";
++    if (_id == "LADY_CECILY") return "cecily";
++    if (_id == "SAPPER_VANE") return "vane";
++    if (_id == "REFUGEE_MIRA") return "mira";
++    if (_id == "OLD_MALLOW") return "mallow";
++    if (_id == "MERCENARY_GRIM") return "grim";
++    if (_id == "FOREMAN_BRAND") return "brand";
++    if (_id == "FACTOR_MALO") return "malo";
+     var _role = _e[$ "role"];
+     if (_role == "ELDER") return "alden";
+     if (_role == "BAKER") return "beatrice";
+@@ -809,8 +816,6 @@ function vis_spawn(_type, _x, _y) {
+         case "sparks": _p.img = 1; _p.vx = random_range(-20, 20); _p.vy = random_range(-46, -20); _p.max = random_range(0.5, 1.0); _p.add = true; _p.col = make_color_rgb(255, 190, 90); break;
+         case "embers": _p.img = 1; _p.vx = random_range(-8, 8); _p.vy = random_range(-30, -14); _p.max = random_range(0.8, 1.6); _p.add = true; _p.col = make_color_rgb(255, 160, 70); break;
+         case "spray": _p.img = 9; _p.vx = random_range(-26, 26); _p.vy = random_range(-40, -18); _p.max = random_range(0.5, 0.9); _p.a = 0.9; break;
+-        case "portal": _p.img = 5; _p.vx = 0; _p.vy = random_range(-22, -10); _p.max = random_range(1.6, 2.8); _p.add = true;
+-            _p.col = choose(make_color_rgb(150, 120, 255), make_color_rgb(110, 230, 255), make_color_rgb(230, 200, 255)); _p.s = random_range(0.6, 1.1); break;
+         case "firefly": _p.img = 2; _p.max = random_range(3, 6); _p.add = true; _p.col = make_color_rgb(210, 255, 130); _p.s = 0.6; break;
+         case "leaf": _p.img = choose(3, 4); _p.vx = random_range(6, 16); _p.vy = random_range(10, 18); _p.max = random_range(4, 7); break;
+         case "butterfly": _p.img = 7; _p.vx = random_range(-14, 14); _p.vy = random_range(-8, 8); _p.max = random_range(5, 9);
+@@ -836,12 +841,7 @@ function vis_particles_step(_dt, _tod) {
+         _e.acc += _e.rate * _dt;
+         while (_e.acc >= 1) {
+             _e.acc -= 1;
+-            if (_e.type == "portal") {
+-                var _a = random(6.28), _r = random_range(30, 70);
+-                vis_spawn("portal", _e.x + cos(_a) * _r, _e.y + sin(_a) * _r * 0.8 + 40);
+-            } else {
+-                vis_spawn(_e.type, _e.x + random_range(-3, 3), _e.y);
+-            }
++            vis_spawn(_e.type, _e.x + random_range(-3, 3), _e.y);
+         }
+     }
+     // ambient life in the view
+@@ -871,11 +871,6 @@ function vis_particles_step(_dt, _tod) {
+             case "smoke": _p.s += _dt * 0.35; _p.vx += 3 * _dt; break;
+             case "spray": _p.vy += 120 * _dt; break;
+             case "sparks": _p.vy += 30 * _dt; break;
+-            case "portal":
+-                var _po = V.portal;
+-                var _ang = point_direction(_po.x, _po.y - 92, _p.x, _p.y) + 90;
+-                _p.vx = lengthdir_x(14, _ang);
+-                break;
+             case "firefly": _p.vx = sin(V.time * 1.7 + _p.ph) * 10; _p.vy = cos(V.time * 1.3 + _p.ph * 2) * 8; break;
+             case "leaf": _p.vx = 10 + sin(V.time * 2 + _p.ph) * 14; break;
+             case "butterfly": _p.vx += random_range(-40, 40) * _dt; _p.vy += random_range(-40, 40) * _dt; _p.vx = clamp(_p.vx, -22, 22); _p.vy = clamp(_p.vy, -16, 16); break;

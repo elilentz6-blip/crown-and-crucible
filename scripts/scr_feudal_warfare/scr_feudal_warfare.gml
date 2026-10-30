@@ -273,16 +273,8 @@ function cc_war_advance_cycle() {
         _kb.banner_text = "RIVER LEAGUE FREE-CROSSING: Corsairs wave merchants through without excise.";
     }
 
-    // 4. Weekly Fief Income for Player (if Lord Rowan holds the Watchtower Fief)
-    if (variable_global_exists("fief_owned") && global.fief_owned && instance_exists(obj_game)) {
-        obj_game.hero_gold += global.weekly_fief_income;
-        obj_game.add_floating_text(
-            instance_exists(obj_player) ? obj_player.x : 683,
-            instance_exists(obj_player) ? obj_player.y - 45 : 384,
-            "FIEF TRIBUTE: +" + string(global.weekly_fief_income) + " GOLD!",
-            c_yellow
-        );
-    }
+    // Military standing does not create a hereditary fief or a tax on the vale.
+
 }
 
 // =========================================================================

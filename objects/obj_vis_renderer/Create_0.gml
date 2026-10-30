@@ -18,3 +18,6 @@
 // Owner: Claude (visuals). Reads obj_game / obj_player state; never changes gameplay data.
 depth = 50; // above the room background (100), below obj_game (0) so its battle and armory GUI sit on top
 vis_init();
+
+// Native branded frontend; automated gameplay tours retain direct boot.
+frontend_init();

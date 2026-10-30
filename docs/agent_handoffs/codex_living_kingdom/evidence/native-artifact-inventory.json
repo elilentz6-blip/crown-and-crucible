@@ -1,0 +1,35 @@
+{
+  "compile_stage": "Final Compile finished",
+  "package_exit": 1,
+  "runtime": "not executed",
+  "artifacts": {
+    "_native/argon-audit/out/options.ini": {
+      "bytes": 481,
+      "sha256": "3f68d66134772048fdc361c8d96a2d277384f143ee6d625b16d0f9ab406a889d"
+    },
+    "_native/argon-audit/out/splash.png": {
+      "bytes": 3576289,
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f"
+    },
+    "_native/argon-audit/out/assets/game.ios": {
+      "bytes": 14016904,
+      "sha256": "95104c409fcb9dae8b91122dd60251968a437b40cbd8446ac19e404b114df249"
+    },
+    "_native/argon-audit/out/BLANK_GAME/BLANK_GAME/Supporting Files/options.ini": {
+      "bytes": 481,
+      "sha256": "3f68d66134772048fdc361c8d96a2d277384f143ee6d625b16d0f9ab406a889d"
+    },
+    "_native/argon-audit/out/BLANK_GAME/BLANK_GAME/games/splash.png": {
+      "bytes": 3576289,
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f"
+    },
+    "_native/argon-audit/out/BLANK_GAME/BLANK_GAME/Supporting Files/out/assets/game.ios": {
+      "bytes": 14016904,
+      "sha256": "95104c409fcb9dae8b91122dd60251968a437b40cbd8446ac19e404b114df249"
+    },
+    "_native/argon-audit/out/BLANK_GAME/BLANK_GAME/Supporting Files/blank_game/blank_game/games/splash.png": {
+      "bytes": 3576289,
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f"
+    }
+  }
+}

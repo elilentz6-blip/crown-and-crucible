@@ -1,0 +1,6 @@
+PASS mod, div, and/or/not and hex literals evaluate like GML
+PASS repeat, begin/end and accessors translate
+PASS strings, comments and struct keys are left alone
+PASS macros become constants
+PASS every project script and obj_game event parses after translation
+5 translator tests passed.

@@ -1,0 +1,27 @@
+================================================================
+CHALLENGER 1: EMPIRICAL VERIFICATION & ADVERSARIAL STRESS SUITE
+================================================================
+
+--- SECTION 1: BUG B12 STRESS TESTS (Elder Alden Interaction) ---
+PASS B12.1: Interacting with Elder Alden when rep < 30 and war cycle >= 3 selects war alert without crash
+PASS B12.2: War cycle boundary progression with rep < 30 (cycles 1, 2, 3, 4, 10)
+PASS B12.3: Reputation boundary progression with war cycle >= 3 (rep 0, 29, 30, 31, 100, -20)
+PASS B12.4: Counter-example Oracle: verify pre-fix code crashes on undefined global.feudal_war
+
+--- SECTION 2: SAVE/LOAD SCHEMA VALIDATION & RESILIENCE ---
+PASS SAVE.1: Missing save file returns false cleanly without mutating game state
+PASS SAVE.2: Corrupted, non-JSON or empty payloads are rejected cleanly
+PASS SAVE.3: Non-object JSON root types (scalars, arrays, null) are rejected
+PASS SAVE.4: Incompatible future save versions (> CC_SAVE_VERSION) are rejected
+PASS SAVE.5: Mid-battle, mid-dice, and mid-archery states refuse both saving and loading
+PASS SAVE.6: Adversarial / negative / extreme numeric payloads in hero struct are safely bounded
+PASS SAVE.7: Corrupted quest payloads (invalid stages, unknown statuses, nulls) are safely filtered
+PASS SAVE.8: Corrupted NPC payloads (non-numeric affinity, mixed memories) do not crash
+PASS SAVE.9: Corrupted player location coordinates are clamped to room bounds
+PASS SAVE.10: Full round-trip persistence preserves world, inventory, reputation, warfare, and quests
+
+================================================================
+STRESS RESULTS: 14 passed, 0 failed.
+================================================================
+(node:74241) [UNDICI-EHPA] Warning: EnvHttpProxyAgent is experimental, expect them to change at any time.
+(Use `node --trace-warnings ...` to show where the warning was created)

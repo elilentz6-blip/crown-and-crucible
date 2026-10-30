@@ -1,0 +1,38 @@
+================================================================
+CHALLENGER M2: ADVERSARIAL STRESS & EMPIRICAL VERIFICATION SUITE
+================================================================
+
+--- SUITE 1: AUDIO WRAPPER ROBUSTNESS ---
+PASS [1] AUDIO.1: Invalid / missing sound assets safely return -1 without throwing
+PASS [2] AUDIO.2: Headless audio absence returns -1 for extreme pitch and gain without crash or NaN
+PASS [3] AUDIO.3: Active audio environment mock handles extreme inputs safely
+[EMPIRICAL AUDIT] scr_audio.gml clamp() present: true
+[EMPIRICAL AUDIT] scr_audio.gml min/max present: false
+PASS [4] AUDIO.4: Empirical Source Audit: inspect clamp claims in scr_audio.gml
+
+--- SUITE 2: DIALOGUE DISMISSAL BOUNCE SUPPRESSION ---
+PASS [5] DIALOGUE.1: Normal 3-stage dialogue flow (Open -> Finish typing -> Dismiss)
+PASS [6] DIALOGUE.2: Rapid Space/Z spam on consecutive frames adjacent to NPC does not bounce or re-open
+PASS [7] DIALOGUE.3: Filler text "You look across the wide realm" never bounces open when pressing Space in empty space
+PASS [8] DIALOGUE.4: Dialogue cleanly re-opens after full fadeout concludes
+
+--- SUITE 3: ENTITY DEPTH SORTING STABILITY & BOUNDARIES ---
+PASS [9] DEPTH.1: Rowan anchor harmonization uses player.y without artificial offset
+PASS [10] DEPTH.2: Dynamic actors at identical Y coordinates sort stably without jitter
+PASS [11] DEPTH.3: Negative Y coordinates sort cleanly before positive coordinates
+PASS [12] DEPTH.4: Extreme boundary coordinates (-999999 to 999999) sort without numeric overflow or NaN
+PASS [13] DEPTH.5: Rowan passing directly above and below NPC transitions depth cleanly
+
+--- SUITE 4: PRESENTATION DEBT & UI INVARIANTS ---
+PASS [14] UI.1: Armory wiring delegates to ui_equipment_draw and initializes card layout
+PASS [15] UI.2: Trade menu cursor clamping and navigation with vk_down
+PASS [16] UI.3: Contract acceptance returns prior contract to AVAILABLE status
+PASS [17] UI.4 (DEFECT): Empty commodity list Buy/Sell must not corrupt merchant stock or cargo with NaN
+PASS [18] UI.5 (DEFECT): Save Schema v2 must restore ACTIVE contract status in global.contracts upon load
+PASS [19] AUDIO.5: Audio wrapper clamps pitch within [0.1, 5.0] and gain within [0.0, 1.0] when active
+
+================================================================
+TOTAL ADVERSARIAL TESTS: 19
+PASSED: 19
+FAILED: 0
+================================================================

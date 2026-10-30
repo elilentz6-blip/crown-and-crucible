@@ -1,0 +1,22 @@
+{
+  "live_board_write": {
+    "status": "REJECTED BEFORE EXECUTION",
+    "reason": "Granular approval policy disables sandbox escalation; authoritative Mac board is outside writable roots.",
+    "claims_recorded": false,
+    "notifications_sent": false
+  },
+  "native_packaging": {
+    "exit": 1,
+    "compile_stage": "Final Compile finished",
+    "runtime_play": "NOT EXECUTED"
+  },
+  "earlier_github_push": {
+    "status": "REJECTED BY AUTOMATIC APPROVAL REVIEW",
+    "reason": "Missing explicit authorization to publish potentially private project contents.",
+    "retried_in_handoff": false
+  },
+  "older_clone_inspection": {
+    "test_process_exit": 130,
+    "full_byte_snapshot": "interrupted during read_bytes; no source edits"
+  }
+}

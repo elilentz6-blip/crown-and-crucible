@@ -1,0 +1,2604 @@
+{
+  "schema_version": 1,
+  "base_commit": "47f045cad4f968f84e52f4ebe954c378ebdeb65c",
+  "implementation_head": "5926006668c35607d1bf43fbf2ac1dd2b875a4f7",
+  "branch": "agent/codex-living-kingdom-handoff",
+  "remote_main_observed_after_fetch": "99ba93571ab72a3accc17b4df9252665bd7d817e",
+  "combined_with_later_remote_main": false,
+  "native_validation": {
+    "compile_stage": "Final Compile finished",
+    "overall_igor_exit": 1,
+    "packaging": "permission denied",
+    "runtime_play": "not executed"
+  },
+  "scope": "Every actual branch change since base, including handoff files; external work is separate.",
+  "files": [
+    {
+      "path": ".gitignore",
+      "change_type": "modified",
+      "related_feature": "Repository hygiene",
+      "purpose": "Ignore reproducible QA/native/Python cache output while preserving board lock ignore.",
+      "integration_status": "Integrated on isolated branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [],
+      "warnings_for_argon": [
+        "Evidence deliberately included in this handoff must remain tracked."
+      ],
+      "sha256": "161136a60e27999d4c413b206fa2ff95cfc80df4121f234f99e5dbac10e4a48f",
+      "hash_note": null
+    },
+    {
+      "path": "BLANK GAME.yyp",
+      "change_type": "modified",
+      "related_feature": "Resource registration",
+      "purpose": "Register two scripts and six branding sprites.",
+      "integration_status": "GameMaker loaded this exact project during native compile attempt.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "New .yy files and sprite images"
+      ],
+      "warnings_for_argon": [
+        "Shared resource: claim only during coordinated edits; no replacement with old clone registry."
+      ],
+      "sha256": "cb53592a496839fad13a423f8a9caf47da1d52756ac2aa447cd23d47007c0cfa",
+      "hash_note": null
+    },
+    {
+      "path": "CROWN_AND_CRUCIBLE_MASTER_DOSSIER.md",
+      "change_type": "modified",
+      "related_feature": "Project documentation",
+      "purpose": "Reconcile canonical local status or provide the requested Claude implementation briefing.",
+      "integration_status": "Documentation only.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "Proposed Chronicles",
+        "Actual source/evidence"
+      ],
+      "warnings_for_argon": [
+        "Earlier status snapshots do not certify later revisions; no remote Google Doc edited."
+      ],
+      "sha256": "cffe0aa524ef3625e64c4f8f7087878f1c999ba11912408062f2c329da571110",
+      "hash_note": null
+    },
+    {
+      "path": "art_src/branding/dunhollow.png",
+      "change_type": "created",
+      "related_feature": "Branding source art",
+      "purpose": "Preserve the supplied or matching generated illustration bytes.",
+      "integration_status": "Referenced by registered native sprites on this branch; not installed in active checkout.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tools/register_branding.py",
+        "sprites/spr_front_*",
+        "sprites/spr_loading_*"
+      ],
+      "warnings_for_argon": [
+        "Do not regenerate or replace original images without coordinating with Claude."
+      ],
+      "sha256": "008cc2ecbd019e3c7d4de328beb514531ca74bca92c4b3fa363e4c56c6f21a5c",
+      "hash_note": null
+    },
+    {
+      "path": "art_src/branding/emblem.png",
+      "change_type": "created",
+      "related_feature": "Branding source art",
+      "purpose": "Preserve the supplied or matching generated illustration bytes.",
+      "integration_status": "Referenced by registered native sprites on this branch; not installed in active checkout.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tools/register_branding.py",
+        "sprites/spr_front_*",
+        "sprites/spr_loading_*"
+      ],
+      "warnings_for_argon": [
+        "Do not regenerate or replace original images without coordinating with Claude."
+      ],
+      "sha256": "820bfaf11c098844a91f6de44178366030beaf836bf002982fc29555812f328a",
+      "hash_note": null
+    },
+    {
+      "path": "art_src/branding/greenmere.png",
+      "change_type": "created",
+      "related_feature": "Branding source art",
+      "purpose": "Preserve the supplied or matching generated illustration bytes.",
+      "integration_status": "Referenced by registered native sprites on this branch; not installed in active checkout.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tools/register_branding.py",
+        "sprites/spr_front_*",
+        "sprites/spr_loading_*"
+      ],
+      "warnings_for_argon": [
+        "Do not regenerate or replace original images without coordinating with Claude."
+      ],
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f",
+      "hash_note": null
+    },
+    {
+      "path": "art_src/branding/logo.png",
+      "change_type": "created",
+      "related_feature": "Branding source art",
+      "purpose": "Preserve the supplied or matching generated illustration bytes.",
+      "integration_status": "Referenced by registered native sprites on this branch; not installed in active checkout.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tools/register_branding.py",
+        "sprites/spr_front_*",
+        "sprites/spr_loading_*"
+      ],
+      "warnings_for_argon": [
+        "Do not regenerate or replace original images without coordinating with Claude."
+      ],
+      "sha256": "c0dc04124d1346207c778fbb9ef37ac46e11a1653b2abb163dbda0e3e363212e",
+      "hash_note": null
+    },
+    {
+      "path": "art_src/branding/oakhaven.png",
+      "change_type": "created",
+      "related_feature": "Branding source art",
+      "purpose": "Preserve the supplied or matching generated illustration bytes.",
+      "integration_status": "Referenced by registered native sprites on this branch; not installed in active checkout.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tools/register_branding.py",
+        "sprites/spr_front_*",
+        "sprites/spr_loading_*"
+      ],
+      "warnings_for_argon": [
+        "Do not regenerate or replace original images without coordinating with Claude."
+      ],
+      "sha256": "b4f28f25ef949d15f207aea8d4e6bea71b78799deb8d0ffff75a11585575b54d",
+      "hash_note": null
+    },
+    {
+      "path": "art_src/branding/parchment.png",
+      "change_type": "created",
+      "related_feature": "Branding source art",
+      "purpose": "Preserve the supplied or matching generated illustration bytes.",
+      "integration_status": "Referenced by registered native sprites on this branch; not installed in active checkout.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tools/register_branding.py",
+        "sprites/spr_front_*",
+        "sprites/spr_loading_*"
+      ],
+      "warnings_for_argon": [
+        "Do not regenerate or replace original images without coordinating with Claude."
+      ],
+      "sha256": "3fb3bccf1e7d2f7fd265aeb2a1c81c04d23e8a7896e5084afd27242f13e57f1d",
+      "hash_note": null
+    },
+    {
+      "path": "docs/CHRONICLES_LEDGER.md",
+      "change_type": "modified",
+      "related_feature": "Project documentation",
+      "purpose": "Reconcile canonical local status or provide the requested Claude implementation briefing.",
+      "integration_status": "Documentation only.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "Proposed Chronicles",
+        "Actual source/evidence"
+      ],
+      "warnings_for_argon": [
+        "Earlier status snapshots do not certify later revisions; no remote Google Doc edited."
+      ],
+      "sha256": "4d7efa2dd7dd172278699f5cb64839ef2bd527457743bb9eed4585d71c6e4b67",
+      "hash_note": null
+    },
+    {
+      "path": "docs/CLAUDE_CHRONICLES_BRIEFING.md",
+      "change_type": "created",
+      "related_feature": "Project documentation",
+      "purpose": "Reconcile canonical local status or provide the requested Claude implementation briefing.",
+      "integration_status": "Documentation only.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "Proposed Chronicles",
+        "Actual source/evidence"
+      ],
+      "warnings_for_argon": [
+        "Earlier status snapshots do not certify later revisions; no remote Google Doc edited."
+      ],
+      "sha256": "99081997fc4c86021451f2844856569086ece7dc1b08a92fb5ba5e76f785b736",
+      "hash_note": null
+    },
+    {
+      "path": "docs/STORY_BIBLE.md",
+      "change_type": "modified",
+      "related_feature": "Project documentation",
+      "purpose": "Reconcile canonical local status or provide the requested Claude implementation briefing.",
+      "integration_status": "Documentation only.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "Proposed Chronicles",
+        "Actual source/evidence"
+      ],
+      "warnings_for_argon": [
+        "Earlier status snapshots do not certify later revisions; no remote Google Doc edited."
+      ],
+      "sha256": "2d1ea801801d9ac8ab31a09f9dac3e85174c88fa772ad91a26b12844eb1cbe56",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/AGENT_COORDINATION_LOG.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9cdfa0643d72e36b0819180b4a3182f90d4b3b2f07729b5970589153fc739548",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/ARGON_START_HERE.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "3a5251a916880ab3e0db397ed22b0b8daf998751b48c759972e811c1b56bb56d",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/CHANGE_MANIFEST.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": null,
+      "hash_note": "Manifest omits its own hash to avoid self-reference."
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/IMPLEMENTATION_REPORT.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "e17ca1874f8f299782e8925f8e62842bbddf81b4ca4c4784bdb95d6b6b33145c",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/KNOWN_ISSUES_AND_NEXT_STEPS.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "53cd12f18d697a36cee2d4da637e5e09e74c0d532449d92e896c8089b701cd7e",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/TECHNICAL_ARCHITECTURE.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "6e52b959d04fa269ed274de3f2c42a498d20d61abc8e576367fab0fd9b2ef761",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/TEST_RESULTS.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "670a9de0491c76e74fcf869b2458cc0c0c6c05e6aaea3df08b134e41763183c7",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/active-mac-snapshot.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9ba57eb39a4d61b039f8670e84ba4c0a853b495358552229363a35c925b24a53",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/active-mac-tracked.diff",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "380c20a9c1109fccf651fcd823fa554addf95bfedb83aec7b81f9047b1bb3ff9",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/api-index.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "0a2a76081552e66bbad1e3040d1fb16c07861f55dccf95de373de5912e4ed969",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/environment-limitations.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9d2686b52e9e2f60251f69ead33315dd080b6a95adb7774669b42dee9f3816ab",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/external-source-snapshots/art_src/world/map_art.py",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "de06a057e658cc448c2ea714f3c47385502e43593a620671e5e67ff0c390ff13",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/external-source-snapshots/scripts/scr_vis_map/scr_vis_map.gml",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "2048760a320b0eaaddc21ad3adc95e95e65c3f659c27c22e503943892a564ee8",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/external-source-snapshots/scripts/scr_vis_map/scr_vis_map.yy",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "f1b44b5fa51e9e89f66cde8771d235a3fcc97c70e2b0275aa0312828882071fb",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/handoff-validation.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "c769c2e1736bffd3dd14b2e392fdd41a3f40c9fe2760490669c801db0dcee4f0",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-main-challenger_m2_stress.cjs.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "af36aafc7f07b2cfff346c601c4c8aa14317d53dc6077b76a0469df47dc423f6",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-main-chronicles_greenmere.test.cjs.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9991a0c69aeaf52113be315ed60e0cbb6e3b5941ffebf2905077c803355f3b7c",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-main-igor.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "a5e48e5ccea1b2ab00a8fe507713ee76272a0260012d4ac34ddff3bc277edaa3",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-main-run_all.cjs.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "d5987a237b6f13c475f46514cf61899801996d44f47ff0ef23e5be74c359a79c",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-trial-challenger_m2_stress.cjs.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "3ebc5c1b7767fb2f308718a4a7633ec67a6c753d07402b3cbee16cf859989edb",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-trial-chronicles_greenmere.test.cjs.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "a2b2a588f2f9661de25047ad858d8b7ee28a1ed4c226339e4fb6912f94783968",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-trial-igor.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "caeff1dccfbad84e7c5ad282c2cea86fd2120a35fa3a674cf672a9595edb20de",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/historical-trial-run_all.cjs.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9272147a7fca014639b06eee24895e90a4fbc8296470e8ace8884701fab35e43",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/layout-previews/controls.png",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "28397a9b79a6a2288126c66276e9a60a7e503993f8aa6c8bea85c88ff7f28f72",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/layout-previews/load_confirmation.png",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "87584725440197da0b13a02fdb553475bce23a27d1768ddb65a9f0486e047ed6",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/layout-previews/loading_dunhollow.png",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "8ac66be77f77269a9c6541998c0a550724128e852a2752fac019afb87240a8ba",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/layout-previews/loading_oakhaven.png",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "719143c17400ff4d94c5a31aa61b1616d6d1db4c29296435f4dee37e5da92557",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/layout-previews/splash.png",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "d381e8b40acf63645e24de4d1a45983ca18b791b409f4fdcf49d60f868b65c97",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/layout-previews/title.png",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "90be60991f9bb57a48e37de8b54da6647246a7f3a8101d92fdb913a6c5c5dee8",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/live-agent-board-read.md",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "f963b3afaa7059be165134a16cd24168426d3e0f24e4b0a479d6d2de3ad604c5",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/mac-adversarial.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "c288da96bab8e15ace3b4b45151f4bba09eb7a58f96c9c157c4970077f5c87fa",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/mac-greenmere.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "f553d968a2d923e12e3941338e3a6308efeea11181971a468820e3ac8c3f8b2e",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/mac-m2-stress.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "af36aafc7f07b2cfff346c601c4c8aa14317d53dc6077b76a0469df47dc423f6",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/mac-regression.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "a6d26cc17b3c247e3ed6b2dd33f6494c8c587d6d95d28a9e407ad0b12985d803",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/mac-stress.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "12947b9af3bd5486b4dd0780de07c65d058e73f84700a6b0e6c0847d1c4b7864",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/mac-translator.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "05f434c75f0d3503285aa186ba643e7ce415a684b3247fd104619b7c59ff72b9",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/native-artifact-inventory.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "21ce1b948a8ac8a7c6b514c2b9d873e58ae38abc10b0a9b7e52844a85ce19ea6",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/native-build.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "7f8fd34912ff46de38a0a249ec0a8001e17e91e399522a61d164daf7f89f9a4e",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/old-mac-clone-regression.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "5f856b24cedea9fa406f56b51745a6832ffb807ca26e5f99aee69123b2d7fa7f",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/older-mac-clone-snapshot.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "b9cd0ac9cadfa3c9ecfd983558eeecac58760b3bee2148a2cd281a382da55c43",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/older-mac-clone-tracked.diff",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "7c18993a881ef6e3eda0e71f30e957cd0afb2b7a70c20bb403ecf4db035b33e2",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/portal-c988274.diff",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "1ac0854c6a270e0e4c55aa6c55a7f7b07c4d2b0a2cca9d7c8849067bc4cc9579",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/prior-cloud-tests/adversarial.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "96d2531c3ab84e7312059cabe2aa4ee280ffc63d227fc48bd6e6f752f10a9745",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/prior-cloud-tests/greenmere.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9991a0c69aeaf52113be315ed60e0cbb6e3b5941ffebf2905077c803355f3b7c",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/prior-cloud-tests/m2-stress.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "af36aafc7f07b2cfff346c601c4c8aa14317d53dc6077b76a0469df47dc423f6",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/prior-cloud-tests/regression.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "ba9c464afe135eb1332ac1a324206015006dde2699318a905e505d9834fed680",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/prior-cloud-tests/stress.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "76fc8e686694eccfc39fa6a92c7c1b167a8365f67987a2b7852f4df9490f9693",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/prior-cloud-tests/translator.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "5e9df8960a2826138f8a0bb0e9e98d9ffc9dbae97eb9fd7038ea99b48161f9fe",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/remote-fetch.log",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "559311ed5ff107f66e67e9b03c45314967be9f6b34e62c1e43bc664f09000259",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/test-case-results.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "9a155f03b83597ce8c149d168b1bdf55268b856c497caafe46fb50a548ffb765",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/whitespace-check.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "87f10f0eecd252e0339d9195aeb6a9da2e314ebc0e5a336a2089243ba85a8c7b",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/verify_handoff.py",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "0c5542fff59d8070556a47cca7b12a4c6d35a986b37bda612a703596eacdd2ce",
+      "hash_note": null
+    },
+    {
+      "path": "objects/obj_game/Draw_64.gml",
+      "change_type": "modified",
+      "related_feature": "Frontend state and routing",
+      "purpose": "Implement native title/pause/loading behavior or early mode dispatch.",
+      "integration_status": "Wired into native events in isolated branch.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_living_world",
+        "scr_vis_world",
+        "ui_text",
+        "global.frontend"
+      ],
+      "warnings_for_argon": [
+        "Preserve existing modes/QA boot routes; validate native input and save behavior."
+      ],
+      "sha256": "ba469073b7db1eec44e23f5e62f692b28691d0a2b042f07f27bf98070b7ac261",
+      "hash_note": null
+    },
+    {
+      "path": "objects/obj_game/Step_0.gml",
+      "change_type": "modified",
+      "related_feature": "Frontend state and routing",
+      "purpose": "Implement native title/pause/loading behavior or early mode dispatch.",
+      "integration_status": "Wired into native events in isolated branch.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_living_world",
+        "scr_vis_world",
+        "ui_text",
+        "global.frontend"
+      ],
+      "warnings_for_argon": [
+        "Preserve existing modes/QA boot routes; validate native input and save behavior."
+      ],
+      "sha256": "4c02e36f13869e0524df10eba16025f911c07b97f8629d0e45ec12aff0176bd9",
+      "hash_note": null
+    },
+    {
+      "path": "objects/obj_vis_renderer/Create_0.gml",
+      "change_type": "modified",
+      "related_feature": "Renderer integration",
+      "purpose": "Boot/suppress frontend overlays and suspend pending visual-door transitions.",
+      "integration_status": "Narrow hooks in existing renderer.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_frontend",
+        "Existing Claude renderer"
+      ],
+      "warnings_for_argon": [
+        "Coordinate shared visual changes; do not overwrite the active map/presentation work."
+      ],
+      "sha256": "72c9559614a07bd5ef6dffcccd073a265020ab9eddd601c472a732a6ef332013",
+      "hash_note": null
+    },
+    {
+      "path": "objects/obj_vis_renderer/Draw_64.gml",
+      "change_type": "modified",
+      "related_feature": "Renderer integration",
+      "purpose": "Boot/suppress frontend overlays and suspend pending visual-door transitions.",
+      "integration_status": "Narrow hooks in existing renderer.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_frontend",
+        "Existing Claude renderer"
+      ],
+      "warnings_for_argon": [
+        "Coordinate shared visual changes; do not overwrite the active map/presentation work."
+      ],
+      "sha256": "596ad657256068b823d48869e26727040b76f4fca4f0483cb0f5fdea8c72cec0",
+      "hash_note": null
+    },
+    {
+      "path": "objects/obj_vis_renderer/Draw_75.gml",
+      "change_type": "modified",
+      "related_feature": "Renderer integration",
+      "purpose": "Boot/suppress frontend overlays and suspend pending visual-door transitions.",
+      "integration_status": "Narrow hooks in existing renderer.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_frontend",
+        "Existing Claude renderer"
+      ],
+      "warnings_for_argon": [
+        "Coordinate shared visual changes; do not overwrite the active map/presentation work."
+      ],
+      "sha256": "64fa1fff692a3202a15cf144b0fc97605034c40e08e080635192468453260833",
+      "hash_note": null
+    },
+    {
+      "path": "options/mac/icons/crown_crucible.png",
+      "change_type": "created",
+      "related_feature": "Mac branding / packaging",
+      "purpose": "Set display name, app icon and startup illustration.",
+      "integration_status": "Compile-stage loaded; final archive packaging blocked by output permissions.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "options/mac/options_mac.yy",
+        "Current-checkout options_dir macro"
+      ],
+      "warnings_for_argon": [
+        "Mac signing, icon and first-launch behavior remain unverified."
+      ],
+      "sha256": "820bfaf11c098844a91f6de44178366030beaf836bf002982fc29555812f328a",
+      "hash_note": null
+    },
+    {
+      "path": "options/mac/options_mac.yy",
+      "change_type": "modified",
+      "related_feature": "Mac branding / packaging",
+      "purpose": "Set display name, app icon and startup illustration.",
+      "integration_status": "Compile-stage loaded; final archive packaging blocked by output permissions.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "options/mac/options_mac.yy",
+        "Current-checkout options_dir macro"
+      ],
+      "warnings_for_argon": [
+        "Mac signing, icon and first-launch behavior remain unverified."
+      ],
+      "sha256": "8b26b1586101370d6970d61ae617bc84d04c108a7fea099b7586bfaf1ec433cf",
+      "hash_note": null
+    },
+    {
+      "path": "options/mac/splash/crown_crucible.png",
+      "change_type": "created",
+      "related_feature": "Mac branding / packaging",
+      "purpose": "Set display name, app icon and startup illustration.",
+      "integration_status": "Compile-stage loaded; final archive packaging blocked by output permissions.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "options/mac/options_mac.yy",
+        "Current-checkout options_dir macro"
+      ],
+      "warnings_for_argon": [
+        "Mac signing, icon and first-launch behavior remain unverified."
+      ],
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_chronicle_core/scr_chronicle_core.gml",
+      "change_type": "modified",
+      "related_feature": "Chronicle lifecycle and QA",
+      "purpose": "Protect day/reward processing, route opt-in follow QA or improve epilogue wording.",
+      "integration_status": "Existing Chronicle state/version retained.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_greenmere",
+        "scr_chronicle_followthrough"
+      ],
+      "warnings_for_argon": [
+        "Regional season results continue play; they are not the four terminal kingdom endings."
+      ],
+      "sha256": "980c5b9f0004fbdc0549c8b7c86f75f6ff0269b11bdc68a30c65e656f2f388a2",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_chronicle_followthrough/scr_chronicle_followthrough.gml",
+      "change_type": "created",
+      "related_feature": "Historical follow-through",
+      "purpose": "Extend or delegate Greenmere conversations, deadlines, evidence and consequences.",
+      "integration_status": "Public gm_* wrappers integrated; state uses existing Chronicle save block.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_chronicle_core",
+        "scr_conversation",
+        "scr_war_clock",
+        "scr_living_world"
+      ],
+      "warnings_for_argon": [
+        "Keep inherited *_greenmere functions and Gemini historical inquiries; local lore/tuning provisional."
+      ],
+      "sha256": "e0cd0f363876f0647033f0657ae4cca5db771c8bf8f60f0fd0d8f8f91df398ac",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_chronicle_followthrough/scr_chronicle_followthrough.yy",
+      "change_type": "created",
+      "related_feature": "Historical follow-through",
+      "purpose": "Extend or delegate Greenmere conversations, deadlines, evidence and consequences.",
+      "integration_status": "Public gm_* wrappers integrated; state uses existing Chronicle save block.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "scr_chronicle_core",
+        "scr_conversation",
+        "scr_war_clock",
+        "scr_living_world"
+      ],
+      "warnings_for_argon": [
+        "Keep inherited *_greenmere functions and Gemini historical inquiries; local lore/tuning provisional."
+      ],
+      "sha256": "1cd1b81e385e18ca857a6910d5ea4db6f2cd44ea09ac12da6f3e80b9602c57c4",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_chronicle_qa/scr_chronicle_qa.gml",
+      "change_type": "modified",
+      "related_feature": "Chronicle lifecycle and QA",
+      "purpose": "Protect day/reward processing, route opt-in follow QA or improve epilogue wording.",
+      "integration_status": "Existing Chronicle state/version retained.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_greenmere",
+        "scr_chronicle_followthrough"
+      ],
+      "warnings_for_argon": [
+        "Regional season results continue play; they are not the four terminal kingdom endings."
+      ],
+      "sha256": "8a6fb4fe4ac7ce958dff2d3882ce12d6736d0ebcb8739bb2c2c763129fb28ae8",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_conversation/scr_conversation.gml",
+      "change_type": "modified",
+      "related_feature": "Conversation/notebook UX",
+      "purpose": "Bound visible replies and show only reports actually heard.",
+      "integration_status": "Existing tree and input interfaces retained.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "cf_heard_news",
+        "ui_text",
+        "global.convo"
+      ],
+      "warnings_for_argon": [
+        "Inspect long labels, page transitions and notebook persistence natively."
+      ],
+      "sha256": "d26d598695e08f9e304ce712d09a3f9fd13f8337e7a01324c35be7d6ad71dc9f",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_feudal_hierarchy/scr_feudal_hierarchy.gml",
+      "change_type": "modified",
+      "related_feature": "Progression and save reconciliation",
+      "purpose": "Separate professional standing/service from automatic noble title, estate or tribute.",
+      "integration_status": "Integrated with current rank/save interfaces.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "global.chron",
+        "Existing rank/employer save fields"
+      ],
+      "warnings_for_argon": [
+        "Retain legitimate professional styles and earned standing; do not create automatic knighthood."
+      ],
+      "sha256": "5099eedc32e732c3e7eb2c33e1323303719dc1419dad53acd3e661e63d330b32",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_feudal_warfare/scr_feudal_warfare.gml",
+      "change_type": "modified",
+      "related_feature": "Progression and save reconciliation",
+      "purpose": "Separate professional standing/service from automatic noble title, estate or tribute.",
+      "integration_status": "Integrated with current rank/save interfaces.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "global.chron",
+        "Existing rank/employer save fields"
+      ],
+      "warnings_for_argon": [
+        "Retain legitimate professional styles and earned standing; do not create automatic knighthood."
+      ],
+      "sha256": "e491ce74031463f30f28028215db11bc29e018f8bdfb07fc894cd854a757700d",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_frontend/scr_frontend.gml",
+      "change_type": "created",
+      "related_feature": "Frontend state and routing",
+      "purpose": "Implement native title/pause/loading behavior or early mode dispatch.",
+      "integration_status": "Wired into native events in isolated branch.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_living_world",
+        "scr_vis_world",
+        "ui_text",
+        "global.frontend"
+      ],
+      "warnings_for_argon": [
+        "Preserve existing modes/QA boot routes; validate native input and save behavior."
+      ],
+      "sha256": "587f3dcb56d43152b92efda48b2e9a4ee3cf2fdb1c414e42756b7d76331c0e15",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_frontend/scr_frontend.yy",
+      "change_type": "created",
+      "related_feature": "Frontend state and routing",
+      "purpose": "Implement native title/pause/loading behavior or early mode dispatch.",
+      "integration_status": "Wired into native events in isolated branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "scr_living_world",
+        "scr_vis_world",
+        "ui_text",
+        "global.frontend"
+      ],
+      "warnings_for_argon": [
+        "Preserve existing modes/QA boot routes; validate native input and save behavior."
+      ],
+      "sha256": "71aadd6991ca1e268522afe8e3b487182d8f449fe7ec9e41f55f5ff82eeacfac",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_greenmere/scr_greenmere.gml",
+      "change_type": "modified",
+      "related_feature": "Historical follow-through",
+      "purpose": "Extend or delegate Greenmere conversations, deadlines, evidence and consequences.",
+      "integration_status": "Public gm_* wrappers integrated; state uses existing Chronicle save block.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_chronicle_core",
+        "scr_conversation",
+        "scr_war_clock",
+        "scr_living_world"
+      ],
+      "warnings_for_argon": [
+        "Keep inherited *_greenmere functions and Gemini historical inquiries; local lore/tuning provisional."
+      ],
+      "sha256": "0576ca61c944b86eec0a0272f2dc3ca0903453d85b09f5a162f373c1c571cc2b",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_living_world/scr_living_world.gml",
+      "change_type": "modified",
+      "related_feature": "Progression and save reconciliation",
+      "purpose": "Separate professional standing/service from automatic noble title, estate or tribute.",
+      "integration_status": "Integrated with current rank/save interfaces.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "global.chron",
+        "Existing rank/employer save fields"
+      ],
+      "warnings_for_argon": [
+        "Retain legitimate professional styles and earned standing; do not create automatic knighthood."
+      ],
+      "sha256": "20afbbbca0a1302dd0fcc071817bffc5ae88f1a8bdf7acf25aba80182a920511",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_retinue_life/scr_retinue_life.gml",
+      "change_type": "modified",
+      "related_feature": "Retinue UX/calendar integration",
+      "purpose": "Expose present Galahalt testimony or prevent double day/wage advancement.",
+      "integration_status": "Existing party/calendar APIs retained.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_conversation",
+        "scr_greenmere",
+        "Existing retinue state"
+      ],
+      "warnings_for_argon": [
+        "No ownership of Gemini support mechanics or Claude presentation is implied."
+      ],
+      "sha256": "f76dba8424bb1684a667dc3f0a8ebf6163a8ce2892d05538c7a1fc00fa6a21dc",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_retinue_ui/scr_retinue_ui.gml",
+      "change_type": "modified",
+      "related_feature": "Retinue UX/calendar integration",
+      "purpose": "Expose present Galahalt testimony or prevent double day/wage advancement.",
+      "integration_status": "Existing party/calendar APIs retained.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_conversation",
+        "scr_greenmere",
+        "Existing retinue state"
+      ],
+      "warnings_for_argon": [
+        "No ownership of Gemini support mechanics or Claude presentation is implied."
+      ],
+      "sha256": "62af70d251fd9cd069fb3b66344746f9448884684c1a8f41388f235a87bc6018",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_vis_world/scr_vis_world.gml",
+      "change_type": "modified",
+      "related_feature": "Renderer integration",
+      "purpose": "Boot/suppress frontend overlays and suspend pending visual-door transitions.",
+      "integration_status": "Narrow hooks in existing renderer.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_frontend",
+        "Existing Claude renderer"
+      ],
+      "warnings_for_argon": [
+        "Coordinate shared visual changes; do not overwrite the active map/presentation work."
+      ],
+      "sha256": "2fb1b4c1678462c1f1814517afc9386ba2e7897dbf910e0e2dcd4df6bf7929f1",
+      "hash_note": null
+    },
+    {
+      "path": "scripts/scr_war_clock/scr_war_clock.gml",
+      "change_type": "modified",
+      "related_feature": "Chronicle lifecycle and QA",
+      "purpose": "Protect day/reward processing, route opt-in follow QA or improve epilogue wording.",
+      "integration_status": "Existing Chronicle state/version retained.",
+      "validation_status": "Documented compile-stage and fresh Node evidence; native gameplay unverified.",
+      "known_dependencies": [
+        "scr_greenmere",
+        "scr_chronicle_followthrough"
+      ],
+      "warnings_for_argon": [
+        "Regional season results continue play; they are not the four terminal kingdom endings."
+      ],
+      "sha256": "f9ac5e4e8fda02ac3f8d90dbf8213210c4a80e3b6e4417d6dff17f3018b805d8",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_emblem/6b969d61-1f3e-51bd-8ce3-a9e757395f6e.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "820bfaf11c098844a91f6de44178366030beaf836bf002982fc29555812f328a",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_emblem/layers/6b969d61-1f3e-51bd-8ce3-a9e757395f6e/89386933-ff4e-5a56-a005-dca0d78e711c.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "820bfaf11c098844a91f6de44178366030beaf836bf002982fc29555812f328a",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_emblem/spr_front_emblem.yy",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "1f0d8e4a63a64936160fb9540e2583d4e69f6ec480a54ce7d9149ce8aa6fe81a",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_logo/2a574ab9-23ae-56f3-a2ee-2f55205fefe7.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "c0dc04124d1346207c778fbb9ef37ac46e11a1653b2abb163dbda0e3e363212e",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_logo/layers/2a574ab9-23ae-56f3-a2ee-2f55205fefe7/70dcd384-ee33-50a5-bda6-4d375fd73bf7.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "c0dc04124d1346207c778fbb9ef37ac46e11a1653b2abb163dbda0e3e363212e",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_logo/spr_front_logo.yy",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "3f9bcff63a8f2484917ff6978c39dcac7d318965c96e29a3476252b50cfd591b",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_parchment/6e46281c-2db8-532b-b16a-244f7ad23481.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "3fb3bccf1e7d2f7fd265aeb2a1c81c04d23e8a7896e5084afd27242f13e57f1d",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_parchment/layers/6e46281c-2db8-532b-b16a-244f7ad23481/99469ff2-2b37-5171-9663-1fbb8495682c.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "3fb3bccf1e7d2f7fd265aeb2a1c81c04d23e8a7896e5084afd27242f13e57f1d",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_front_parchment/spr_front_parchment.yy",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "2d9c239898186afd71fa5b2f66d3a1581886fdfdeab1f1b2db9da6cf66f6e57a",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_dunhollow/53a16f8d-259a-51d0-95a4-0e0fc2cc2c2c.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "008cc2ecbd019e3c7d4de328beb514531ca74bca92c4b3fa363e4c56c6f21a5c",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_dunhollow/layers/53a16f8d-259a-51d0-95a4-0e0fc2cc2c2c/67ad74a4-4ea5-55b7-9b38-6c1a5cf0d3ce.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "008cc2ecbd019e3c7d4de328beb514531ca74bca92c4b3fa363e4c56c6f21a5c",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_dunhollow/spr_loading_dunhollow.yy",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "6214e372caf89a5aea1a11542abc2a98dd1b0989e9c3e3510fbfbb0b0881dd7f",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_greenmere/750ab387-5632-55bd-9d60-2251d9214a5e.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_greenmere/layers/750ab387-5632-55bd-9d60-2251d9214a5e/cd26db09-8203-51ca-8c58-bd958722584c.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "214e3cc29fbd6311af3a27500cb2280de48b9507f35ef59aa40326fba5910f9f",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_greenmere/spr_loading_greenmere.yy",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "d896fd7208a3611a85ea2102e5dd250865ce23a6ce8a210c6352630a458b367c",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_oakhaven/f2fd4827-91e7-50f5-b9fd-b25d87d9f133.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "b4f28f25ef949d15f207aea8d4e6bea71b78799deb8d0ffff75a11585575b54d",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_oakhaven/layers/f2fd4827-91e7-50f5-b9fd-b25d87d9f133/52723bd6-ed42-5f1d-83c3-e6f82120eaa2.png",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "b4f28f25ef949d15f207aea8d4e6bea71b78799deb8d0ffff75a11585575b54d",
+      "hash_note": null
+    },
+    {
+      "path": "sprites/spr_loading_oakhaven/spr_loading_oakhaven.yy",
+      "change_type": "created",
+      "related_feature": "Native branding resource",
+      "purpose": "Provide sprite metadata, frame or matching layer image for the front end.",
+      "integration_status": "Registered in BLANK GAME.yyp on this branch.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "BLANK GAME.yyp",
+        "art_src/branding/",
+        "scr_frontend"
+      ],
+      "warnings_for_argon": [
+        "Keep frame/layer UUIDs together; older Mac clone uses different identifiers."
+      ],
+      "sha256": "320e7a86336bfb465415c74c015afd428ebcd905908d782db8ba7fe8eec3a2c9",
+      "hash_note": null
+    },
+    {
+      "path": "tests/chronicles_followthrough.test.cjs",
+      "change_type": "created",
+      "related_feature": "Regression coverage",
+      "purpose": "Test actual GML behavior, integrity, compatibility and edge cases under the Node harness.",
+      "integration_status": "Executed on recovered branch; method does not substitute for native gameplay.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tests/harness/gml.cjs",
+        "Corresponding native GML scripts"
+      ],
+      "warnings_for_argon": [
+        "Read test names/assertions; do not assume all old saves or hardware input are covered."
+      ],
+      "sha256": "890c8d271810537e0a0f45c353457f63c5bda4fa63a110d2cf03a634cdf26075",
+      "hash_note": null
+    },
+    {
+      "path": "tests/chronicles_greenmere.test.cjs",
+      "change_type": "modified",
+      "related_feature": "Regression coverage",
+      "purpose": "Test actual GML behavior, integrity, compatibility and edge cases under the Node harness.",
+      "integration_status": "Executed on recovered branch; method does not substitute for native gameplay.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tests/harness/gml.cjs",
+        "Corresponding native GML scripts"
+      ],
+      "warnings_for_argon": [
+        "Read test names/assertions; do not assume all old saves or hardware input are covered."
+      ],
+      "sha256": "3e78ad8f0bdd9ef9c613c07737c5bdcc218a192b770e3d529f2a2236e8f7a5c4",
+      "hash_note": null
+    },
+    {
+      "path": "tests/feudal_warfare.test.cjs",
+      "change_type": "modified",
+      "related_feature": "Regression coverage",
+      "purpose": "Test actual GML behavior, integrity, compatibility and edge cases under the Node harness.",
+      "integration_status": "Executed on recovered branch; method does not substitute for native gameplay.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tests/harness/gml.cjs",
+        "Corresponding native GML scripts"
+      ],
+      "warnings_for_argon": [
+        "Read test names/assertions; do not assume all old saves or hardware input are covered."
+      ],
+      "sha256": "0eba5de515563af1aef8ed34417470bc815d63ba6ae158e9f8b000a9c4379ec4",
+      "hash_note": null
+    },
+    {
+      "path": "tests/grounded_canon_r3_r4.test.cjs",
+      "change_type": "modified",
+      "related_feature": "Regression coverage",
+      "purpose": "Test actual GML behavior, integrity, compatibility and edge cases under the Node harness.",
+      "integration_status": "Executed on recovered branch; method does not substitute for native gameplay.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "tests/harness/gml.cjs",
+        "Corresponding native GML scripts"
+      ],
+      "warnings_for_argon": [
+        "Read test names/assertions; do not assume all old saves or hardware input are covered."
+      ],
+      "sha256": "cd9ea682d8bbf237299d799eccabbfe202e6c14b6d53db93478b84e7324ac37a",
+      "hash_note": null
+    },
+    {
+      "path": "tools/register_branding.py",
+      "change_type": "created",
+      "related_feature": "Build / visual QA tooling",
+      "purpose": "Reproduce narrow registration, GML layout rendering or safe native QA launching.",
+      "integration_status": "Developer tool; not automatic proof of native execution.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "GameMaker runtime or optional Canvas/Python dependencies"
+      ],
+      "warnings_for_argon": [
+        "Registration writes resources; runner helper requires matching fresh build-side files."
+      ],
+      "sha256": "d001774573dfa5cb0ddcd1abce0e97f1c0d44ae7f4a478a32d0a692365eb404e",
+      "hash_note": null
+    },
+    {
+      "path": "tools/render_frontend.cjs",
+      "change_type": "created",
+      "related_feature": "Build / visual QA tooling",
+      "purpose": "Reproduce narrow registration, GML layout rendering or safe native QA launching.",
+      "integration_status": "Developer tool; not automatic proof of native execution.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "GameMaker runtime or optional Canvas/Python dependencies"
+      ],
+      "warnings_for_argon": [
+        "Registration writes resources; runner helper requires matching fresh build-side files."
+      ],
+      "sha256": "d716938ea49501a5ec281759bbee1e22a343e3cac110687114236bc428a2d263",
+      "hash_note": null
+    },
+    {
+      "path": "tools/run_native_qa.py",
+      "change_type": "created",
+      "related_feature": "Build / visual QA tooling",
+      "purpose": "Reproduce narrow registration, GML layout rendering or safe native QA launching.",
+      "integration_status": "Developer tool; not automatic proof of native execution.",
+      "validation_status": "File/reference integrity checked; inspect feature-specific evidence.",
+      "known_dependencies": [
+        "GameMaker runtime or optional Canvas/Python dependencies"
+      ],
+      "warnings_for_argon": [
+        "Registration writes resources; runner helper requires matching fresh build-side files."
+      ],
+      "sha256": "13a0fe7bec8f0e52873d608b32ae308238bf21718a0d0e46ec66722cb6b4674e",
+      "hash_note": null
+    }
+  ],
+  "observed_external_changes": [
+    {
+      "path": "BLANK GAME.yyp",
+      "git_status": " M",
+      "sha256": "8dfda3c035cc2c741f79d9685653d930a1924aba12f430394d5939f63447b62f",
+      "bytes": 47761,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "art_src/combat/gen_combat.py",
+      "git_status": " M",
+      "sha256": "ea4c447cbc42e36c1e417b61a02788f0420f164ac8f5a2d220d43a978b5b225b",
+      "bytes": 29185,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_1_armory.png",
+      "git_status": " M",
+      "sha256": "7c33e63481c8d09b4a1d392584ba061ef3f9b8bcd0d3c5e60d43c5b4e52da42f",
+      "bytes": 142335,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_2_quest_log.png",
+      "git_status": " M",
+      "sha256": "24292e655cc87a3376ff31d74eda2f8093d714ee437be48a5f2892fd28341d3a",
+      "bytes": 65905,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_3_contracts.png",
+      "git_status": " M",
+      "sha256": "5878de6dff34c1319ceedfe40716726d437f258f2b50929b766e4ea7da551888",
+      "bytes": 70201,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_4_trade.png",
+      "git_status": " M",
+      "sha256": "b93a948b0d1cb162fc3ef0b13c230ce72602e3ada2dbbcaa5baa729a4c9a0ad9",
+      "bytes": 65432,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "docs/AGENT_BOARD.md",
+      "git_status": " M",
+      "sha256": "6a979d4fb44fa4dc7c48a9b981cce3d2573264167d8c4f5766c7117ce8f1c10e",
+      "bytes": 10065,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "objects/obj_game/Draw_64.gml",
+      "git_status": " M",
+      "sha256": "b575ac8945f0d892da90e0e14f5494283f4e250823a06d62fd29db22185a6fac",
+      "bytes": 7089,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "objects/obj_vis_renderer/Draw_0.gml",
+      "git_status": " M",
+      "sha256": "851b027f6b0ff23fc85c8ddd9aae5b61e8f98443a71fa6037b8124a33c68aad8",
+      "bytes": 969,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_combat_render/scr_combat_render.gml",
+      "git_status": " M",
+      "sha256": "c815dcf4e08f2ce41668e9f32b4d84d8e11f9e800e5a5818cbac40a9b14f53ff",
+      "bytes": 42037,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_vis_artdata/scr_vis_artdata.gml",
+      "git_status": " M",
+      "sha256": "0a238256546bbca99f5ffa4f1c012920bfa87ea624b97e1b64405bbeb68831ad",
+      "bytes": 14604,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_vis_draw/scr_vis_draw.gml",
+      "git_status": " M",
+      "sha256": "4dd43f7d63b6644cb6adbbd296841e9dee78608428b215cbb719c5bd2d0a056e",
+      "bytes": 20695,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_vis_feel/scr_vis_feel.gml",
+      "git_status": " M",
+      "sha256": "63c21268c9ae432bf1f19565f7b1c6684e8b990fcca3c4c1dc8bc154fa11d42a",
+      "bytes": 11945,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_vis_world/scr_vis_world.gml",
+      "git_status": " M",
+      "sha256": "4b33d574ce1c288f242d6b729a850b9820e2b99226c7f85d0c2034a509f0914f",
+      "bytes": 48578,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_cbt_arrow/cffe9efe-2d25-5fe5-a80e-0155d79b3688.png",
+      "git_status": " M",
+      "sha256": "1ca4a1058794c67d5c73578a0faab6263ed31fecbd3138d9a61ec4c991fb504d",
+      "bytes": 139,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_cbt_arrow/layers/cffe9efe-2d25-5fe5-a80e-0155d79b3688/b6038cc8-2d1b-57ee-9cba-2143664bb9b0.png",
+      "git_status": " M",
+      "sha256": "1ca4a1058794c67d5c73578a0faab6263ed31fecbd3138d9a61ec4c991fb504d",
+      "bytes": 139,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_cbt_lane/43928106-aa63-556c-8056-07071adf5cd8.png",
+      "git_status": " M",
+      "sha256": "ad61441a4433bba41792b197566fb6f6868ff6d4a4fb4b8ee93592b61c8f4760",
+      "bytes": 296,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_cbt_lane/layers/43928106-aa63-556c-8056-07071adf5cd8/1e8c4f42-6aac-5537-932a-70f2461dc451.png",
+      "git_status": " M",
+      "sha256": "ad61441a4433bba41792b197566fb6f6868ff6d4a4fb4b8ee93592b61c8f4760",
+      "bytes": 296,
+      "change_type": "modified",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "art_src/world/map_art.py",
+      "git_status": "??",
+      "sha256": "de06a057e658cc448c2ea714f3c47385502e43593a620671e5e67ff0c390ff13",
+      "bytes": 3389,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_vis_map/scr_vis_map.gml",
+      "git_status": "??",
+      "sha256": "2048760a320b0eaaddc21ad3adc95e95e65c3f659c27c22e503943892a564ee8",
+      "bytes": 8793,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "scripts/scr_vis_map/scr_vis_map.yy",
+      "git_status": "??",
+      "sha256": "f1b44b5fa51e9e89f66cde8771d235a3fcc97c70e2b0275aa0312828882071fb",
+      "bytes": 252,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_compass/e188010b-deda-53a9-a4fb-b572b7363f23.png",
+      "git_status": "??",
+      "sha256": "0a3ee4e5c5b6234b6931956cbb5ca8277aa20fbca9da8931a4dd816d3e4a7fbe",
+      "bytes": 563,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_compass/layers/e188010b-deda-53a9-a4fb-b572b7363f23/a8fc74d3-7a2b-5bd9-bfef-7c678e67ef81.png",
+      "git_status": "??",
+      "sha256": "0a3ee4e5c5b6234b6931956cbb5ca8277aa20fbca9da8931a4dd816d3e4a7fbe",
+      "bytes": 563,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_compass/spr_map_compass.yy",
+      "git_status": "??",
+      "sha256": "50459a607e65366e0f12f2394cb4140283298f6ba839803abecb538d054212bb",
+      "bytes": 3913,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/1c990310-9751-5add-9d54-888edf8e4ee9.png",
+      "git_status": "??",
+      "sha256": "814fdfd04de4366c1e6b8fb1f59faaefb80237245e36a69d970200b5ccf431c0",
+      "bytes": 133,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/695cdd01-8fe2-5509-9bb7-276a6c3c340e.png",
+      "git_status": "??",
+      "sha256": "ff31d431df7c5da90cdf668793b3521675745613d6f7db5bcf0871496e116389",
+      "bytes": 153,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/78e22fa3-7196-50e4-a02b-f40c2b8ec659.png",
+      "git_status": "??",
+      "sha256": "7733d6a99689d65f3a1ef4be712eff198eee48d0eece2b573bffad3da99510b0",
+      "bytes": 141,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/7b923c6d-12e3-5999-bbd3-bca90de073cd.png",
+      "git_status": "??",
+      "sha256": "556242a648caf11f5e4bb1e2563adddfa0e03a53766fbc8693f9e6fa4f72f65b",
+      "bytes": 131,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/7cdeae6c-4768-5779-ab3d-b75db8c61b1a.png",
+      "git_status": "??",
+      "sha256": "b2d529e95b8b9957e03e6841191b065ba08dc28e455beec2867b08cf66a19b51",
+      "bytes": 170,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/979bf467-5299-5a30-bdac-d56b75887c26.png",
+      "git_status": "??",
+      "sha256": "dcc0e5b9bc06d881e1b8eaa1d4cf17be7cd90fe52944e3a70f6177b6719c6e1a",
+      "bytes": 142,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/b8dceb5e-38c7-5e07-8238-af1404e3c6eb.png",
+      "git_status": "??",
+      "sha256": "3f18ed254ab7879d5016749f669e6fdc837a6b6820a2b165c585ee2af0c7c14c",
+      "bytes": 163,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/f567ec13-19e7-581e-8e04-960ea9cda224.png",
+      "git_status": "??",
+      "sha256": "0a3ed1a6f98a083c76db7aaf4b61002f1b4c10c8b038e80641ec24f9b7841afc",
+      "bytes": 140,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/1c990310-9751-5add-9d54-888edf8e4ee9/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "814fdfd04de4366c1e6b8fb1f59faaefb80237245e36a69d970200b5ccf431c0",
+      "bytes": 133,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/695cdd01-8fe2-5509-9bb7-276a6c3c340e/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "ff31d431df7c5da90cdf668793b3521675745613d6f7db5bcf0871496e116389",
+      "bytes": 153,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/78e22fa3-7196-50e4-a02b-f40c2b8ec659/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "7733d6a99689d65f3a1ef4be712eff198eee48d0eece2b573bffad3da99510b0",
+      "bytes": 141,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/7b923c6d-12e3-5999-bbd3-bca90de073cd/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "556242a648caf11f5e4bb1e2563adddfa0e03a53766fbc8693f9e6fa4f72f65b",
+      "bytes": 131,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/7cdeae6c-4768-5779-ab3d-b75db8c61b1a/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "b2d529e95b8b9957e03e6841191b065ba08dc28e455beec2867b08cf66a19b51",
+      "bytes": 170,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/979bf467-5299-5a30-bdac-d56b75887c26/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "dcc0e5b9bc06d881e1b8eaa1d4cf17be7cd90fe52944e3a70f6177b6719c6e1a",
+      "bytes": 142,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/b8dceb5e-38c7-5e07-8238-af1404e3c6eb/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "3f18ed254ab7879d5016749f669e6fdc837a6b6820a2b165c585ee2af0c7c14c",
+      "bytes": 163,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/f567ec13-19e7-581e-8e04-960ea9cda224/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "0a3ed1a6f98a083c76db7aaf4b61002f1b4c10c8b038e80641ec24f9b7841afc",
+      "bytes": 140,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    },
+    {
+      "path": "sprites/spr_map_glyphs/spr_map_glyphs.yy",
+      "git_status": "??",
+      "sha256": "b287b9ae6826f98b3682aa7fa57365cf60662dd453189843393c8c19eeb306a4",
+      "bytes": 11193,
+      "change_type": "created",
+      "related_feature": "Observed shared presentation/map work",
+      "purpose": "Inventory only; source not copied into runtime branch.",
+      "integration_status": "Active Mac checkout only; not a Codex implementation change.",
+      "validation_status": "Read-only snapshot, not combined native validation.",
+      "known_dependencies": [
+        "Current live agent claims and owner coordination"
+      ],
+      "warnings_for_argon": [
+        "Preserve active work; do not infer ownership or port without coordination."
+      ]
+    }
+  ],
+  "external_snapshot_root": "/Users/elilentz/GameMakerProjects/BLANK GAME",
+  "deletions_note": "Only Git-reported deletions may appear; no deletion entries are invented."
+}

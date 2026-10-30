@@ -102,7 +102,7 @@ test('contract betrayal awards rival faction favors, higher bribes, and logs def
   assert.equal(g.global.contracts_betrayed_count, 1);
 });
 
-test('chivalric hierarchy promotes from Common Man-at-Arms to Company Officer and Sworn Knight', g => {
+test('military standing advances without automatic knighthood, allegiance or inherited land', g => {
   assert.equal(g.global.feudal_rank, 0);
   assert.equal(g.global.player_title, 'Rowan (Man-at-Arms)');
   
@@ -111,11 +111,14 @@ test('chivalric hierarchy promotes from Common Man-at-Arms to Company Officer an
   assert.equal(g.global.feudal_rank, 1);
   assert.match(g.global.player_title, /Freeblade Captain/);
   
-  // Add crown rep + 60 renown -> Knight-Banneret
+  // Add crown rep + 60 renown -> trusted company captain
   g.cc_rep_add('crown', 50);
   g.cc_hierarchy_add_renown(60);
   assert.equal(g.global.feudal_rank, 2);
-  assert.match(g.global.player_title, /Sworn Knight/);
+  assert.match(g.global.player_title, /Trusted Company Captain/);
+  assert.equal(g.global.sworn_faction, '');
+  assert.equal(g.global.fief_owned, false);
+  assert.ok(g.cc_hierarchy_enter_service('crown'));
   assert.equal(g.global.sworn_faction, 'crown');
 });
 
@@ -130,17 +133,17 @@ test('multi-agent retinue bonus and temporary military reinforcements provide co
   g.global.sworn_faction = 'crown';
   const ally = g.cc_war_request_allies('crown');
   assert.ok(ally);
-  assert.equal(ally.name, 'Royal Halberdier');
+  assert.equal(ally.name, 'Royal Spearman');
   assert.ok(ally.bonus_hp > 0 && ally.bonus_atk > 0);
 });
 
-test('weekly fief tribute pays gold to the player once the Watchtower Fief is claimed', g => {
+test('legacy fief flags cannot mint tribute during war cycles', g => {
   g.global.fief_owned = true;
   g.global.weekly_fief_income = 50;
   const g0 = g.hero_gold;
   
   g.cc_war_advance_cycle();
-  assert.equal(g.hero_gold, g0 + 50);
+  assert.equal(g.hero_gold, g0);
 });
 
 test('realm save/load persists war cycle, faction stats, active contracts, and chivalric rank', g => {
@@ -166,8 +169,8 @@ test('realm save/load persists war cycle, faction stats, active contracts, and c
   assert.equal(g.global.chivalric_renown, 125);
   assert.equal(g.global.feudal_rank, 2);
   assert.equal(g.global.sworn_faction, 'river_league');
-  assert.equal(g.global.player_title, 'Sir Rowan, River Guild Champion');
-  assert.equal(g.global.fief_owned, true);
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
+  assert.equal(g.global.fief_owned, false);
 });
 
 console.log(`${passed} feudal warfare tests passed.`);

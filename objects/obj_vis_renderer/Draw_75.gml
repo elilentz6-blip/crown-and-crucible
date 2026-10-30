@@ -12,4 +12,4 @@
 ///
 /// INTER-MODULE INTERFACES:
 ///   - vis_feel_draw_top() in scr_vis_feel.
-vis_feel_draw_top();
+if (!frontend_active()) vis_feel_draw_top();

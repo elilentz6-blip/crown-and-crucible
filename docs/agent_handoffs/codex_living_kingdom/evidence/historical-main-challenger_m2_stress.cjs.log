@@ -1,0 +1,43 @@
+================================================================
+CHALLENGER M2: EMPIRICAL STRESS & ADVERSARIAL VERIFICATION SUITE
+================================================================
+
+--- SUITE 1: CONTRACT SWITCHING & LIFECYCLE STRESS ---
+PASS [1] Contracts: Initial contract state has all contracts AVAILABLE and no active contract
+PASS [2] Contracts: Rapid sequential switching keeps exactly 1 active and reverts prior to AVAILABLE
+PASS [3] Contracts: High-throughput stress test (5,000 rapid switches) has no leaks or duplicates
+PASS [4] Contracts: Re-accepting the currently ACTIVE contract is rejected (returns false)
+PASS [5] Contracts: Completed and betrayed contracts are terminal and cannot be re-accepted
+PASS [6] Contracts: Boundary / malformed inputs to cc_contract_accept safely return false
+PASS [7] Contracts: Overworld waypoint check completes active scout contract
+
+--- SUITE 2: TRADE MENU NAVIGATION & BOUNDARY CONDITIONS ---
+PASS [8] Trade Menu: Cursor wraps circularly with vk_up and vk_down without drift
+PASS [9] Trade Menu: S key sells selected commodity without advancing cursor index
+PASS [10] Trade Menu: Out-of-bounds initial cursor index is clamped automatically
+PASS [11] Trade Menu: Empty commodity list boundary does not crash on navigation
+PASS [12] Trade Menu: Empty commodity list rejects Buy action and does NOT corrupt cargo or stock with NaN
+PASS [13] Trade Menu: Empty commodity list rejects Sell action and does NOT corrupt cargo or stock with NaN
+PASS [14] Trade Menu: Drawing trade menu with empty commodity list succeeds without error
+
+--- SUITE 3: SAVE SCHEMA V2 ROUND-TRIPPING & PERSISTENCE ---
+PASS [15] Save Schema v2: Mid-battle, mid-dice, and mid-archery states refuse saving and loading
+PASS [16] Save Schema v2: Active contract status is preserved across save and load
+PASS [17] Save Schema v2: Presentation fields (dialogue frame, player title, time) round-trip cleanly
+PASS [18] Save Schema v2: Backward compatibility loads legacy save without version tag
+PASS [19] Save Schema v2: Incompatible future version (> 2) is safely rejected
+
+--- SUITE 4: MODERN ARMORY & UI KIT PRESENTATION ---
+PASS [20] Armory: ui_screen_armory calls ui_equipment_draw and preserves gear stats
+PASS [21] UI Kit: Zero Unicode emojis in Trade, Quest Log, and Contracts menus
+
+--- SUITE 5: LIGHTWEIGHT AUDIO & DEFENSIVE BOUNDING ---
+PASS [22] Audio: 4 CC0 procedural sound files have valid RIFF PCM WAV headers and .yy metadata
+PASS [23] Audio: cc_sfx_play gracefully returns -1 on all invalid sound assets
+PASS [24] Audio: cc_sfx_play clamps pitch and gain bounds when audio hardware is active
+PASS [25] Dialogue: Dismissal frame suppresses same-frame interaction re-trigger
+PASS [26] Depth Sorting: Rowan uses player.y without artificial +10 offset
+
+================================================================
+CHALLENGER M2 RESULTS: 26 passed, 0 failed out of 26 tests.
+================================================================

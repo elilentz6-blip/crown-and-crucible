@@ -1,6 +1,7 @@
 # Chronicles of Aethelgard: implementation ledger
 
-Branch `claude/chronicles-greenmere`, based on main `ee559e7`. This ledger tracks how the Chronicles
+Original pass: branch `claude/chronicles-greenmere`, based on main `ee559e7`. Follow-through:
+`agent/codex-chronicles-followthrough`, based on main `47f045c` (preserving `53a7e16` historical inquiries and `334ff95` combat support). This ledger tracks how the Chronicles
 (docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md) became playable in the native GameMaker build. It keeps
 four things apart: behaviour that already existed and was verified, work completed here, choices that
 are provisional, and work that remains.
@@ -127,14 +128,85 @@ At 100 the season ends with one of four provisional epilogues (settlement, crown
 - **Theology stays open.** No religious content was added beyond the chapel book-chest, which belongs to the religious house of the 192 settlement.
 - **New names** (Hugh Fenner, Hawise, Oswin Tarr, Jory Penhal, Sergeant Ebbe, Piers Hessel, the Wren, the Wenlow company) and their positions are new compatible inventions.
 
-## 4. Remaining work and shared integrations
+## 4. Follow-through completed in native source — 30 October 2026
 
-- **Feudal hierarchy (`scr_feudal_hierarchy`):** rank 3 still grants "Lord of the Western March" and a fief, and rank 2 grants "Sworn Knight". Both conflict with the rule that office and wealth do not ennoble anyone. The tower captaincy here models office without lordship. The owner of that module should reconcile it; tests in challenger_m1 assert the old titles.
-- **QUEST_COUNTERFEIT** still describes an astral relic in places, and the Shade foe sprite remains. Both are Story Bible open decisions.
-- **The retinue (`scr_retinue*`)** places Galahalt at routine spots. He gives his Barrow Cut testimony only at the tower or the barrows, so with the retinue running Rowan usually needs him in the party. A dedicated "talk to companion" hook would help.
-- **No visual smoke** for the burned mill and no drawn checkpoint barrier; the stages are shown through people, notices, prices and landmarks.
-- **Next batch:**
-  - Oakhaven factors and the Ordel hearing outcome.
-  - Joan Harrow's captain if Rowan proposed the vale.
-  - The 50-mark demand as its own situation, using Alden's account and the Eamon testimony.
-  - Malor's protection at Red Sike when the League holds the bridge.
+The existing Greenmere content and main's newer historical-paper reading/inquiry changes are kept.
+`scr_chronicle_followthrough` wraps the public `gm_*` interfaces. The original implementations have
+`_greenmere` suffixes; new content and persistent state are not inserted into `obj_game`.
+
+| Situation | Playable behavior in source | Persistence / limit |
+| --- | --- | --- |
+| Oakhaven account | Clerk Martin Roke arrives after three days. Resolve cargo, obtain the account, learn Ordel and file before an eight-day deadline. A finding arrives four days after filing. Ignoring it permits a hearing without Rowan. | Existing Chronicle flags, schedules and documents; rewards once. Restitution costs 20G once and does not pardon the taking. A late receipt does not rewrite the original judgment. |
+| Additional cartage | Independently issued after four days; collection due seven days later. Alden's composition, Oswin's receipt and Fenner's assessment support a four-day inquiry. Collection, refusal and unattended distress differ. | Copy fee 3G once or waived with local backing. Credits duplicated cartage only; remaining assessment survives. No personal debt invented for Rowan. |
+| Vale captain | Edwin Hessel appears at the tower twelve days after nomination, with royal assent. | Appointment is an office, not ownership, noble birth or knighthood. |
+| Professional standing | Four military ranks, explicit service through Guy/Cecily/Vane. Rank never grants an oath, estate, lordship or knighthood. | Old saves retain rank, existing employer and recognized professional titles. Automatic fief fields/income are removed. Actual tower appointment still takes precedence in title. |
+| Companion testimony | P, select met Galahalt, T opens existing testimony/dispatch choices when near or in party. | No remote conversation with absent companions. Other retinue controls remain. |
+| News and reading | Hawise relays fresh news on request. Notebook retains only reports heard, even after the world queue moves on. Six visible reply rows follow selection and accommodate wrapped labels. | Uses existing heard-state serialization; no undiscovered objectives or automatic omniscience. |
+
+Martin Roke, Edwin Hessel, procedure, amounts and timing are **PROVISIONAL** compatible inventions.
+Theology and Rule 13 economic organization remain **OPEN DECISIONS**. There is no G/mark conversion.
+
+## 5. Branding and native presentation
+
+`scr_frontend` adds a skippable splash, title menu, Continue, new-journey confirmation, controls,
+Esc pause menu, explicit save/load feedback, 30 loading tips and illustrations from the isles. Loading
+reads real saved state and prepares missing terrain chunks per frame; no fake percentage or artificial
+minimum wait. Held confirmation input cannot immediately interact with the world.
+
+The supplied logo, Greenmere landscape and parchment are preserved byte for byte. Matching
+Oakhaven/Dunhollow illustrations and a compact emblem accompany them in `art_src/branding/` and six
+registered sprites. Mac options use the display name Crown & Crucible and the new icon/startup art.
+No existing art or sprite generator was overwritten. Claude can reskin the small draw layer without
+changing loading, save or timing mechanics. These pictures do not create playable island maps.
+
+## 6. Prioritized fixes and verification
+
+| Priority | Issue | Result / verification |
+| --- | --- | --- |
+| P1 | Automatic noble title, oath and tribute contradict common birth and grant repeat income | Fixed, including old-save migration and explicit service tests. |
+| P1 | Calendar expiry and dawn together double-advance deadlines and retinue wages | Fixed in both calendars; edge-case test. |
+| P1 | Quickload replaces unsaved progress without warning; no clear Continue route | Native frontend confirmation, Continue, corrupt-save feedback and held-key release tested under Node. Native execution pending. |
+| P2 | Hearing/captain/cartage promises stop at the original branch ending | Delayed consequences, evidence and unique rewards now implemented and tested. |
+| P2 | Offscreen news appears in Rowan's notebook before he hears it | Conversations now reveal reports; tests cover persistence and no duplicates. |
+| P2 | Long reply lists overflow; parchment tips/footer sit outside visible paper | Bounded replies tested; six actual-GML layout renders inspected and panel source bounds corrected. |
+| P2 | Shared cargo fails the lodging test because a boolean is compared with a string | Correct string-valued outcome check; regression case. |
+| Gate | Fresh GameMaker compile, native screenshots and manual walkthrough | **NOT RUN for this revision.** Work resumed on Linux without the macOS SDK/runner. Must pass on the Mac before merge. |
+
+`node tests/run_all.cjs`: **12/12 suites pass**, including **23 follow-through/frontend cases**.
+Additional required stress suites: `challenger_stress.cjs` **14/14**, `challenger_m2_stress.cjs` **26/26**.
+The professional-title round-trip test passes unchanged; only obsolete knight/lord styles migrate.
+`node tests/gml_translator.test.cjs` checks translation, not native compilation. The visual QA script
+renders six screens from translated `frontend_draw`, native PNGs and bitmap font glyphs; it is not a
+GameMaker playtest or an HTML implementation. `tools/register_branding.py` is idempotent.
+
+The opt-in `CC_FOLLOW_QA=1` native driver follows actual conversations, waits days, checks single
+rewards, chooses service, appoints the local captain and round-trips Chronicle JSON in memory. Its
+logic was exercised under the Node harness with no player-save writes. **The native driver has not
+yet run in GameMaker.** After a fresh Mac build, `tools/run_native_qa.py` checks for `game.ios`,
+`options.ini` and `splash.png`, launches the specified runner and rejects failures or incomplete logs.
+It also supports the existing Chronicle walkthrough. It does not compile or repair signing.
+
+## 7. Remaining work and coordination
+
+- **Mac gate:** compile this checkout in GameMaker 2024.14.4.222, run both native walkthroughs, then
+  manually check splash skip, Continue, new game with an existing save, pause, all five weapons,
+  movement, shops, equipment, defeat/recovery and load. The Node suites do not certify live feel.
+- **Claude:** own the art direction, portraits/animations, battle presentation, drawn checkpoint
+  barrier and burned-mill smoke. Retain the new functional screens and source artwork. A pasteable
+  kickoff is in `docs/CLAUDE_CHRONICLES_BRIEFING.md`.
+- **Gemini:** preserve the historical-paper additions and public encounter/Chronicle APIs. Malor's
+  League protection at Red Sike and later regional extensions remain unimplemented in this batch.
+- **Kingdom direction:** maritime maps, final economic organization, terminal kingdom collapse and
+  the four final civil-war sequences remain planned. Greenmere's season epilogues continue play.
+- **Historical tests:** `tests/challenger_m1_empirical.cjs` is an older standalone report, outside
+  `run_all.cjs`; its automatic-lordship expectations are superseded. Current hierarchy behavior is
+  covered by `feudal_warfare.test.cjs`, grounded-canon tests and the follow-through suite.
+
+
+**Shared-board limitation:** Main `47f045c` and its Codex inbox were read after fetch; the listed
+Codex claims match the new modules. The authoritative board on Eli's disconnected Mac could not be
+read live or updated from Linux. No private board fork was edited. This branch therefore stays local in a downloadable review package for Grok's native verification
+and live-board reconciliation. Automatic approval review rejected the GitHub push because explicit
+publication authorization was missing; no PR was created and nothing was merged.
+Claude's claimed minigame code/art directories are untouched. The old Mac clone may still hold an
+older uncommitted patch; do not apply it over this newer tested branch without comparing first.

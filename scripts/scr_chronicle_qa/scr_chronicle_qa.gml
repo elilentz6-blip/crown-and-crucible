@@ -95,6 +95,7 @@ function chron_qa_close() {
 }
 
 function chron_qa_step() {
+    if (environment_get_variable("CC_FOLLOW_QA") == "1") { cf_qa_step(); return; }
     if (!chron_qa_active() || !chron_ready() || !instance_exists(obj_player) || !variable_global_exists("vis")) return;
     static _f = 0;
     _f += 1;

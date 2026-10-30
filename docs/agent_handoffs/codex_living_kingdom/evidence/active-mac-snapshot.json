@@ -1,0 +1,253 @@
+{
+  "root": "/Users/elilentz/GameMakerProjects/BLANK GAME",
+  "head": "99ba93571ab72a3accc17b4df9252665bd7d817e",
+  "branch": "main",
+  "changes": [
+    {
+      "path": "BLANK GAME.yyp",
+      "git_status": " M",
+      "sha256": "8dfda3c035cc2c741f79d9685653d930a1924aba12f430394d5939f63447b62f",
+      "bytes": 47761
+    },
+    {
+      "path": "art_src/combat/gen_combat.py",
+      "git_status": " M",
+      "sha256": "ea4c447cbc42e36c1e417b61a02788f0420f164ac8f5a2d220d43a978b5b225b",
+      "bytes": 29185
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_1_armory.png",
+      "git_status": " M",
+      "sha256": "7c33e63481c8d09b4a1d392584ba061ef3f9b8bcd0d3c5e60d43c5b4e52da42f",
+      "bytes": 142335
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_2_quest_log.png",
+      "git_status": " M",
+      "sha256": "24292e655cc87a3376ff31d74eda2f8093d714ee437be48a5f2892fd28341d3a",
+      "bytes": 65905
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_3_contracts.png",
+      "git_status": " M",
+      "sha256": "5878de6dff34c1319ceedfe40716726d437f258f2b50929b766e4ea7da551888",
+      "bytes": 70201
+    },
+    {
+      "path": "art_src/screenshots/phase5/after/screen_4_trade.png",
+      "git_status": " M",
+      "sha256": "b93a948b0d1cb162fc3ef0b13c230ce72602e3ada2dbbcaa5baa729a4c9a0ad9",
+      "bytes": 65432
+    },
+    {
+      "path": "docs/AGENT_BOARD.md",
+      "git_status": " M",
+      "sha256": "6a979d4fb44fa4dc7c48a9b981cce3d2573264167d8c4f5766c7117ce8f1c10e",
+      "bytes": 10065
+    },
+    {
+      "path": "objects/obj_game/Draw_64.gml",
+      "git_status": " M",
+      "sha256": "b575ac8945f0d892da90e0e14f5494283f4e250823a06d62fd29db22185a6fac",
+      "bytes": 7089
+    },
+    {
+      "path": "objects/obj_vis_renderer/Draw_0.gml",
+      "git_status": " M",
+      "sha256": "851b027f6b0ff23fc85c8ddd9aae5b61e8f98443a71fa6037b8124a33c68aad8",
+      "bytes": 969
+    },
+    {
+      "path": "scripts/scr_combat_render/scr_combat_render.gml",
+      "git_status": " M",
+      "sha256": "c815dcf4e08f2ce41668e9f32b4d84d8e11f9e800e5a5818cbac40a9b14f53ff",
+      "bytes": 42037
+    },
+    {
+      "path": "scripts/scr_vis_artdata/scr_vis_artdata.gml",
+      "git_status": " M",
+      "sha256": "0a238256546bbca99f5ffa4f1c012920bfa87ea624b97e1b64405bbeb68831ad",
+      "bytes": 14604
+    },
+    {
+      "path": "scripts/scr_vis_draw/scr_vis_draw.gml",
+      "git_status": " M",
+      "sha256": "4dd43f7d63b6644cb6adbbd296841e9dee78608428b215cbb719c5bd2d0a056e",
+      "bytes": 20695
+    },
+    {
+      "path": "scripts/scr_vis_feel/scr_vis_feel.gml",
+      "git_status": " M",
+      "sha256": "63c21268c9ae432bf1f19565f7b1c6684e8b990fcca3c4c1dc8bc154fa11d42a",
+      "bytes": 11945
+    },
+    {
+      "path": "scripts/scr_vis_world/scr_vis_world.gml",
+      "git_status": " M",
+      "sha256": "4b33d574ce1c288f242d6b729a850b9820e2b99226c7f85d0c2034a509f0914f",
+      "bytes": 48578
+    },
+    {
+      "path": "sprites/spr_cbt_arrow/cffe9efe-2d25-5fe5-a80e-0155d79b3688.png",
+      "git_status": " M",
+      "sha256": "1ca4a1058794c67d5c73578a0faab6263ed31fecbd3138d9a61ec4c991fb504d",
+      "bytes": 139
+    },
+    {
+      "path": "sprites/spr_cbt_arrow/layers/cffe9efe-2d25-5fe5-a80e-0155d79b3688/b6038cc8-2d1b-57ee-9cba-2143664bb9b0.png",
+      "git_status": " M",
+      "sha256": "1ca4a1058794c67d5c73578a0faab6263ed31fecbd3138d9a61ec4c991fb504d",
+      "bytes": 139
+    },
+    {
+      "path": "sprites/spr_cbt_lane/43928106-aa63-556c-8056-07071adf5cd8.png",
+      "git_status": " M",
+      "sha256": "ad61441a4433bba41792b197566fb6f6868ff6d4a4fb4b8ee93592b61c8f4760",
+      "bytes": 296
+    },
+    {
+      "path": "sprites/spr_cbt_lane/layers/43928106-aa63-556c-8056-07071adf5cd8/1e8c4f42-6aac-5537-932a-70f2461dc451.png",
+      "git_status": " M",
+      "sha256": "ad61441a4433bba41792b197566fb6f6868ff6d4a4fb4b8ee93592b61c8f4760",
+      "bytes": 296
+    },
+    {
+      "path": "art_src/world/map_art.py",
+      "git_status": "??",
+      "sha256": "de06a057e658cc448c2ea714f3c47385502e43593a620671e5e67ff0c390ff13",
+      "bytes": 3389
+    },
+    {
+      "path": "scripts/scr_vis_map/scr_vis_map.gml",
+      "git_status": "??",
+      "sha256": "2048760a320b0eaaddc21ad3adc95e95e65c3f659c27c22e503943892a564ee8",
+      "bytes": 8793
+    },
+    {
+      "path": "scripts/scr_vis_map/scr_vis_map.yy",
+      "git_status": "??",
+      "sha256": "f1b44b5fa51e9e89f66cde8771d235a3fcc97c70e2b0275aa0312828882071fb",
+      "bytes": 252
+    },
+    {
+      "path": "sprites/spr_map_compass/e188010b-deda-53a9-a4fb-b572b7363f23.png",
+      "git_status": "??",
+      "sha256": "0a3ee4e5c5b6234b6931956cbb5ca8277aa20fbca9da8931a4dd816d3e4a7fbe",
+      "bytes": 563
+    },
+    {
+      "path": "sprites/spr_map_compass/layers/e188010b-deda-53a9-a4fb-b572b7363f23/a8fc74d3-7a2b-5bd9-bfef-7c678e67ef81.png",
+      "git_status": "??",
+      "sha256": "0a3ee4e5c5b6234b6931956cbb5ca8277aa20fbca9da8931a4dd816d3e4a7fbe",
+      "bytes": 563
+    },
+    {
+      "path": "sprites/spr_map_compass/spr_map_compass.yy",
+      "git_status": "??",
+      "sha256": "50459a607e65366e0f12f2394cb4140283298f6ba839803abecb538d054212bb",
+      "bytes": 3913
+    },
+    {
+      "path": "sprites/spr_map_glyphs/1c990310-9751-5add-9d54-888edf8e4ee9.png",
+      "git_status": "??",
+      "sha256": "814fdfd04de4366c1e6b8fb1f59faaefb80237245e36a69d970200b5ccf431c0",
+      "bytes": 133
+    },
+    {
+      "path": "sprites/spr_map_glyphs/695cdd01-8fe2-5509-9bb7-276a6c3c340e.png",
+      "git_status": "??",
+      "sha256": "ff31d431df7c5da90cdf668793b3521675745613d6f7db5bcf0871496e116389",
+      "bytes": 153
+    },
+    {
+      "path": "sprites/spr_map_glyphs/78e22fa3-7196-50e4-a02b-f40c2b8ec659.png",
+      "git_status": "??",
+      "sha256": "7733d6a99689d65f3a1ef4be712eff198eee48d0eece2b573bffad3da99510b0",
+      "bytes": 141
+    },
+    {
+      "path": "sprites/spr_map_glyphs/7b923c6d-12e3-5999-bbd3-bca90de073cd.png",
+      "git_status": "??",
+      "sha256": "556242a648caf11f5e4bb1e2563adddfa0e03a53766fbc8693f9e6fa4f72f65b",
+      "bytes": 131
+    },
+    {
+      "path": "sprites/spr_map_glyphs/7cdeae6c-4768-5779-ab3d-b75db8c61b1a.png",
+      "git_status": "??",
+      "sha256": "b2d529e95b8b9957e03e6841191b065ba08dc28e455beec2867b08cf66a19b51",
+      "bytes": 170
+    },
+    {
+      "path": "sprites/spr_map_glyphs/979bf467-5299-5a30-bdac-d56b75887c26.png",
+      "git_status": "??",
+      "sha256": "dcc0e5b9bc06d881e1b8eaa1d4cf17be7cd90fe52944e3a70f6177b6719c6e1a",
+      "bytes": 142
+    },
+    {
+      "path": "sprites/spr_map_glyphs/b8dceb5e-38c7-5e07-8238-af1404e3c6eb.png",
+      "git_status": "??",
+      "sha256": "3f18ed254ab7879d5016749f669e6fdc837a6b6820a2b165c585ee2af0c7c14c",
+      "bytes": 163
+    },
+    {
+      "path": "sprites/spr_map_glyphs/f567ec13-19e7-581e-8e04-960ea9cda224.png",
+      "git_status": "??",
+      "sha256": "0a3ed1a6f98a083c76db7aaf4b61002f1b4c10c8b038e80641ec24f9b7841afc",
+      "bytes": 140
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/1c990310-9751-5add-9d54-888edf8e4ee9/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "814fdfd04de4366c1e6b8fb1f59faaefb80237245e36a69d970200b5ccf431c0",
+      "bytes": 133
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/695cdd01-8fe2-5509-9bb7-276a6c3c340e/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "ff31d431df7c5da90cdf668793b3521675745613d6f7db5bcf0871496e116389",
+      "bytes": 153
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/78e22fa3-7196-50e4-a02b-f40c2b8ec659/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "7733d6a99689d65f3a1ef4be712eff198eee48d0eece2b573bffad3da99510b0",
+      "bytes": 141
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/7b923c6d-12e3-5999-bbd3-bca90de073cd/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "556242a648caf11f5e4bb1e2563adddfa0e03a53766fbc8693f9e6fa4f72f65b",
+      "bytes": 131
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/7cdeae6c-4768-5779-ab3d-b75db8c61b1a/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "b2d529e95b8b9957e03e6841191b065ba08dc28e455beec2867b08cf66a19b51",
+      "bytes": 170
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/979bf467-5299-5a30-bdac-d56b75887c26/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "dcc0e5b9bc06d881e1b8eaa1d4cf17be7cd90fe52944e3a70f6177b6719c6e1a",
+      "bytes": 142
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/b8dceb5e-38c7-5e07-8238-af1404e3c6eb/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "3f18ed254ab7879d5016749f669e6fdc837a6b6820a2b165c585ee2af0c7c14c",
+      "bytes": 163
+    },
+    {
+      "path": "sprites/spr_map_glyphs/layers/f567ec13-19e7-581e-8e04-960ea9cda224/58c9cee3-c600-505a-b043-cb2d8dfdc88b.png",
+      "git_status": "??",
+      "sha256": "0a3ed1a6f98a083c76db7aaf4b61002f1b4c10c8b038e80641ec24f9b7841afc",
+      "bytes": 140
+    },
+    {
+      "path": "sprites/spr_map_glyphs/spr_map_glyphs.yy",
+      "git_status": "??",
+      "sha256": "b287b9ae6826f98b3682aa7fa57365cf60662dd453189843393c8c19eeb306a4",
+      "bytes": 11193
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "manifest_matches_actual_git_changes": true,
+  "manifest_file_count": 112,
+  "external_observed_file_count": 41,
+  "hashes_match": true,
+  "required_docs_exist": true,
+  "local_links_exist": true,
+  "indexed_functions_exist": true,
+  "quoted_source_paths_exist": true,
+  "six_branding_resources_match": true,
+  "required_argon_directive_exact": true,
+  "native_runtime_verified": false
+}

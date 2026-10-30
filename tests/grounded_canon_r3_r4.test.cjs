@@ -72,13 +72,13 @@ test('R1.2: Rowan initializes as common-born Man-at-Arms with dynamic military p
   g.global.reputation.crown = 60;
   g.global.chivalric_renown = 50;
   g.cc_hierarchy_check_promotion();
-  assert.equal(g.global.player_title, 'Rowan, Sergeant-at-Arms');
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
   assert.equal(g.global.feudal_rank, 1);
 
   // Promote to Rank 2 via Crown standing (renown >= 100)
   g.global.chivalric_renown = 100;
   g.cc_hierarchy_check_promotion();
-  assert.equal(g.global.player_title, 'Rowan, Sworn Knight');
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
   assert.equal(g.global.feudal_rank, 2);
 
   // Promote via River League standing
@@ -87,7 +87,7 @@ test('R1.2: Rowan initializes as common-born Man-at-Arms with dynamic military p
   g.global.reputation.oakhaven = 80;
   g.global.feudal_rank = 1;
   g.cc_hierarchy_check_promotion();
-  assert.equal(g.global.player_title, "Rowan, Factor's Shield");
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
 });
 
 test('R1.3: QUEST_COUNTERFEIT resolves through grounded medieval investigation', () => {
@@ -245,8 +245,9 @@ test('R4.1: Save Schema v2 persists dynamic war cycle, active contracts, and com
 
   g.global.war_cycle_count = 5;
   g.global.active_contract_id = 'CONTRACT_BOUNTY_MALOR';
-  g.global.chivalric_renown = 35;
-  g.global.player_title = 'Rowan, Sergeant-at-Arms';
+  g.global.chivalric_renown = 55;
+  g.global.feudal_rank = 1;
+  g.global.player_title = 'Rowan, Freeblade Captain';
 
   // Save
   assert.equal(g.cc_save_game(), true);
@@ -256,14 +257,16 @@ test('R4.1: Save Schema v2 persists dynamic war cycle, active contracts, and com
   g.global.war_cycle_count = 0;
   g.global.active_contract_id = '';
   g.global.chivalric_renown = 0;
+  g.global.feudal_rank = 0;
   g.global.player_title = 'Rowan, Man-at-Arms';
 
   // Load
   assert.equal(g.cc_load_game(), true);
   assert.equal(g.global.war_cycle_count, 5);
   assert.equal(g.global.active_contract_id, 'CONTRACT_BOUNTY_MALOR');
-  assert.equal(g.global.chivalric_renown, 35);
-  assert.equal(g.global.player_title, 'Rowan, Sergeant-at-Arms');
+  assert.equal(g.global.chivalric_renown, 55);
+  assert.equal(g.global.feudal_rank, 1);
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
 
   // Verify active contract status is synchronized
   const c = g.cc_contract_get('CONTRACT_BOUNTY_MALOR');

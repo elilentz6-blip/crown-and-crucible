@@ -30,6 +30,9 @@
 
 var _dt = 1.0 / 60.0;
 
+if (frontend_active()) { frontend_step(_dt); exit; }
+if (global.game_mode == "OVERWORLD" && keyboard_check_pressed(vk_escape)) { frontend_open_pause(); exit; }
+
 // Screen Shake Decay
 if (screen_shake > 0) {
     screen_shake = max(0, screen_shake - 0.4);
@@ -117,6 +120,13 @@ if (global.game_mode == "OVERWORLD") {
 
         // Quick Load [F9] or [L]
         if (keyboard_check_pressed(vk_f9) || keyboard_check_pressed(ord("L"))) {
+            if (frontend_ready()) {
+                frontend_open_pause();
+                global.frontend.return_phase = "pause";
+                global.frontend.phase = "confirm_load";
+                global.frontend.cursor = 1;
+                exit;
+            }
             cc_load_game();
         }
 
