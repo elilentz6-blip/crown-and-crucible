@@ -204,7 +204,7 @@ function convo_draw() {
         var _c = global.vis.art.characters[$ P.visual];
         if (_c != undefined) _portrait = _c.portrait;
     }
-    ui_dialogue_draw(V.text, P.name, _portrait, floor(V.chars), 1);
+    ui_dialogue_draw(V.text, P.name, _portrait, floor(V.chars), 1, !convo_last_page() || array_length(V.opts) == 0);
 
     if (V.chars < string_length(V.text)) return;
     if (!convo_last_page()) {

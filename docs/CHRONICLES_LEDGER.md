@@ -104,7 +104,10 @@ At 100 the season ends with one of four provisional epilogues (settlement, crown
 - Pages break between sentences.
 - The notebook says how many entries are hidden.
 - The QA play-through stands Rowan beside each person and waits a few frames before each screenshot, because `screen_save` captures the previous frame.
-- Still open: in the small font, "B" and "G" look alike and "(" looks like "<". That needs a font or glyph pass in art_src/fonts.
+- Hand-drawn glyphs (`GLYPH_FIX` in art_src/ui/gen_ui.py) were applied to the existing font frames only:
+  - small Z, B, G, E and ( ), and body Z and ( );
+  - Z no longer reads as 2, B and G are distinct, and brackets no longer read as < > or { }.
+- The "more to read" arrow is hidden on a final page that has replies.
 
 ## 3. Provisional choices (easy to revise)
 

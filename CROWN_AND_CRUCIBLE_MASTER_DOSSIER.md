@@ -450,6 +450,7 @@ These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the p
     - Pages break between sentences.
     - Key hints use the kit's key caps (`ui_key_hints`, which now takes a label font).
     - The notebook counts entries hidden above or below.
+    - The UI sprite fonts carry hand-drawn Z, B, G, E and bracket glyphs (`GLYPH_FIX` in art_src/ui/gen_ui.py), so key hints and prices read correctly.
   - `scr_greenmere`: people, places, events and the three situations.
   - `scr_war_clock`.
 - **Hooks in shared files:**

@@ -55,7 +55,7 @@ function chron_qa_talk(_id) {
     for (var _i = 0; _i < array_length(_g.world_villagers); _i++) {
         var _v = _g.world_villagers[_i];
         if (_v.id == _id) {
-            obj_player.x = _v.x + 30; obj_player.y = _v.y; // beside them, not on top
+            obj_player.x = _v.x; obj_player.y = _v.y + 48; // in front of them, not on top or inside a wall
             global.gm.legacy_skip = false;
             var _ok = gm_interact(obj_player.x, obj_player.y);
             chron_qa_log(_ok && global.game_mode == "CONVERSATION", "talk to " + _id);
@@ -70,7 +70,7 @@ function chron_qa_site(_name) {
     var _L = obj_game.world_landmarks;
     for (var _i = 0; _i < array_length(_L); _i++) {
         if (_L[_i].name == _name) {
-            obj_player.x = _L[_i].x; obj_player.y = _L[_i].y + 4;
+            obj_player.x = _L[_i].x; obj_player.y = _L[_i].y + _L[_i].rad + 12; // in front, not hidden inside it
             var _ok = gm_interact(obj_player.x, obj_player.y);
             chron_qa_log(_ok, "inspect " + _name);
             return _ok;
@@ -183,6 +183,7 @@ function chron_qa_step() {
             chron_qa_log(global.war_clock.ended, "season ended: " + global.war_clock.ending);
             break;
         case 1040: chron_qa_finish_text(); break;
+        case 1045: chron_qa_last_page(); break;
         case 1050: screen_save("chron_17_epilogue.png"); chron_qa_log(global.game_mode == "CONVERSATION", "epilogue told"); chron_qa_close(); break;
         case 1070: chron_qa_log(true, "play-through complete"); game_end(); break;
     }
