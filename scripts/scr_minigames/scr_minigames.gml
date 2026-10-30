@@ -233,6 +233,8 @@ function cc_dice_update() {
                 obj_game.hero_gold -= _dg.wager;
                 _dg.phase = "ROLL_1";
                 _dg.roll_timer = _dg.roll_duration;
+                _dg.player_held = [false, false, false];
+                _dg.opp_held = [false, false, false];
             }
         }
         if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("X"))) {
@@ -323,9 +325,13 @@ function cc_dice_update() {
     else if (_dg.phase == "RESOLVE") {
         if (keyboard_check_pressed(vk_space) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(ord("Z"))) {
             _dg.phase = "BET_SELECT";
+            _dg.player_held = [false, false, false];
+            _dg.opp_held = [false, false, false];
         }
         if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("X"))) {
             _dg.active = false;
+            _dg.player_held = [false, false, false];
+            _dg.opp_held = [false, false, false];
             global.game_mode = "OVERWORLD";
         }
     }

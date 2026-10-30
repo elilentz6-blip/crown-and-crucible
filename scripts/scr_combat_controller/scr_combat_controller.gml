@@ -31,6 +31,14 @@ function cc_combat_emit(_kind, _data) {
     var _event = { kind: _kind, data: _data };
     array_push(combat_events, _event);
     if (array_length(combat_events) > 48) array_delete(combat_events, 0, 1);
+    if (_kind == "encounter_ended") {
+        if (variable_global_exists("active_contract_id") && global.active_contract_id == "CONTRACT_BOUNTY_MALOR") {
+            var _eid = is_struct(_data) ? (_data[$ "encounter_id"] ?? "") : "";
+            if (_eid == "Captain 'Blood-Pike' Malor") {
+                cc_contract_complete("CONTRACT_BOUNTY_MALOR");
+            }
+        }
+    }
     if (!is_undefined(combat_event_hook)) {
         var _hook = combat_event_hook;
         _hook(_event);
@@ -98,7 +106,15 @@ function cc_begin_attack() {
         var _M = retinue_member(_fighter_id);
         if (_M != undefined && is_struct(_M.def.combat) && _M.def.combat.can_fight) {
             var _c_weapon = _M.def.combat[$ "weapon"];
-            if (is_struct(_c_weapon)) _weapon = _c_weapon;
+            if (is_struct(_c_weapon)) {
+                _weapon = _c_weapon;
+            } else {
+                _weapon = {
+                    id: _M.def.equipment.weapon,
+                    name: _M.def.equipment.weapon_name,
+                    weapon_class: _M.def.combat.weapon_class
+                };
+            }
         }
     }
     weapon_attack = cc_attack_create(_weapon, combat_modifiers, weapon_minigames);
@@ -115,8 +131,17 @@ function cc_resolve_attack() {
         _scaling = _provider(weapon_attack, battle_enemy);
     }
     var _might = cc_value(_scaling, "might", undefined);
+    var _crit_stat = stat_crit;
+    if (retinue_exists() && retinue_active_fighter() != "ROWAN") {
+        var _fighter_id = retinue_active_fighter();
+        var _M = retinue_member(_fighter_id);
+        if (_M != undefined && is_struct(_M.stats)) {
+            if (is_undefined(_might)) _might = _M.stats.atk;
+            _crit_stat = _M.stats.crit;
+        }
+    }
     if (is_undefined(_might)) _might = stat_atk;
-    var _crit = !weapon_attack.result.miss && (weapon_attack.result.perfect || random(100) < stat_crit);
+    var _crit = !weapon_attack.result.miss && (weapon_attack.result.perfect || random(100) < _crit_stat);
     attack_outcome = cc_attack_damage(weapon_attack, _might, cc_value(_scaling, "fervor", 1), cc_value(_scaling, "blazon", {}), _crit, cc_value(battle_enemy, "armor", 0));
     battle_enemy.armor = max(0, cc_value(battle_enemy, "armor", 0) - attack_outcome.armor_break);
     battle_enemy.hp = max(0, battle_enemy.hp - attack_outcome.damage);
@@ -171,6 +196,17 @@ function cc_battle_open(_source) {
                 }
             }
         }
+        if (!turn_support_used && hero_hp < hero_max_hp) {
+            for (var _s = 0; _s < array_length(_supports); _s++) {
+                var _sup = _supports[_s];
+                if (_sup.trigger == "PLAYER_TURN" && _sup.id == "BLESSED_MEAD") {
+                    turn_support_used = true;
+                    hero_hp = min(hero_max_hp, hero_hp + _sup.power);
+                    battle_box_text = "* Brother Dunstan passes a swig of blessed mead! (+" + string(_sup.power) + " HP)";
+                    break;
+                }
+            }
+        }
     }
 }
 
@@ -181,7 +217,7 @@ function cc_begin_defense() {
     soul_y = dodge_box_y;
     bullets = [];
     defense_warnings = [];
-    defense_clock = 0.15;
+    defense_clock = max(defense_clock, 0.15);
     defense_elapsed = 0;
     combat_transition = 0.35;
     soul_invulnerable = 0;
@@ -277,8 +313,20 @@ function cc_defense_tick(_dt) {
                         }
                     }
                 }
-                var _raw = max(1, 4 - floor(stat_def / 5));
+                var _fighter_def = stat_def;
+                var _is_comp = (retinue_exists() && retinue_active_fighter() != "ROWAN");
+                var _comp_id = _is_comp ? retinue_active_fighter() : "";
+                if (_is_comp) {
+                    var _FM = retinue_member(_comp_id);
+                    if (_FM != undefined && is_struct(_FM.stats)) {
+                        _fighter_def = _FM.stats.def;
+                    }
+                }
+                var _raw = max(1, 4 - floor(_fighter_def / 5));
                 var _damage = cc_take_hit(max(1, _raw - _reduction));
+                if (_is_comp) {
+                    retinue_member_take_damage(_comp_id, _damage.hp_lost);
+                }
                 soul_invulnerable = 0.45;
                 screen_shake = 3;
                 cc_combat_emit("soul_hit", _damage);
@@ -297,7 +345,7 @@ function cc_defense_tick(_dt) {
         bullets = [];
         defense_warnings = [];
         battle_box_text = "* The enemy prepares their next move.";
-        if (!turn_support_used && retinue_exists()) {
+        if (!turn_support_used && hero_hp < hero_max_hp && retinue_exists()) {
             var _supports = retinue_support_abilities();
             for (var _s = 0; _s < array_length(_supports); _s++) {
                 var _sup = _supports[_s];

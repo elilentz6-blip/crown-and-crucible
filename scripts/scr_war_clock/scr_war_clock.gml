@@ -200,14 +200,18 @@ function war_clock_evaluate() {
     if (chron_flag("piers_home")) _settle += 1;
     if (chron_flag("lead_stolen")) _settle -= 2;
     if (chron_flag("barrow_accusation")) _settle -= 2;
-    var _crown = 0, _league = 0;
+    var _crown = 0, _league = 0, _dunhollow = 0;
     if (variable_global_exists("reputation") && is_struct(global.reputation)) {
         _crown = global.reputation[$ "crown"] ?? 0;
-        _league = global.reputation[$ "oakhaven"] ?? 0;
+        _league = global.reputation[$ "oakhaven"] ?? (global.reputation[$ "river_league"] ?? 0);
+        _dunhollow = global.reputation[$ "dunhollow"] ?? (global.reputation[$ "iron_council"] ?? 0);
     }
+    if (_dunhollow >= 30 && _dunhollow >= _crown && _dunhollow >= _league) return "council";
     if (_settle >= 6) return "settlement";
-    if (_crown >= 40 && _crown >= _league) return "crown";
-    if (_league >= 40) return "league";
+    if (_crown >= 20 && _league >= 20) return "settlement";
+    if (_crown >= 30 && _crown >= _league) return "crown";
+    if (_league >= 30) return "league";
+    if (_dunhollow >= 30) return "council";
     return "ashen";
 }
 
@@ -226,6 +230,7 @@ function war_clock_ending_title(_e) {
         case "settlement": return "A Hearing Instead of a War";
         case "crown": return "The King's Peace, Kept by Force";
         case "league": return "The River Keeps Its Own Counsel";
+        case "council": return "The Anvil Broke the Crown: Dunhollow stands apart";
     }
     return "The Ashen Season";
 }
@@ -238,6 +243,8 @@ function war_clock_ending_text(_e) {
             return "By midwinter the bailiff's men held King's Bridge and the landing at Red Sike both. Grain moved under the King's seal at the King's price, and the Oakhaven factors wrote their complaints to the Council instead of buying. The roads were safer and the bread was dearer. The Crown's officers had their way this year, and made a great many creditors doing it. Beyond the passages, other companies are still marching. The kingdom has not found its peace.";
         case "league":
             return "Oakhaven's paper went further than the bailiff's men. Barges ran down past Red Sike under League protection, and the post at King's Bridge was left to feed itself. The vale ate, mostly. What it owed the Crown did not go away because nobody came to collect it this season. People at the cross say the King will remember. Beyond the passages, other companies are still marching. The kingdom has not found its peace.";
+        case "council":
+            return "Castellan Morvath held the mountain defiles and closed the iron gates to royal requisitions. Dunhollow kept its stone, its silver, and its bread, declaring the Iron Council's charter sovereign over the march. The Crown's bailiffs found only locked passes and bristling palisades. Stonecross weathered the winter under the anvil's shadow, autonomous and defiant. Beyond the gorges, the kingdom's war churns on unresolved.";
     }
     return "No one decided to burn the vale. Unpaid companies took what they needed, the bailiff's post took the rest, and the families who could leave did. The watermill stood black all winter. In Stonecross they call it the Ashen season. Nobody agrees whose fault it was: the Chancellor's demand, the League's buying, Rusk's hunger, or the men paid to keep the road who did not. Beyond the passages, other companies are still marching. The kingdom has not found its peace.";
 }

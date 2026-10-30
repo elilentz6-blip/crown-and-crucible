@@ -29,5 +29,5 @@ draw_sprite_ext(spr_hero_knight, 0, x, y + _bob, _xsc, 1, 0, c_white, 1.0);
 
 // Overhead Name Tag
 draw_set_color(c_white);
-var _name = instance_exists(obj_game) ? obj_game.hero_name : "Sir Rowan";
+var _name = instance_exists(obj_game) ? (variable_instance_exists(obj_game, "player_title") && obj_game.player_title != "" ? obj_game.player_title : obj_game.hero_name) : "Rowan";
 draw_text(x - string_width(_name) / 2, y - 48, _name);

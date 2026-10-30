@@ -43,6 +43,26 @@ function convo_open(_tree_id, _node = "start") {
     if (!variable_global_exists("convo")) convo_init();
     var _tree = gm_tree(_tree_id);
     if (!is_struct(_tree) || !is_struct(_tree[$ _node])) return false;
+    if (_tree_id == "pippin" && is_struct(_tree)) {
+        if (!variable_struct_exists(_tree, "aveline")) {
+            _tree.aveline = cv("pippin", "Queen Aveline's Roll of 192. It confirms the charter for the market of Oakhaven and commissions the western watchtower above Stonecross. Here is an extract for your records.", [cvo("(Back)", "start")]);
+        }
+        if (is_struct(_tree[$ "start"]) && is_array(_tree.start.opts)) {
+            var _has_aveline_opt = false;
+            for (var _o = 0; _o < array_length(_tree.start.opts); _o++) {
+                if (_tree.start.opts[_o].go == "aveline") _has_aveline_opt = true;
+            }
+            if (!_has_aveline_opt) {
+                array_insert(_tree.start.opts, 0, cvo("Do you have a copy of Queen Aveline's Roll?", "aveline", "", "!doc:chronicle_aveline"));
+            }
+        }
+        if (chron_doc_has("settlement_copy") && !chron_doc_has("chronicle_aveline")) {
+            chron_doc_give("chronicle_aveline");
+        }
+        if (chron_flag("greyhaven_articles") && !chron_doc_has("chronicle_greyhaven")) {
+            chron_doc_give("chronicle_greyhaven");
+        }
+    }
     var V = global.convo;
     V.active = true;
     V.tree_id = _tree_id;
@@ -58,6 +78,14 @@ function convo_open(_tree_id, _node = "start") {
 function convo_goto(_node_id) {
     var V = global.convo;
     if (_node_id == "" || !is_struct(V.tree) || !is_struct(V.tree[$ _node_id])) { convo_close(); return; }
+    if (V.tree_id == "pippin") {
+        if (_node_id == "aveline" || _node_id == "copied" || _node_id == "copy") {
+            if (!chron_doc_has("chronicle_aveline")) chron_doc_give("chronicle_aveline");
+        }
+        if (_node_id == "greyhaven") {
+            if (!chron_doc_has("chronicle_greyhaven")) chron_doc_give("chronicle_greyhaven");
+        }
+    }
     var N = V.tree[$ _node_id];
     V.node_id = _node_id;
     var _enter = N[$ "enter"] ?? "";

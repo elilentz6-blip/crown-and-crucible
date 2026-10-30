@@ -781,7 +781,7 @@ function draw_hd_market_stall(_mx, _my, _canopy_col, _goods) {
     } else if (_goods == "POTIONS") {
         draw_set_color(make_color_rgb(220, 38, 38)); // Health Vial
         draw_roundrect(_mx - 12, _my - 8, _mx - 6, _my - 1, false);
-        draw_set_color(make_color_rgb(37, 99, 235)); // Mana Vial
+        draw_set_color(make_color_rgb(37, 99, 235)); // Distilled Spirit Vial
         draw_roundrect(_mx + 4, _my - 8, _mx + 10, _my - 1, false);
     }
 }

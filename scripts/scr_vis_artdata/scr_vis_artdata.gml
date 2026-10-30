@@ -75,7 +75,7 @@ function vis_artdata() {
             highwayman: { spr: spr_char_highwayman, portrait: spr_portrait_highwayman, shadow: spr_char_shadow, name: "Highwayman", floats: false, idle_fps: 4, walk_fps: 8 },
             margery: { spr: spr_char_margery, portrait: spr_portrait_margery, shadow: spr_char_shadow, name: "Margery the Minstrel", floats: false, idle_fps: 4, walk_fps: 8 },
             rowan: { spr: spr_char_rowan, portrait: spr_portrait_rowan, shadow: spr_char_shadow, name: "Rowan", floats: false, idle_fps: 4, walk_fps: 8 },
-            shade: { spr: spr_char_shade, portrait: spr_portrait_shade, shadow: spr_char_shadow, name: "Barrow Shade", floats: true, idle_fps: 4, walk_fps: 8 },
+            shade: { spr: spr_char_shade, portrait: spr_portrait_shade, shadow: spr_char_shadow, name: "Barrow Renegade Warden", floats: false, idle_fps: 4, walk_fps: 8 },
             pippin: { spr: spr_char_pippin, portrait: spr_portrait_pippin, shadow: spr_char_shadow, name: "Scribe Pippin", floats: false, idle_fps: 4, walk_fps: 8 },
             wulf: { spr: spr_char_wulf, portrait: spr_portrait_wulf, shadow: spr_char_shadow, name: "Wulf the Smuggler", floats: false, idle_fps: 4, walk_fps: 8 },
             balin: { spr: spr_char_balin, portrait: spr_portrait_balin, shadow: spr_char_shadow, name: "Sir Balin", floats: false, idle_fps: 4, walk_fps: 8 },

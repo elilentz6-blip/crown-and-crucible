@@ -153,7 +153,7 @@ function retinue_can_join(_id) {
     if (retinue_in_party(_id)) return { ok: false, text: "* " + M.name + " is already with you." };
     switch (M.status) {
         case "AWAY": return { ok: false, text: "* " + M.name + " is away: " + M.status_note + "." };
-        case "CAPTURED": return { ok: false, text: "* " + M.name + " is a prisoner in the Barrows. Defeat the Warden Shade to free them." };
+        case "CAPTURED": return { ok: false, text: "* " + M.name + " is a prisoner in the Barrows. Defeat the Renegade Warden to free them." };
         case "INJURED": if (M.kind != RET_KIND_MERC || !(M.def[$ "starts_injured"] ?? false)) return { ok: false, text: "* " + M.name + " is still recovering (" + M.status_note + ")." }; break;
         case "ESTRANGED": return { ok: false, text: M.def.refuse_low };
     }

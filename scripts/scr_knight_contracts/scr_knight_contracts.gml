@@ -110,7 +110,7 @@ function cc_contracts_init() {
             employer_name: "Sapper Vane",
             employer_x: 2450,
             employer_y: 1850,
-            desc: "Starving Dunhollow miners purchased a grain cart from Stonecross. Outlaws and hungry barrow shades threaten the eastern defile.",
+            desc: "Starving Dunhollow miners purchased a grain cart from Stonecross. Deserters and ruthless hill outlaws threaten the eastern defile.",
             target_desc: "Defend the grain cart at the eastern defile from hostile scavengers.",
             target_x: 2350,
             target_y: 1750,
@@ -120,10 +120,16 @@ function cc_contracts_init() {
             reward_renown: 25,
             reward_rep: { dunhollow: 25, stonecross: 10 },
             status: "AVAILABLE",
-            has_betrayal_option: false,
+            has_betrayal_option: true,
+            betrayal_faction: "crown",
+            betrayal_contact_name: "Bailiff Sir Guy",
+            betrayal_contact_x: 1040,
+            betrayal_contact_y: 1720,
+            betrayal_gold: 110,
+            betrayal_rep: { crown: 25, dunhollow: -20 },
             dialogue_offer: "* Sapper Vane: 'Our miners cannot swing sledgehammers on empty bellies! Protect our grain cart along the eastern barrow trail!'",
             dialogue_complete: "* Sapper Vane: 'The flour arrived safely! Dunhollow does not forget those who feed its sons!' (+90 Gold, +25 Dunhollow Rep)",
-            dialogue_betray: ""
+            dialogue_betray: "* Bailiff Sir Guy: 'Dunhollow's grain cart diverted to the royal storehouse? Splendid! The Crown pays well for order: 110 Gold!'"
         },
 
         // Contract 4: Reconnaissance of Royal Checkpoint
@@ -145,10 +151,16 @@ function cc_contracts_init() {
             reward_renown: 20,
             reward_rep: { oakhaven: 20 },
             status: "AVAILABLE",
-            has_betrayal_option: false,
+            has_betrayal_option: true,
+            betrayal_faction: "crown",
+            betrayal_contact_name: "Sergeant Ebbe",
+            betrayal_contact_x: 846,
+            betrayal_contact_y: 1884,
+            betrayal_gold: 80,
+            betrayal_rep: { crown: 25, oakhaven: -20 },
             dialogue_offer: "* Lady Cecily: 'We need eyes on Sir Guy's checkpoint. Count his halberdiers and return with their patrol times.'",
             dialogue_complete: "* Lady Cecily: 'Excellent reconnaissance, Rowan. Our river runners now know when the bridge sentries switch watch!' (+60 Gold)",
-            dialogue_betray: ""
+            dialogue_betray: "* Sergeant Ebbe: 'Cecily wants our bridge patrol rota? The Crown thanks you for bringing this dispatch to us, lad. Here's 80 Gold!'"
         }
     ];
 }
@@ -304,7 +316,7 @@ function cc_contracts_check_interaction(_px, _py) {
             cc_contract_complete(_c.id);
             return true;
         } else if (_c.type == "BOUNTY") {
-            // Trigger Undertale-style boss encounter
+            // Trigger Undertale-style boss encounter; completes on victory/surrender via encounter_ended
             if (instance_exists(obj_game)) {
                 var _boss = {
                     name: "Captain 'Blood-Pike' Malor",
@@ -314,10 +326,9 @@ function cc_contracts_check_interaction(_px, _py) {
                     def: 3,
                     gold_reward: 35,
                     act_commands: ["Check", "Negotiate", "Disarm", "Bribe"],
-                    quote: "* (Captain Malor spins a twin-bladed river pike.) 'Bailiff Guy sent a hedge knight to collect my skin? Let's see your steel!'"
+                    quote: "* (Captain Malor spins a twin-bladed river pike.) 'Bailiff Guy sent a man-at-arms to collect my skin? Let's see your steel!'"
                 };
                 obj_game.start_undertale_battle(_boss);
-                cc_contract_complete(_c.id);
                 return true;
             }
         } else if (_c.type == "DEFENSE") {
@@ -333,6 +344,17 @@ function cc_contracts_check_interaction(_px, _py) {
     }
 
     return false;
+}
+
+function cc_contract_on_combat_event(_kind, _data) {
+    if (_kind == "encounter_ended") {
+        if (variable_global_exists("active_contract_id") && global.active_contract_id == "CONTRACT_BOUNTY_MALOR") {
+            var _eid = is_struct(_data) ? (_data[$ "encounter_id"] ?? "") : "";
+            if (_eid == "Captain 'Blood-Pike' Malor") {
+                cc_contract_complete("CONTRACT_BOUNTY_MALOR");
+            }
+        }
+    }
 }
 
 // =========================================================================

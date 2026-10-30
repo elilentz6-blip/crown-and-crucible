@@ -66,7 +66,7 @@ function retinue_defs() {
             fee: 0, wage: 0, term: 0,
             quest: { id: "FALLEN_BANNER", title: "The Fallen Banner", unlock_approval: 25,
                 desc: "The banner of the Ashen Lance was lost in the Barrows when the Order fell. The thing that guards the crypt took it.",
-                goal: "Defeat the Barrow Warden Shade with Galahalt at your side." },
+                goal: "Defeat the Barrow Renegade Warden with Galahalt at your side." },
             greet_first: "* (The scarred knight does not look up from the fire.) 'Another knight-errant. Sit, if you like. The barrows will still be there tomorrow, and so will I.'",
             greet: ["* Sir Galahalt: 'Rowan. Your guard is still too low.'", "* Sir Galahalt: 'You came back. Most don't.'", "* Sir Galahalt nods, once. From him, that is a speech."],
             join: ["* Sir Galahalt buckles his sword belt. 'Lead on. I'll tell you when you're wrong.'", "* Sir Galahalt: 'An oath is an oath. My shield is yours until the road ends.'"],
