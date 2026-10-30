@@ -112,7 +112,7 @@ function cc_world_simulation_init() {
             x: 810,
             y: 2710,
             rad: 48,
-            text: "* (Master Odo wipes sweat from his brow.) 'An iron blade is only as loyal as the smith who tempered it. Keep your edge true, knight!'"
+            text: "* (Master Odo wipes sweat from his brow.) 'An iron blade is only as loyal as the smith who tempered it. Keep your edge true, man-at-arms!'"
         },
         // Chapel: Sacred Solar Altar
         {

@@ -143,7 +143,7 @@ world_villagers = [
         speed: 0.8,
         moving: true,
         anim: 0,
-        text: "* (Elder Alden leans on his staff.) 'Welcome to Stonecross, knight. The realm has grown weary, but our hearts remain steadfast.'"
+        text: "* (Elder Alden leans on his staff.) 'Welcome to Stonecross, man-at-arms. The realm has grown weary, but our hearts remain steadfast.'"
     },
     {
         id: "BEATRICE",
@@ -208,7 +208,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Wulf clinks two bone dice together with a smirk.) 'Care for a round of Crown & Bones, knight? Or are you here to pay off that ink-stained clerk's debt?'"
+        text: "* (Wulf clinks two bone dice together with a smirk.) 'Care for a round of Crown & Bones, friend? Or are you here to pay off that ink-stained clerk's debt?'"
     },
     {
         id: "BALIN",
@@ -247,7 +247,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Bailiff Sir Guy brandishes a parchment writ stamped with the King's seal.) 'By decree of King Aldous III! All freelance knights are summoned for crown commissions! Press [B] to view the Knight's Ledger!'"
+        text: "* (Bailiff Sir Guy brandishes a parchment writ stamped with the King's seal.) 'By decree of King Aldous III! All veteran men-at-arms are summoned for crown commissions! Press [B] to view the Contract Ledger!'"
     },
     {
         id: "LADY_CECILY",
@@ -273,7 +273,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Sapper Vane leans on a heavy iron war-pick.) 'Dunhollow needs bread and escort swords. Castellan Morvath pays in pure bog-ore to any knight brave enough to face the barrows!'"
+        text: "* (Sapper Vane leans on a heavy iron war-pick.) 'Dunhollow needs bread and escort swords. Castellan Morvath pays in pure bog-ore to any man-at-arms brave enough to face the barrows!'"
     },
     {
         id: "REFUGEE_MIRA",
@@ -338,7 +338,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Factor Malo watches the river anxiously.) 'The bailiffs are inspecting wagons at King's Bridge! I need a reliable knight to haul this heavy brine keg of Rusk bar steel to Master Odo's anvil!'"
+        text: "* (Factor Malo watches the river anxiously.) 'The bailiffs are inspecting wagons at King's Bridge! I need a reliable hand to haul this heavy brine keg of Rusk bar steel to Master Odo's anvil!'"
     }
 ];
 

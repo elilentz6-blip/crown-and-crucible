@@ -1094,7 +1094,7 @@ function cc_villager_get_dynamic_dialogue(_vid) {
             } else if (_cycle >= 3) {
                 return "* Wulf grins knowingly: 'Word from the docks: River League cutthroats are charging triple to slip contraband past the King's cutters. Good time to have friends with boats.'";
             } else {
-                return "* Wulf clinks two bone dice together with a smirk: 'Care for a round of Crown & Bones, knight? Or are you here to pay off that ink-stained clerk's debt?'";
+                return "* Wulf clinks two bone dice together with a smirk: 'Care for a round of Crown & Bones, friend? Or are you here to pay off that ink-stained clerk's debt?'";
             }
 
         case "DONALD":

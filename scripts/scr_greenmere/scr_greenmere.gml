@@ -244,14 +244,21 @@ function gm_world_refresh_greenmere() {
         }
     }
     var _has_odo = false;
+    var _has_barnaby = false;
     for (var _i = 0; _i < array_length(_V); _i++) {
-        if (_V[_i].id == "ODO") { _has_odo = true; break; }
+        if (_V[_i].id == "ODO") _has_odo = true;
+        if (_V[_i].id == "BARNABY") _has_barnaby = true;
     }
     if (!_has_odo) {
-        var _odo = gm_person_entity("ODO", "Master Odo", "brand", 810, 2710, "");
+        var _odo = gm_person_entity("ODO", "Master Odo", "brand", 810, 2710, "odo");
         _odo.text = "* (Master Odo bellows over his anvil.) 'An iron blade is only as loyal as the smith who tempered it. Keep your edge true, traveler!'";
         _odo.posts = global.npc_schedules.ODO.posts;
         array_push(_V, _odo);
+    }
+    if (!_has_barnaby) {
+        var _barn = gm_person_entity("BARNABY", "Barkeep Barnaby", "giles", 436, 2682, "barnaby");
+        _barn.text = "* (Barkeep Barnaby wipes a pewter tankard.) 'Welcome inside! Fresh spiced cider, hot mutton stew, or local gossip?'";
+        array_push(_V, _barn);
     }
 
     // deserters and hungry men on the roads come back sooner once companies are unpaid
@@ -377,15 +384,27 @@ function gm_legacy_pending() {
 /// Legacy townsfolk whose talk this module takes over while they have something to discuss.
 function gm_tree_for_legacy_greenmere(_vid) {
     switch (_vid) {
+        case "ODO": return "odo";
+        case "DONALD": return "donald";
+        case "DUNSTAN": return "dunstan";
+        case "MARGERY": return "margery";
+        case "BARNABY": return "barnaby";
         // Alden and Mira keep their everyday greeting until Rowan has some business in the vale
         case "ALDEN": return gm_has_business() ? "alden" : "";
         case "REFUGEE_MIRA": return gm_has_business() ? "mira" : "";
-        case "PIPPIN": return (chron_flag("settlement_found") || chron_flag("heard_ordel") || chron_doc_has("settlement_copy")) ? "pippin" : "";
-        case "BAILIFF_GUY": return (chron_flag("barge_arrived") || chron_doc_has("dispatch") || chron_flag("petition_sent") || chron_has_note("galahalt_testimony")) ? "guy" : "";
-        case "LADY_CECILY": return chron_flag("barge_arrived") ? "cecily" : "";
-        case "SAPPER_VANE": return (chron_flag("barge_arrived") && !chron_flag("barge_resolved")) ? "vane" : "";
-        case "BEATRICE": return (chron_flag("barge_arrived") && cc_npc_has_memory("beatrice", "DAILY_BREAD")) ? "beatrice" : "";
-        case "OLD_MALLOW": return (chron_flag("tower_inspected") && !cc_quest_is_active("QUEST_PIG")) ? "mallow" : "";
+        case "PIPPIN": return (chron_flag("settlement_found") || chron_flag("heard_ordel") || chron_doc_has("settlement_copy") || (gm_has_business() && !cc_quest_is_active("QUEST_GAMBLER"))) ? "pippin" : "";
+        case "BAILIFF_GUY": return (chron_flag("barge_arrived") || chron_doc_has("dispatch") || chron_flag("petition_sent") || chron_has_note("galahalt_testimony") || gm_has_business()) ? "guy" : "";
+        case "LADY_CECILY": return (chron_flag("barge_arrived") || gm_has_business()) ? "cecily" : "";
+        case "SAPPER_VANE": return ((chron_flag("barge_arrived") && !chron_flag("barge_resolved")) || (gm_has_business() && !cc_quest_is_active("QUEST_MISSING_WINE"))) ? "vane" : "";
+        case "BEATRICE": return ((chron_flag("barge_arrived") || gm_has_business()) && cc_npc_has_memory("beatrice", "DAILY_BREAD")) ? "beatrice" : "";
+        case "OLD_MALLOW": return ((chron_flag("tower_inspected") || gm_has_business()) && !cc_quest_is_active("QUEST_PIG")) ? "mallow" : "";
+        case "GILES": return (gm_has_business() && !cc_quest_is_active("QUEST_PIG")) ? "giles" : "";
+        case "WULF": return gm_has_business() ? "wulf" : "";
+        case "BALIN": return (gm_has_business() && !cc_quest_is_active("QUEST_DRUNKEN_KNIGHT")) ? "balin" : "";
+        case "MERCENARY_GRIM": return (gm_has_business() && !cc_quest_is_active("QUEST_DRUNKEN_KNIGHT")) ? "grim" : "";
+        case "FOREMAN_BRAND": return (gm_has_business() && !cc_quest_is_active("QUEST_MISSING_WINE")) ? "brand" : "";
+        case "FACTOR_MALO": return (gm_has_business() && !cc_quest_is_active("QUEST_SMUGGLER_RUN")) ? "malo" : "";
+        case "CORIN": return (gm_has_business() && (cc_quest_is_active("QUEST_COUNTERFEIT") || cc_quest_is_completed("QUEST_COUNTERFEIT"))) ? "corin" : "";
     }
     return "";
 }
@@ -448,6 +467,18 @@ function gm_person_greenmere(_who) {
         case "beatrice": return { name: "Baker Beatrice", visual: "beatrice" };
         case "mallow": return { name: "Old Mallow", visual: "mallow" };
         case "mira": return { name: "Refugee Mira", visual: "mira" };
+        case "odo": return { name: "Master Odo", visual: "brand" };
+        case "giles": return { name: "Farmer Giles", visual: "giles" };
+        case "balin": return { name: "Sir Balin", visual: "balin" };
+        case "dunstan": return { name: "Brother Dunstan", visual: "dunstan" };
+        case "margery": return { name: "Margery", visual: "margery" };
+        case "wulf": return { name: "Wulf the Smuggler", visual: "wulf" };
+        case "donald": return { name: "Guard Donald", visual: "donald" };
+        case "corin": return { name: "Peddler Corin", visual: "corin" };
+        case "barnaby": return { name: "Barkeep Barnaby", visual: "giles" };
+        case "malo": return { name: "Factor Malo", visual: "malo" };
+        case "brand": return { name: "Foreman Brand", visual: "brand" };
+        case "grim": return { name: "Mercenary Grim", visual: "grim" };
         case "galahalt": return { name: "Sir Galahalt", visual: "galahalt" };
         case "isolde": return { name: "Isolde Venn", visual: "isolde" };
         case "guard": return { name: "Bridge Guard", visual: "donald" };
@@ -495,6 +526,29 @@ function gm_cond_one_greenmere(_p) {
         case "has_cargo": return gm_cargo_count() > 0;
         case "crown_trusts": return gm_rep("crown") >= 20 || gm_has_crown_contract();
         case "can_repair": return chron_flag("harrow_timber") && !chron_flag("lead_stolen") && !chron_flag("repair_started") && !chron_flag("tower_repaired");
+        case "corin_coin_taken": return chron_flag("corin_coin_taken") || (cc_quest_is_active("QUEST_COUNTERFEIT") && cc_quest_get("QUEST_COUNTERFEIT").stage == 2);
+        case "odo_assayed": return chron_flag("odo_assayed") || (cc_quest_is_active("QUEST_COUNTERFEIT") && cc_quest_get("QUEST_COUNTERFEIT").stage >= 3) || cc_quest_is_completed("QUEST_COUNTERFEIT");
+        case "malo_keg_taken": return chron_flag("malo_keg_taken") || (cc_quest_is_active("QUEST_SMUGGLER_RUN") && cc_quest_get("QUEST_SMUGGLER_RUN").stage >= 2);
+        case "odo_keg_done": return chron_flag("odo_keg_done") || cc_quest_is_completed("QUEST_SMUGGLER_RUN");
+        case "giles_sow_asked": return chron_flag("giles_sow_asked") || cc_quest_is_active("QUEST_PIG");
+        case "mallow_clover_found": return chron_flag("mallow_clover_found") || (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage >= 2);
+        case "giles_sow_done": return chron_flag("giles_sow_done") || cc_quest_is_completed("QUEST_PIG");
+        case "balin_vow_taken": return chron_flag("balin_vow_taken") || cc_quest_is_active("QUEST_DRUNKEN_KNIGHT");
+        case "grim_vow_settled": return chron_flag("grim_vow_settled") || (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage >= 2);
+        case "balin_vow_done": return chron_flag("balin_vow_done") || cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT");
+        case "brand_pardon_asked": return chron_flag("brand_pardon_asked") || cc_quest_is_active("QUEST_MISSING_WINE");
+        case "vane_writ_given": return chron_flag("vane_writ_given") || (cc_quest_is_active("QUEST_MISSING_WINE") && cc_quest_get("QUEST_MISSING_WINE").stage >= 2);
+        case "brand_wine_done": return chron_flag("brand_wine_done") || cc_quest_is_completed("QUEST_MISSING_WINE");
+        case "wulf_debt_paid": return chron_flag("wulf_debt_paid") || (cc_quest_is_active("QUEST_GAMBLER") && cc_quest_get("QUEST_GAMBLER").stage >= 3) || cc_quest_is_completed("QUEST_GAMBLER");
+        case "prayed_today": return chron_flag("prayed_today") && chron_get("prayed_day", -1) == global.chron.day;
+        case "worked_farm_today": return chron_flag("worked_farm_today") && chron_get("worked_farm_day", -1) == global.chron.day;
+        case "worked_forge_today": return chron_flag("worked_forge_today") && chron_get("worked_forge_day", -1) == global.chron.day;
+        case "worked_watch_today": return chron_flag("worked_watch_today") && chron_get("worked_watch_day", -1) == global.chron.day;
+        case "worked_cartage_today": return chron_flag("worked_cartage_today") && chron_get("worked_cartage_day", -1) == global.chron.day;
+        case "worked_hunt_today": return chron_flag("worked_hunt_today") && chron_get("worked_hunt_day", -1) == global.chron.day;
+        case "worked_forage_today": return chron_flag("worked_forage_today") && chron_get("worked_forage_day", -1) == global.chron.day;
+        case "has_mule": return chron_flag("has_mule");
+        case "has_wagon": return chron_flag("has_wagon");
     }
     return chron_flag(_p);
 }
@@ -1028,6 +1082,232 @@ function gm_fx_greenmere(_id) {
         case "note_epilogue":
             chron_note("season_end", war_clock_ending_title(global.war_clock.ending), war_clock_ending_text(global.war_clock.ending));
             break;
+
+        // ---------- Minigame & Menu Entry from Conversations ----------
+        case "dice_play":
+            convo_close();
+            cc_dice_start(1);
+            break;
+        case "trade_open":
+            convo_close();
+            global.game_mode = "TRADE_MENU";
+            break;
+        case "archery_play":
+            convo_close();
+            cc_archery_start();
+            break;
+
+        // ---------- Odo, Giles, Balin, Dunstan, Margery, Wulf, Donald, Corin, Barnaby, Malo, Brand, Grim ----------
+        case "odo_assay":
+            chron_set("odo_assayed", true);
+            if (!cc_quest_is_active("QUEST_COUNTERFEIT")) cc_quest_start("QUEST_COUNTERFEIT");
+            cc_quest_advance("QUEST_COUNTERFEIT", 3, "Search the Overgrown Border Redoubt for the illicit minting press.");
+            cc_npc_add_affinity("odo", 10, "COUNTERFEIT_ASSAYED");
+            chron_note("coiners", "Debased groats", "Master Odo tested the crooked groat with touchstone and acid. It is base copper and lead washed in thin silver from a press at the Border Redoubt.");
+            break;
+        case "odo_keg":
+            chron_set("odo_keg_done", true);
+            if (!cc_quest_is_completed("QUEST_SMUGGLER_RUN")) {
+                if (!cc_quest_is_active("QUEST_SMUGGLER_RUN")) cc_quest_start("QUEST_SMUGGLER_RUN");
+                cc_quest_complete("QUEST_SMUGGLER_RUN", "DELIVERED_STEEL");
+            }
+            break;
+        case "note_iron_assize":
+            chron_note("iron_assize", "The dearth of iron", "Bog-ore from Dunhollow is taxed twice at the bridge, and royal officers take every batch of horseshoes and billhooks on tally.");
+            break;
+        case "odo_repair":
+            if (!gm_pay(4)) { convo_redirect("odo_poor"); break; }
+            global.weapon_durability = 100;
+            global.armor_durability = 100;
+            gm_float("GEAR REPAIRED!", UI_COL_GOLD);
+            break;
+        case "work_forge":
+            chron_set("worked_forge_today", true);
+            chron_set("worked_forge_day", global.chron.day);
+            if (_g != noone) {
+                _g.hero_gold += 14;
+                _g.time_of_day = (_g.time_of_day + 1) mod 4;
+            }
+            global.weapon_durability = 100;
+            cc_rep_add("stonecross", 2);
+            gm_float("+14G (FORGE SHIFT)", UI_COL_GOLD);
+            break;
+        case "giles_start_pig":
+            chron_set("giles_sow_asked", true);
+            if (!cc_quest_is_active("QUEST_PIG") && !cc_quest_is_completed("QUEST_PIG")) cc_quest_start("QUEST_PIG");
+            break;
+        case "mallow_find_clover":
+            chron_set("mallow_clover_found", true);
+            if (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage < 2) {
+                cc_quest_advance("QUEST_PIG", 2, "Found Clover grazing by the brook! Lead her back to Farmer Giles.");
+            }
+            break;
+        case "giles_finish_pig":
+            chron_set("giles_sow_done", true);
+            if (!cc_quest_is_completed("QUEST_PIG")) {
+                if (!cc_quest_is_active("QUEST_PIG")) cc_quest_start("QUEST_PIG");
+                cc_quest_complete("QUEST_PIG", "RETURNED_CLOVER");
+            }
+            break;
+        case "work_farm":
+            chron_set("worked_farm_today", true);
+            chron_set("worked_farm_day", global.chron.day);
+            if (_g != noone) {
+                _g.hero_gold += 8;
+                _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 6);
+                _g.time_of_day = (_g.time_of_day + 1) mod 4;
+            }
+            global.last_meal_day = global.chron.day;
+            cc_rep_add("stonecross", 2);
+            gm_float("+8G & BREAD (FIELD SHIFT)", UI_COL_GOLD);
+            break;
+        case "balin_start_vow":
+            chron_set("balin_vow_taken", true);
+            if (!cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && !cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) cc_quest_start("QUEST_DRUNKEN_KNIGHT");
+            break;
+        case "grim_settle_vow":
+            chron_set("grim_vow_settled", true);
+            if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage < 2) {
+                cc_quest_advance("QUEST_DRUNKEN_KNIGHT", 2, "Report back to Sir Balin at the Boar & Flagon.");
+            }
+            break;
+        case "balin_finish_vow":
+            chron_set("balin_vow_done", true);
+            if (!cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) {
+                if (!cc_quest_is_active("QUEST_DRUNKEN_KNIGHT")) cc_quest_start("QUEST_DRUNKEN_KNIGHT");
+                cc_quest_complete("QUEST_DRUNKEN_KNIGHT", "CHAMPIONED_BALIN");
+            }
+            break;
+        case "balin_drink":
+            if (!gm_pay(2)) { convo_redirect("balin_poor"); break; }
+            if (_g != noone) _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 4);
+            break;
+        case "dunstan_heal":
+            if (!gm_pay(5)) { convo_redirect("dunstan_poor"); break; }
+            if (_g != noone) _g.hero_hp = _g.hero_max_hp;
+            global.player_injury = "";
+            global.player_injury_days = 0;
+            gm_float("WOUNDS BOUND!", c_lime);
+            break;
+        case "dunstan_pray":
+            chron_set("prayed_today", true);
+            chron_set("prayed_day", global.chron.day);
+            if (_g != noone) _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 3);
+            break;
+        case "margery_song":
+            if (!gm_pay(2)) { convo_redirect("margery_poor"); break; }
+            if (_g != noone) _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 4);
+            break;
+        case "wulf_buy_debt":
+            if (!gm_pay(25)) { convo_redirect("wulf_poor"); break; }
+            chron_set("wulf_debt_paid", true);
+            if (!cc_quest_is_active("QUEST_GAMBLER") && !cc_quest_is_completed("QUEST_GAMBLER")) cc_quest_start("QUEST_GAMBLER");
+            if (cc_quest_is_active("QUEST_GAMBLER")) cc_quest_advance("QUEST_GAMBLER", 3, "Return Pippin's debt slip to him.");
+            break;
+        case "wulf_black_market":
+            if (!variable_global_exists("player_cargo") || global.player_cargo.WHEAT <= 0) { convo_redirect("wulf_no_wheat"); break; }
+            global.player_cargo.WHEAT -= 1;
+            if (_g != noone) _g.hero_gold += 24;
+            cc_rep_add("crown", -2);
+            gm_float("+24G (ILLICIT WHEAT)", UI_COL_GOLD);
+            break;
+        case "work_watch":
+            chron_set("worked_watch_today", true);
+            chron_set("worked_watch_day", global.chron.day);
+            if (_g != noone) {
+                _g.hero_gold += 10;
+                _g.time_of_day = (_g.time_of_day + 1) mod 4;
+            }
+            cc_rep_add("stonecross", 2);
+            cc_rep_add("crown", 1);
+            gm_float("+10G (WATCH SHIFT)", UI_COL_GOLD);
+            break;
+        case "corin_start_coin":
+            chron_set("corin_coin_taken", true);
+            if (!cc_quest_is_active("QUEST_COUNTERFEIT") && !cc_quest_is_completed("QUEST_COUNTERFEIT")) {
+                cc_quest_start("QUEST_COUNTERFEIT");
+                cc_quest_advance("QUEST_COUNTERFEIT", 2);
+            }
+            break;
+        case "buy_mule":
+            if (!gm_pay(60)) { convo_redirect("corin_poor"); break; }
+            chron_set("has_mule", true);
+            global.transport_tier = "PACK_MULE";
+            global.cargo_capacity = 10;
+            gm_float("PACK MULE ACQUIRED! (10 SACKS)", UI_COL_GOLD);
+            break;
+        case "buy_wagon":
+            if (!gm_pay(140)) { convo_redirect("corin_poor"); break; }
+            chron_set("has_wagon", true);
+            global.transport_tier = "CARTER_WAGON";
+            global.cargo_capacity = 30;
+            gm_float("CARTER WAGON LEASED! (30 SACKS)", UI_COL_GOLD);
+            break;
+        case "work_cartage":
+            chron_set("worked_cartage_today", true);
+            chron_set("worked_cartage_day", global.chron.day);
+            if (_g != noone) {
+                _g.hero_gold += 18;
+                _g.time_of_day = (_g.time_of_day + 1) mod 4;
+            }
+            cc_rep_add("oakhaven", 2);
+            gm_float("+18G (CARTAGE HAUL)", UI_COL_GOLD);
+            break;
+        case "barnaby_meal":
+            if (!gm_pay(4)) { convo_redirect("barnaby_poor"); break; }
+            if (_g != noone) _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 6);
+            global.last_meal_day = global.chron.day;
+            gm_float("+6 HP (HOT STEW)", c_lime);
+            break;
+        case "malo_start_keg":
+            chron_set("malo_keg_taken", true);
+            if (!cc_quest_is_active("QUEST_SMUGGLER_RUN") && !cc_quest_is_completed("QUEST_SMUGGLER_RUN")) {
+                cc_quest_start("QUEST_SMUGGLER_RUN");
+                cc_quest_advance("QUEST_SMUGGLER_RUN", 2, "Deliver the heavy brine keg to Master Odo's anvil!");
+            }
+            break;
+        case "work_forage":
+            chron_set("worked_forage_today", true);
+            chron_set("worked_forage_day", global.chron.day);
+            if (_g != noone) {
+                _g.hero_gold += 12;
+                _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 4);
+                _g.time_of_day = (_g.time_of_day + 1) mod 4;
+            }
+            gm_float("+12G (HERB & MILL SHIFT)", UI_COL_GOLD);
+            break;
+        case "brand_start_wine":
+            chron_set("brand_pardon_asked", true);
+            if (!cc_quest_is_active("QUEST_MISSING_WINE") && !cc_quest_is_completed("QUEST_MISSING_WINE")) cc_quest_start("QUEST_MISSING_WINE");
+            break;
+        case "vane_give_writ":
+            chron_set("vane_writ_given", true);
+            if (cc_quest_is_active("QUEST_MISSING_WINE") && cc_quest_get("QUEST_MISSING_WINE").stage < 2) {
+                cc_quest_advance("QUEST_MISSING_WINE", 2, "Deliver the Overtime Defense Writ to Foreman Brand.");
+            }
+            break;
+        case "brand_finish_wine":
+            chron_set("brand_wine_done", true);
+            if (!cc_quest_is_completed("QUEST_MISSING_WINE")) {
+                if (!cc_quest_is_active("QUEST_MISSING_WINE")) cc_quest_start("QUEST_MISSING_WINE");
+                cc_quest_complete("QUEST_MISSING_WINE", "MEDIATED_MASONS");
+            }
+            break;
+        case "work_hunt":
+            chron_set("worked_hunt_today", true);
+            chron_set("worked_hunt_day", global.chron.day);
+            if (_g != noone) {
+                _g.hero_gold += 15;
+                _g.time_of_day = (_g.time_of_day + 1) mod 4;
+            }
+            gm_float("+15G (FEN BOAR HUNT)", UI_COL_GOLD);
+            break;
+        case "beatrice_buy_loaf":
+            if (!gm_pay(2)) { convo_redirect("beatrice_poor"); break; }
+            if (_g != noone) _g.hero_hp = min(_g.hero_max_hp, _g.hero_hp + 6);
+            global.last_meal_day = global.chron.day;
+            gm_float("+6 HP (FRESH LOAF)", c_lime);
+            break;
     }
 }
 
@@ -1225,6 +1505,47 @@ function gm_text_greenmere(_id) {
             return war_clock_ready() ? war_clock_ending_title(global.war_clock.ending) : "";
         case "board_text":
             return war_clock_ready() ? global.war_clock.notice : "";
+
+        // ---------- Odo, Giles, Balin, Dunstan, Margery, Wulf, Donald, Corin, Barnaby, Malo, Brand, Grim ----------
+        case "odo_start":
+            if (_stage >= 3) return "The bailiff wants fifty billhooks on royal tally, and bog-ore from Dunhollow is cut off. State your business, man-at-arms.";
+            if (instance_exists(obj_game) && obj_game.time_of_day == 2) return "Even a smith rests his hammer at sundown. Have a mug by the hearth, Rowan, or talk iron.";
+            return "Mind the sparks, Rowan. Good iron is dear this season, and a notched blade will get you killed.";
+        case "giles_start":
+            if (cc_quest_is_completed("QUEST_PIG")) return "Clover is safe in her pen and the wattle fence is mended. If you want honest day-work in the fields, just ask.";
+            if (_stage >= 3) return "Crown forage carts took two bushels of seed corn yesterday. How is a tenant supposed to sow come spring?";
+            return "The soil in Greenmere is rich, Rowan, if the bailiffs and the crows leave any of the harvest.";
+        case "balin_start":
+            if (cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) return "My honor stands whole thanks to you, friend. Pull up a stool and rest your feet.";
+            if (_stage >= 3) return "King Aldous is calling up every retired lance on the rolls. Even with this swollen knee, I may have to ride.";
+            return "A man spends thirty years in the saddle and ends up conquered by his own left knee. What news from the road?";
+        case "dunstan_start":
+            if (_stage >= 3) return "The chapel aisle is crowded with families from the burned steads. Keep your blade sheathed when you can, Rowan.";
+            return "Peace be with you, Rowan. The kettle is warm and the Witness keeps the roll of all who walk this vale.";
+        case "margery_start":
+            if (_stage >= 3) return "Nobody pays for merry catches when soldiers are quartered in the loft. They only want songs about home.";
+            return "Rowan! You look like a man who has walked ten miles in wet boots. Sit by the embers.";
+        case "wulf_start":
+            if (_stage >= 3) return "Martial law at every crossing, and twice the profit for a boatman who knows the reeds. Care to roll the bones?";
+            return "Two bone dice and an honest cup, friend. Or as honest as anything gets at Red Sike.";
+        case "donald_start":
+            if (_stage >= 3) return "Deserters from the march companies were spotted near the barrows at dusk. Keep your weapon ready on the south road.";
+            return "Halberd sharp and lantern trimmed. The parish militia keeps the peace in Stonecross, whoever sits in High Cairn.";
+        case "corin_start":
+            if (_stage >= 3) return "Crown price ceilings on wheat and bridge tolls on iron! A peddler needs three ledgers just to cross the river.";
+            return "Salt pike from Oakhaven, bog-iron from Dunhollow, and honest grain from the vale! What do you need, Rowan?";
+        case "barnaby_start":
+            if (_stage >= 3) return "Half the taproom drinks on royal tallies now. Real silver groats are a welcome sight at this bar.";
+            return "Hot mutton pottage on the hob and spiced cider in the cask. What can I draw for you, friend?";
+        case "malo_start":
+            if (cc_quest_is_completed("QUEST_SMUGGLER_RUN")) return "Master Odo said that Rusk spring-steel tempered clean and true. You have friends on the river now.";
+            return "Keep your voice low near the water, man-at-arms. The bailiff's clerks count every sack on the wharf.";
+        case "brand_start":
+            if (cc_quest_is_completed("QUEST_MISSING_WINE")) return "With Sapper Vane's writ in my pouch, Morvath's inspectors couldn't touch a single mason on this bridge!";
+            return "Five hundred dressed stones laid before the autumn floods, and the lords still begrudge us a dry roof.";
+        case "grim_start":
+            if (cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) return "You stood for Balin like a proper soldier. Watch yourself south of the crossing; the barrows aren't empty.";
+            return "I was hired to watch the south track, not to chatter. Speak plain if you have business.";
     }
     return "";
 }
@@ -1559,6 +1880,9 @@ function gm_tree_greenmere(_id) {
         case "vane":
             T.start = cv("vane", "Dunhollow man. Don't look at me like that. The Castellan's writ doesn't run here and I'm not pretending it does. Hunger runs everywhere.", [
                 cvo("What do you want with the barge?", "barge", "", "!vane_deal&!vane_refused"),
+                cvo("Foreman Brand needs an overtime writ for that wine cask.", "writ", "vane_give_writ", "brand_pardon_asked&!vane_writ_given"),
+                cvo("Why does Dunhollow answer the Crown with iron picks?", "dunhollow"),
+                cvo("(The contract ledger.)", "", "contracts"),
                 cvo("(Something else.)", "", "legacy"),
                 cvo("(Leave)", "")
             ]);
@@ -1566,17 +1890,24 @@ function gm_tree_greenmere(_id) {
                 cvo("Forty. Done.", "agree", "vane_agree"), cvo("No. That's theft.", "refuse", "vane_refuse"), cvo("(Back)", "start")]);
             T.agree = cv("vane", "Tomorrow night. Keep them talking. We'll do the rest.", []);
             T.refuse = cv("vane", "It is. So's starving. Go on, then.", []);
+            T.writ = cv("vane", "Brand and his lads rebuilt that eastern bridge three days early. Take this signed overtime writ and tell Morvath's clerks it was military requisition.", [cvo("(Back)", "start")]);
+            T.dunhollow = cv("vane", "The Crown taxes our bog-ore at the crossing and caps what our carters can buy in wheat. Castellan Morvath keeps the furnaces burning because nobody else will.", [cvo("(Back)", "start")]);
             break;
 
         // ================= BAKER BEATRICE =================
         case "beatrice":
             T.start = cv("beatrice", "", [
                 cvo("Would you buy a share of the barge?", "share", "beatrice_share", "barge_open&!beatrice_share"),
+                cvo("Buy a fresh morning loaf. (2G)", "loaf", "beatrice_buy_loaf"),
+                cvo("How do the grain prices affect the bakehouse?", "oven"),
                 cvo("(Something else.)", "", "legacy"),
                 cvo("(Leave)", "")
             ]);
             T.start.tx = "beatrice_start";
             T.share = cv("beatrice", "A fifth, at the market price, and gladly. I won't pay a seizure price to a bailiff's man, and I won't pay Oakhaven's price either.", []);
+            T.loaf = cv("beatrice", "Warm from the hearth stone! Honest rye and barley keeps a man standing on a cold road.", [cvo("(Back)", "start")]);
+            T.beatrice_poor = cv("beatrice", "Save your coppers, Rowan. Come back at dawn if you're truly pinched.", [cvo("(Back)", "start")]);
+            T.oven = cv("beatrice", "King Aldous's assize caps what a baker may charge, but the carters charge double for flour. When soldiers pay in wooden tallies, the oven runs at a loss.", [cvo("(Back)", "start")]);
             break;
 
         // ================= OLD MALLOW =================
@@ -1584,12 +1915,231 @@ function gm_tree_greenmere(_id) {
             T.start = cv("mallow", "The tower? Knocks at night. Always has. My grandfather said it's the watch asking to be relieved.", [
                 cvo("It's a loose beam. I saw it.", "beam"),
                 cvo("Did your grandfather work on the tower?", "pockets", "mallow_pockets", "!mallow_pockets"),
+                cvo("Have you seen Farmer Giles's sow Clover?", "clover", "mallow_find_clover", "giles_sow_asked&!mallow_clover_found"),
                 cvo("(Something else.)", "", "legacy"),
                 cvo("(Leave)", "")
             ]);
             T.start.enter = "note_ghost";
             T.beam = cv("mallow", "Maybe it is. My grandfather heard it before that beam was loose.", [cvo("(Back)", "start")]);
             T.pockets = cv("mallow", "He did, and his father. The beams sit in pockets cut into the stone on the south side. Put new ones in the old pockets and they'll take the weight. Nobody asks me these things.", [cvo("(Back)", "start")]);
+            T.clover = cv("mallow", "Giles blames me? That sow rooted straight through my turnip trench! She's behind my barn by the brook; tell Giles to mend his wattle fence.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= MASTER ODO =================
+        case "odo":
+            T.start = cv("odo", "", [
+                cvo("Test this crooked silver groat on your touchstone.", "assay", "odo_assay", "corin_coin_taken&!odo_assayed"),
+                cvo("I brought the heavy brine keg from Factor Malo.", "keg", "odo_keg", "malo_keg_taken&!odo_keg_done"),
+                cvo("Why is good iron so scarce in the vale?", "iron"),
+                cvo("Mend and sharpen my gear at the grindstone. (4G)", "repaired", "odo_repair"),
+                cvo("Can I work a shift at the bellows and anvil?", "worked", "work_forge", "!worked_forge_today"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "odo_start";
+            T.assay = cv("odo", "Copper and lead washed in thin silver! It was struck from a stolen royal die with a cracked cross. The coiners work out of the Overgrown Border Redoubt north of here.", [cvo("(Back)", "start")]);
+            T.keg = cv("odo", "Rusk spring-steel packed in salt! That will temper into blades that won't notch on a shield rim. Take your eighty marks and my thanks, Rowan.", [cvo("(Back)", "start")]);
+            T.iron = cv("odo", "Dunhollow smelts the bog-ore, and the Crown taxes every cartload at King's Bridge. Meanwhile the bailiff requisitions horseshoes and billhooks on wooden tallies.", [cvo("How do you keep the furnace lit?", "iron2"), cvo("(Back)", "start")]);
+            T.iron2 = cv("odo", "By melting down broken plowshares and buying bar-iron wherever a quiet boat lands. A smith serves the tools that feed the parish.", [cvo("(Back)", "start")]);
+            T.iron2.enter = "note_iron_assize";
+            T.repaired = cv("odo", "Edge honed true and straps riveted tight. Treat your steel well and it won't fail you in the ditch.", [cvo("(Back)", "start")]);
+            T.odo_poor = cv("odo", "Charcoal costs silver, Rowan. Four marks when you have them.", [cvo("(Back)", "start")]);
+            T.worked = cv("odo", "You swing a steady hammer! Three dozen horseshoe nails and two militia bills drawn out clean. Here is your fourteen marks, and I touched up your blade.", []);
+            break;
+
+        // ================= FARMER GILES =================
+        case "giles":
+            T.start = cv("giles", "", [
+                cvo("What's wrong? You look worried.", "sow", "giles_start_pig", "!giles_sow_asked&!giles_sow_done"),
+                cvo("Clover was in Mallow's turnips. I brought her home.", "sow_done", "giles_finish_pig", "mallow_clover_found&!giles_sow_done"),
+                cvo("How does the royal grain assize hit your farm?", "assize"),
+                cvo("Do you need a hand scything and threshing today?", "worked", "work_farm", "!worked_farm_today"),
+                cvo("(Something else.)", "", "legacy"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "giles_start";
+            T.sow = cv("giles", "My prized sow Clover broke out before dawn! Check behind Old Mallow's barn across the brook before some hungry company puts her in a pot.", [cvo("(Back)", "start")]);
+            T.sow_done = cv("giles", "Clover, my girl! I'll mend the wattle fence today so Mallow stops scowling. Take these forty-five marks and a wheel of farm cheese, Rowan!", [cvo("(Back)", "start")]);
+            T.assize = cv("giles", "King Aldous's assize caps wheat at eighteen marks in the market so the towns don't riot. Sounds fair, until the bailiff takes our seed corn on credit.", [cvo("Who profits from that?", "assize2"), cvo("(Back)", "start")]);
+            T.assize2 = cv("giles", "Oakhaven factors who buy upriver before harvest, and smugglers who sell after dark. The man who guides the plow gets the chaff.", [cvo("(Back)", "start")]);
+            T.worked = cv("giles", "Honest sweat in the barley rows! You bound twenty sheaves before sundown. Here is eight marks and a warm loaf for your pack.", []);
+            break;
+
+        // ================= SIR BALIN =================
+        case "balin":
+            T.start = cv("balin", "", [
+                cvo("Why are you nursing that knee so grimly?", "boast", "balin_start_vow", "!balin_vow_taken&!balin_vow_done"),
+                cvo("Mercenary Grim accepted my word as your second.", "boast_done", "balin_finish_vow", "grim_vow_settled&!balin_vow_done"),
+                cvo("Tell me about the old knights and the hired companies.", "knights"),
+                cvo("Share a mug of spiced cider. (2G)", "drink", "balin_drink"),
+                cvo("(Something else.)", "", "legacy"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "balin_start";
+            T.boast = cv("balin", "After three cups last night I boasted I could best any mercenary on the south road! Now my left knee is swollen like a turnip, and Barrow Mercenary Grim waits at the crossing. Stand as my second!", [cvo("(Back)", "start")]);
+            T.boast_done = cv("balin", "Grim took your word under the code of steel? You saved an old man's name from the tavern mud! Take these sixty marks, my friend.", [cvo("(Back)", "start")]);
+            T.knights = cv("balin", "In my father's day a knight held land for forty days' service and knew his tenants by name. Now the Crown hires forty-day companies with coin wrung from empty towers.", [cvo("And when the coin runs out?", "knights2"), cvo("(Back)", "start")]);
+            T.knights2 = cv("balin", "Then the company pays itself from the nearest barn. Keep your word clean, Rowan; a man-at-arms with a good name is rarer than plate armor.", [cvo("(Back)", "start")]);
+            T.drink = cv("balin", "To dry roads and honest steel! If you ever face a poleaxe in the barrows, watch the back-swing before you step in.", [cvo("(Back)", "start")]);
+            T.balin_poor = cv("balin", "Keep your coppers, lad. My purse is thin today too.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= BROTHER DUNSTAN =================
+        case "dunstan":
+            T.start = cv("dunstan", "", [
+                cvo("Bind my wounds with abbey salve. (5G)", "healed", "dunstan_heal"),
+                cvo("Kneel in quiet prayer by the altar.", "prayed", "dunstan_pray", "!prayed_today"),
+                cvo("Tell me about the Common Observance and the Witness.", "faith"),
+                cvo("How are the families from the western march faring?", "refugees"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "dunstan_start";
+            T.healed = cv("dunstan", "Yarrow, honey, and clean linen. Your cuts are bound and your fever is cooled. Try not to catch every iron point you meet on the road.", [cvo("(Back)", "start")]);
+            T.dunstan_poor = cv("dunstan", "The salve jars cost silver I must spend on barley for the poor. Kneel and rest a while instead, my friend.", [cvo("(Back)", "start")]);
+            T.prayed = cv("dunstan", "You kneel in the cool stone quiet while the altar candles flicker. Your breathing steadies and your limbs feel lighter.", [cvo("(Back)", "start")]);
+            T.faith = cv("dunstan", "We keep the Common Observance here: no grand prelates, only the roll of the dead and the oaths sworn before neighbors. What a man promises before witnesses, the Witness remembers.", [cvo("Why keep the meadow rolls in the chest?", "faith2"), cvo("(Back)", "start")]);
+            T.faith2 = cv("dunstan", "Because lords forget what their grandfathers granted when war comes. Parchment in a locked oak chest outlives three kings.", [cvo("(Back)", "start")]);
+            T.refugees = cv("dunstan", "They sleep on straw by the south wall and share our barley broth. Every cart seized on the road puts another hungry child at the chapel door.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= MARGERY =================
+        case "margery":
+            T.start = cv("margery", "", [
+                cvo("Sing a verse of the Truce of Ryehaven. (2G)", "song", "margery_song"),
+                cvo("Who has been losing silver at the tables?", "gossip"),
+                cvo("What do the commons make of the three claimants?", "factions"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "margery_start";
+            T.song = cv("margery", "She plucks a gentle chord and sings of the drovers coming home through the autumn rain. The hearth warmth settles into your bones.", [cvo("(Back)", "start")]);
+            T.margery_poor = cv("margery", "No silver? Then hum along for free, love; I don't tax the broke.", [cvo("(Back)", "start")]);
+            T.gossip = cv("margery", "Poor Scribe Pippin lost forty marks to Wulf at Crown & Bones. Wulf's dice have a habit of rolling crowns whenever the candle gutters.", [cvo("Can Wulf be reasoned with?", "gossip2"), cvo("(Back)", "start")]);
+            T.gossip2 = cv("margery", "Wulf loves silver more than cruelty. Beat him at his own board or offer him twenty-five marks cash, and he'll hand over the clerk's note.", [cvo("(Back)", "start")]);
+            T.factions = cv("margery", "The King sends bailiffs with wax seals, Lady Vivienne sends factors with debt ledgers, and Castellan Morvath sends men with iron picks. None of them tip the minstrel.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= WULF THE SMUGGLER =================
+        case "wulf":
+            T.start = cv("wulf", "", [
+                cvo("Play a round of Crown & Bones.", "", "dice_play"),
+                cvo("About Scribe Pippin's forty-mark dice debt.", "debt", "", "!wulf_debt_paid"),
+                cvo("What moves along the river after dark?", "smuggle"),
+                cvo("Sell a sack of wheat off the books. (+24G)", "black_market", "wulf_black_market", "has_cargo"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "wulf_start";
+            T.debt = cv("wulf", "That ink-stained clerk wagered forty marks he didn't have. His note is in my vest. You here to win it back over the cup, or buy him out?", [
+                cvo("I'll buy back his note for twenty-five cash. (25G)", "debt_bought", "wulf_buy_debt"),
+                cvo("We'll settle it over the dice cup.", "", "dice_play"),
+                cvo("(Back)", "start")
+            ]);
+            T.debt_bought = cv("wulf", "Twenty-five in hard silver beats forty on a clerk's promise. Take his slip and tell him to stick to psalters.", [cvo("(Back)", "start")]);
+            T.wulf_poor = cv("wulf", "Come back when your purse clinks, friend. Or roll the bones.", [cvo("(Back)", "start")]);
+            T.smuggle = cv("wulf", "Whatever the King's assize makes too cheap to sell in daylight! When the Crown caps wheat at eighteen marks, a night boat to the fen pays twenty-four.", [cvo("Isn't the bailiff watching Red Sike?", "smuggle2"), cvo("(Back)", "start")]);
+            T.smuggle2 = cv("wulf", "Sir Guy has twelve hungry men and three miles of riverbank. A man who knows the reed beds can float ten sacks past his nose before moonrise.", [cvo("(Back)", "start")]);
+            T.black_market = cv("wulf", "One sack slipped under the oilcloth, twenty-four marks in your palm. Don't mention my name to the bailiff.", [cvo("(Back)", "start")]);
+            T.wulf_no_wheat = cv("wulf", "You've no wheat in your pack to sell me, friend. Come back with grain.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= MILITIA GUARD DONALD =================
+        case "donald":
+            T.start = cv("donald", "", [
+                cvo("How are the roads out of Stonecross?", "roads"),
+                cvo("Can I stand a watch shift at the gatehouse?", "watched", "work_watch", "!worked_watch_today"),
+                cvo("Let me practice at the militia archery butts.", "", "archery_play"),
+                cvo("Why are the bailiff's men stopping carts?", "tolls"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "donald_start";
+            T.roads = cv("donald", "Follow the paved highroad south for King's Bridge and the western watchtower. East across the brook leads to Giles's steading, the chapel, and the watermill.", [cvo("And the old barrows?", "roads2"), cvo("(Back)", "start")]);
+            T.roads2 = cv("donald", "South-east past the river landing. Renegades from broken companies camp among the mounds. Don't walk that track after dusk without iron in your hand.", [cvo("(Back)", "start")]);
+            T.watched = cv("donald", "A quiet turn on the gatehouse wall! You checked three late timber carts and kept the peace till the watch bell. Here is your ten marks.", []);
+            T.tolls = cv("donald", "Emergency customs under the King's seal. A man on foot with a knapsack passes free, but any mule train or wagon pays five marks at the bridge.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= PEDDLER CORIN =================
+        case "corin":
+            T.start = cv("corin", "", [
+                cvo("Show me what you're buying and selling.", "", "trade_open"),
+                cvo("You mentioned a crooked silver groat?", "coin", "corin_start_coin", "!corin_coin_taken"),
+                cvo("Can I get a pack mule or cart for heavier loads?", "transport"),
+                cvo("Do you have a cartage consignment that needs hauling?", "cartage", "work_cartage", "!worked_cartage_today"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "corin_start";
+            T.coin = cv("corin", "A tinker passed me three groats that feel light as tin and carry a blurred crown. Take this one to Master Odo's anvil and see what metal is inside!", [cvo("(Back)", "start")]);
+            T.transport = cv("corin", "A man on foot can only haul three sacks in his pack. Buy a pack mule from my string to carry ten sacks, or lease a carter's wagon for thirty.", [
+                cvo("Buy a sturdy pack mule (10 sacks). (60G)", "mule_bought", "buy_mule", "!has_mule&!has_wagon"),
+                cvo("Lease a carter's wagon (30 sacks). (140G)", "wagon_bought", "buy_wagon", "!has_wagon"),
+                cvo("(Back)", "start")
+            ]);
+            T.mule_bought = cv("corin", "She's steady on the bridges and knows the road! You can haul ten sacks now, though she'll want oats on long journeys.", [cvo("(Back)", "start")]);
+            T.wagon_bought = cv("corin", "Iron-rimmed wheels and a waxed canvas tarp! You can haul thirty sacks across the vale now.", [cvo("(Back)", "start")]);
+            T.corin_poor = cv("corin", "Mules and timber wagons don't come cheap in wartime, Rowan. Save up your silver first.", [cvo("(Back)", "start")]);
+            T.cartage = cv("corin", "You helped my drovers haul salted pike crates up from the river landing and tally the manifest. Here is eighteen marks for your back!", []);
+            break;
+
+        // ================= BARKEEP BARNABY =================
+        case "barnaby":
+            T.start = cv("barnaby", "", [
+                cvo("Pour a mug of spiced cider and hot mutton stew. (4G)", "stew", "barnaby_meal"),
+                cvo("What are the drovers saying at the bar?", "banter"),
+                cvo("Who are the regulars in the taproom?", "patrons"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "barnaby_start";
+            T.stew = cv("barnaby", "Thick barley, hot mutton broth, and a mug of spiced cider. That will keep the autumn chill out of your ribs!", [cvo("(Back)", "start")]);
+            T.barnaby_poor = cv("barnaby", "Four groats for stew and cider, friend. Speak to Hawise if you only want the bench.", [cvo("(Back)", "start")]);
+            T.banter = cv("barnaby", "Carters say the River League doubled the water-tax at Oakhaven, while Castellan Morvath's men took all the charcoal wagons from the hills.", [cvo("And here in Stonecross?", "banter2"), cvo("(Back)", "start")]);
+            T.banter2 = cv("barnaby", "Everyone watches the Red Sike landing and waits to see whether the bailiff or the factors blink first.", [cvo("(Back)", "start")]);
+            T.patrons = cv("barnaby", "Hawise keeps the rooms and the house book. Sir Balin nurses his knee in the corner, Margery sings by the hearth, and Wulf rattles his bone dice.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= FACTOR MALO =================
+        case "malo":
+            T.start = cv("malo", "", [
+                cvo("You have a heavy keg that needs moving?", "keg", "malo_start_keg", "!malo_keg_taken"),
+                cvo("Why smuggle Rusk steel in brine kegs?", "steel"),
+                cvo("Do you have work gathering river herbs and grinding meal?", "foraged", "work_forage", "!worked_forage_today"),
+                cvo("(Something else.)", "", "legacy"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "malo_start";
+            T.keg = cv("malo", "The bailiff's men search every cart at King's Bridge! Haul this brine keg of Rusk spring-steel to Master Odo's anvil in the forge and he'll pay you well.", [cvo("(Back)", "start")]);
+            T.steel = cv("malo", "Crown customs call Dunhollow bar-steel contraband unless it goes to the royal armory. Yet Stonecross smiths need good edges for scythes and axes.", [cvo("So the River League moves it?", "steel2"), cvo("(Back)", "start")]);
+            T.steel2 = cv("malo", "For a fair commission. Ballast under salted herring barrels never draws a second glance from a sleepy tollman.", [cvo("(Back)", "start")]);
+            T.foraged = cv("malo", "You gathered willow bark along the weir and helped turn the millstone hopper till dusk. Here is twelve marks for the apothecary sacks.", []);
+            break;
+
+        // ================= FOREMAN BRAND =================
+        case "brand":
+            T.start = cv("brand", "", [
+                cvo("What's this trouble over a tapped wine cask?", "cask", "brand_start_wine", "!brand_pardon_asked&!brand_wine_done"),
+                cvo("I brought Sapper Vane's signed overtime pardon writ.", "cask_done", "brand_finish_wine", "vane_writ_given&!brand_wine_done"),
+                cvo("Tell me about the masons and Castellan Morvath.", "masons"),
+                cvo("(Something else.)", "", "legacy"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "brand_start";
+            T.cask = cv("brand", "We finished the eastern river bridge three days early and tapped a reserve cask to toast the keystone! Seek Sapper Vane at the barrow pass for a military overtime writ before the bailiffs flog us!", [cvo("(Back)", "start")]);
+            T.cask_done = cv("brand", "Signed by Sapper Vane under military requisition! Not a bailiff in the shire can touch my masons now. Take these fifty-five marks, friend!", [cvo("(Back)", "start")]);
+            T.masons = cv("brand", "Every lord wants bridges strong enough for siege wagons, and none of them wants to pay the quarrymen when the mortar dries.", [cvo("Does Morvath pay better?", "masons2"), cvo("(Back)", "start")]);
+            T.masons2 = cv("brand", "He pays in iron script and salt pork, which is better than royal tallies, though his discipline is hard as granite.", [cvo("(Back)", "start")]);
+            break;
+
+        // ================= BARROW MERCENARY GRIM =================
+        case "grim":
+            T.start = cv("grim", "", [
+                cvo("I stand as Sir Balin's second for his tavern boast.", "vow", "grim_settle_vow", "balin_vow_taken&!grim_vow_settled"),
+                cvo("What brings a sellsword to the barrow road?", "barrows"),
+                cvo("Join me in tracking wild boar along the fen.", "hunted", "work_hunt", "!worked_hunt_today"),
+                cvo("(Something else.)", "", "legacy"),
+                cvo("(Leave)", "")
+            ]);
+            T.start.tx = "grim_start";
+            T.vow = cv("grim", "Balin sent a seasoned man-at-arms to answer his boast? That satisfies the code of steel. Tell the old knight his honor is clear.", [cvo("(Back)", "start")]);
+            T.barrows = cv("grim", "Unpaid men from the spring muster have turned renegade among the burial mounds. Travellers who leave the highroad after sundown rarely come back with their boots.", [cvo("Why haven't the bailiffs cleared them?", "barrows2"), cvo("(Back)", "start")]);
+            T.barrows2 = cv("grim", "Because Sir Guy has twelve men and a grain barge to guard. In this vale, if you want a road safe, you clear it yourself.", [cvo("(Back)", "start")]);
+            T.hunted = cv("grim", "Clean tracking through the fen reeds! We dressed a heavy tusker and sold the hide and saltedflitch to the drovers. Fifteen marks for your share.", []);
             break;
 
         // ================= OSWIN TARR =================
