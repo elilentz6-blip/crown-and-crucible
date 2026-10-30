@@ -137,7 +137,7 @@ function chron_qa_step() {
         case 520: chron_qa_last_page(); break;
         case 525: screen_save("chron_10_jory.png"); chron_qa_choose("What's the cargo"); break;
         case 540: chron_qa_close(); break;
-        case 555: chron_qa_talk("BAILIFF_GUY", 34, 0); // the river runs below his post break;
+        case 555: chron_qa_talk("BAILIFF_GUY", 34, 0); break; // the river runs below his post
         case 590: chron_qa_last_page(); break;
         case 595: screen_save("chron_11_guy_barge.png"); chron_qa_close(); break;
         case 610:
