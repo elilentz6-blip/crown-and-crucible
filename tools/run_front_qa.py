@@ -11,6 +11,7 @@ app control is needed.
 import argparse
 import hashlib
 import os
+import plistlib
 from pathlib import Path
 import shutil
 import subprocess
@@ -35,8 +36,10 @@ def main():
     args = parser.parse_args()
     if args.app:
         runner, game = args.app / 'Contents/MacOS/Mac_Runner', []
-        support = args.app.name
+        with (args.app / 'Contents/Info.plist').open('rb') as plist:
+            support = plistlib.load(plist)['CFBundleIdentifier']
     else:
+        support = 'com.yoyogames.macyoyorunner'
         build = args.build.expanduser().resolve()
         for name in ['game.ios', 'options.ini', 'splash.png']:
             if not (build / name).is_file():
@@ -51,7 +54,7 @@ def main():
         if args.only and scenario not in args.only:
             continue
         home = root / home_key
-        data = home / 'Library/Application Support/com.yoyogames.macyoyorunner'
+        data = home / 'Library/Application Support' / support
         data.mkdir(parents=True, exist_ok=True)
         if seed == 'old':
             shutil.copy(args.old_save, data / SAVE)

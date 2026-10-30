@@ -169,3 +169,10 @@ Treat the historical bare-runner crash as a known prohibited launch procedure: `
 3. Reproduce visual contradictions and external map/dice reports with their owners.
 4. Audit exploit/duplicate-reward and corrupted-save paths independently.
 5. Improve loading text, accessibility and performance after measurement.
+
+## Update 30 Oct 2026 (Claude): native verification of the front end
+Merged to main as `2397841`, then completed on `claude/project-thread-londvg`. Native packaging, splash -> title ->
+New game/Continue -> loading -> Stonecross, pause/resume, save/continue, return to menu, settings, quit, relaunch,
+old-save and corrupt-save handling, doors and input-leakage checks all ran natively and passed (see
+`tools/run_front_qa.py`). The "no native smoke" caveat above is closed. Open: Igor exits 1 only because there is no
+Developer ID signing identity (the game still compiles and packages); controller/touch input is not covered.

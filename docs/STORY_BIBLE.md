@@ -535,3 +535,9 @@ silently included or owned by Codex. The live board was read but its mutation wa
 environment; pending claims/status/messages are written in the handoff, not falsely marked sent.
 Argon must independently audit, establish authorized claims and preserve Claude/Gemini work.
 Theology and Rule 13 remain open; no new lore approval or merge/publication authority is granted.
+
+## 19 · Front end and house style — 30 October 2026
+The splash, title, loading and pause screens now share the in-game look: the gilded panels, keycaps, dividers and
+bitmap fonts of the game's own screens, with the painted Greenmere, Oakhaven and Dunhollow scenes pixelated to the
+world's grid. Loading and tip text are unchanged canon-safe copy. Settings affect presentation only (volume, window,
+screen shake, text speed); no story state is touched, and Return to main menu never alters a saved journey.

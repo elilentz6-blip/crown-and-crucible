@@ -712,3 +712,21 @@ silently included or owned by Codex. The live board was read but its mutation wa
 environment; pending claims/status/messages are written in the handoff, not falsely marked sent.
 Argon must independently audit, establish authorized claims and preserve Claude/Gemini work.
 Theology and Rule 13 remain open; no new lore approval or merge/publication authority is granted.
+
+## Front end integration, native verification and house style — 30 October 2026 (Claude)
+The Codex front end (`scr_frontend`, six branding sprites, hooks in `obj_game` Step/Draw GUI and `obj_vis_renderer`
+Create/Draw GUI/Draw 75, `vis_step` pause guard) reached main in merge `2397841`. This pass finished and verified it
+natively; nothing was recopied.
+- **Added:** Settings (volume, fullscreen, screen shake, text speed Normal/Fast/Instant) stored in their own
+  `settings_crown_and_crucible.json`, never in the journey save; pause menu gains Settings and Return to main menu;
+  Quit during a journey and Return to main menu both ask first. Return to main menu and the pause-menu Load restart the
+  runner's game (`frontend_restart`, `global.frontend_boot`) so no session state survives; a save that cannot be read is
+  refused before restarting, and the session is kept.
+- **House style:** menus now use the game's own `ui_kit` (gilded panel, keycaps, divider, next-arrow, bitmap fonts) and
+  the painted brand/loading art is pixelated onto the world's pixel grid (`frontend_pixelate`).
+- **Native QA:** `CC_FRONT_QA=<scenario>` runs `scr_frontend_qa` (keyboard_key_press, real input path) in the unmodified
+  boot; `tools/run_front_qa.py` runs seven scenarios (first, relaunch, oldsave, corrupt, door, systems, fullscreen) in
+  throwaway HOMEs, against either a built `game.ios` or the packaged `.app`, and asserts the player's save is untouched.
+  Result: 270 checks, 0 failures, on both.
+- **Known:** `tests/m3_integration.test.cjs` (Gemini, uncommitted) fails on retinue Parley; unrelated. Real-save
+  "vis" state differs after a menu restart by design (clocks and particles).
