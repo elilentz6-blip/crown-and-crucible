@@ -411,6 +411,8 @@ Grounded reuse is possible only with a clear status and function: an attributed 
 - [Master Design & Technical Dossier — read-only reference](https://docs.google.com/document/d/1ulsREbm3-9J14xsvC9Wwun1GTXEgl1USZ-PM1WRiXkY)
 Useful native paths: objects/obj_game/Create_0.gml and Step_0.gml; scripts/scr_combat_controller; scripts/scr_weapon_minigames; scripts/scr_equipment_cards; scripts/scr_world_simulation; scripts/scr_living_world; scripts/scr_feudal_hierarchy; scripts/scr_feudal_warfare; scripts/scr_knight_contracts; scripts/scr_retinue*. The HTML proof of concept is not native implementation evidence.
 
+**Presentation note (Phase 5, 2026-10-30):** the realm map (M) and the "News from the road" toasts add no canon. The map's place names come from the existing layout, and it never shows quest markers. War headlines that were previously spoken by whichever NPC stood nearby are now unattributed news.
+
 ## 16 · Open creative decisions
 
 OPEN DECISION — Economic organization (Rule 13). No model has been chosen. Reserve taxation, land and labor arrangements, currency, guild powers, property structures, and the relationship between markets and political privilege for owner approval.

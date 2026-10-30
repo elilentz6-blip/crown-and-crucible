@@ -147,3 +147,5 @@ else if (global.game_mode == "CONVERSATION") {
 else if (global.game_mode == "NOTEBOOK") {
     notebook_draw();
 }
+
+ui_screens_close_fx();

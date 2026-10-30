@@ -293,6 +293,7 @@ function vis_draw_gui() {
         draw_sprite_stretched_ext(spr_fx_vignette, 0, 0, 0, VIS_GUI_W, VIS_GUI_H, c_white, 0.55 + V.light_k * 0.35);
     }
     if (_mode == "CONVERSATION") { ui_hud_draw(_g); vis_draw_fade(); return; }   // the conversation draws itself (Draw GUI)
+    if (_mode == "MAP") vis_map_draw();
     if (_mode != "OVERWORLD") { vis_draw_fade(); return; }
 
     vis_draw_world_labels();
@@ -334,7 +335,7 @@ function vis_draw_gui() {
     if (_ha > 0.01) {
         draw_set_alpha(_ha);
         var _hx = VIS_GUI_W - 14, _hy = VIS_GUI_H - 34;
-        var _items = [["- =", "Zoom"], ["R", "Weather"], ["T", "Time"], ["K", "Save"], ["B", "Contracts"], ["J", "Notes"], ["Q", "Journal"], ["C", "Armory"], ["Z", "Interact"], ["WASD", "Move"]];
+        var _items = [["- =", "Zoom"], ["R", "Weather"], ["T", "Time"], ["K", "Save"], ["M", "Map"], ["B", "Contracts"], ["J", "Notes"], ["Q", "Journal"], ["C", "Armory"], ["Z", "Interact"], ["WASD", "Move"]];
         for (var _i = 0; _i < array_length(_items); _i++) {
             var _lab = _items[_i][1], _key = _items[_i][0];
             var _lw = ui_text_width(_lab, "small");

@@ -14,6 +14,7 @@
 ///
 /// INTER-MODULE INTERFACES:
 ///   - vis_draw_world() in scr_vis_world, scr_vis_draw.
-if (global.game_mode == "OVERWORLD" || global.game_mode == "EQUIPMENT" || global.game_mode == "CONVERSATION") {
+if (global.game_mode == "OVERWORLD" || global.game_mode == "EQUIPMENT" || global.game_mode == "CONVERSATION" || global.game_mode == "MAP"
+    || global.game_mode == "QUEST_LOG" || global.game_mode == "CONTRACTS" || global.game_mode == "TRADE_MENU") {
     vis_draw_world();
 }

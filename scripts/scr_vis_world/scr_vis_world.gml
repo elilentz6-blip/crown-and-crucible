@@ -238,7 +238,7 @@ function vis_screens_step(_dt) {
     var V = global.vis;
     if (!V.screens || !instance_exists(obj_game)) return;
     static _stops = [
-        "overworld", "armory", "quest_log", "contracts", "trade", "dice", "archery",
+        "overworld", "map", "armory", "quest_log", "contracts", "trade", "dice", "archery",
         "battle_menu", "fight_SWORD", "fight_GREATSWORD", "fight_DAGGER", "fight_BOW", "fight_SPEAR",
         "dodge_highwayman", "dodge_boar", "dodge_shade",
         "trans_battle", "feel_quest", "feel_rewards", "feel_save",
@@ -259,6 +259,7 @@ function vis_screens_step(_dt) {
                 case "quest_log": global.game_mode = "QUEST_LOG"; break;
                 case "contracts": global.game_mode = "CONTRACTS"; break;
                 case "trade": global.game_mode = "TRADE_MENU"; break;
+                case "map": global.game_mode = "MAP"; global.vis.map_t = 1; break;
                 case "dice": cc_dice_start(1); break;
                 case "archery": cc_archery_start(); break;
                 case "battle_menu": cc_battle_open(roaming_foes[0]); break;
@@ -771,6 +772,7 @@ function vis_step() {
     V.hint_t += _dt;
     vis_tour_step(_dt);
     vis_screens_step(_dt);
+    if (instance_exists(obj_game)) vis_map_step();
     if (instance_exists(obj_game)) vis_feel_step(_dt);
     if (V.snap) {
         // presses Space twice (finish typing, then close) to check the welcome box really closes
@@ -912,6 +914,13 @@ function vis_dialogue_step(_dt) {
     var _len = string_length(D.shown);
     var _visible = D.alpha > 0.5 && D.timer < 2.6 + _len * 0.045;
     var _show = (_txt != D.text) && !_idle;
+    // war news is written to the dialogue field but nobody nearby is saying it: present it as news
+    if (_show && string_pos("[WAR CHRONICLE]", _txt) > 0) {
+        var _news = string_replace(string_replace(_txt, "* ", ""), "[WAR CHRONICLE] ", "");
+        var _cut = string_pos(" (", _news);
+        vis_toast("war", "News from the road", (_cut > 0) ? string_copy(_news, 1, _cut - 1) : _news);
+        _show = false;
+    }
     if (global.game_mode == "OVERWORLD" && !_show) {
         var _z = keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
         if (_z) {

@@ -161,7 +161,7 @@ function vis_feel_step(_dt) {
 
 /// True for gameplay floating text that the feel layer shows another way.
 function vis_feel_hides_float(_text) {
-    return string_pos("STATE SAVED", _text) > 0 || string_pos("STATE LOADED", _text) > 0 || string_pos("LEVEL UP", _text) > 0;
+    return string_pos("STATE SAVED", _text) > 0 || string_pos("STATE LOADED", _text) > 0 || string_pos("LEVEL UP", _text) > 0 || string_pos("[WAR DISPATCH]", _text) > 0;
 }
 
 function vis_ease_out(_k) { _k = clamp(_k, 0, 1); return 1 - power(1 - _k, 3); }
@@ -179,6 +179,7 @@ function vis_feel_draw_top() {
         var _a = clamp(min(_t / 0.25, (2.8 - _t) / 0.35), 0, 1);
         var _sl = round((1 - vis_ease_out(_t / 0.3)) * -28);
         var _sub = vis_glyph_safe(_to.sub);
+        while (ui_text_width(_sub, "small") > VIS_GUI_W - 240 && string_length(_sub) > 8) _sub = string_copy(_sub, 1, string_length(_sub) - 4) + "..";
         var _tw = max(ui_text_width(_to.title, "title") * 2, ui_text_width(_sub, "small")) + 120;
         var _bx = round(W / 2 - _tw / 2), _by = 22 + _sl;
         var _icon = UI_ICON_SCROLL, _col = UI_COL_PARCHMENT;

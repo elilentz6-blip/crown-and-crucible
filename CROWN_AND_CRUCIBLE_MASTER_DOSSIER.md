@@ -488,6 +488,9 @@ These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the p
 
 ---
 
+### XI-A. Phase 5 presentation pass (2026-10-30)
+Every GUI screen now uses the UI kit: `ui_screens` (armory, journal, ledger, trade), `ui_minigame_screens` + `spr_mg_*` (dice, archery), `scr_combat_render` + `spr_cbt_*` (battle). New: `scr_vis_feel` (transitions, toasts, HUD counters), `scr_vis_map` + `spr_map_*` (realm map on **M**, game mode `MAP`, places only, no quest markers), eight unique NPC sprites. Dev capture: `CC_VIS_SCREENS=1` or a name filter such as `fight`. Found, replaced and remaining: `docs/PHASE5_VISUAL_AUDIT.md`. Checked through headless captures; a by-hand playthrough at speed is still outstanding.
+
 ## XII. Verification, Bug Registry & Technical Debt
 
 ### 12.1 Four-Tier Verification Summary
@@ -526,6 +529,7 @@ To ensure flawless multi-agent coordination without race conditions, strict file
 ## XIV. Future Development Roadmap
 
 ### Phase 5: Visual Presentation & UI Kit Integration
+Done 2026-10-30, see XI-A; open items are in `docs/PHASE5_VISUAL_AUDIT.md` section 4.
 1. Wire `scripts/ui_equipment/ui_equipment.gml` into `scripts/ui_screens/ui_screens.gml`.
 2. Replace flat-box battle HUD, trade menus, and quest logs with `ui_kit` nine-slice panels and typography.
 3. Replace primitive vector battle silhouettes (`spr_foe_*`) with full animated character sprites.

@@ -2124,6 +2124,24 @@
         "name": "spr_portrait_piers",
         "path": "sprites/spr_portrait_piers/spr_portrait_piers.yy"
       }
+    },
+    {
+      "id": {
+        "name": "spr_map_glyphs",
+        "path": "sprites/spr_map_glyphs/spr_map_glyphs.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_map_compass",
+        "path": "sprites/spr_map_compass/spr_map_compass.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "scr_vis_map",
+        "path": "scripts/scr_vis_map/scr_vis_map.yy"
+      }
     }
   ],
   "resourceType": "GMProject",

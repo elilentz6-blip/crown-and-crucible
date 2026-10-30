@@ -10,6 +10,10 @@ are the existing tour images in `art_src/screenshots/`.
 Status key: **OPEN** (found, not yet replaced), **WIP** (a thread is on it), **DONE** (replaced and
 verified in a build), **KEEP** (left on purpose, with the reason).
 
+> **Status 2026-10-30:** the rows in section 1 below are the audit as found on 2026-10-29. Each one is
+> resolved in section 3 or still listed in section 4. Side-by-side comparison:
+> `art_src/screenshots/phase5/before_after.png`. After-shots: `art_src/screenshots/phase5/after/`.
+
 ## 1. Found
 
 ### 1.1 Screens drawn with flat rectangles and the default font
@@ -80,14 +84,43 @@ Hooks already in place (lead, 2026-10-29): `obj_game/Draw_64.gml` now calls `ui_
 function, so the game is unchanged until a thread replaces the body.
 
 ## 3. Replaced
-(filled in as threads finish)
+Verified in a native Igor build with `CC_VIS_SCREENS=1` (no runtime errors) on 2026-10-30.
+
+| Found | Now | Where |
+|---|---|---|
+| Armory, journal, contract ledger, trade: flat boxes, default font, overflow, emoji | Rebuilt on the UI kit with item and goods icons, card art in sockets, keycap hints, open and close animation. Menus now sit over the dimmed town instead of black. | `ui_screens`, `ui_equipment`, `art_src/ui` |
+| Dice: green rectangle, white squares, "6" for a crown | Illustrated tavern table, dice sprites, opponent portrait, stake chips | `ui_minigame_screens`, `art_src/minigames` |
+| Archery: colour bands, circle on a line | Painted range with butts and treeline, bow and hands in the foreground, quiver, score card | same |
+| Battle: black screen, blob foes, primitive buttons | Painted backdrops by area, finished hero and foe sprites, kit panels and bars, illustrated weapon minigames, themed attack patterns | `scr_combat_render`, `art_src/combat` |
+| `spr_foe_*` in battle | Replaced by the finished character art | `scr_combat_render` |
+| 8 NPCs drawn as Farmer Giles (Bailiff Guy, Lady Cecily, Sapper Vane, Refugee Mira, Old Mallow, Grim, Foreman Brand, Factor Malo) | Each has an original sprite sheet and portrait | `art_src/characters/defs`, `vis_char_key` |
+| Emoji in menu titles | Gone with the old screens; `vis_glyph_safe` also strips unsupported glyphs from floating text and toasts | `scr_vis_feel` |
+| No map or navigation screen (the brief lists one; the game had none) | **New realm map (M):** inked parchment baked from the live terrain and building layout, place names, compass, hero banner. Places only, no quest markers. | `scr_vis_map`, `art_src/world/map_art.py` |
+| Hard cuts into battle and menus | Gold slash and opening blinds into battle, fades for menus | `scr_vis_feel` |
+| Save and load as a floating line | "Game saved" / "Game loaded" toasts | `scr_vis_feel` |
+| Rewards as plain floating text | Rolling gold with a +N delta, HP damage trail and heal flash, XP bar, level-up and quest toasts, medallion pulse, chest glints, footstep dust, a puff when a foe returns | `scr_vis_feel`, `ui_hud` |
+| War news spoken by whichever NPC stood nearby, plus an overflowing floating line | "News from the road" toast | `vis_dialogue_step`, `scr_vis_feel` |
+| Key bar missing Journal, Contracts, Save | Added, along with Map | `scr_vis_draw` |
+| Magic portal art | Replaced by the Overgrown Border Redoubt (Gemini, c988274) | layout |
 
 ## 4. Remaining
-(filled in at the end)
+| Item | Why it matters | Status |
+|---|---|---|
+| **Not playtested at speed by a person.** Everything above was checked from headless captures of each screen, not by playing. The dice roll/hold/resolve flow and archery's stuck-arrow code were never run from real key presses. | Animation timing and feel are unverified | QA threads are on it |
+| Close-fade path for menus (`ui_screens_close_fx`) is now wired but not visually checked | Could look wrong on exit | Open |
+| Interiors: the forge is sparse, and the manor, weaver and six houses share one cottage room | "Empty buildings" is only partly solved | Open |
+| Environment art (buildings, terrain, water, vegetation) was reviewed but not redrawn in this phase; it already matched the target look | Brief asks to improve every environment | Partly done |
+| Barnaby and Lord Geoffrey borrow the Giles and Balin portraits in dice | Duplicate portraits | Open |
+| "Reconnaissance: Inspect Royal Checkpoint" truncates in the ledger list | Minor | Open |
+| Retinue screens were built by their own thread and not re-audited here | Consistency unverified | Open |
+| Old `cc_draw_*` screens and their emoji remain as dead code in Gemini's and ChatGPT's files | Harmless; owners should remove them | KEEP |
+| Legacy fallback renderer and `spr_hero_knight`, `spr_building_*` etc. | Unused while the renderer exists | KEEP |
+| Map shows the Stonecross vale only; other regions have no map data yet | Needs a region map when more regions are walkable | Open |
+| Pipeline note: run `gen_ui.py` before `build_all.py`, or the old 5 glyph returns. Add single characters with `art_src/characters/import_new.py` rather than a full `build_all`. | Prevents regressions | Note |
 
 ## How to capture
 `CC_VIS_SCREENS=1` in the runner environment opens, in order: overworld, armory, quest log,
-contracts, trade, dice, archery, battle menu, the five weapon minigames, and the three defence
-patterns; saves `screen_<n>_<name>.png` to
+contracts, trade, dice, archery, battle menu, the five weapon minigames, the three defence patterns,
+the battle transition and the reward toasts (a realm map stop comes right after the overworld); saves `screen_<n>_<name>.png` to
 `~/Library/Application Support/com.yoyogames.macyoyorunner/` and quits (about 40 s). Dev only;
 inert unless the variable is set. Code: `vis_screens_step` in `scr_vis_world`.
