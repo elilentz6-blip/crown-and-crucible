@@ -357,6 +357,8 @@ LOCKED CANON: organic exploration, minimal handholding after a short contextual 
 
 PLANNED SYSTEM: keep contextual control instructions concise and make journals serve discovered information rather than reveal undiscovered content. Military, commercial, agricultural, and personal ambitions remain valid design directions; agriculture and other careers must not be labeled implemented merely because the world depicts farms.
 
+WRITING NOTE (implemented): the conversation box shows three lines at a time and pages between sentences, so a page never ends on a stray word. A sentence longer than three lines is broken mid-sentence, so keep spoken sentences shorter than that. Rowan's notebook says how many entries are above or below the page, so nothing he has learned seems lost.
+
 ### Combat as an interface, not supernatural physics
 
 VERIFIED IMPLEMENTATION: FIGHT selects sword timing, greatsword charge-and-release, dagger cadence, bow aim/draw, or spear range; ACT, ITEM, MERCY, and enclosed projectile dodging are present in the native controller. The “Soul” is an interface abstraction for vulnerability, positioning, and attention—not a literal detached soul.

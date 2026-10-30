@@ -288,8 +288,9 @@ function ui_faction_name(_faction) {
 }
 
 /// Row of key hints. _entries = [[["W", "S"], "Browse"], [["Esc"], "Close", true]]; a third
-/// element true greys the label. Returns the total width; _draw = false only measures.
-function ui_key_hints(_x, _y, _entries, _col = UI_COL_INK_SOFT, _draw = true) {
+/// element true greys the label. Returns the total width; _draw = false only measures. _font sets the
+/// labels' style, e.g. "small_outline" over the world.
+function ui_key_hints(_x, _y, _entries, _col = UI_COL_INK_SOFT, _draw = true, _font = "small") {
     var _cx = _x;
     for (var _i = 0; _i < array_length(_entries); _i++) {
         var _e = _entries[_i];
@@ -300,7 +301,7 @@ function ui_key_hints(_x, _y, _entries, _col = UI_COL_INK_SOFT, _draw = true) {
             _cx += _kw + 3;
         }
         _cx += 4;
-        if (_draw) ui_text_draw(_cx, _y + 2, _e[1], "small", (array_length(_e) > 2 && _e[2]) ? UI_COL_MUTED : _col);
+        if (_draw) ui_text_draw(_cx, _y + 2, _e[1], _font, (array_length(_e) > 2 && _e[2]) ? UI_COL_MUTED : _col);
         _cx += ui_text_width(_e[1], "small");
         if (_i < array_length(_entries) - 1) _cx += 24;
     }

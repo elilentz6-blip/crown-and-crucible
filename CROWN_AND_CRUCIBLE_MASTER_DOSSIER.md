@@ -447,6 +447,9 @@ These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the p
 - **New modules:**
   - `scr_chronicle_core`: calendar, flags, notes, papers, rumours, news and schedule.
   - `scr_conversation`: modes `CONVERSATION` and `NOTEBOOK` (key **J**).
+    - Pages break between sentences.
+    - Key hints use the kit's key caps (`ui_key_hints`, which now takes a label font).
+    - The notebook counts entries hidden above or below.
   - `scr_greenmere`: people, places, events and the three situations.
   - `scr_war_clock`.
 - **Hooks in shared files:**

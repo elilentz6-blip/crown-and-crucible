@@ -98,6 +98,14 @@ At 100 the season ends with one of four provisional epilogues (settlement, crown
 - content integrity: every reply leads somewhere, every id is handled and every page fits the box;
 - the canon wording.
 
+**Readability follow-up (after the native screenshots on main 47f045c):**
+
+- Key hints in conversations and the notebook are drawn as key caps, because the small font's "Z" reads as "2".
+- Pages break between sentences.
+- The notebook says how many entries are hidden.
+- The QA play-through stands Rowan beside each person and waits a few frames before each screenshot, because `screen_save` captures the previous frame.
+- Still open: in the small font, "B" and "G" look alike and "(" looks like "<". That needs a font or glyph pass in art_src/fonts.
+
 ## 3. Provisional choices (easy to revise)
 
 - **War Clock numbers:**

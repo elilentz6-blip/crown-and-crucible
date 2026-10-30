@@ -5,7 +5,8 @@
 ///   With CC_CHRON_QA=1 the native runner plays through the Greenmere content on its own:
 ///   conversations, the notebook, the tower, the barge, the War Clock stages, a sleep, and an
 ///   in-memory save/load round trip (the player's save file is not written). It saves chron_*.png screenshots, logs "CHRON QA" lines (any failure
-///   reads "CHRON QA FAIL"), and quits. Without the variable it does nothing.
+///   reads "CHRON QA FAIL"), and quits. Each screenshot is taken a few frames after its page is
+///   shown in full, because screen_save captures the frame drawn before it. Without the variable it does nothing.
 ///
 /// STATE OWNERSHIP:
 ///   - None of its own; drives scr_greenmere / scr_conversation through their public functions.
@@ -54,7 +55,7 @@ function chron_qa_talk(_id) {
     for (var _i = 0; _i < array_length(_g.world_villagers); _i++) {
         var _v = _g.world_villagers[_i];
         if (_v.id == _id) {
-            obj_player.x = _v.x; obj_player.y = _v.y + 12;
+            obj_player.x = _v.x + 30; obj_player.y = _v.y; // beside them, not on top
             global.gm.legacy_skip = false;
             var _ok = gm_interact(obj_player.x, obj_player.y);
             chron_qa_log(_ok && global.game_mode == "CONVERSATION", "talk to " + _id);
@@ -110,17 +111,21 @@ function chron_qa_step() {
         case 150: chron_qa_last_page(); chron_qa_choose("I'll look into it"); chron_qa_log(chron_flag("maud_accepted"), "Maud's levy accepted"); break;
         case 160: chron_qa_close(); break;
         case 175: chron_qa_site("Ruined Watchtower"); break;
-        case 215: chron_qa_last_page(); screen_save("chron_04_tower.png"); chron_qa_log(chron_flag("tower_inspected"), "tower inspected"); break;
+        case 210: chron_qa_last_page(); break;
+        case 215: screen_save("chron_04_tower.png"); chron_qa_log(chron_flag("tower_inspected"), "tower inspected"); break;
         case 220: chron_qa_choose("Look at the roof"); break;
-        case 250: chron_qa_last_page(); screen_save("chron_05_tower_roof.png"); chron_qa_close(); break;
+        case 245: chron_qa_last_page(); break;
+        case 250: screen_save("chron_05_tower_roof.png"); chron_qa_close(); break;
         case 265: chron_qa_enter("chapel"); break;
         case 290: chron_qa_site("Chapel Book-Chest"); break;
-        case 320: chron_qa_last_page(); screen_save("chron_06_bookchest.png"); chron_qa_choose("Look at the bundle"); break;
+        case 315: chron_qa_last_page(); break;
+        case 320: screen_save("chron_06_bookchest.png"); chron_qa_choose("Look at the bundle"); break;
         case 330: chron_qa_close(); chron_qa_leave_inside(); break;
         case 345: chron_qa_talk("PIPPIN"); break;
         case 360: chron_qa_last_page(); chron_qa_choose("tower bundle"); break;
         case 375: chron_qa_last_page(); chron_qa_choose("Here's three"); chron_qa_log(chron_doc_has("settlement_copy"), "settlement copied"); break;
-        case 410: chron_qa_last_page(); screen_save("chron_07_pippin_copy.png"); chron_qa_close(); break;
+        case 405: chron_qa_last_page(); break;
+        case 410: screen_save("chron_07_pippin_copy.png"); chron_qa_close(); break;
         case 425: notebook_open(); break;
         case 450: screen_save("chron_08_notebook_learned.png"); global.convo.nb_tab = 1; break;
         case 470: screen_save("chron_09_notebook_papers.png"); global.convo.nb_tab = 0; chron_qa_close(); break;
@@ -129,10 +134,12 @@ function chron_qa_step() {
             chron_qa_log(chron_flag("barge_arrived") && war_clock_running(), "barge held, War Clock running silently");
             chron_qa_talk("JORY");
             break;
-        case 525: chron_qa_last_page(); screen_save("chron_10_jory.png"); chron_qa_choose("What's the cargo"); break;
+        case 520: chron_qa_last_page(); break;
+        case 525: screen_save("chron_10_jory.png"); chron_qa_choose("What's the cargo"); break;
         case 540: chron_qa_close(); break;
         case 555: chron_qa_talk("BAILIFF_GUY"); break;
-        case 595: chron_qa_last_page(); screen_save("chron_11_guy_barge.png"); chron_qa_close(); break;
+        case 590: chron_qa_last_page(); break;
+        case 595: screen_save("chron_11_guy_barge.png"); chron_qa_close(); break;
         case 610:
             war_clock_push(42);
             chron_qa_log(war_clock_stage() == 2, "stage 2 reached");
@@ -140,10 +147,12 @@ function chron_qa_step() {
             break;
         case 650: screen_save("chron_12_stage2_refugees.png"); chron_qa_enter("tavern"); break;
         case 690: chron_qa_talk("EBBE"); break;
-        case 730: chron_qa_last_page(); screen_save("chron_13_ebbe.png"); chron_qa_close(); break;
+        case 725: chron_qa_last_page(); break;
+        case 730: screen_save("chron_13_ebbe.png"); chron_qa_close(); break;
         case 745: chron_qa_talk("HAWISE"); break;
         case 775: chron_qa_last_page(); chron_qa_choose("Rowan."); break;
-        case 810: chron_qa_last_page(); screen_save("chron_14_hawise.png"); _g.time_of_day = 3; chron_qa_choose("A bed for the night"); break;
+        case 805: chron_qa_last_page(); break;
+        case 810: screen_save("chron_14_hawise.png"); _g.time_of_day = 3; chron_qa_choose("A bed for the night"); break;
         case 830:
             chron_qa_log(_g.time_of_day == 0 && global.chron.day == 3, "slept until dawn at the Boar & Flagon");
             chron_qa_close();
@@ -157,7 +166,8 @@ function chron_qa_step() {
             break;
         case 870: obj_player.y = GM_BRIDGE_Y; break;
         case 900: chron_qa_finish_text(); chron_qa_log(global.game_mode == "CONVERSATION", "King's Bridge checkpoint stops a load"); break;
-        case 910: chron_qa_last_page(); screen_save("chron_15_checkpoint.png"); chron_qa_choose("Turn back"); global.player_cargo.WHEAT = 0; break;
+        case 905: chron_qa_last_page(); break;
+        case 910: screen_save("chron_15_checkpoint.png"); chron_qa_choose("Turn back"); global.player_cargo.WHEAT = 0; break;
         case 925: obj_player.x = 1110; obj_player.y = 1690; break;
         case 960: screen_save("chron_16_stage3_pavilion.png"); break;
         case 975:

@@ -85,17 +85,47 @@ function convo_goto(_node_id) {
     V.chars = 0;
 }
 
-/// Splits a speech into pages of three lines, the most the dialogue box shows at once.
+/// Splits a speech into pages of at most three lines, the most the dialogue box shows at once.
+/// Pages break between sentences where they can, so no page ends on a stray word; a sentence
+/// longer than a page is broken by lines.
 function convo_paginate(_text) {
-    var _lines = ui_text_wrap(_text, "body", CONVO_TEXT_W);
+    var _sent = convo_sentences(_text);
     var _pages = [];
     var _cur = "";
-    for (var _i = 0; _i < array_length(_lines); _i++) {
-        _cur += _lines[_i];
-        if ((_i mod 3) == 2 && _i < array_length(_lines) - 1) { array_push(_pages, string_trim(_cur)); _cur = ""; }
+    for (var _s = 0; _s < array_length(_sent); _s++) {
+        var _try = (_cur == "") ? _sent[_s] : _cur + " " + _sent[_s];
+        if (array_length(ui_text_wrap(_try, "body", CONVO_TEXT_W)) <= 3) { _cur = _try; continue; }
+        if (_cur != "") array_push(_pages, _cur);
+        _cur = "";
+        var _lines = ui_text_wrap(_sent[_s], "body", CONVO_TEXT_W);
+        if (array_length(_lines) <= 3) { _cur = _sent[_s]; continue; }
+        var _chunk = "";
+        for (var _i = 0; _i < array_length(_lines); _i++) {
+            _chunk += _lines[_i];
+            if ((_i mod 3) == 2) { array_push(_pages, string_trim(_chunk)); _chunk = ""; }
+        }
+        _cur = string_trim(_chunk);
     }
-    array_push(_pages, string_trim(_cur));
+    if (_cur != "" || array_length(_pages) == 0) array_push(_pages, _cur);
     return _pages;
+}
+
+/// Breaks text into sentences: after . ? ! (and any closing quote or bracket) followed by a space.
+function convo_sentences(_text) {
+    var _out = [];
+    var _cur = "";
+    var _n = string_length(_text);
+    for (var _i = 1; _i <= _n; _i++) {
+        var _ch = string_char_at(_text, _i);
+        _cur += _ch;
+        if (_ch != "." && _ch != "?" && _ch != "!") continue;
+        while (_i < _n && string_pos(string_char_at(_text, _i + 1), "\"')") > 0) { _i += 1; _cur += string_char_at(_text, _i); }
+        if (_i < _n && string_char_at(_text, _i + 1) != " ") continue;
+        array_push(_out, string_trim(_cur));
+        _cur = "";
+    }
+    if (string_trim(_cur) != "") array_push(_out, string_trim(_cur));
+    return _out;
 }
 
 function convo_last_page() {
@@ -178,7 +208,8 @@ function convo_draw() {
 
     if (V.chars < string_length(V.text)) return;
     if (!convo_last_page()) {
-        ui_text_draw(1183 - 230, 592, "Z  continue", "small_outline", UI_COL_PARCHMENT);
+        // key caps, so "Z" reads as a key and not as the reply number 2
+        ui_key_hints(1183 - 140, 590, [[["Z"], "Continue"]], UI_COL_PARCHMENT, true, "small_outline");
         return;
     }
     // replies panel above the dialogue box
@@ -203,7 +234,7 @@ function convo_draw() {
         ui_text_draw(_x + 22, _yy + 2, string(_i + 1) + ".  " + V.opts[_i].t, _sel ? "body_bold" : "body", _sel ? UI_COL_INK : UI_COL_INK_SOFT, _w - 44);
     }
     // above the replies, clear of the speaker's name plate
-    ui_text_draw(_x + 4, _y - 22, "W/S choose   Z choose   Esc leave", "small_outline", UI_COL_PARCHMENT);
+    ui_key_hints(_x + 4, _y - 28, [[["W", "S"], "Move"], [["Z"], "Choose"], [["Esc"], "Leave"]], UI_COL_PARCHMENT, true, "small_outline");
 }
 
 // --------------------------------------------------------------------------------------------
@@ -265,13 +296,24 @@ function notebook_draw() {
     }
     V.nb_scroll = clamp(V.nb_scroll, 0, max(0, array_length(_lines) - 1));
     var _yy = _y + 140;
+    var _shown = 0;
     for (var _i = V.nb_scroll; _i < array_length(_lines); _i++) {
         var _body = ui_text_wrap(_lines[_i][1], "body", _w - 100);
         var _bh = 26 + array_length(_body) * ui_text_font("body").line_h;
-        if (_yy + _bh > _y + _h - 50) break;
+        if (_yy + _bh > _y + _h - 50 && _shown > 0) break;
         ui_text_draw(_x + 40, _yy, _lines[_i][0], "body_bold", UI_COL_INK);
         ui_text_draw(_x + 56, _yy + 24, _lines[_i][1], "body", UI_COL_INK_SOFT, _w - 100);
         _yy += _bh + 10;
+        _shown += 1;
     }
-    ui_text_draw(_x + 36, _y + _h - 40, "A/D page   W/S scroll   J or Esc close", "small", UI_COL_INK_SOFT);
+    ui_key_hints(_x + 36, _y + _h - 44, [[["A", "D"], "Page"], [["W", "S"], "Scroll"], [["J", "Esc"], "Close"]]);
+    // say when entries are hidden above or below, so nothing seems missing
+    var _below = array_length(_lines) - V.nb_scroll - _shown;
+    var _more = "";
+    if (V.nb_scroll > 0) _more = string(V.nb_scroll) + " above";
+    if (_below > 0) _more += ((_more != "") ? ", " : "") + string(_below) + " more below";
+    if (_more != "") {
+        _more = "Entries " + string(V.nb_scroll + 1) + "-" + string(V.nb_scroll + _shown) + " of " + string(array_length(_lines)) + " (" + _more + ")";
+        ui_text_draw(_x + _w - 36 - ui_text_width(_more, "small"), _y + _h - 42, _more, "small", UI_COL_INK);
+    }
 }
