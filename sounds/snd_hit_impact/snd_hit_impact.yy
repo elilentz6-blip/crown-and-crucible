@@ -1,25 +1,26 @@
 {
-  "$GMSound": "",
-  "%Name": "snd_hit_impact",
-  "audioGroupId": {
-    "name": "audiogroup_default",
-    "path": "audiogroups/audiogroup_default"
+  "$GMSound":"v2",
+  "%Name":"snd_hit_impact",
+  "audioGroupId":{
+    "name":"audiogroup_default",
+    "path":"audiogroups/audiogroup_default",
   },
-  "bitDepth": 1,
-  "bitRate": 128,
-  "compression": 0,
-  "conversionMode": 0,
-  "duration": 0.18,
-  "name": "snd_hit_impact",
-  "parent": {
-    "name": "BLANK GAME",
-    "path": "BLANK GAME.yyp"
+  "bitDepth":1,
+  "channelFormat":0,
+  "compression":0,
+  "compressionQuality":4,
+  "conversionMode":0,
+  "duration":0.18,
+  "exportDir":"",
+  "name":"snd_hit_impact",
+  "parent":{
+    "name":"BLANK GAME",
+    "path":"BLANK GAME.yyp",
   },
-  "preload": false,
-  "resourceType": "GMSound",
-  "resourceVersion": "2.0",
-  "sampleRate": 44100,
-  "soundFile": "snd_hit_impact.wav",
-  "type": 0,
-  "volume": 1.0
+  "preload":false,
+  "resourceType":"GMSound",
+  "resourceVersion":"2.0",
+  "sampleRate":44100,
+  "soundFile":"snd_hit_impact.wav",
+  "volume":1.0,
 }

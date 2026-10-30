@@ -432,7 +432,7 @@ runTest('Audio: 4 CC0 procedural sound files have valid RIFF PCM WAV headers and
     assert.equal(buf.readUInt16LE(22), 1, 'Mono channels');
     assert.equal(buf.readUInt16LE(34), 16, '16-bit depth');
 
-    const yy = JSON.parse(fs.readFileSync(yyPath, 'utf8'));
+    const yy = JSON.parse(fs.readFileSync(yyPath, "utf8").replace(/,(\s*[}\]])/g, "$1")); // GameMaker IDE writes trailing commas
     assert.equal(yy.resourceType, 'GMSound');
     assert.equal(yy.name, snd);
   }

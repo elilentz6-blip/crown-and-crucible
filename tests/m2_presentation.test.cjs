@@ -51,7 +51,7 @@ test('audio assets exist as genuine 16-bit PCM WAV files and have valid .yy desc
 
     // Verify valid JSON in .yy
     const yyContent = fs.readFileSync(yyPath, 'utf8');
-    const yyJson = JSON.parse(yyContent);
+    const yyJson = JSON.parse(yyContent.replace(/,(\s*[}\]])/g, "$1")); // GameMaker IDE writes trailing commas
     assert.equal(yyJson.resourceType, 'GMSound');
     assert.equal(yyJson.name, snd);
   }
@@ -81,7 +81,7 @@ test('scr_audio safe wrapper cc_sfx_play is registered and handles fallbacks gra
 test('BLANK GAME.yyp registers scr_audio and all 4 sound assets', () => {
   const yypPath = path.join(ROOT, 'BLANK GAME.yyp');
   const yypContent = fs.readFileSync(yypPath, 'utf8');
-  const yyp = JSON.parse(yypContent);
+  const yyp = JSON.parse(yypContent.replace(/,(\s*[}\]])/g, "$1")); // GameMaker IDE writes trailing commas
 
   const resourceIds = yyp.resources.map(r => r.id.name);
   assert.ok(resourceIds.includes('scr_audio'), 'scr_audio registered in yyp');
