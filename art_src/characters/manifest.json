@@ -967,5 +967,710 @@
     "walk_fps": 8,
     "shadow": "shadow.png",
     "floats": false
+  },
+  "maud": {
+    "display_name": "Maud Hessel",
+    "role": "npc",
+    "sheet": "maud/maud_sheet.png",
+    "strips": {
+      "idle_down": "maud/maud_idle_down.png",
+      "walk_down": "maud/maud_walk_down.png",
+      "idle_left": "maud/maud_idle_left.png",
+      "walk_left": "maud/maud_walk_left.png",
+      "idle_right": "maud/maud_idle_right.png",
+      "walk_right": "maud/maud_walk_right.png",
+      "idle_up": "maud/maud_idle_up.png",
+      "walk_up": "maud/maud_walk_up.png"
+    },
+    "portrait": "maud/maud_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "oswin": {
+    "display_name": "Oswin Tarr",
+    "role": "npc",
+    "sheet": "oswin/oswin_sheet.png",
+    "strips": {
+      "idle_down": "oswin/oswin_idle_down.png",
+      "walk_down": "oswin/oswin_walk_down.png",
+      "idle_left": "oswin/oswin_idle_left.png",
+      "walk_left": "oswin/oswin_walk_left.png",
+      "idle_right": "oswin/oswin_idle_right.png",
+      "walk_right": "oswin/oswin_walk_right.png",
+      "idle_up": "oswin/oswin_idle_up.png",
+      "walk_up": "oswin/oswin_walk_up.png"
+    },
+    "portrait": "oswin/oswin_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "hawise": {
+    "display_name": "Hawise of the Boar & Flagon",
+    "role": "npc",
+    "sheet": "hawise/hawise_sheet.png",
+    "strips": {
+      "idle_down": "hawise/hawise_idle_down.png",
+      "walk_down": "hawise/hawise_walk_down.png",
+      "idle_left": "hawise/hawise_idle_left.png",
+      "walk_left": "hawise/hawise_walk_left.png",
+      "idle_right": "hawise/hawise_idle_right.png",
+      "walk_right": "hawise/hawise_walk_right.png",
+      "idle_up": "hawise/hawise_idle_up.png",
+      "walk_up": "hawise/hawise_walk_up.png"
+    },
+    "portrait": "hawise/hawise_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "jory": {
+    "display_name": "Jory Penhal, Bargemaster",
+    "role": "npc",
+    "sheet": "jory/jory_sheet.png",
+    "strips": {
+      "idle_down": "jory/jory_idle_down.png",
+      "walk_down": "jory/jory_walk_down.png",
+      "idle_left": "jory/jory_idle_left.png",
+      "walk_left": "jory/jory_walk_left.png",
+      "idle_right": "jory/jory_idle_right.png",
+      "walk_right": "jory/jory_walk_right.png",
+      "idle_up": "jory/jory_idle_up.png",
+      "walk_up": "jory/jory_walk_up.png"
+    },
+    "portrait": "jory/jory_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "fenner": {
+    "display_name": "Hugh Fenner, Steward",
+    "role": "npc",
+    "sheet": "fenner/fenner_sheet.png",
+    "strips": {
+      "idle_down": "fenner/fenner_idle_down.png",
+      "walk_down": "fenner/fenner_walk_down.png",
+      "idle_left": "fenner/fenner_idle_left.png",
+      "walk_left": "fenner/fenner_walk_left.png",
+      "idle_right": "fenner/fenner_idle_right.png",
+      "walk_right": "fenner/fenner_walk_right.png",
+      "idle_up": "fenner/fenner_idle_up.png",
+      "walk_up": "fenner/fenner_walk_up.png"
+    },
+    "portrait": "fenner/fenner_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "cecily": {
+    "display_name": "Lady Cecily",
+    "role": "npc",
+    "sheet": "cecily/cecily_sheet.png",
+    "strips": {
+      "idle_down": "cecily/cecily_idle_down.png",
+      "walk_down": "cecily/cecily_walk_down.png",
+      "idle_left": "cecily/cecily_idle_left.png",
+      "walk_left": "cecily/cecily_walk_left.png",
+      "idle_right": "cecily/cecily_idle_right.png",
+      "walk_right": "cecily/cecily_walk_right.png",
+      "idle_up": "cecily/cecily_idle_up.png",
+      "walk_up": "cecily/cecily_walk_up.png"
+    },
+    "portrait": "cecily/cecily_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "guy": {
+    "display_name": "Bailiff Sir Guy",
+    "role": "npc",
+    "sheet": "guy/guy_sheet.png",
+    "strips": {
+      "idle_down": "guy/guy_idle_down.png",
+      "walk_down": "guy/guy_walk_down.png",
+      "idle_left": "guy/guy_idle_left.png",
+      "walk_left": "guy/guy_walk_left.png",
+      "idle_right": "guy/guy_idle_right.png",
+      "walk_right": "guy/guy_walk_right.png",
+      "idle_up": "guy/guy_idle_up.png",
+      "walk_up": "guy/guy_walk_up.png"
+    },
+    "portrait": "guy/guy_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "vane": {
+    "display_name": "Sapper Vane",
+    "role": "npc",
+    "sheet": "vane/vane_sheet.png",
+    "strips": {
+      "idle_down": "vane/vane_idle_down.png",
+      "walk_down": "vane/vane_walk_down.png",
+      "idle_left": "vane/vane_idle_left.png",
+      "walk_left": "vane/vane_walk_left.png",
+      "idle_right": "vane/vane_idle_right.png",
+      "walk_right": "vane/vane_walk_right.png",
+      "idle_up": "vane/vane_idle_up.png",
+      "walk_up": "vane/vane_walk_up.png"
+    },
+    "portrait": "vane/vane_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "mira": {
+    "display_name": "Refugee Mira",
+    "role": "npc",
+    "sheet": "mira/mira_sheet.png",
+    "strips": {
+      "idle_down": "mira/mira_idle_down.png",
+      "walk_down": "mira/mira_walk_down.png",
+      "idle_left": "mira/mira_idle_left.png",
+      "walk_left": "mira/mira_walk_left.png",
+      "idle_right": "mira/mira_idle_right.png",
+      "walk_right": "mira/mira_walk_right.png",
+      "idle_up": "mira/mira_idle_up.png",
+      "walk_up": "mira/mira_walk_up.png"
+    },
+    "portrait": "mira/mira_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "mallow": {
+    "display_name": "Old Mallow",
+    "role": "npc",
+    "sheet": "mallow/mallow_sheet.png",
+    "strips": {
+      "idle_down": "mallow/mallow_idle_down.png",
+      "walk_down": "mallow/mallow_walk_down.png",
+      "idle_left": "mallow/mallow_idle_left.png",
+      "walk_left": "mallow/mallow_walk_left.png",
+      "idle_right": "mallow/mallow_idle_right.png",
+      "walk_right": "mallow/mallow_walk_right.png",
+      "idle_up": "mallow/mallow_idle_up.png",
+      "walk_up": "mallow/mallow_walk_up.png"
+    },
+    "portrait": "mallow/mallow_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "grim": {
+    "display_name": "Grim, Hired Man",
+    "role": "npc",
+    "sheet": "grim/grim_sheet.png",
+    "strips": {
+      "idle_down": "grim/grim_idle_down.png",
+      "walk_down": "grim/grim_walk_down.png",
+      "idle_left": "grim/grim_idle_left.png",
+      "walk_left": "grim/grim_walk_left.png",
+      "idle_right": "grim/grim_idle_right.png",
+      "walk_right": "grim/grim_walk_right.png",
+      "idle_up": "grim/grim_idle_up.png",
+      "walk_up": "grim/grim_walk_up.png"
+    },
+    "portrait": "grim/grim_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "brand": {
+    "display_name": "Foreman Brand",
+    "role": "npc",
+    "sheet": "brand/brand_sheet.png",
+    "strips": {
+      "idle_down": "brand/brand_idle_down.png",
+      "walk_down": "brand/brand_walk_down.png",
+      "idle_left": "brand/brand_idle_left.png",
+      "walk_left": "brand/brand_walk_left.png",
+      "idle_right": "brand/brand_idle_right.png",
+      "walk_right": "brand/brand_walk_right.png",
+      "idle_up": "brand/brand_idle_up.png",
+      "walk_up": "brand/brand_walk_up.png"
+    },
+    "portrait": "brand/brand_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "malo": {
+    "display_name": "Factor Malo",
+    "role": "npc",
+    "sheet": "malo/malo_sheet.png",
+    "strips": {
+      "idle_down": "malo/malo_idle_down.png",
+      "walk_down": "malo/malo_walk_down.png",
+      "idle_left": "malo/malo_idle_left.png",
+      "walk_left": "malo/malo_walk_left.png",
+      "idle_right": "malo/malo_idle_right.png",
+      "walk_right": "malo/malo_walk_right.png",
+      "idle_up": "malo/malo_idle_up.png",
+      "walk_up": "malo/malo_walk_up.png"
+    },
+    "portrait": "malo/malo_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "ebbe": {
+    "display_name": "Sergeant Ebbe",
+    "role": "npc",
+    "sheet": "ebbe/ebbe_sheet.png",
+    "strips": {
+      "idle_down": "ebbe/ebbe_idle_down.png",
+      "walk_down": "ebbe/ebbe_walk_down.png",
+      "idle_left": "ebbe/ebbe_idle_left.png",
+      "walk_left": "ebbe/ebbe_walk_left.png",
+      "idle_right": "ebbe/ebbe_idle_right.png",
+      "walk_right": "ebbe/ebbe_walk_right.png",
+      "idle_up": "ebbe/ebbe_idle_up.png",
+      "walk_up": "ebbe/ebbe_walk_up.png"
+    },
+    "portrait": "ebbe/ebbe_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "piers": {
+    "display_name": "Piers Hessel",
+    "role": "npc",
+    "sheet": "piers/piers_sheet.png",
+    "strips": {
+      "idle_down": "piers/piers_idle_down.png",
+      "walk_down": "piers/piers_walk_down.png",
+      "idle_left": "piers/piers_idle_left.png",
+      "walk_left": "piers/piers_walk_left.png",
+      "idle_right": "piers/piers_idle_right.png",
+      "walk_right": "piers/piers_walk_right.png",
+      "idle_up": "piers/piers_idle_up.png",
+      "walk_up": "piers/piers_walk_up.png"
+    },
+    "portrait": "piers/piers_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
   }
 }

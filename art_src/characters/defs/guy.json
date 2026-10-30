@@ -1,0 +1,7 @@
+{ "id": "guy", "extends": "_base_villager", "name": "Bailiff Sir Guy",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#5a4030", "main": "#8a6a1e", "trim": "#e0c050", "tabard": "#8e2a2a", "pants": "#3a3030", "skin": "#e0a888", "boots": "#2e2420", "metal": "#9aa2ac" },
+  "face": { "beard": "short" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "mail", "tabard": "tabard", "crest": "cross", "crest_color": "trim" },
+  "accessories": [ { "type": "sword_hip", "hilt": "#e0c050", "sheath": "#3a2a20" } ] }

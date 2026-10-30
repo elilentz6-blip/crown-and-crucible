@@ -1,0 +1,6 @@
+{ "id": "brand", "extends": "_base_villager", "name": "Foreman Brand",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#7a4a2a", "main": "#8a7a62", "trim": "#5a4a36", "apron": "#6a5038", "pants": "#4a4034", "skin": "#e0a47c", "boots": "#3a2a20" },
+  "face": { "beard": "short" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic", "apron": "apron" } }

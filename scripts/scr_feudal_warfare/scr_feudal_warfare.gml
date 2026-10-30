@@ -27,7 +27,7 @@ function cc_warfare_init() {
             name: "The Royal Crown of High Cairn",
             short_name: "The Crown",
             leader: "King Aldous III",
-            title: "The Sunken Monarch",
+            title: "King at High Cairn",
             capital: "High Cairn",
             color: make_color_rgb(234, 179, 8),
             dark_color: make_color_rgb(113, 63, 18),
@@ -45,7 +45,7 @@ function cc_warfare_init() {
             id: "river_league",
             name: "The River League of Oakhaven",
             short_name: "The River League",
-            leader: "Baroness Vivienne de la Tour",
+            leader: "Lady Vivienne de La Tour",
             title: "The River Viper",
             capital: "Oakhaven Wharfs",
             color: make_color_rgb(56, 189, 248),
@@ -131,7 +131,7 @@ function cc_warfare_init() {
         {
             time_str: "Early Skirmishes",
             faction: "river_league",
-            headline: "Baroness Vivienne refuses royal tax audits at Oakhaven wharfs.",
+            headline: "Lady Vivienne refuses royal tax audits at Oakhaven wharfs.",
             flavor: "River League corsairs seize royal revenue barges, dumping audit ledgers into the river."
         },
         {
@@ -173,6 +173,13 @@ function cc_war_record_dispatch(_faction, _headline, _flavor) {
         array_delete(global.war_chronicle, 20, 1);
     }
 
+    // With the Chronicles running, dispatches become news people tell Rowan (notebook, J) instead of
+    // interrupting whatever he is doing.
+    if (variable_global_exists("chron") && chron_ready()) {
+        chron_news(_headline);
+        return;
+    }
+
     // Trigger floating announcement on screen
     if (instance_exists(obj_game) && instance_exists(obj_player)) {
         obj_game.add_floating_text(obj_player.x, obj_player.y - 50, "[WAR DISPATCH] " + _headline, c_yellow);
@@ -185,6 +192,8 @@ function cc_war_record_dispatch(_faction, _headline, _flavor) {
 // =========================================================================
 
 function cc_war_simulation_step() {
+    // The war moves once the War Clock has started (scr_war_clock), not from the first minute.
+    if (variable_global_exists("war_clock") && !war_clock_running()) return;
     global.war_sim_timer += 1;
     if (global.war_sim_timer < global.war_sim_interval) return;
 
@@ -220,7 +229,7 @@ function cc_war_advance_cycle() {
         cc_war_record_dispatch(
             "river_league",
             "River League privateers intercept Royal grain train near Oakhaven!",
-            "Baroness Vivienne's corsairs seize 40 sacks of flour. Stonecross wheat prices skyrocket!"
+            "Lady Vivienne's corsairs seize 40 sacks of flour. Stonecross wheat prices skyrocket!"
         );
     } else if (_roll == 1) {
         // Iron Council Foraging Raid
@@ -249,8 +258,8 @@ function cc_war_advance_cycle() {
         _iron.treasury += 120;
         cc_war_record_dispatch(
             "river_league",
-            "Oakhaven silver arrives in Dunhollow; miners toast Baroness Vivienne!",
-            "Baroness Vivienne negotiates a non-aggression pact with Castellan Morvath, isolating the Crown."
+            "Oakhaven silver arrives in Dunhollow; miners toast Lady Vivienne!",
+            "Lady Vivienne negotiates a non-aggression pact with Castellan Morvath, isolating the Crown."
         );
     }
 
@@ -295,9 +304,10 @@ function cc_war_get_zone(_zid) {
 }
 
 function cc_war_get_price_mult(_cid) {
-    if (_cid == "WHEAT") return global.war_economic_modifiers.WHEAT_PRICE_MULT;
-    if (_cid == "IRON") return global.war_economic_modifiers.IRON_PRICE_MULT;
-    if (_cid == "WINE") return global.war_economic_modifiers.WINE_PRICE_MULT;
-    if (_cid == "FISH") return global.war_economic_modifiers.FISH_PRICE_MULT;
+    var _clock = variable_global_exists("war_clock") ? war_clock_price_mult(_cid) : 1.0; // scr_war_clock stage
+    if (_cid == "WHEAT") return global.war_economic_modifiers.WHEAT_PRICE_MULT * _clock;
+    if (_cid == "IRON") return global.war_economic_modifiers.IRON_PRICE_MULT * _clock;
+    if (_cid == "WINE") return global.war_economic_modifiers.WINE_PRICE_MULT * _clock;
+    if (_cid == "FISH") return global.war_economic_modifiers.FISH_PRICE_MULT * _clock;
     return 1.0;
 }

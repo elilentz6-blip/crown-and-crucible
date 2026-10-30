@@ -120,6 +120,16 @@ if (global.game_mode == "OVERWORLD") {
             cc_load_game();
         }
 
+        // Rowan's notes [J] (scr_conversation)
+        if (keyboard_check_pressed(ord("J"))) {
+            notebook_open();
+            exit;
+        }
+
+        // Calendar, the Greenmere situations and the War Clock (scr_chronicle_core)
+        chron_step(_dt);
+        if (global.game_mode != "OVERWORLD") exit;
+
         // Dynamic World Simulation Step (Travel encounters, roadside events, quest triggers)
         cc_world_simulation_step();
 
@@ -178,6 +188,7 @@ if (global.game_mode == "OVERWORLD") {
         if (_dlg_active || (current_time - dialogue_dismissed_frame) < 150) {
             _interact = false;
         }
+        if (gm_legacy_pending()) _interact = true; // a conversation handed this person back to their own talk
         if (_interact) {
             var _handled = false;
 
@@ -232,6 +243,11 @@ if (global.game_mode == "OVERWORLD") {
                 }
             }
 
+            // Chronicles conversations: Greenmere people and places (scr_greenmere)
+            if (!_handled && gm_interact(obj_player.x, obj_player.y)) {
+                _handled = true;
+            }
+
             // Check Living Villagers
             if (!_handled) {
                 var _best_v = -1;
@@ -252,14 +268,14 @@ if (global.game_mode == "OVERWORLD") {
                     if (_vil.id == "GILES") {
                             if (!cc_quest_is_active("QUEST_PIG") && !cc_quest_is_completed("QUEST_PIG")) {
                                 cc_quest_start("QUEST_PIG");
-                                overworld_dialogue_text = "* Farmer Giles wrings his hands: 'Rowan! My prized sow Clover went missing! Check behind Old Mallow's barn across the brook at (1850, 1500)!' (Quest Started: The Missing Sow!)";
+                                overworld_dialogue_text = "* Farmer Giles wrings his hands: 'Rowan! My prized sow Clover went missing! Check behind Old Mallow's barn across the brook!' (Quest Started: The Missing Sow!)";
                             } else if (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage >= 2) {
                                 cc_quest_complete("QUEST_PIG", "RETURNED_CLOVER");
                                 cc_war_record_dispatch("stonecross", "Prized Sow Returned", "Farmer Giles and Old Mallow reconciled over the recovery of Clover, easing farmstead tensions.");
                                 overworld_dialogue_text = "* Farmer Giles weeps with joy: 'Clover, my girl! You brought her back! Here is the 45 Gold I promised and fresh goat cheese!' (+45G, +80 XP, +15 Rep, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +45G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_PIG")) {
-                                overworld_dialogue_text = "* Farmer Giles paces nervously: 'Please, Rowan! Check Old Mallow's turnip patch across the brook (1850, 1500) before nightfall!'";
+                                overworld_dialogue_text = "* Farmer Giles paces nervously: 'Please, Rowan! Check Old Mallow's turnip patch across the brook before nightfall!'";
                             } else {
                                 overworld_dialogue_text = cc_villager_get_dynamic_dialogue("GILES");
                             }
@@ -284,7 +300,7 @@ if (global.game_mode == "OVERWORLD") {
                                 cc_quest_complete("QUEST_GAMBLER", "DEBT_RESOLVED");
                                 cc_war_record_dispatch("stonecross", "Scribe Debt Settled", "Pippin's debt slip was retrieved from Wulf's gaming table, preserving the township archives.");
                                 cc_npc_add_affinity("pippin", 30, "DEBT_CLEARED");
-                                overworld_dialogue_text = "* Pippin hugs his debt slip: 'You won it back! I swear on the Sunken Crown I will never touch dice again!' (+30G, +100 XP, Quest Completed!)";
+                                overworld_dialogue_text = "* Pippin hugs his debt slip: 'You won it back! I swear on my mother's grave I will never touch dice again!' (+30G, +100 XP, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +30G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_GAMBLER")) {
                                 overworld_dialogue_text = "* Pippin wrings his ink-stained hands: 'Wulf sits at the gaming table inside the Boar & Flagon. Beat him at Crown & Bones!'";
@@ -296,14 +312,14 @@ if (global.game_mode == "OVERWORLD") {
                         } else if (_vil.id == "BALIN") {
                             if (!cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && !cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) {
                                 cc_quest_start("QUEST_DRUNKEN_KNIGHT");
-                                overworld_dialogue_text = "* Sir Balin winces, nursing his swollen knee: 'I swore at the bar I could best any mercenary in the south... but my left knee is ruined! Barrow Mercenary Grim waits at the barrow crossing (1040, 1600). Stand as my second and satisfy the vow!' (Quest Started: The Boast of Sir Balin!)";
+                                overworld_dialogue_text = "* Sir Balin winces, nursing his swollen knee: 'I swore at the bar I could best any mercenary in the south... but my left knee is ruined! Barrow Mercenary Grim waits at the barrow crossing. Stand as my second and satisfy the vow!' (Quest Started: The Boast of Sir Balin!)";
                             } else if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage >= 2) {
                                 cc_quest_complete("QUEST_DRUNKEN_KNIGHT", "CHAMPIONED_BALIN");
                                 cc_war_record_dispatch("crown", "Balin's Honor Championed", "Rowan stood as Sir Balin's second against Mercenary Grim, upholding the martial code of steel.");
-                                overworld_dialogue_text = "* Sir Balin raises his flagon: 'Grim accepted? By the Sunken Crown, my knightly honor is saved! Take this 60 Gold and my spare tournament gorget!' (+60G, +140 XP, +15 Crown Rep, Quest Completed!)";
+                                overworld_dialogue_text = "* Sir Balin raises his flagon: 'Grim accepted? By my father's sword, my honor is saved! Take this 60 Gold and my spare tournament gorget!' (+60G, +140 XP, +15 Crown Rep, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +60G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT")) {
-                                overworld_dialogue_text = "* Sir Balin rubs his knee: 'Hurry to the barrow crossing (1040, 1600), Rowan! Mercenary Grim has no patience for tardy sellswords!'";
+                                overworld_dialogue_text = "* Sir Balin rubs his knee: 'Hurry to the barrow crossing, Rowan! Mercenary Grim has no patience for tardy sellswords!'";
                             } else {
                                 overworld_dialogue_text = cc_villager_get_dynamic_dialogue("BALIN");
                             }
@@ -322,14 +338,14 @@ if (global.game_mode == "OVERWORLD") {
                         } else if (_vil.id == "FOREMAN_BRAND") {
                             if (!cc_quest_is_active("QUEST_MISSING_WINE") && !cc_quest_is_completed("QUEST_MISSING_WINE")) {
                                 cc_quest_start("QUEST_MISSING_WINE");
-                                overworld_dialogue_text = "* Foreman Brand wipes stone dust from his goggles: 'Rowan! We finished the eastern river bridge three days early and tapped Castellan Morvath's reserve wine cask to celebrate! If Bailiff Guy finds out, we'll be sent to the iron mines. Seek Sapper Vane at the barrow pass (2450, 1850) for an overtime pardon writ!' (Quest Started: The Quarrymen's Tapped Cask!)";
+                                overworld_dialogue_text = "* Foreman Brand wipes stone dust from his brows: 'Rowan! We finished the eastern river bridge three days early and tapped Castellan Morvath's reserve wine cask to celebrate! If Bailiff Guy finds out, we'll be sent to the iron mines. Seek Sapper Vane at the barrow pass for an overtime pardon writ!' (Quest Started: The Quarrymen's Tapped Cask!)";
                             } else if (cc_quest_is_active("QUEST_MISSING_WINE") && cc_quest_get("QUEST_MISSING_WINE").stage >= 2) {
                                 cc_quest_complete("QUEST_MISSING_WINE", "MEDIATED_MASONS");
                                 cc_war_record_dispatch("dunhollow", "Quarrymen Pardon Granted", "Sapper Vane's overtime writ shielded Foreman Brand's masons from bailiff retribution.");
                                 overworld_dialogue_text = "* Foreman Brand laughs in relief: 'A signed military pardon from Sapper Vane! Morvath's bailiffs can't touch us now! Take this 55 Gold and our finest river gravel-mortar!' (+55G, +110 XP, +20 Dunhollow Rep, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +55G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_MISSING_WINE")) {
-                                overworld_dialogue_text = "* Foreman Brand whispers: 'Have you spoken with Sapper Vane at (2450, 1850)? We need that signed overtime pardon before Morvath's inspectors arrive!'";
+                                overworld_dialogue_text = "* Foreman Brand whispers: 'Have you spoken with Sapper Vane at the barrow pass? We need that signed overtime pardon before Morvath's inspectors arrive!'";
                             } else {
                                 overworld_dialogue_text = "* Foreman Brand taps the stone balustrade: 'Built to withstand five hundred spring floods. The masons of Stonecross salute you, friend!'";
                             }
@@ -337,10 +353,10 @@ if (global.game_mode == "OVERWORLD") {
                             if (!cc_quest_is_active("QUEST_SMUGGLER_RUN") && !cc_quest_is_completed("QUEST_SMUGGLER_RUN")) {
                                 cc_quest_start("QUEST_SMUGGLER_RUN");
                                 cc_quest_advance("QUEST_SMUGGLER_RUN", 2, "Deliver the heavy brine keg to Master Odo's anvil!");
-                                overworld_dialogue_text = "* Factor Malo whispers under his breath: 'The royal bailiffs are inspecting wagons at King's Bridge! Take this heavy brine keg of crucible spring-steel and haul it to Master Odo's anvil at the Stonecross forge (810, 2710)!' (Quest Started: The Smuggler's Run!)";
+                                overworld_dialogue_text = "* Factor Malo whispers under his breath: 'The royal bailiffs are inspecting wagons at King's Bridge! Take this heavy brine keg of Rusk spring steel and haul it to Master Odo's anvil at the Stonecross forge!' (Quest Started: The Smuggler's Run!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "CONTRABAND RETRIEVED!", c_yellow);
                             } else if (cc_quest_is_active("QUEST_SMUGGLER_RUN")) {
-                                overworld_dialogue_text = "* Factor Malo looks around furtively: 'Don't linger here! Deliver that brine keg to Master Odo's anvil inside the forge at (810, 2710)!'";
+                                overworld_dialogue_text = "* Factor Malo looks around furtively: 'Don't linger here! Deliver that brine keg to Master Odo's anvil inside the forge!'";
                             } else {
                                 overworld_dialogue_text = "* Factor Malo winks slyly: 'Master Odo says the spring-steel tempered beautifully. The River League always pays back those who deliver without asking questions.'";
                             }
@@ -349,7 +365,7 @@ if (global.game_mode == "OVERWORLD") {
                                 cc_quest_start("QUEST_COUNTERFEIT");
                                 // Corin hands over the debased coin, directing Rowan to Master Odo's anvil at (810, 2710) for assay
                                 cc_quest_advance("QUEST_COUNTERFEIT", 2);
-                                overworld_dialogue_text = "* Peddler Corin whispers: 'A traveling tinker sold me these silver groats cheap, but the stamp looks crooked. Take this debased coin to Master Odo at the forge anvil (810, 2710) to test the metal!' (Quest Started: The Counterfeit Coin!)";
+                                overworld_dialogue_text = "* Peddler Corin whispers: 'A traveling tinker sold me these silver groats cheap, but the stamp looks crooked. Take this debased coin to Master Odo at the forge anvil to test the metal!' (Quest Started: The Counterfeit Coin!)";
                             } else {
                                 global.game_mode = "TRADE_MENU";
                             }
@@ -566,6 +582,16 @@ else if (global.game_mode == "CONTRACTS") {
     if (keyboard_check_pressed(ord("B")) || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("X"))) {
         global.game_mode = "OVERWORLD";
     }
+}
+
+// =========================================================================
+// STATE 9: CONVERSATIONS & ROWAN'S NOTES (scr_conversation)
+// =========================================================================
+else if (global.game_mode == "CONVERSATION") {
+    convo_step(_dt);
+}
+else if (global.game_mode == "NOTEBOOK") {
+    notebook_step();
 }
 
 // Battle helpers (start_undertale_battle, start_enemy_dodge, end_undertale_battle) live in Create_0

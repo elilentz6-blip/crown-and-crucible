@@ -49,7 +49,7 @@ function cc_contracts_init() {
             employer_x: 1040,
             employer_y: 1720,
             desc: "River corsair Captain Malor has plundered three crown revenue barges. King Aldous offers gold and renown for his silver corsair badge.",
-            target_desc: "Confront Captain Malor at the ruined river landing south of the willow sward (1950, 1900).",
+            target_desc: "Confront Captain Malor at the ruined river landing south of the willow sward.",
             target_x: 1950,
             target_y: 1900,
             target_rad: 65,
@@ -79,8 +79,8 @@ function cc_contracts_init() {
             employer_name: "Lady Cecily",
             employer_x: 2020,
             employer_y: 1850,
-            desc: "Smuggle an unmarked crate of tempered crucible steel past royal checkpoints directly to Master Odo's storehouse.",
-            target_desc: "Deliver the forged steel crate to Master Odo's forge bench in the north (975, 740).",
+            desc: "Smuggle an unmarked crate of tempered Rusk bar steel past royal checkpoints directly to Master Odo's storehouse.",
+            target_desc: "Deliver the forged steel crate to Master Odo's forge bench in the north.",
             target_x: 975,
             target_y: 740,
             target_rad: 60,
@@ -96,7 +96,7 @@ function cc_contracts_init() {
             betrayal_contact_y: 1720,
             betrayal_gold: 75,
             betrayal_rep: { crown: 30, oakhaven: -25 },
-            dialogue_offer: "* Lady Cecily: 'The King taxes every ingot of crucible steel. Move this unmarked crate to the northern forge and keep quiet.'",
+            dialogue_offer: "* Lady Cecily: 'The King taxes every ingot of Rusk bar steel. Move this unmarked crate to the northern forge and keep quiet.'",
             dialogue_complete: "* Master Odo prizes open the crate: 'Crucible spring-steel! Legendary blades shall be forged!' (+100 Gold)",
             dialogue_betray: "* Bailiff Sir Guy: 'Contraband steel seized from Vivienne's smugglers? A glorious victory for the Royal Treasury!' (+75 Gold, +30 Crown Rep)"
         },
@@ -111,7 +111,7 @@ function cc_contracts_init() {
             employer_x: 2450,
             employer_y: 1850,
             desc: "Starving Dunhollow miners purchased a grain cart from Stonecross. Outlaws and hungry barrow shades threaten the eastern defile.",
-            target_desc: "Defend the grain cart at the eastern defile from hostile scavengers (2350, 1750).",
+            target_desc: "Defend the grain cart at the eastern defile from hostile scavengers.",
             target_x: 2350,
             target_y: 1750,
             target_rad: 65,
@@ -136,7 +136,7 @@ function cc_contracts_init() {
             employer_x: 2020,
             employer_y: 1850,
             desc: "Scout the garrison size and artillery placements at King's Bridge to allow River League smugglers to time their crossing.",
-            target_desc: "Approach within 70 paces of the King's Highroad Outpost to note sentry schedules (1040, 1720).",
+            target_desc: "Approach within 70 paces of the King's Highroad Outpost to note sentry schedules.",
             target_x: 1040,
             target_y: 1720,
             target_rad: 70,
@@ -277,7 +277,7 @@ function cc_contract_betray(_cid) {
         cc_war_record_dispatch(
             _c.betrayal_faction,
             "Freelance Knight defects! " + _c.title + " turned to rival favor!",
-            "Sir Rowan chose gold and faction alignment over feudal loyalty."
+            "Rowan chose gold and faction alignment over feudal loyalty."
         );
 
         return true;

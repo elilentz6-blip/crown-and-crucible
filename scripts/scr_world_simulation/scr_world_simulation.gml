@@ -102,7 +102,7 @@ function cc_world_simulation_init() {
             x: 246,
             y: 2672,
             rad: 45,
-            text: "* (Margery plays a soft, melancholic ballad of the Sunken Crown. You listen and feel warmed by the embers.) (+2 HP)"
+            text: "* (Margery plays a soft, melancholic ballad about the Truce of Ryehaven. You listen and feel warmed by the embers.) (+2 HP)"
         },
         // Forge: Master Odo & Anvil
         {
@@ -122,7 +122,7 @@ function cc_world_simulation_init() {
             x: 1304,
             y: 2634,
             rad: 50,
-            text: "* (Brother Dunstan raises his hands in solemn blessing.) 'May the light of the Sunken Crown guide your shield through the dark barrows.' (+10 HP Blessing)"
+            text: "* (Brother Dunstan cleans and binds your scrapes with a practised hand.) 'Keep your shield up in the barrows, and your feet dry.' (+10 HP, Tended)"
         },
         // Cottage: Hearth Bed
         {
@@ -261,9 +261,9 @@ function cc_world_simulation_interact(_hx, _hy) {
                 else if (_spot.id == "FORGE_ANVIL") {
                     // Check if player has counterfeit coin to assay (Quest: The Counterfeit Coin)
                     if (cc_quest_is_active("QUEST_COUNTERFEIT") && cc_quest_get("QUEST_COUNTERFEIT").stage == 2) {
-                        cc_quest_advance("QUEST_COUNTERFEIT", 3, "Search the Overgrown Border Redoubt (1600, 400) for the illicit minting press.");
+                        cc_quest_advance("QUEST_COUNTERFEIT", 3, "Search the Overgrown Border Redoubt for the illicit minting press.");
                         cc_npc_add_affinity("odo", 10, "COUNTERFEIT_ASSAYED");
-                        obj_game.overworld_dialogue_text = "* Master Odo applies touchstone and acid to the groat: 'Copper and lead washed in thin silver! Stamped with a stolen royal die with a cracked crown-cross. The coiners operate out of the Overgrown Border Redoubt to the north (1600, 400). Find their press and smash it!'";
+                        obj_game.overworld_dialogue_text = "* Master Odo applies touchstone and acid to the groat: 'Copper and lead washed in thin silver! Stamped with a stolen royal die with a cracked crown-cross. The coiners operate out of the Overgrown Border Redoubt to the north. Find their press and smash it!'";
                         obj_game.add_floating_text(_hx, _hy - 40, "COIN ASSAYED! DIE IDENTIFIED", c_yellow);
                         return true;
                     }
@@ -314,7 +314,7 @@ function cc_world_simulation_interact(_hx, _hy) {
                     obj_game.add_floating_text(_hx, _hy - 40, "CLOVER LOCATED! STAGE 2", c_yellow);
                     return true;
                 } else if (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage >= 2) {
-                    obj_game.overworld_dialogue_text = "* Clover grunts and trots happily alongside you. Lead her back to Farmer Giles at (1750, 1340)!";
+                    obj_game.overworld_dialogue_text = "* Clover grunts and trots happily alongside you. Lead her back to Farmer Giles!";
                     return true;
                 } else if (cc_quest_is_completed("QUEST_PIG")) {
                     obj_game.overworld_dialogue_text = "* Clover snorts contentedly in the grass, munching fresh turnips.";
@@ -348,7 +348,7 @@ function cc_world_simulation_interact(_hx, _hy) {
             else if (_site.id == "TAPPED_WINE_CASK") {
                 if (!cc_quest_is_active("QUEST_MISSING_WINE") && !cc_quest_is_completed("QUEST_MISSING_WINE")) {
                     cc_quest_start("QUEST_MISSING_WINE");
-                    obj_game.overworld_dialogue_text = "* You discover a tapped oak barrel of High Cairn vintage hidden behind the lime kilns! Foreman Brand and his stonemasons explain they celebrated finishing the bridge early. Speak with Sapper Vane at (2450, 1850) for a pardon writ! (Quest Started: The Quarrymen's Tapped Cask!)";
+                    obj_game.overworld_dialogue_text = "* You discover a tapped oak barrel of High Cairn vintage hidden behind the lime kilns! Foreman Brand and his stonemasons explain they celebrated finishing the bridge early. Speak with Sapper Vane at the barrow pass for a pardon writ! (Quest Started: The Quarrymen's Tapped Cask!)";
                     return true;
                 } else if (cc_quest_is_active("QUEST_MISSING_WINE") && cc_quest_get("QUEST_MISSING_WINE").stage >= 2) {
                     cc_quest_complete("QUEST_MISSING_WINE", "MEDIATED_MASONS");
@@ -356,7 +356,7 @@ function cc_world_simulation_interact(_hx, _hy) {
                     obj_game.add_floating_text(_hx, _hy - 40, "QUEST COMPLETED! +55G", c_yellow);
                     return true;
                 } else if (cc_quest_is_active("QUEST_MISSING_WINE")) {
-                    obj_game.overworld_dialogue_text = "* The tapped wine cask sits empty behind the kilns. Sapper Vane at the barrow pass (2450, 1850) can sign an overtime defense writ.";
+                    obj_game.overworld_dialogue_text = "* The tapped wine cask sits empty behind the kilns. Sapper Vane at the barrow pass can sign an overtime defense writ.";
                     return true;
                 } else {
                     obj_game.overworld_dialogue_text = "* An empty wine cask branded with the High Cairn royal reserve seal.";
@@ -369,11 +369,11 @@ function cc_world_simulation_interact(_hx, _hy) {
                 if (!cc_quest_is_active("QUEST_SMUGGLER_RUN") && !cc_quest_is_completed("QUEST_SMUGGLER_RUN")) {
                     cc_quest_start("QUEST_SMUGGLER_RUN");
                     cc_quest_advance("QUEST_SMUGGLER_RUN", 2, "Deliver the heavy brine barrel to Master Odo's forge!");
-                    obj_game.overworld_dialogue_text = "* You heave the brine barrel from the river landing. Hidden beneath salted fish is crates of crucible spring-steel! Deliver it to Master Odo's workshop at (810, 2710)! (Quest Started: The Smuggler's Run!)";
+                    obj_game.overworld_dialogue_text = "* You heave the brine barrel from the river landing. Hidden beneath salted fish is crates of Rusk spring steel! Deliver it to Master Odo's workshop! (Quest Started: The Smuggler's Run!)";
                     obj_game.add_floating_text(_hx, _hy - 40, "CARGO RETRIEVED!", c_yellow);
                     return true;
                 } else if (cc_quest_is_active("QUEST_SMUGGLER_RUN")) {
-                    obj_game.overworld_dialogue_text = "* Deliver the brine barrel of spring-steel to Master Odo's anvil inside the forge at (810, 2710).";
+                    obj_game.overworld_dialogue_text = "* Deliver the brine barrel of spring-steel to Master Odo's anvil inside the forge.";
                     return true;
                 } else {
                     obj_game.overworld_dialogue_text = "* Empty river mooring ropes and weathered cargo skids by the Red Sike.";

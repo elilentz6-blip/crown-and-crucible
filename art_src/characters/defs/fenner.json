@@ -1,0 +1,6 @@
+{ "id": "fenner", "extends": "_base_villager", "name": "Hugh Fenner, Steward",
+  "body": { "build": "slim", "height": "tall" },
+  "palette": { "hair": "#4a3a2a", "main": "#3e6a4a", "trim": "#d0d4cc", "tabard": "#3e6a4a", "pants": "#2e3a30", "skin": "#e4b08c", "boots": "#2a2420" },
+  "face": { "beard": "mustache" },
+  "hair": { "style": "swept" },
+  "outfit": { "top": "tunic", "tabard": "tabard", "crest": "cross", "crest_color": "trim" } }

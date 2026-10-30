@@ -246,6 +246,19 @@ LOCKED CANON: systemic deterioration and four possible civil-war outcomes are es
 
 PLANNED SYSTEM: signal danger through believable reports and visible consequences. Allow meaningful optional pursuits and enough response time; do not disguise an arbitrary short deadline or blame the player for an unavoidable collapse. The exact balance between a quiet introductory period and escalation is OPEN DECISION.
 
+VERIFIED IMPLEMENTATION (Greenmere, provisional numbers): the native War Clock (`scr_war_clock`) starts silently when the Red Sike grain barge is held on the second day. That is the 487 echo of the 442 Ordel seizure. Pressure grows daily, and faster while the cargo is held, after the tower lead is stolen, or after an accusation is cried at the cross. It falls when disputes are settled. It shows itself only through the world:
+
+- requisition and recruiting notices;
+- dearer bread and thinner market stock;
+- Sergeant Ebbe's recruiting table;
+- refugees at the camp;
+- a King's Bridge checkpoint on loads;
+- soldiers lodged in town;
+- Piers Hessel's unpaid company;
+- the burned watermill.
+
+A plain warning comes at 90. Time passes only while Rowan walks the world. At 100, a provisional regional epilogue is told and play continues.
+
 ### Four planned outcomes
 
 PLANNED SYSTEM — Rebel victory: a successful opposition coalition defeats or compels the Crown’s position. Preserve factional costs and competing interests. A free republic, specific treaty, territorial settlement, and Rowan’s reward are PROVISIONAL; victory does not automatically ennoble him.
@@ -256,6 +269,15 @@ PLANNED SYSTEM — Secret negotiated settlement: evidence, relationships, and co
 
 PLANNED SYSTEM — Catastrophic collapse / Ashen Kingdom: insufficient intervention permits systemic ruin through prolonged fighting, destroyed livelihoods, scarcity, displacement, and failure of effective authority. No supernatural army or cosmic event causes the ending. “Ashen” refers to material destruction. This is the fourth distinct outcome, not an automatically delayed epilogue.
 
+PROVISIONAL IMPLEMENTATION: the Greenmere season ends in one of four regional epilogues:
+
+- "A Hearing Instead of a War": settlement, chosen when enough disputes were settled.
+- "The King's Peace, Kept by Force": crown.
+- "The River Keeps Its Own Counsel": league.
+- "The Ashen Season": collapse, caused only by unpaid companies, hunger and failed authority.
+
+These are not the kingdom's final four endings.
+
 OPEN DECISION: exact ending conditions, post-ending play, and any small metatextual callbacks in a new run. Such callbacks, if approved, must not imply reincarnation, resurrection, or supernatural memories.
 
 ## 13 · Quest room and grounded mysteries
@@ -265,6 +287,39 @@ OPEN DECISION: exact ending conditions, post-ending play, and any small metatext
 PROVISIONAL: preserve the compatible intrigue surrounding Eamon, an allegedly unlawful surcharge, a disputed charter, a concealed manifest, and intermediaries who can help or exploit Rowan. The old 200/250-gold figures, named feast-day tax, annual-versus-quarterly schedule, legal conclusion, and final distribution of money are not locked. They depend on Rule 13 and the owner’s choice of jurisdiction.
 
 PLANNED SYSTEM: investigation may offer several approaches—testimony, records, negotiation, exposure, payment, or service—without making each approach available in every quest. Access to archives or rulers must respect class, patronage, and institutional procedures. Old versions claiming that this whole multi-city arc is already playable are superseded; the native code inspected does not establish that complete arc.
+
+### The Greenmere situations (implemented from the Chronicles)
+
+VERIFIED IMPLEMENTATION (`scr_greenmere`; see docs/CHRONICLES_LEDGER.md):
+
+- **The levy for the empty tower.** Maud Hessel has already been to the High Cairn record house this autumn. It found the foundation and no acquittance, matching the Prologue. She wants to know who was supposed to stay.
+  - The religious house's copy of the 192 settlement lies in the chapel book-chest, kept because it confirms the house's meadow rights.
+  - Pippin can read it and write a petition.
+  - Hugh Fenner, Lady Joan Harrow's steward, holds the Harrow right to name the captain. A common man-at-arms speaks to the steward, not the Lady.
+  - The petition brings an acquittance while the levy stands, because part of it is pledged against a repair loan elsewhere.
+  - Six households and Harrow timber can mend the tower, and the vale keeps a watch for its own sake.
+  - Old Mallow keeps his belief that the knocking is the watch asking to be relieved: "My grandfather heard it before that beam was loose."
+  - Rowan can strip the remaining lead, or refuse Maud entirely; she then goes back to High Cairn herself.
+  - He may be named the Harrow captain, subject to the King's assent. It is an office, not nobility.
+- **The Barrow Cut.** The testimony stays partial:
+  - Galahalt: no warning.
+  - Oswin Tarr: the provision carts were held at Red Sike for a debt claimed against the supplier.
+  - Sir Guy, only to a man the Crown trusts: the order came at the sixth hour.
+  - The newer graves by the track.
+
+  A looter's cache holds the household dispatch, endorsed "came to the Cut past the ninth hour; they were already engaged". It supports the complaint about warning, not intent. Rowan chooses whether to claim more than it says.
+- **The barge at Red Sike.** Jory Penhal's Terveth barge carries Oakhaven-bought grain, held for the grower's arrears on the King's account. The claimants:
+  - Guy, whose post is unpaid;
+  - Lady Cecily, citing the Ordel Settlement;
+  - Fenner, for the Harrow landing toll;
+  - Beatrice, for the town's bread;
+  - Sapper Vane, for Rusk. The castellan's writ does not run in Greenmere, and he says so.
+
+  Jory hides six sacks of his own. The careful reading of the Ordel Settlement allows a hearing and a share sold at market, which needs the toll paid. If nobody acts, the bailiff seizes it by night.
+- **Regional memory of hired companies.** Hawise charges more when hired men walk with Rowan, because the last company left owing for eleven nights. Mira says it depends which company.
+- **Obligations survive.** Sergeant Ebbe's advance binds Rowan until he repays it, or his name goes into the deserters' roll.
+
+PROVISIONAL: the new ordinary people are compatible inventions: Hugh Fenner, Hawise, Oswin Tarr, Jory Penhal and the Wren, Sergeant Ebbe, Piers Hessel, and the Wenlow company. So are the coin amounts and all timings.
 
 ### Six native side-quest foundations
 
@@ -332,7 +387,7 @@ This register records source inspection at main 73fe672, not a new build or game
 | --- | --- | --- |
 | **Combat · controller and weapon mechanics** | Five weapon interactions, ACT/ITEM/MERCY, telegraphed dodge patterns. ACT currently enables Mercy immediately. | Keep the interaction structure. Soul and Ward are abstractions; per-enemy social depth is not established by the ACT label. |
 | **Cards · equipment definitions** | Twelve typed cards; actual disciplines and effects are in native definitions. Second Wind heals after a surviving wave. | Use nonmagical preparation/technique explanations. No confirmed enchantment, resurrection, or time reversal. |
-| **Rowan · hero initialization and rank rules** | “Sir Rowan” and hedge-knight starting titles; numerical promotions grant banneret/castellan titles and a fief. | These conflict with the common-born man-at-arms start. Separate knighthood, office, property, and hereditary nobility. |
+| **Rowan · hero initialization and rank rules** | Player-facing “Sir Rowan” text is now “Rowan” (Chronicles branch). Rank 2 still grants “Sworn Knight”, and rank 3 grants a “Lord of the Western March” title and fief. | These still conflict with the common-born man-at-arms start. Separate knighthood, office, property, and hereditary nobility. The Greenmere tower captaincy models an office that does not ennoble. |
 | **Legacy mystery · world interactions** | Relic consecration and a gate interaction explicitly describe supernatural light and Seraphina’s voice; no actual interdimensional map travel is established. | Remove objective supernatural claims in a future code pass. Final grounded replacements require owner approval. |
 | **Encounters and recovery · combat rules** | A Shade foe, HP recovery, defeat recovery, and timed foe respawn exist. | The Shade’s current presentation conflicts with canon. Recovery and respawn are prototype mechanics, not returning dead or miraculous medicine. |
 | **Retinue · companion modules** | Recruitment, wages, memories, routines, injuries, temporary allies, personal quest state, and combat-facing APIs. | Preserve people and social consequences. Support definitions do not by themselves verify controller integration or every advertised bonus. |

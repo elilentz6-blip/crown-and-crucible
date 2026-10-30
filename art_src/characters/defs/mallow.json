@@ -1,0 +1,8 @@
+{ "id": "mallow", "extends": "_base_villager", "name": "Old Mallow",
+  "body": { "build": "slim" },
+  "palette": { "hair": "#c8c4bc", "main": "#6a7a3e", "trim": "#a89a62", "hat": "#a88a52", "pants": "#4a4030", "skin": "#d8a284", "boots": "#3a2c22" },
+  "face": { "beard": "long", "beard_color": "#d0ccc4" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic" },
+  "headwear": { "style": "straw_hat", "color": "hat" },
+  "accessories": [ { "type": "pitchfork" } ] }

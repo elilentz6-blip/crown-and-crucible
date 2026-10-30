@@ -1,0 +1,7 @@
+{ "id": "jory", "extends": "_base_villager", "name": "Jory Penhal, Bargemaster",
+  "palette": { "hair": "#2e2a26", "main": "#3e5a6a", "trim": "#c8b48a", "hat": "#2e3e4a", "pants": "#3a3a3a", "skin": "#c88e68", "boots": "#2a2420", "cape": "#4a5a52" },
+  "face": { "beard": "stubble" },
+  "hair": { "style": "curly" },
+  "outfit": { "top": "tunic" },
+  "headwear": { "style": "hood", "color": "hat" },
+  "accessories": [ { "type": "cape", "color": "cape" } ] }

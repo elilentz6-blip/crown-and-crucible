@@ -165,8 +165,8 @@ function cc_living_world_init() {
             resolution: "",
             stages: [
                 "Examine the counterfeit coin from Corin's wagon wares.",
-                "Take the debased silver groat to Master Odo at the forge anvil (810, 2710) for assay.",
-                "Search the Overgrown Border Redoubt (1600, 400) to find and smash the illicit minting press."
+                "Take the debased silver groat to Master Odo at the forge anvil for assay.",
+                "Search the Overgrown Border Redoubt to find and smash the illicit minting press."
             ],
             reward_gold: 50,
             reward_xp: 120,
@@ -232,7 +232,7 @@ function cc_living_world_init() {
             stages: [
                 "Collect the sealed brine barrel from the river wharf.",
                 "Cross the toll bridge: sneak past Guard Donald, bribe with 10G, or show lawful permit.",
-                "Deliver the cargo to Master Odo's smithy (which turns out to be high-grade crucible spring-steel)."
+                "Deliver the cargo to Master Odo's smithy (which turns out to be high-grade Rusk spring steel)."
             ],
             reward_gold: 80,
             reward_xp: 150,
@@ -541,6 +541,7 @@ function cc_save_game() {
         current_region: global.current_region,
         recruited_party: _party,
         retinue: retinue_exists() ? retinue_save_pack() : undefined, // Knight's Retinue (scr_retinue_api)
+        chronicle: chron_ready() ? chron_save_pack() : undefined, // calendar, Greenmere situations, War Clock (scr_chronicle_core)
         location: instance_exists(obj_player) ? cc_save_pack_location() : undefined,
         time_of_day: _g.time_of_day,
         time_timer: _g.time_timer,
@@ -784,6 +785,9 @@ function cc_load_game() {
         global.player_title = cc_save_string(_wf, "player_title", global.player_title);
         global.fief_owned = bool(_wf[$ "fief_owned"] ?? false);
     }
+
+    // Chronicles state; saves from before it existed start the region fresh from today
+    if (chron_ready()) chron_load_restore(_data[$ "chronicle"]);
 
     global.game_mode = "OVERWORLD";
     var _px = instance_exists(obj_player) ? obj_player.x : 683;
@@ -1065,7 +1069,7 @@ function cc_villager_get_dynamic_dialogue(_vid) {
             if (_cycle >= 6) {
                 return "* Scribe Pippin dips his quill with trembling fingers: 'Every page I copy is a muster roll of fallen boys from the valley. Villages emptied of young hands. When will King Aldous call an armistice?'";
             } else if (_cycle >= 3) {
-                return "* Scribe Pippin shakes his head over ink-stained parchment: 'I am copying conflicting tax warrants—one from King Aldous, one from Baroness Vivienne. Two rulers taxing the same acre of cabbages! It's sheer folly, Rowan.'";
+                return "* Scribe Pippin shakes his head over ink-stained parchment: 'I am copying conflicting tax warrants—one from King Aldous, one from Lady Vivienne. Two rulers taxing the same acre of cabbages! It's sheer folly, Rowan.'";
             } else if (cc_quest_is_completed("QUEST_GAMBLER")) {
                 return "* Scribe Pippin hums merrily as he copies an illuminated manuscript: 'My quill flies across the vellum! Not a single copper lost to the dice table since you saved me, " + _title + "!'";
             } else {
@@ -1101,7 +1105,7 @@ function cc_villager_get_dynamic_dialogue(_vid) {
 
         case "REFUGEE_MIRA":
             if (_bridge_fac == "river_league") {
-                return "* Refugee Mira gazes west with guarded hope: 'They say Baroness Vivienne's river rangers have cleared the King's Bridge. If the barges run, perhaps my brother can return from Oakhaven.'";
+                return "* Refugee Mira gazes west with guarded hope: 'They say Lady Vivienne's river rangers have cleared the King's Bridge. If the barges run, perhaps my brother can return from Oakhaven.'";
             } else if (_cycle >= 4) {
                 return "* Refugee Mira pulls her threadbare shawl close: 'More families arrived from the eastern marches last night. The bailiffs burned the hayricks to deny forage to the armies. We have nothing left.'";
             } else {
@@ -1112,7 +1116,7 @@ function cc_villager_get_dynamic_dialogue(_vid) {
             if (_cycle >= 6) {
                 return "* Master Odo hammers white-hot iron with thunderous blows: 'Raw bog-ore is cut off from the hills! I am melting down old plowshares and wagon rims to forge spear-points. War devours iron like a furnace!'";
             } else if (_iron_mult > 1.25 || _cycle >= 3) {
-                return "* Master Odo wipes sweat with a leather forearm: 'Morvath's garrison placed an order for fifty billhooks. The forge runs night and day, Rowan. Every scrap of crucible steel you bring is worth its weight in silver.'";
+                return "* Master Odo wipes sweat with a leather forearm: 'Morvath's garrison placed an order for fifty billhooks. The forge runs night and day, Rowan. Every scrap of Rusk bar steel you bring is worth its weight in silver.'";
             } else if (cc_quest_is_completed("QUEST_COUNTERFEIT")) {
                 return "* Master Odo bellows over his anvil: 'That illicit mint at the Border Redoubt is smashed for good! The groats in Stonecross ring true once more. Check my iron chest for a tempered blade, " + _title + "!'";
             } else {
@@ -1132,9 +1136,9 @@ function cc_villager_get_dynamic_dialogue(_vid) {
             if (_cycle >= 6) {
                 return "* Margery strums a slow, solemn minor chord: 'No one pays for drinking songs anymore, Rowan. The patrons want ballads of fallen knights and burned keeps. Even the Boar & Flagon feels like a tomb tonight.'";
             } else if (_cycle >= 3) {
-                return "* Margery tunes a gut string with a smirk: 'Heard a drover say Baroness Vivienne's rangers confiscated sixty barrels of cider at the river bend. The tavern regulars were ready to march to war right then and there!'";
+                return "* Margery tunes a gut string with a smirk: 'Heard a drover say Lady Vivienne's rangers confiscated sixty barrels of cider at the river bend. The tavern regulars were ready to march to war right then and there!'";
             } else {
-                return "* Margery sings softly: 'O, the Sunken Crown beneath the deep, where ancient kings in starlight sleep...' Your spirit feels restored! (+4 HP)";
+                return "* Margery sings softly: 'O, the drovers came to Ryehaven town, with the rain in their boots and their hats pulled down...' You find yourself smiling. (+4 HP)";
             }
     }
 
@@ -1148,7 +1152,7 @@ function cc_tavern_get_ambient_banter() {
 
     var _rumors = [
         "A royal courier changed horses at dawn—King Aldous's vanguard is marching south along the turnpike.",
-        "Baroness Vivienne slapped an eighty-groat toll on every wool barge passing Oakhaven. The river boatmen are ready to riot!",
+        "Lady Vivienne slapped an eighty-groat toll on every wool barge passing Oakhaven. The river boatmen are ready to riot!",
         "Castellan Morvath's teamsters requisitioned all the charcoal wagons from the kiln. The smiths are spitting mad.",
         "Bailiff Sir Guy posted muster notices on the town oak. Every second son in the parish has been called up for the militia.",
         "The drovers won't take the south road after sundown. Armed renegades from the old border bastions are bold as wolves.",

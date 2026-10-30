@@ -1,0 +1,7 @@
+{ "id": "vane", "extends": "_base_villager", "name": "Sapper Vane",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#2a2420", "main": "#5a5a5e", "trim": "#8e3a2e", "pants": "#3a3632", "skin": "#c08460", "boots": "#2a2420", "hat": "#6a6e74" },
+  "face": { "beard": "long", "beard_color": "#2a2420" },
+  "outfit": { "top": "mail" },
+  "headwear": { "style": "kettle_helm", "color": "hat" },
+  "accessories": [ { "type": "staff" } ] }

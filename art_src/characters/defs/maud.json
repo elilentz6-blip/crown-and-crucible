@@ -1,0 +1,7 @@
+{ "id": "maud", "extends": "_base_villager", "name": "Maud Hessel",
+  "body": { "build": "slim" },
+  "palette": { "hair": "#8a8478", "main": "#4e4a3e", "trim": "#9a8a62", "hat": "#d9d0bc", "apron": "#8c7a5c", "skin": "#e2ae88", "boots": "#3e2e22" },
+  "face": { "brows": "#6a6458" },
+  "hair": { "style": "bun" },
+  "outfit": { "top": "dress", "apron": "apron", "belt": null },
+  "headwear": { "style": "mob_cap", "color": "hat", "trim": "#b8ac94" } }

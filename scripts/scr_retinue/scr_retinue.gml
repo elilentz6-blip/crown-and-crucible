@@ -57,7 +57,7 @@ function retinue_init() {
     retinue_snapshot_world();
     if (instance_exists(obj_game)) R.last_tod = obj_game.time_of_day;
     for (var _i = 0; _i < array_length(R.order); _i++) retinue_place_body(R.members[$ R.order[_i]], true);
-    retinue_chronicle("Sir Rowan arrives in Stonecross alone, with a rusty sword and a great many debts.", []);
+    retinue_chronicle("Rowan arrives in Stonecross alone, with a rusty sword and a great many debts.", []);
 }
 
 /// Runtime member from a definition: shared read-only data plus fresh mutable state.
@@ -202,7 +202,7 @@ function retinue_join(_id, _announce = true) {
     if (!M.ever) {
         M.ever = true;
         retinue_remember(M, "JOINED", "The day I joined Rowan's company" + retinue_place_suffix(), 1);
-        if (M.kind == RET_KIND_COMPANION) retinue_chronicle(M.name + " joins Sir Rowan's company.", [_id]);
+        if (M.kind == RET_KIND_COMPANION) retinue_chronicle(M.name + " joins Rowan's company.", [_id]);
     }
     if (M.status != "INJURED") M.status = "IN_PARTY";
     M.status_note = (M.status == "INJURED") ? M.status_note : "";
@@ -514,7 +514,7 @@ function retinue_body_interact(_body) {
         if (M.status == "UNMET") M.status = (M.def[$ "starts_injured"] ?? false) ? "INJURED" : "AVAILABLE";
         if (M.status == "INJURED" && M.status_until == 0) M.status_until = R.day + 2;
         _g.overworld_dialogue_text = M.def.greet_first + ((M.kind == RET_KIND_MERC) ? "" : "  (Talk again to ask them to join you.)");
-        retinue_remember(M, "MET", "Met Sir Rowan" + retinue_place_suffix(), 1);
+        retinue_remember(M, "MET", "Met Rowan" + retinue_place_suffix(), 1);
         R.pending_id = M.id; R.pending_t = 8;
         return true;
     }
@@ -613,8 +613,8 @@ function retinue_request_effect(M, _kind, _yes) {
             if (_yes) {
                 M.quest_stage = 3; retinue_adjust(M, 15, 15, 10);
                 if (variable_global_exists("reputation")) cc_rep_add("stonecross", 5);
-                retinue_remember(M, "BALLAD", "Sang 'The Ballad of Sir Rowan' to a packed Boar & Flagon", 3);
-                retinue_chronicle("Margery performs 'The Ballad of Sir Rowan'. Nobody in the Boar & Flagon pays for a drink all night.", [M.id]);
+                retinue_remember(M, "BALLAD", "Sang 'The Ballad of Rowan the Unknighted' to a packed Boar & Flagon", 3);
+                retinue_chronicle("Margery performs 'The Ballad of Rowan the Unknighted'. Nobody in the Boar & Flagon pays for a drink all night.", [M.id]);
                 M.title = "Margery Silvertongue";
             } else retinue_adjust(M, -5);
             break;
