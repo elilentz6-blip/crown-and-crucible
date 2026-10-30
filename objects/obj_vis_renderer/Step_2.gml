@@ -15,3 +15,4 @@
 ///   - vis_step() in scr_vis_world.
 vis_step();
 chron_qa_step(); // CC_CHRON_QA=1 headless Chronicles play-through only (scr_chronicle_qa)
+if (!frontend_shake_on() && instance_exists(obj_game)) obj_game.screen_shake = 0; // Settings: screen shake off

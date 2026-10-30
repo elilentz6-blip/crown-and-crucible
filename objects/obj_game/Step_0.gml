@@ -30,6 +30,7 @@
 
 var _dt = 1.0 / 60.0;
 
+if (frontend_qa_active()) frontend_qa_step();
 if (frontend_active()) { frontend_step(_dt); exit; }
 if (global.game_mode == "OVERWORLD" && keyboard_check_pressed(vk_escape)) { frontend_open_pause(); exit; }
 

@@ -170,7 +170,7 @@ function convo_step(_dt) {
     var _len = string_length(V.text);
     var _cprev = floor(V.chars);
     if (V.chars < _len) {
-        V.chars = min(_len, V.chars + 70 * _dt);
+        V.chars = min(_len, V.chars + 70 * frontend_text_speed() * _dt);
         if (floor(V.chars) > _cprev && (floor(V.chars) mod 3 == 0)) cc_sfx_play("snd_dialogue_chitter", 0.95 + 0.1 * ((floor(V.chars) mod 4) / 4), 0.3);
     }
     if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("X"))) { convo_close(); return; }

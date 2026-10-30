@@ -42,12 +42,104 @@ function frontend_active() { return frontend_ready() && global.game_mode == "FRO
 
 /// The renderer calls this after native setup; gameplay automation retains its direct boot.
 function frontend_init(_force = false) {
+    frontend_settings_load();
     if (!_force && (environment_get_variable("CC_CHRON_QA") == "1" || environment_get_variable("CC_FOLLOW_QA") == "1" || environment_get_variable("CC_RETINUE_QA") == "1" || environment_get_variable("CC_RETINUE_SNAP") == "1"
         || environment_get_variable("CC_VIS_TOUR") != "" || environment_get_variable("CC_VIS_SCREENS") != "" || environment_get_variable("CC_VIS_SNAP") != "")) return;
     window_set_caption("Crown & Crucible");
     global.frontend = {phase:"splash", elapsed:0, cursor:0, tip:0, art:0, session:false,
         status:"", action:"", worked:false, jobs:[], job:0, fade:0, return_phase:"title"};
     global.game_mode = "FRONTEND";
+    // A return to the menu or a reload restarts the runner's game so nothing carries over.
+    var _boot = variable_global_exists("frontend_boot") ? global.frontend_boot : "";
+    global.frontend_boot = "";
+    if (_boot == "title") { global.frontend.phase = "title"; global.frontend.cursor = file_exists(CC_SAVE_FILE) ? 0 : 1; }
+    if (_boot == "load") frontend_begin_loading("load");
+}
+
+/// Clears the state that init code only builds when it is missing, then restarts the game.
+function frontend_restart(_boot) {
+    global.frontend_boot = _boot;
+    global.gm = undefined;
+    convo_init();
+    game_restart();
+}
+
+/// True when the save would load, so a failed reload never costs the player the session.
+function frontend_save_readable() {
+    if (!file_exists(CC_SAVE_FILE)) return false;
+    var _file = file_text_open_read(CC_SAVE_FILE);
+    if (_file == -1) return false;
+    var _json = file_text_read_string(_file);
+    file_text_close(_file);
+    var _data = undefined;
+    try { _data = json_parse(_json); } catch (_e) { _data = undefined; }
+    return is_struct(_data) && cc_save_number(_data, "version", 1) <= CC_SAVE_VERSION;
+}
+
+#macro CC_SETTINGS_FILE "settings_crown_and_crucible.json"
+
+/// Settings live apart from the journey save, so changing them can never touch a save.
+function frontend_settings_load() {
+    global.cc_settings = {volume: 100, fullscreen: false, shake: true, text_speed: 0};
+    if (file_exists(CC_SETTINGS_FILE)) {
+        var _file = file_text_open_read(CC_SETTINGS_FILE);
+        if (_file != -1) {
+            var _json = file_text_read_string(_file);
+            file_text_close(_file);
+            var _data = undefined;
+            try { _data = json_parse(_json); } catch (_e) { _data = undefined; }
+            if (is_struct(_data)) {
+                var S = global.cc_settings;
+                S.volume = clamp(round(cc_save_number(_data, "volume", 100) / 10) * 10, 0, 100);
+                S.fullscreen = cc_save_number(_data, "fullscreen", 0) != 0;
+                S.shake = cc_save_number(_data, "shake", 1) != 0;
+                S.text_speed = clamp(floor(cc_save_number(_data, "text_speed", 0)), 0, 2);
+            }
+        }
+    }
+    frontend_settings_apply();
+}
+
+function frontend_settings_apply() {
+    var S = global.cc_settings;
+    audio_master_gain(S.volume / 100);
+    if (window_get_fullscreen() != S.fullscreen) window_set_fullscreen(S.fullscreen);
+}
+
+function frontend_settings_save() {
+    var S = global.cc_settings;
+    var _file = file_text_open_write(CC_SETTINGS_FILE);
+    if (_file == -1) return false;
+    file_text_write_string(_file, json_stringify({volume: S.volume, fullscreen: S.fullscreen ? 1 : 0, shake: S.shake ? 1 : 0, text_speed: S.text_speed}));
+    file_text_close(_file);
+    return true;
+}
+
+function frontend_shake_on() { return !variable_global_exists("cc_settings") || global.cc_settings.shake; }
+
+/// Multiplier on the conversation typewriter; Instant is large enough to finish any page at once.
+function frontend_text_speed() {
+    if (!variable_global_exists("cc_settings")) return 1;
+    return [1, 2, 1000][global.cc_settings.text_speed];
+}
+
+function frontend_settings_rows() {
+    var S = global.cc_settings;
+    return ["Volume:  " + string(S.volume) + "%", "Fullscreen:  " + (S.fullscreen ? "On" : "Off"),
+        "Screen shake:  " + (S.shake ? "On" : "Off"), "Text speed:  " + ["Normal", "Fast", "Instant"][S.text_speed], "Back"];
+}
+
+function frontend_settings_adjust(_row, _dir) {
+    var S = global.cc_settings;
+    switch (_row) {
+        case 0: S.volume = clamp(S.volume + _dir * 10, 0, 100); break;
+        case 1: S.fullscreen = !S.fullscreen; break;
+        case 2: S.shake = !S.shake; break;
+        case 3: S.text_speed = (S.text_speed + 3 + _dir) mod 3; break;
+        default: return;
+    }
+    frontend_settings_apply();
+    if (!frontend_settings_save()) global.frontend.status = "Settings could not be saved.";
 }
 
 function frontend_open_pause() {
@@ -61,8 +153,11 @@ function frontend_menu() {
     var _p = global.frontend.phase;
     if (_p == "confirm_new") return ["Begin a new journey", "Back"];
     if (_p == "confirm_load") return ["Load the saved journey", "Back"];
-    if (_p == "pause") return ["Resume journey", "Save journey", "Load saved journey", "Controls", "Quit game"];
-    return ["Continue", "New journey", "Controls", "Quit game"];
+    if (_p == "confirm_menu") return ["Return to the main menu", "Back"];
+    if (_p == "confirm_quit") return ["Quit to the desktop", "Back"];
+    if (_p == "settings") return frontend_settings_rows();
+    if (_p == "pause") return ["Resume journey", "Save journey", "Load saved journey", "Controls", "Settings", "Return to main menu", "Quit game"];
+    return ["Continue", "New journey", "Controls", "Settings", "Quit game"];
 }
 
 function frontend_begin_loading(_action) {
@@ -70,6 +165,7 @@ function frontend_begin_loading(_action) {
     var F = global.frontend;
     F.phase = "loading"; F.action = _action; F.worked = false; F.elapsed = 0;
     F.jobs = []; F.job = 0; F.fade = 0; F.art = (F.art + 1) mod 3;
+    F.tip = irandom(array_length(frontend_tips()) - 1); F.status = "";
     F.status = _action == "load" ? "Reading the saved journey" : "Preparing the Greenmere Vale";
     global.game_mode = "FRONTEND";
     return true;
@@ -78,6 +174,11 @@ function frontend_begin_loading(_action) {
 function frontend_choose(_index) {
     var F = global.frontend, _menu = frontend_menu();
     if (_index < 0 || _index >= array_length(_menu)) return;
+    if (F.phase == "settings") {
+        if (_index == array_length(_menu) - 1) { F.phase = F.return_phase; F.cursor = 0; F.status = ""; }
+        else frontend_settings_adjust(_index, 1);
+        return;
+    }
     switch (_menu[_index]) {
         case "Back": F.phase = F.return_phase; F.cursor = 0; return;
         case "Continue":
@@ -93,9 +194,19 @@ function frontend_choose(_index) {
         case "Load saved journey":
             if (!file_exists(CC_SAVE_FILE)) { F.status = "No saved journey is available."; return; }
             F.return_phase = F.phase; F.phase = "confirm_load"; F.cursor = 1; return;
-        case "Load the saved journey": frontend_begin_loading("load"); return;
+        case "Load the saved journey":
+            if (!F.session) { frontend_begin_loading("load"); return; }
+            if (!frontend_save_readable()) { F.phase = "pause"; F.cursor = 0; F.status = "That save could not be loaded. The saved file has not been changed."; return; }
+            frontend_restart("load"); return;
         case "Controls": F.return_phase = F.phase; F.phase = "controls"; return;
-        case "Quit game": game_end(); return;
+        case "Settings": F.return_phase = F.phase; F.phase = "settings"; F.cursor = 0; F.status = ""; return;
+        case "Return to main menu": F.return_phase = F.phase; F.phase = "confirm_menu"; F.cursor = 1; return;
+        case "Return to the main menu": frontend_restart("title"); return;
+        case "Quit to the desktop": game_end(); return;
+        case "Quit game":
+            if (F.session) { F.return_phase = F.phase; F.phase = "confirm_quit"; F.cursor = 1; }
+            else game_end();
+            return;
     }
 }
 
@@ -106,8 +217,13 @@ function frontend_step(_dt) {
     var _yes = keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
     var _back = keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("X"));
     var _ntips = array_length(frontend_tips());
-    if (keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"))) F.tip = (F.tip + _ntips - 1) mod _ntips;
-    if (keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"))) F.tip = (F.tip + 1) mod _ntips;
+    var _left = keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"));
+    var _right = keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"));
+    if (F.phase == "settings") { if (_left != _right) frontend_settings_adjust(F.cursor, _right ? 1 : -1); }
+    else {
+        if (_left) F.tip = (F.tip + _ntips - 1) mod _ntips;
+        if (_right) F.tip = (F.tip + 1) mod _ntips;
+    }
     if (F.phase == "splash") {
         if (F.elapsed >= 2.2 || _yes || _back) { F.phase = "title"; F.elapsed = 0; F.cursor = file_exists(CC_SAVE_FILE) ? 0 : 1; }
         return;
@@ -135,6 +251,8 @@ function frontend_step(_dt) {
             F.status = "Preparing the roads and settlements"; return;
         }
         if (F.job < array_length(F.jobs)) { var _job = F.jobs[F.job]; vis_bake_chunk(_job[0], _job[1]); F.job += 1; return; }
+        // Hold a new journey or a reload long enough for the tip to be read; a resume is immediate.
+        if (F.action != "resume" && F.elapsed < 1.2) return;
         F.phase = "fade"; F.fade = 0; F.elapsed = 0; F.session = true; return;
     }
     if (F.phase == "fade") {
@@ -148,7 +266,7 @@ function frontend_step(_dt) {
     }
     if (_back) {
         if (F.phase == "pause") frontend_begin_loading("resume");
-        else if (F.phase == "confirm_new" || F.phase == "confirm_load") { F.phase = F.return_phase; F.cursor = 0; }
+        else if (F.phase == "confirm_new" || F.phase == "confirm_load" || F.phase == "confirm_menu" || F.phase == "confirm_quit" || F.phase == "settings") { F.phase = F.return_phase; F.cursor = 0; F.status = ""; }
         return;
     }
     var _n = array_length(frontend_menu());
@@ -210,22 +328,26 @@ function frontend_draw() {
         ui_text_draw(80, 585, F.status + string_repeat(".", floor(F.elapsed * 3) mod 4), "small", UI_COL_PARCHMENT, 1100);
     } else {
         draw_sprite_ext(spr_front_logo, 0, 115, 80, 510 / sprite_get_width(spr_front_logo), 510 / sprite_get_height(spr_front_logo), 0, c_white, 1);
-        frontend_parchment(765, 155, 495, 420);
+        frontend_parchment(765, 130, 495, 470);
         var _title = F.phase == "pause" ? "Your Journey" : "Enter Aethelgard";
         if (F.phase == "confirm_new") _title = "A New Journey";
         if (F.phase == "confirm_load") _title = "Return to Your Save?";
-        ui_text_draw(820, 200, _title, "title", UI_COL_INK, 385);
+        if (F.phase == "confirm_menu") _title = "Leave This Journey?";
+        if (F.phase == "confirm_quit") _title = "Quit the Game?";
+        if (F.phase == "settings") _title = "Settings";
+        ui_text_draw(820, 175, _title, "title", UI_COL_INK, 385);
         var _menu = frontend_menu();
         for (var _i = 0; _i < array_length(_menu); _i++) {
             var _disabled = _menu[_i] == "Continue" && !file_exists(CC_SAVE_FILE);
-            ui_text_draw(825, 258 + _i * 43, (F.cursor == _i ? ">  " : "    ") + _menu[_i], "body_bold",
+            ui_text_draw(825, 232 + _i * 36, (F.cursor == _i ? ">  " : "    ") + _menu[_i], "body_bold",
                 _disabled ? make_color_rgb(133, 118, 96) : (F.cursor == _i ? make_color_rgb(107, 41, 47) : UI_COL_INK), 365);
         }
         var _status = F.status;
         if (F.phase == "confirm_new") _status = "Your saved journey remains until you choose to save the new one.";
         if (F.phase == "confirm_load") _status = "Current unsaved progress will be replaced.";
-        if (_status != "") ui_text_draw(817, 475, _status, "small", UI_COL_INK_SOFT, 380);
-        ui_text_draw(822, 538, "W/S choose   Z / Enter confirm", "small", UI_COL_INK_SOFT, 390);
+        if (F.phase == "confirm_menu" || F.phase == "confirm_quit") _status = "Unsaved progress will be lost. Your saved journey is not changed.";
+        if (_status != "") ui_text_draw(817, 495, _status, "small", UI_COL_INK_SOFT, 380);
+        ui_text_draw(822, 558, F.phase == "settings" ? "W/S choose   A/D change" : "W/S choose   Z / Enter confirm", "small", UI_COL_INK_SOFT, 390);
     }
     if (F.phase != "splash") {
         var _tips = frontend_tips(), _tip = _tips[F.tip];

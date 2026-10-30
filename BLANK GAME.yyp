@@ -44,6 +44,7 @@
     {"id":{"name":"spr_loading_oakhaven","path":"sprites/spr_loading_oakhaven/spr_loading_oakhaven.yy"}},
     {"id":{"name":"spr_loading_dunhollow","path":"sprites/spr_loading_dunhollow/spr_loading_dunhollow.yy"}},
     {"id":{"name":"scr_frontend","path":"scripts/scr_frontend/scr_frontend.yy"}},
+    {"id":{"name":"scr_frontend_qa","path":"scripts/scr_frontend_qa/scr_frontend_qa.yy"}},
     {"id":{"name":"scr_chronicle_followthrough","path":"scripts/scr_chronicle_followthrough/scr_chronicle_followthrough.yy"}},
     {
       "id": {
