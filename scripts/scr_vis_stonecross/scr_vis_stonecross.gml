@@ -148,14 +148,14 @@ function vis_layout_stonecross() {
             { key: "gatehouse", x: 1148, y: 1990, solid: true },
             { key: "ruin_cottage", x: 2120, y: 2060, solid: true },
             { key: "ruin_house", x: 2760, y: 2120, solid: true },
+            { key: "border_redoubt", x: 1600, y: 380, solid: true },
             { key: "weald_arch", x: 640, y: 560, solid: true },
         ],
 
-        // Ground-level art drawn under actors (bridges, portal dais).
+        // Ground-level art drawn under actors (bridges, river jetties).
         ground: [
             { spr: spr_prop_bridge, x: 1142, y: 1712 },
             { spr: spr_prop_bridge_small, x: 2060, y: 1712 },
-            { spr: spr_portal_dais, x: 1600, y: 380 },
             { spr: spr_prop_jetty, x: 2470, y: 1726 },
             { spr: spr_prop_rowboat, x: 2522, y: 1788 },
         ],
@@ -226,7 +226,10 @@ function vis_layout_stonecross() {
             [spr_veg_reeds, 0, 1095, 1270, 0, 0],
             [spr_veg_reeds, 0, 1205, 1330, 0, 0],
             [spr_prop_rock_s, 0, 1210, 1262, 20, 8],
-            // border redoubt ruins standing stones
+            // border redoubt ruins standing stones & illicit coining den
+            [spr_prop_barrels, 0, 1540, 420, 30, 8],
+            [spr_prop_crates, 0, 1660, 415, 30, 10],
+            [spr_prop_campfire, 0, 1600, 440, 18, 8],
             [spr_prop_rock_l, 0, 1430, 470, 36, 12],
             [spr_prop_rock_l, 0, 1770, 470, 36, 12],
             [spr_prop_rock_s, 0, 1460, 330, 20, 8],

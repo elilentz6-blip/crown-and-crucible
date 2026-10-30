@@ -53,7 +53,7 @@ function vis_draw_world() {
     }
     }
 
-    // 3. ground-level art (bridges, portal dais)
+    // 3. ground-level art (bridges, river jetties)
     for (var _g = 0; _g < array_length(V.ground); _g++) {
         var _gd = V.ground[_g];
         draw_sprite(_gd.spr, 0, _gd.x, _gd.y);
@@ -111,7 +111,7 @@ function vis_draw_world() {
     // 7b. fog banks over the lit scene (lamp glows still punch through below)
     vis_weather_draw_fog(vis_weather_ambient(V.ambient_col));
 
-    // 8. additive glows: lit windows, lamps, runes, fire, portal halo, glowing particles
+    // 8. additive glows: lit windows, lamps, fire, glowing particles
     gpu_set_blendmode(bm_add);
     var _gk = vis_weather_glow_k();
     if (_gk > 0.02) {
@@ -122,8 +122,6 @@ function vis_draw_world() {
             draw_sprite_ext(_gl.spr, _gl.img, _gl.x, _gl.y, 1, 1, 0, c_white, _gk * (0.85 + 0.15 * sin(_t * 3 + _gl.x)));
         }
     }
-    var _po = V.portal;
-    draw_sprite_ext(spr_portal_arch, 1, _po.x, _po.y, 1, 1, 0, c_white, 0.4);
     vis_particles_draw(true);
     vis_weather_draw_sky();
     gpu_set_blendmode(bm_normal);
@@ -246,7 +244,7 @@ function vis_draw_lighting() {
     var _amb = vis_weather_ambient(V.ambient_col);
     var _k = vis_weather_light_k();
     if (_k < 0.01 && _amb == c_white) {
-        // daytime: lights still bloom very softly around the portal
+        // daytime: lights still bloom very softly around the redoubt and hearths
         return;
     }
     var _w = ceil(V.view_w) + 2, _h = ceil(V.view_h) + 2;

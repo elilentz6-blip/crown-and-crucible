@@ -173,7 +173,7 @@ function vis_tour_step(_dt) {
         [1600, 1280, 1, 2, "square_day"], [1280, 860, 1, 2, "west_lane_day"], [1310, 1060, 2, 2, "west_lane_dusk"],
         [2060, 1080, 1, 2, "east_lane_day"], [2290, 900, 1, 2, "stable_day"], [2200, 1460, 1, 2, "farm_barn_day"],
         [2330, 1690, 0, 2, "mill_dawn"], [1148, 2060, 1, 2, "gatehouse_day"], [1148, 2060, 3, 2, "gatehouse_night"],
-        [2180, 2110, 2, 2, "ruins_dusk"], [660, 640, 3, 2, "grove_arch_night"], [1600, 500, 3, 2, "portal_night"],
+        [2180, 2110, 2, 2, "ruins_dusk"], [660, 640, 3, 2, "grove_arch_night"], [1600, 500, 3, 2, "border_redoubt_night"],
         [2130, 870, 2, 2, "tavern_dusk"], [1800, 1150, 1, 1, "overview_day"], [1800, 1150, 3, 1, "overview_night"],
         [0, 0, 1, 2, "int_tavern"], [0, 0, 1, 2, "int_forge"], [0, 0, 1, 2, "int_chapel"], [0, 0, 1, 2, "int_cottage"],
         [2130, 800, 1, 2, "fadein_tavern"], [2130, 800, 1, 2, "fadeout_tavern"], [1515, 1205, 1, 2, "dialogue"],
@@ -449,7 +449,7 @@ function vis_bake_chunk(_ci, _cj) {
 // Static scene
 // ---------------------------------------------------------------------------------------------
 
-/// kind: 0 sprite, 1 swaying tree, 2 animated, 3 building, 4 portal arch, 5 lamp
+/// kind: 0 sprite, 1 swaying tree, 2 animated, 3 building, 4 redoubt ruins, 5 lamp
 function vis_add_static(_spr, _img, _x, _y, _kind, _sy = undefined) {
     var V = global.vis;
     var _e = { spr: _spr, img: _img, x: _x, y: _y, kind: _kind, sy: _sy ?? _y, seed: vis_hash(_x, _y, 3) * 10 };
@@ -553,10 +553,9 @@ function vis_place_layout() {
     // the border redoubt ruins
     var _po = L.portal;
     V.portal = _po;
-    vis_add_static(spr_portal_arch, 0, _po.x, _po.y, 4);
-    array_push(V.lights, { x: _po.x, y: _po.y - 90, r: 240, col: make_color_rgb(180, 160, 120), k: 0.8, flicker: 0.04, always: true });
-    array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 160, col: make_color_rgb(200, 180, 130), k: 0.6, flicker: 0.03, always: true });
-    array_push(V.emitters, { type: "dust", x: _po.x, y: _po.y - 60, rate: 8, acc: 0 });
+    // Grounded Border Redoubt: rendered via L.buildings (border_redoubt) and L.props
+    array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 160, col: make_color_rgb(255, 190, 110), k: 0.6, flicker: 0.03, always: true });
+    array_push(V.emitters, { type: "dust", x: _po.x, y: _po.y - 60, rate: 4, acc: 0 });
 }
 
 function vis_keepout(_x, _y, _r) {
@@ -719,6 +718,14 @@ function vis_char_key(_e) {
     if (_id == "CORIN") return "corin";
     if (_id == "DUNSTAN") return "dunstan";
     if (_id == "GALAHALT") return "galahalt";
+    if (_id == "BAILIFF_GUY") return "guy";
+    if (_id == "LADY_CECILY") return "cecily";
+    if (_id == "SAPPER_VANE") return "vane";
+    if (_id == "REFUGEE_MIRA") return "mira";
+    if (_id == "OLD_MALLOW") return "mallow";
+    if (_id == "MERCENARY_GRIM") return "grim";
+    if (_id == "FOREMAN_BRAND") return "brand";
+    if (_id == "FACTOR_MALO") return "malo";
     var _role = _e[$ "role"];
     if (_role == "ELDER") return "alden";
     if (_role == "BAKER") return "beatrice";
@@ -809,8 +816,6 @@ function vis_spawn(_type, _x, _y) {
         case "sparks": _p.img = 1; _p.vx = random_range(-20, 20); _p.vy = random_range(-46, -20); _p.max = random_range(0.5, 1.0); _p.add = true; _p.col = make_color_rgb(255, 190, 90); break;
         case "embers": _p.img = 1; _p.vx = random_range(-8, 8); _p.vy = random_range(-30, -14); _p.max = random_range(0.8, 1.6); _p.add = true; _p.col = make_color_rgb(255, 160, 70); break;
         case "spray": _p.img = 9; _p.vx = random_range(-26, 26); _p.vy = random_range(-40, -18); _p.max = random_range(0.5, 0.9); _p.a = 0.9; break;
-        case "portal": _p.img = 5; _p.vx = 0; _p.vy = random_range(-22, -10); _p.max = random_range(1.6, 2.8); _p.add = true;
-            _p.col = choose(make_color_rgb(150, 120, 255), make_color_rgb(110, 230, 255), make_color_rgb(230, 200, 255)); _p.s = random_range(0.6, 1.1); break;
         case "firefly": _p.img = 2; _p.max = random_range(3, 6); _p.add = true; _p.col = make_color_rgb(210, 255, 130); _p.s = 0.6; break;
         case "leaf": _p.img = choose(3, 4); _p.vx = random_range(6, 16); _p.vy = random_range(10, 18); _p.max = random_range(4, 7); break;
         case "butterfly": _p.img = 7; _p.vx = random_range(-14, 14); _p.vy = random_range(-8, 8); _p.max = random_range(5, 9);
@@ -836,12 +841,7 @@ function vis_particles_step(_dt, _tod) {
         _e.acc += _e.rate * _dt;
         while (_e.acc >= 1) {
             _e.acc -= 1;
-            if (_e.type == "portal") {
-                var _a = random(6.28), _r = random_range(30, 70);
-                vis_spawn("portal", _e.x + cos(_a) * _r, _e.y + sin(_a) * _r * 0.8 + 40);
-            } else {
-                vis_spawn(_e.type, _e.x + random_range(-3, 3), _e.y);
-            }
+            vis_spawn(_e.type, _e.x + random_range(-3, 3), _e.y);
         }
     }
     // ambient life in the view
@@ -871,11 +871,6 @@ function vis_particles_step(_dt, _tod) {
             case "smoke": _p.s += _dt * 0.35; _p.vx += 3 * _dt; break;
             case "spray": _p.vy += 120 * _dt; break;
             case "sparks": _p.vy += 30 * _dt; break;
-            case "portal":
-                var _po = V.portal;
-                var _ang = point_direction(_po.x, _po.y - 92, _p.x, _p.y) + 90;
-                _p.vx = lengthdir_x(14, _ang);
-                break;
             case "firefly": _p.vx = sin(V.time * 1.7 + _p.ph) * 10; _p.vy = cos(V.time * 1.3 + _p.ph * 2) * 8; break;
             case "leaf": _p.vx = 10 + sin(V.time * 2 + _p.ph) * 14; break;
             case "butterfly": _p.vx += random_range(-40, 40) * _dt; _p.vy += random_range(-40, 40) * _dt; _p.vx = clamp(_p.vx, -22, 22); _p.vy = clamp(_p.vy, -16, 16); break;
