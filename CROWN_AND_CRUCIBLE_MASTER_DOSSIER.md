@@ -261,7 +261,7 @@ Implemented in `scripts/scr_feudal_warfare/scr_feudal_warfare.gml`, three living
 | Faction Key | Faction Title & Seat | Leader | Power | Treasury | Granary | Armory | Territory | Strategic Ambition |
 |---|---|---|---|---|---|---|---|---|
 | `crown` | **The Royal Crown** (High Cairn) | King Aldous III | 85 | 1400g | 90 Food | 45 Iron | 45% | Enforce royal tithes, preserve feudal order |
-| `river_league` | **The River League** (Oakhaven) | Baroness Vivienne | 65 | 2200g | 60 Food | 30 Iron | 30% | Abolish river tolls, establish free trade republic |
+| `river_league` | **The River League** (Oakhaven) | Lady Vivienne de La Tour | 65 | 2200g | 60 Food | 30 Iron | 30% | Abolish river tolls, establish free trade republic |
 | `iron_council` | **The Iron Council** (Dunhollow)| Castellan Morvath | 75 | 800g | 40 Food | 95 Iron | 25% | Secure grain supplies, assert miner independence |
 
 ### 4.2 Autonomous Warfare Simulation Engine
@@ -269,8 +269,21 @@ Implemented in `scripts/scr_feudal_warfare/scr_feudal_warfare.gml`, three living
 - **Simulation Mechanics**: Automatically rolls campaign events, adjusts faction resources, recalculates territorial control of three contested checkpoints (King's Bridge, Red Sike Wharf, Eastern Barrow Defile), and triggers regional price shocks (+35% Wheat shock on river ambushes; +30% Iron shock on mountain raids).
 - **War Chronicle**: Records campaign dispatches into `global.war_chronicle` (retaining the 20 most recent entries).
 
-### 4.3 The Hidden War Clock Architecture (Design Proposal)
-To prevent the simulation from remaining a static circular loop, the proposed **War Clock** introduces systemic degradation:
+### 4.3 The War Clock (implemented, provisional numbers: `scripts/scr_war_clock`)
+The War Clock now runs natively. It starts silently when the Red Sike grain barge is held on day 2. Pressure runs from 0 to 100 at 1.6 a day, plus persistent causes such as the held barge, stolen tower lead or an accusation cried at the cross. Settlements lower it, and the kept tower watch slows it. Days pass only in the overworld (`scr_chronicle_core`), so menus, conversations and battles cost no time.
+
+The stages show through the world, never as a number:
+
+| Stage | Pressure | What happens |
+|---|---|---|
+| 1 | 20 or more | Cart requisitions and dearer bread |
+| 2 | 40 or more | A recruiter, refugees and quicker deserters |
+| 3 | 60 or more | A King's Bridge checkpoint on carried loads, soldiers lodged in town and an unpaid company |
+| 4 | 80 or more | The watermill burned |
+
+A final warning comes at 90. At 100, one of four provisional regional epilogues is told (settlement, crown, league or Ashen), and play continues. The legacy random war cycle below now waits for the clock, and its dispatches become news in Rowan's notes instead of interrupting dialogue. See `docs/CHRONICLES_LEDGER.md`.
+
+The earlier design proposal it grew from:
 - **Realm Exhaustion (0–100)**: Increases with every violent campaign cycle; high exhaustion triggers peasant desertions.
 - **Economic Collapse**: If granaries fall below 20 Food, regional famine strikes; if Iron falls below 20, checkpoint defenses break.
 - **Terminal Thresholds**: If Realm Exhaustion reaches 100 before Rowan mediates peace, the realm succumbs to **Ending 4: Ashen Kingdom**.
@@ -421,9 +434,36 @@ Governed by `scr_living_world.gml`, trading spans four regional centers (Stonecr
 1. **Ending 1: Rebel Victory (The Maritime Concordat)**: Rowan champions Baroness Vivienne and the River League. Royal blockades are shattered; Oakhaven is chartered as a sovereign free trade republic; King Aldous is forced to sign the Maritime Concordat, decentralizing royal power.
 2. **Ending 2: Loyalist Restoration (The Iron Crown Victorious)**: Rowan serves King Aldous III as Royal Champion. Chancery corruption is purged; Chancellor Eamon is imprisoned; River League privateers and Dunhollow mining guilds are subdued under royal garrisons, restoring centralized iron order.
 3. **Ending 3: Secret Settlement (The Peacemaker's Chivalric Accord)**: Rowan uncovers ancient imperial charters and the *Falsified Royal Manifest*, mediating a tripartite compromise. Vivienne receives trade exemptions; Dunhollow receives guaranteed low-cost grain; Stonecross tithes are capped at the lawful 200g; the realm reaches 95% stability.
-4. **Ending 4: Ashen Kingdom (The Great Realm Collapse)**: War Clock exhaustion expires due to unchecked faction warfare, famine, and resource depletion. Border defenses collapse, allowing the Whispering Barrows shades or the Dimensional Rift vortex to consume the realm in ash and darkness.
+4. **Ending 4: Ashen Kingdom (The Great Realm Collapse)**: War Clock exhaustion expires due to unchecked faction warfare, famine, and resource depletion. Unpaid companies, failed authority and burned livelihoods ruin the realm. "Ashen" means material destruction; no supernatural cause exists (canon).
+
+> **Implemented regionally (provisional):** `war_clock_evaluate()` picks a Greenmere-season epilogue from what Rowan settled (barge shared out, petition answered, tower watched, Barrow truth told, Piers home) and from crown and Oakhaven standing. These are regional epilogues, not the kingdom's final endings.
 
 ---
+
+## X-A. The Chronicles of Aethelgard in Stonecross & the Greenmere Vale (implemented)
+
+These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the present year 487. The full ledger, which separates verified, new, provisional and remaining work, is `docs/CHRONICLES_LEDGER.md`.
+
+- **New modules:**
+  - `scr_chronicle_core`: calendar, flags, notes, papers, rumours, news and schedule.
+  - `scr_conversation`: modes `CONVERSATION` and `NOTEBOOK` (key **J**).
+  - `scr_greenmere`: people, places, events and the three situations.
+  - `scr_war_clock`.
+- **Hooks in shared files:**
+  - obj_game Create calls the four inits. Step calls `chron_step`, adds the J key, `gm_legacy_pending` and `gm_interact` after chests, and the two new modes. Draw_64 adds the two new modes.
+  - The vis renderer also draws the world behind conversations.
+  - In `cc_save_game` / `cc_load_game`, the save gains a `chronicle` block.
+  - In `cc_war_simulation_step` / `cc_war_record_dispatch` / `cc_war_get_price_mult`, the cycle follows the clock, dispatches become news and prices follow the stage.
+- **People:** Maud Hessel (1700,1480), Hugh Fenner (1690,1265), Hawise (tavern, 330,2700), Oswin Tarr (1990,1700), Jory Penhal (Red Sike, 2100,1860, while the barge is held), Sergeant Ebbe (tavern, stage 2 and later), Piers Hessel (by the pavilion at stage 3 and later; home once freed), and refugees at stage 2 and later.
+- **Places:**
+  - The tower and barrows landmarks open conversations.
+  - New places are the Chapel Book-Chest (1400,2660), the cottage Box Bed (1834,2682), the Looter's Cache (2410,2075, after the Barrow renegade is beaten or spared), the Bridge Checkpoint (stage 3 and later) and the Burned Watermill (stage 4).
+  - The notice board shows a new War Clock notice once.
+- **Situations:**
+  - The levy for the empty tower, covering the settlement copy, petition, acquittance, repair and watch, the stolen lead and the captaincy.
+  - The Barrow Cut: three witnesses, the late dispatch, and four ways to use it.
+  - The barge at Red Sike: five claimants and five outcomes, including doing nothing.
+- **Rules kept:** no quest markers and no objective arrows. Every refusal has consequences and the world carries on without Rowan. Rewards are given once (`chron_reward_once`). Esc always leaves a conversation without effect.
 
 ## XI. Art, Rendering Pipeline & Interiors
 
@@ -491,7 +531,7 @@ To ensure flawless multi-agent coordination without race conditions, strict file
 3. Replace primitive vector battle silhouettes (`spr_foe_*`) with full animated character sprites.
 
 ### Phase 6: Systemic Simulation & Narrative Expansion
-1. Implement the Hidden War Clock simulation tracking Realm Exhaustion, Famine, and Devastation.
+1. ~~Implement the Hidden War Clock~~ Done for Greenmere (provisional numbers, `scr_war_clock`). Extend its causes to contracts and the other islands.
 2. Wire quest branches and contract defections into the Four Civil War Endings.
 3. Build the Archipelago maritime expansion, introducing riverboat naval mechanics, contraband smuggling, and island ports.
 4. Implement modular homebuilding at the Old Watchtower Fief and seasonal chivalric tournament brackets.
@@ -521,7 +561,10 @@ To ensure flawless multi-agent coordination without race conditions, strict file
 
 ```gml
 // Authoritative Global State Tree:
-global.game_mode             // "OVERWORLD", "BATTLE", "EQUIPMENT", "DICE_GAME", "ARCHERY_GAME", "TRADE_MENU", "QUEST_LOG", "CONTRACTS"
+global.game_mode             // "OVERWORLD", "BATTLE", "EQUIPMENT", "DICE_GAME", "ARCHERY_GAME", "TRADE_MENU", "QUEST_LOG", "CONTRACTS", "RETINUE", "CONVERSATION", "NOTEBOOK"
+global.chron                 // { day, clock, flags, notes[], docs[], heard{}, sched[], news[] }  saved as "chronicle"
+global.war_clock             // { started, pressure 0-100, stage 0-4, mediation, notice, ended, ending }  saved inside "chronicle"
+global.convo                 // transient conversation / notebook UI state (never saved)
 global.reputation            // { crown: int, river_league: int, iron_council: int, stonecross: int }
 global.side_quests           // { QUEST_PIG, QUEST_GAMBLER, QUEST_COUNTERFEIT, QUEST_DRUNKEN_KNIGHT, QUEST_MISSING_WINE, QUEST_SMUGGLER_RUN }
 global.commodities           // { WHEAT, FISH, IRON, WINE }

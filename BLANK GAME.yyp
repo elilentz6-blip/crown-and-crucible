@@ -2010,6 +2010,120 @@
         "name": "spr_cbt_bolt",
         "path": "sprites/spr_cbt_bolt/spr_cbt_bolt.yy"
       }
+    },
+    {
+      "id": {
+        "name": "scr_chronicle_core",
+        "path": "scripts/scr_chronicle_core/scr_chronicle_core.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "scr_chronicle_qa",
+        "path": "scripts/scr_chronicle_qa/scr_chronicle_qa.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "scr_conversation",
+        "path": "scripts/scr_conversation/scr_conversation.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "scr_greenmere",
+        "path": "scripts/scr_greenmere/scr_greenmere.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "scr_war_clock",
+        "path": "scripts/scr_war_clock/scr_war_clock.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_ebbe",
+        "path": "sprites/spr_char_ebbe/spr_char_ebbe.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_fenner",
+        "path": "sprites/spr_char_fenner/spr_char_fenner.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_hawise",
+        "path": "sprites/spr_char_hawise/spr_char_hawise.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_jory",
+        "path": "sprites/spr_char_jory/spr_char_jory.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_maud",
+        "path": "sprites/spr_char_maud/spr_char_maud.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_oswin",
+        "path": "sprites/spr_char_oswin/spr_char_oswin.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_piers",
+        "path": "sprites/spr_char_piers/spr_char_piers.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_ebbe",
+        "path": "sprites/spr_portrait_ebbe/spr_portrait_ebbe.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_fenner",
+        "path": "sprites/spr_portrait_fenner/spr_portrait_fenner.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_hawise",
+        "path": "sprites/spr_portrait_hawise/spr_portrait_hawise.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_jory",
+        "path": "sprites/spr_portrait_jory/spr_portrait_jory.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_maud",
+        "path": "sprites/spr_portrait_maud/spr_portrait_maud.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_oswin",
+        "path": "sprites/spr_portrait_oswin/spr_portrait_oswin.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_piers",
+        "path": "sprites/spr_portrait_piers/spr_portrait_piers.yy"
+      }
     }
   ],
   "resourceType": "GMProject",

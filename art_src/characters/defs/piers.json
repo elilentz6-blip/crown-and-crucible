@@ -1,0 +1,7 @@
+{ "id": "piers", "extends": "_base_villager", "name": "Piers Hessel",
+  "body": { "build": "slim" },
+  "palette": { "hair": "#8a6a44", "main": "#5a5e4a", "trim": "#8a7a5a", "pants": "#3e3a30", "skin": "#e6b08a", "boots": "#3a2c22", "hat": "#6e7276" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic" },
+  "headwear": { "style": "kettle_helm", "color": "hat" },
+  "accessories": [ { "type": "spear" } ] }

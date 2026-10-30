@@ -1,0 +1,7 @@
+{ "id": "ebbe", "extends": "_base_villager", "name": "Sergeant Ebbe",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#6a5a4a", "main": "#7a2e2a", "trim": "#c8a050", "tabard": "#2e3a5a", "pants": "#3a3430", "skin": "#d89a76", "boots": "#2a2420", "hat": "#7a7e84" },
+  "face": { "beard": "mustache" },
+  "outfit": { "top": "mail", "tabard": "tabard" },
+  "headwear": { "style": "kettle_helm", "color": "hat" },
+  "accessories": [ { "type": "sword_hip", "hilt": "#c8a050", "sheath": "#3a2a20" } ] }

@@ -1,0 +1,32 @@
+{
+  "id": "cecily",
+  "extends": "_base_villager",
+  "name": "Lady Cecily",
+  "body": {
+    "build": "slim",
+    "height": "tall"
+  },
+  "palette": {
+    "hair": "#b08a3e",
+    "main": "#1f6a60",
+    "trim": "#e8d088",
+    "skin": "#efc4a0",
+    "boots": "#3a2a22",
+    "pants": "#1f4a44",
+    "cape": "#e8e0cc"
+  },
+  "face": {},
+  "hair": {
+    "style": "bun"
+  },
+  "outfit": {
+    "top": "gown",
+    "belt": "#e8d088"
+  },
+  "accessories": [
+    {
+      "type": "cape",
+      "color": "cape"
+    }
+  ]
+}

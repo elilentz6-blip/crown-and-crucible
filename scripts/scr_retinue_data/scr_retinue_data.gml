@@ -177,7 +177,7 @@ function retinue_defs() {
                 desc: "Isolde wants her name cleared. Not her post back. Just the truth on record.",
                 goal: "Raise your standing with the Crown to 40, or with Stonecross to 60, while Isolde rides with you." },
             greet_first: "* (A woman in a faded royal tabard is copying the proclamations, correcting the spelling.) 'You read? Good. Most knights move their lips. Isolde Venn. Formerly of the King's voice.'",
-            greet: ["* Isolde: 'Sir Rowan. Your reputation precedes you. Barely.'", "* Isolde: 'News from High Cairn. None of it good. Walk with me.'", "* Isolde inclines her head with exact courtesy."],
+            greet: ["* Isolde: 'Rowan. Your reputation precedes you. Barely.'", "* Isolde: 'News from High Cairn. None of it good. Walk with me.'", "* Isolde inclines her head with exact courtesy."],
             join: ["* Isolde: 'Very well. Someone ought to keep a true record of what you do.'", "* Isolde: 'I'll ride with you. Try to deserve it.'"],
             leave: ["* Isolde: 'As you command. I'll be where the news is.'", "* Isolde: 'Noted. In ink.'"],
             refuse_low: "* Isolde: 'I refused to lie for a king, Rowan. I won't do it for you.'",

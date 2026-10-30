@@ -1204,7 +1204,7 @@
     "floats": false
   },
   "grim": {
-    "display_name": "Barrow Mercenary Grim",
+    "display_name": "Grim, Hired Man",
     "role": "npc",
     "sheet": "grim/grim_sheet.png",
     "strips": {
@@ -1312,6 +1312,335 @@
       "walk_up": "malo/malo_walk_up.png"
     },
     "portrait": "malo/malo_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "maud": {
+    "display_name": "Maud Hessel",
+    "role": "npc",
+    "sheet": "maud/maud_sheet.png",
+    "strips": {
+      "idle_down": "maud/maud_idle_down.png",
+      "walk_down": "maud/maud_walk_down.png",
+      "idle_left": "maud/maud_idle_left.png",
+      "walk_left": "maud/maud_walk_left.png",
+      "idle_right": "maud/maud_idle_right.png",
+      "walk_right": "maud/maud_walk_right.png",
+      "idle_up": "maud/maud_idle_up.png",
+      "walk_up": "maud/maud_walk_up.png"
+    },
+    "portrait": "maud/maud_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "oswin": {
+    "display_name": "Oswin Tarr",
+    "role": "npc",
+    "sheet": "oswin/oswin_sheet.png",
+    "strips": {
+      "idle_down": "oswin/oswin_idle_down.png",
+      "walk_down": "oswin/oswin_walk_down.png",
+      "idle_left": "oswin/oswin_idle_left.png",
+      "walk_left": "oswin/oswin_walk_left.png",
+      "idle_right": "oswin/oswin_idle_right.png",
+      "walk_right": "oswin/oswin_walk_right.png",
+      "idle_up": "oswin/oswin_idle_up.png",
+      "walk_up": "oswin/oswin_walk_up.png"
+    },
+    "portrait": "oswin/oswin_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "hawise": {
+    "display_name": "Hawise of the Boar & Flagon",
+    "role": "npc",
+    "sheet": "hawise/hawise_sheet.png",
+    "strips": {
+      "idle_down": "hawise/hawise_idle_down.png",
+      "walk_down": "hawise/hawise_walk_down.png",
+      "idle_left": "hawise/hawise_idle_left.png",
+      "walk_left": "hawise/hawise_walk_left.png",
+      "idle_right": "hawise/hawise_idle_right.png",
+      "walk_right": "hawise/hawise_walk_right.png",
+      "idle_up": "hawise/hawise_idle_up.png",
+      "walk_up": "hawise/hawise_walk_up.png"
+    },
+    "portrait": "hawise/hawise_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "jory": {
+    "display_name": "Jory Penhal, Bargemaster",
+    "role": "npc",
+    "sheet": "jory/jory_sheet.png",
+    "strips": {
+      "idle_down": "jory/jory_idle_down.png",
+      "walk_down": "jory/jory_walk_down.png",
+      "idle_left": "jory/jory_idle_left.png",
+      "walk_left": "jory/jory_walk_left.png",
+      "idle_right": "jory/jory_idle_right.png",
+      "walk_right": "jory/jory_walk_right.png",
+      "idle_up": "jory/jory_idle_up.png",
+      "walk_up": "jory/jory_walk_up.png"
+    },
+    "portrait": "jory/jory_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "fenner": {
+    "display_name": "Hugh Fenner, Steward",
+    "role": "npc",
+    "sheet": "fenner/fenner_sheet.png",
+    "strips": {
+      "idle_down": "fenner/fenner_idle_down.png",
+      "walk_down": "fenner/fenner_walk_down.png",
+      "idle_left": "fenner/fenner_idle_left.png",
+      "walk_left": "fenner/fenner_walk_left.png",
+      "idle_right": "fenner/fenner_idle_right.png",
+      "walk_right": "fenner/fenner_walk_right.png",
+      "idle_up": "fenner/fenner_idle_up.png",
+      "walk_up": "fenner/fenner_walk_up.png"
+    },
+    "portrait": "fenner/fenner_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "ebbe": {
+    "display_name": "Sergeant Ebbe",
+    "role": "npc",
+    "sheet": "ebbe/ebbe_sheet.png",
+    "strips": {
+      "idle_down": "ebbe/ebbe_idle_down.png",
+      "walk_down": "ebbe/ebbe_walk_down.png",
+      "idle_left": "ebbe/ebbe_idle_left.png",
+      "walk_left": "ebbe/ebbe_walk_left.png",
+      "idle_right": "ebbe/ebbe_idle_right.png",
+      "walk_right": "ebbe/ebbe_walk_right.png",
+      "idle_up": "ebbe/ebbe_idle_up.png",
+      "walk_up": "ebbe/ebbe_walk_up.png"
+    },
+    "portrait": "ebbe/ebbe_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "piers": {
+    "display_name": "Piers Hessel",
+    "role": "npc",
+    "sheet": "piers/piers_sheet.png",
+    "strips": {
+      "idle_down": "piers/piers_idle_down.png",
+      "walk_down": "piers/piers_walk_down.png",
+      "idle_left": "piers/piers_idle_left.png",
+      "walk_left": "piers/piers_walk_left.png",
+      "idle_right": "piers/piers_idle_right.png",
+      "walk_right": "piers/piers_walk_right.png",
+      "idle_up": "piers/piers_idle_up.png",
+      "walk_up": "piers/piers_walk_up.png"
+    },
+    "portrait": "piers/piers_portrait.png",
     "frame_w": 32,
     "frame_h": 48,
     "origin": [

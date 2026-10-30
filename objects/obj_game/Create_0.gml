@@ -260,7 +260,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Lady Cecily adjusts her azure velvet cloak.) 'Baroness Vivienne values courage and discretion over crown laws. The River League pays double for freeblades who keep their quills dry and their blades sharp!'"
+        text: "* (Lady Cecily adjusts her azure velvet cloak.) 'Lady Vivienne values courage and discretion over crown laws. The River League pays double for freeblades who keep their quills dry and their blades sharp!'"
     },
     {
         id: "SAPPER_VANE",
@@ -325,7 +325,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Foreman Brand wipes stone dust from his goggles.) 'We built the eastern river bridge ahead of schedule! We tapped this royal vintage to toast our work, but Morvath's bailiffs will have us whipped if you don't mediate!'"
+        text: "* (Foreman Brand wipes stone dust from his brows.) 'We built the eastern river bridge ahead of schedule! We tapped this royal vintage to toast our work, but Morvath's bailiffs will have us whipped if you don't mediate!'"
     },
     {
         id: "FACTOR_MALO",
@@ -338,7 +338,7 @@ world_villagers = [
         speed: 0,
         moving: false,
         anim: 0,
-        text: "* (Factor Malo watches the river anxiously.) 'The bailiffs are inspecting wagons at King's Bridge! I need a reliable knight to haul this heavy brine keg of crucible steel to Master Odo's anvil!'"
+        text: "* (Factor Malo watches the river anxiously.) 'The bailiffs are inspecting wagons at King's Bridge! I need a reliable knight to haul this heavy brine keg of Rusk bar steel to Master Odo's anvil!'"
     }
 ];
 
@@ -406,7 +406,7 @@ world_landmarks = [
         x: 2600,
         y: 1260,
         rad: 80,
-        text: "* (Sunlight filters through the stained glass rose window, casting heavenly purple and gold beams upon the altar.)"
+        text: "* (Sunlight filters through the stained glass rose window, casting purple and gold light across the altar.)"
     },
     {
         name: "Ruined Watchtower",
@@ -420,7 +420,7 @@ world_landmarks = [
         x: 2450,
         y: 2020,
         rad: 75,
-        text: "* (An ominous chill breathes from the ancient skull archway. The Whispering Barrows beckon.)"
+        text: "* (Old burial mounds, older than anyone's name for them, with a track worn between.)"
     },
     {
         name: "King's Highroad War Pavilion",
@@ -600,6 +600,12 @@ cc_world_simulation_init();
 cc_warfare_init();
 cc_contracts_init();
 cc_hierarchy_init();
+
+// Chronicles of Aethelgard: calendar, conversations, the Greenmere situations and the War Clock
+convo_init();
+chron_init();
+war_clock_init();
+gm_init();
 
 // Bound bridges let the world save call the global equipment serializers safely.
 cc_equipment_pack_bridge = function() { return cc_equipment_pack(); };

@@ -104,7 +104,7 @@ function cc_minigames_init() {
         // Historical leaderboards
         records: [
             { name: "Robin of the Weald", score: 27 },
-            { name: "Sir Rowan (You)", score: 0 },
+            { name: "Rowan (You)", score: 0 },
             { name: "Guard Donald", score: 19 },
             { name: "Friar Dunstan", score: 14 }
         ]
@@ -558,7 +558,7 @@ function cc_draw_dice_game() {
     // PLAYER AREA (Bottom Half)
     // -------------------------------------------------------------------------
     draw_set_color(make_color_rgb(200, 180, 150));
-    draw_text(220, 420, "Sir Rowan's Throw (Your Dice):");
+    draw_text(220, 420, "Rowan's Throw (Your Dice):");
 
     var _dy_player = 450;
 

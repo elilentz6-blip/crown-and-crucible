@@ -1,31 +1,7 @@
-{
-  "id": "mira",
-  "extends": "_base_villager",
-  "name": "Refugee Mira",
-  "body": {
-    "build": "slim",
-    "height": "short"
-  },
-  "palette": {
-    "hair": "#4a3a30",
-    "main": "#7a7464",
-    "trim": "#5a5448",
-    "hat": "#8a8270",
-    "pants": "#5a5448",
-    "boots": "#3e3228",
-    "skin": "#d6a888"
-  },
-  "face": {},
-  "hair": {
-    "style": "long"
-  },
-  "outfit": {
-    "top": "dress",
-    "belt": "#4a3a2a"
-  },
-  "headwear": {
-    "style": "hood",
-    "color": "hat"
-  },
-  "accessories": []
-}
+{ "id": "mira", "extends": "_base_villager", "name": "Refugee Mira",
+  "body": { "build": "slim" },
+  "palette": { "hair": "#3a2a20", "main": "#6a6252", "trim": "#8a7a5a", "hat": "#7a6e5a", "skin": "#d8a080", "boots": "#3a2e26", "cape": "#5a5244" },
+  "hair": { "style": "long" },
+  "outfit": { "top": "dress", "belt": null },
+  "headwear": { "style": "hood", "color": "hat" },
+  "accessories": [ { "type": "cape", "color": "cape" } ] }

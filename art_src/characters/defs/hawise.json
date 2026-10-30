@@ -1,0 +1,7 @@
+{ "id": "hawise", "extends": "_base_villager", "name": "Hawise of the Boar & Flagon",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#5a3424", "main": "#7a4a3a", "trim": "#e0c890", "hat": "#ece2cc", "apron": "#e6dcc4", "skin": "#eab894", "boots": "#4a2e22" },
+  "face": { "smile": true },
+  "hair": { "style": "bun" },
+  "outfit": { "top": "dress", "apron": "apron", "belt": null },
+  "headwear": { "style": "mob_cap", "color": "hat", "trim": "#c89a7a" } }

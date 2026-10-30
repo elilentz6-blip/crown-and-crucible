@@ -1,39 +1,7 @@
-{
-  "id": "vane",
-  "extends": "_base_villager",
-  "name": "Sapper Vane",
-  "body": {
-    "build": "average",
-    "height": "short"
-  },
-  "palette": {
-    "hair": "#2e2622",
-    "main": "#6a4a2c",
-    "trim": "#a07a44",
-    "pants": "#4a3a2c",
-    "boots": "#2e2218",
-    "skin": "#c8946a",
-    "metal": "#8e94a0"
-  },
-  "face": {
-    "beard": "stubble",
-    "beard_color": "hair"
-  },
-  "hair": {
-    "style": "swept"
-  },
-  "outfit": {
-    "top": "tunic",
-    "apron": "#3e3a36",
-    "belt": "#4a3020"
-  },
-  "headwear": {
-    "style": "none"
-  },
-  "accessories": [
-    {
-      "type": "mace",
-      "color": "#7a5a3c"
-    }
-  ]
-}
+{ "id": "vane", "extends": "_base_villager", "name": "Sapper Vane",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#2a2420", "main": "#5a5a5e", "trim": "#8e3a2e", "pants": "#3a3632", "skin": "#c08460", "boots": "#2a2420", "hat": "#6a6e74" },
+  "face": { "beard": "long", "beard_color": "#2a2420" },
+  "outfit": { "top": "mail" },
+  "headwear": { "style": "kettle_helm", "color": "hat" },
+  "accessories": [ { "type": "staff" } ] }

@@ -14,3 +14,4 @@
 /// INTER-MODULE INTERFACES:
 ///   - vis_step() in scr_vis_world.
 vis_step();
+chron_qa_step(); // CC_CHRON_QA=1 headless Chronicles play-through only (scr_chronicle_qa)

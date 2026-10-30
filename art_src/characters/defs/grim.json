@@ -1,40 +1,7 @@
-{
-  "id": "grim",
-  "extends": "_base_villager",
-  "name": "Barrow Mercenary Grim",
-  "body": {
-    "build": "stout",
-    "height": "tall"
-  },
-  "palette": {
-    "hair": "#242020",
-    "main": "#3e3a3c",
-    "trim": "#8a2a2a",
-    "pants": "#2e2a2c",
-    "boots": "#241c18",
-    "skin": "#c08c68",
-    "metal": "#7a808c"
-  },
-  "face": {
-    "beard": "short",
-    "beard_color": "hair"
-  },
-  "hair": {
-    "style": "short"
-  },
-  "outfit": {
-    "top": "mail",
-    "tabard": "tabard",
-    "belt": "#3a2418"
-  },
-  "headwear": {
-    "style": "kettle_helm",
-    "color": "metal"
-  },
-  "accessories": [
-    {
-      "type": "spear",
-      "color": "#5a4430"
-    }
-  ]
-}
+{ "id": "grim", "extends": "_base_villager", "name": "Grim, Hired Man",
+  "body": { "build": "stout", "height": "tall" },
+  "palette": { "hair": "#3a2e26", "main": "#4a4a46", "trim": "#7a5a3a", "pants": "#2e2a26", "skin": "#c88a66", "boots": "#2a2420", "hat": "#5e6268" },
+  "face": { "beard": "stubble" },
+  "outfit": { "top": "mail" },
+  "headwear": { "style": "kettle_helm", "color": "hat" },
+  "accessories": [ { "type": "spear" } ] }

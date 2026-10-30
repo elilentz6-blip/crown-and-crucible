@@ -1,0 +1,42 @@
+{
+  "id": "malo",
+  "extends": "_base_villager",
+  "name": "Factor Malo",
+  "body": {
+    "build": "stout",
+    "height": "normal"
+  },
+  "palette": {
+    "hair": "#1e1a18",
+    "main": "#5a2a3a",
+    "trim": "#c8a050",
+    "hat": "#2e3a3a",
+    "pants": "#2e2a30",
+    "boots": "#241c1c",
+    "skin": "#c89a78",
+    "cape": "#2e3a3a"
+  },
+  "face": {
+    "beard": "mustache",
+    "beard_color": "hair"
+  },
+  "hair": {
+    "style": "swept"
+  },
+  "outfit": {
+    "top": "tunic",
+    "belt": "#c8a050"
+  },
+  "headwear": {
+    "style": "feather_cap",
+    "color": "hat",
+    "feather": "trim",
+    "trim": "trim"
+  },
+  "accessories": [
+    {
+      "type": "cape",
+      "color": "cape"
+    }
+  ]
+}

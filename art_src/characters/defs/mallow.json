@@ -1,40 +1,8 @@
-{
-  "id": "mallow",
-  "extends": "_base_villager",
-  "name": "Old Mallow",
-  "body": {
-    "build": "stout",
-    "height": "short"
-  },
-  "palette": {
-    "hair": "#d8d4cc",
-    "main": "#8a5a3a",
-    "trim": "#c0a060",
-    "hat": "#6a7a4a",
-    "pants": "#4e4436",
-    "boots": "#3a2c22",
-    "skin": "#d8a080"
-  },
-  "face": {
-    "beard": "long",
-    "beard_color": "hair",
-    "smile": true
-  },
-  "hair": {
-    "style": "short"
-  },
-  "outfit": {
-    "top": "tunic",
-    "belt": "#4a3424"
-  },
-  "headwear": {
-    "style": "mob_cap",
-    "color": "hat"
-  },
-  "accessories": [
-    {
-      "type": "staff",
-      "color": "#7a5a3c"
-    }
-  ]
-}
+{ "id": "mallow", "extends": "_base_villager", "name": "Old Mallow",
+  "body": { "build": "slim" },
+  "palette": { "hair": "#c8c4bc", "main": "#6a7a3e", "trim": "#a89a62", "hat": "#a88a52", "pants": "#4a4030", "skin": "#d8a284", "boots": "#3a2c22" },
+  "face": { "beard": "long", "beard_color": "#d0ccc4" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic" },
+  "headwear": { "style": "straw_hat", "color": "hat" },
+  "accessories": [ { "type": "pitchfork" } ] }

@@ -1,0 +1,31 @@
+{
+  "id": "mira",
+  "extends": "_base_villager",
+  "name": "Refugee Mira",
+  "body": {
+    "build": "slim",
+    "height": "short"
+  },
+  "palette": {
+    "hair": "#4a3a30",
+    "main": "#7a7464",
+    "trim": "#5a5448",
+    "hat": "#8a8270",
+    "pants": "#5a5448",
+    "boots": "#3e3228",
+    "skin": "#d6a888"
+  },
+  "face": {},
+  "hair": {
+    "style": "long"
+  },
+  "outfit": {
+    "top": "dress",
+    "belt": "#4a3a2a"
+  },
+  "headwear": {
+    "style": "hood",
+    "color": "hat"
+  },
+  "accessories": []
+}

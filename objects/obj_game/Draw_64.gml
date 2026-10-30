@@ -137,3 +137,13 @@ else if (global.game_mode == "QUEST_LOG") {
 else if (global.game_mode == "CONTRACTS") {
     ui_screen_contracts();  // presentation hook (ui_screens / ui_minigame_screens)
 }
+
+// =========================================================================
+// STATE 9: CONVERSATIONS & ROWAN'S NOTES (scr_conversation)
+// =========================================================================
+else if (global.game_mode == "CONVERSATION") {
+    convo_draw();
+}
+else if (global.game_mode == "NOTEBOOK") {
+    notebook_draw();
+}

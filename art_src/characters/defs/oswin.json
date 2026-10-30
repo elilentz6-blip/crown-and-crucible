@@ -1,0 +1,8 @@
+{ "id": "oswin", "extends": "_base_villager", "name": "Oswin Tarr",
+  "body": { "build": "stout" },
+  "palette": { "hair": "#9a9288", "main": "#6a5434", "trim": "#a08a5a", "hat": "#5a4a36", "pants": "#4a4034", "skin": "#d49a74", "boots": "#3a2a20" },
+  "face": { "beard": "short", "beard_color": "#a8a094" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic" },
+  "headwear": { "style": "hood", "color": "hat" },
+  "accessories": [ { "type": "staff" } ] }

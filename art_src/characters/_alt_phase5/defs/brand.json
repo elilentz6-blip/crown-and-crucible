@@ -1,0 +1,39 @@
+{
+  "id": "brand",
+  "extends": "_base_villager",
+  "name": "Foreman Brand",
+  "body": {
+    "build": "stout",
+    "height": "normal"
+  },
+  "palette": {
+    "hair": "#8a4a2a",
+    "main": "#a89878",
+    "trim": "#6a5a44",
+    "hat": "#c8b48c",
+    "pants": "#6a6054",
+    "boots": "#4a3a2c",
+    "skin": "#d09a72"
+  },
+  "face": {
+    "beard": "short",
+    "beard_color": "hair"
+  },
+  "hair": {
+    "style": "short"
+  },
+  "outfit": {
+    "top": "tunic",
+    "apron": "#8a7a60",
+    "belt": "#5a3e28"
+  },
+  "headwear": {
+    "style": "none"
+  },
+  "accessories": [
+    {
+      "type": "mace",
+      "color": "#8a6a44"
+    }
+  ]
+}

@@ -187,7 +187,7 @@ function retinue_ui_draw() {
         }
         var _key = (_sid == "ROWAN") ? "rowan" : R.members[$ _sid].visual;
         retinue_draw_portrait(_key, _sx, _sy, 2, false, (_sid == _sel) ? "spr_ui_select" : "spr_ui_frame_inset");
-        var _nm = (_sid == "ROWAN") ? "Sir Rowan" : R.members[$ _sid].name;
+        var _nm = (_sid == "ROWAN") ? "Rowan" : R.members[$ _sid].name;
         ui_text_draw(_sx + 68 - ui_text_width(_nm, "small") / 2, _sy + 140, _nm, "small_outline", UI_COL_PARCHMENT);
         if (R.active_fighter == _sid) {
             ui_icon(UI_ICON_SWORD, _sx + 106, _sy + 4);

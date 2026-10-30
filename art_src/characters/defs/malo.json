@@ -1,42 +1,7 @@
-{
-  "id": "malo",
-  "extends": "_base_villager",
-  "name": "Factor Malo",
-  "body": {
-    "build": "stout",
-    "height": "normal"
-  },
-  "palette": {
-    "hair": "#1e1a18",
-    "main": "#5a2a3a",
-    "trim": "#c8a050",
-    "hat": "#2e3a3a",
-    "pants": "#2e2a30",
-    "boots": "#241c1c",
-    "skin": "#c89a78",
-    "cape": "#2e3a3a"
-  },
-  "face": {
-    "beard": "mustache",
-    "beard_color": "hair"
-  },
-  "hair": {
-    "style": "swept"
-  },
-  "outfit": {
-    "top": "tunic",
-    "belt": "#c8a050"
-  },
-  "headwear": {
-    "style": "feather_cap",
-    "color": "hat",
-    "feather": "trim",
-    "trim": "trim"
-  },
-  "accessories": [
-    {
-      "type": "cape",
-      "color": "cape"
-    }
-  ]
-}
+{ "id": "malo", "extends": "_base_villager", "name": "Factor Malo",
+  "palette": { "hair": "#1e1a18", "main": "#5a2e4a", "trim": "#d8b060", "hat": "#2e2a3a", "pants": "#2e2a2a", "skin": "#c4865e", "boots": "#2a2020", "cape": "#3a2a3a" },
+  "face": { "beard": "mustache" },
+  "hair": { "style": "short" },
+  "outfit": { "top": "tunic", "belt": "trim" },
+  "headwear": { "style": "feather_cap", "color": "hat" },
+  "accessories": [ { "type": "cape", "color": "cape" } ] }
