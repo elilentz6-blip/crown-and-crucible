@@ -305,4 +305,22 @@ test('a day of companion life produces chronicle entries and requests without br
   assert.ok(typeof g.retinue_talk_line(R.members.MARGERY) === 'string');
 });
 
+test('in-combat retinue support abilities trigger appropriately on battle start, soul hit, and player turn', () => {
+  const { g, R } = world();
+  const M = R.members.MARGERY; M.met = true; M.status = 'AVAILABLE'; g.retinue_join('MARGERY', false);
+  const G = R.members.GALAHALT; G.met = true; G.status = 'AVAILABLE'; g.retinue_join('GALAHALT', false);
+  const foe = { name: 'Wild Barrow Boar', hp: 30, max_hp: 30, armor: 0, spareable: false };
+  g.start_undertale_battle(foe);
+  assert.ok(g.stat_crit >= 10, 'Margery Rousing Ballad added crit at battle start');
+  g.start_enemy_dodge();
+  g.combat_transition = 0;
+  const initialHp = g.hero_hp;
+  g.bullets = [{ x: g.soul_x, y: g.soul_y, vx: 0, vy: 0, rad: 5 }];
+  g.cc_defense_tick(0.016);
+  assert.ok(g.hero_hp <= initialHp, 'took hit with shield wall active');
+  g.dodge_timer = 0;
+  g.cc_defense_tick(0.016);
+  assert.equal(g.battle_phase, 'PLAYER_MENU');
+});
+
 console.log(`\n${passed} retinue tests passed.`);

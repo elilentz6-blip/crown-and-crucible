@@ -92,7 +92,16 @@ function cc_combat_input() {
 
 function cc_begin_attack() {
     recalculate_stats();
-    weapon_attack = cc_attack_create(cc_gear(0), combat_modifiers, weapon_minigames);
+    var _weapon = cc_gear(0);
+    if (retinue_exists() && retinue_active_fighter() != "ROWAN") {
+        var _fighter_id = retinue_active_fighter();
+        var _M = retinue_member(_fighter_id);
+        if (_M != undefined && is_struct(_M.def.combat) && _M.def.combat.can_fight) {
+            var _c_weapon = _M.def.combat[$ "weapon"];
+            if (is_struct(_c_weapon)) _weapon = _c_weapon;
+        }
+    }
+    weapon_attack = cc_attack_create(_weapon, combat_modifiers, weapon_minigames);
     battle_phase = "FIGHT_WEAPON";
     battle_input_armed = false;
     cc_sfx_play("snd_sword_swing", 1.0, 0.85);
@@ -137,8 +146,32 @@ function cc_battle_open(_source) {
     bullets = [];
     weapon_attack = undefined;
     attack_outcome = undefined;
+    turn_support_used = false;
+    soul_first_hit_wave = false;
     battle_box_text = "* " + battle_enemy.name + " bars the path! Choose your action.";
     cc_combat_emit("encounter_started", { encounter_id: cc_value(_source, "id", _source.name) });
+
+    if (retinue_exists()) {
+        var _supports = retinue_support_abilities();
+        for (var _s = 0; _s < array_length(_supports); _s++) {
+            var _sup = _supports[_s];
+            if (_sup.trigger == "BATTLE_START") {
+                if (_sup.id == "ROUSING_BALLAD") {
+                    stat_crit += _sup.power;
+                    battle_box_text = "* Margery's Rousing Ballad echoes! (+" + string(_sup.power) + "% Crit)";
+                } else if (_sup.id == "COVERING_VOLLEY") {
+                    battle_enemy.hp = max(1, battle_enemy.hp - _sup.power);
+                    battle_box_text = "* Wenna looses a covering volley! (-" + string(_sup.power) + " enemy HP)";
+                } else if (_sup.id == "PARLEY") {
+                    battle_enemy.spareable = true;
+                    battle_box_text = "* Isolde's Herald Parley demands terms! (Enemy open to mercy)";
+                } else if (_sup.id == "AMBUSH_WARNING") {
+                    defense_clock = 0.55;
+                    battle_box_text = "* Tam's Ambush Warning spots danger first! (Wave delayed)";
+                }
+            }
+        }
+    }
 }
 
 function cc_begin_defense() {
@@ -152,6 +185,7 @@ function cc_begin_defense() {
     defense_elapsed = 0;
     combat_transition = 0.35;
     soul_invulnerable = 0;
+    soul_first_hit_wave = false;
     var _fallback = battle_enemy.name == "Wild Barrow Boar" ? "BOAR_LANES" : ((battle_enemy.name == "Barrow Warden Shade" || battle_enemy.name == "Barrow Renegade Warden") ? "CROWN_RAIN" : "KNIFE_FAN");
     defense_pattern = cc_value(battle_enemy, "pattern_id", _fallback);
     if (!variable_struct_exists(defense_patterns, defense_pattern)) defense_pattern = "KNIFE_FAN";
@@ -232,7 +266,19 @@ function cc_defense_tick(_dt) {
         _bullet.y += _bullet.vy * _seconds;
         if (cc_swept_hit(_old_x - _old_soul_x, _old_y - _old_soul_y, _bullet.x - soul_x, _bullet.y - soul_y, _bullet.rad + 5)) {
             if (soul_invulnerable <= 0) {
-                var _damage = cc_take_hit(max(1, 4 - floor(stat_def / 5)));
+                var _reduction = 0;
+                if (!soul_first_hit_wave && retinue_exists()) {
+                    soul_first_hit_wave = true;
+                    var _supports = retinue_support_abilities();
+                    for (var _s = 0; _s < array_length(_supports); _s++) {
+                        var _sup = _supports[_s];
+                        if (_sup.trigger == "SOUL_HIT") {
+                            _reduction += _sup.power;
+                        }
+                    }
+                }
+                var _raw = max(1, 4 - floor(stat_def / 5));
+                var _damage = cc_take_hit(max(1, _raw - _reduction));
                 soul_invulnerable = 0.45;
                 screen_shake = 3;
                 cc_combat_emit("soul_hit", _damage);
@@ -251,6 +297,19 @@ function cc_defense_tick(_dt) {
         bullets = [];
         defense_warnings = [];
         battle_box_text = "* The enemy prepares their next move.";
+        if (!turn_support_used && retinue_exists()) {
+            var _supports = retinue_support_abilities();
+            for (var _s = 0; _s < array_length(_supports); _s++) {
+                var _sup = _supports[_s];
+                if (_sup.trigger == "PLAYER_TURN" && _sup.id == "BLESSED_MEAD") {
+                    turn_support_used = true;
+                    hero_hp = min(hero_max_hp, hero_hp + _sup.power);
+                    battle_box_text = "* Brother Dunstan passes a swig of blessed mead! (+" + string(_sup.power) + " HP)";
+                    break;
+                }
+            }
+        }
+        recalculate_stats();
     }
 }
 
