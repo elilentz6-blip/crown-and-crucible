@@ -265,9 +265,14 @@ function cc_end_defeat() {
     global.game_mode = "OVERWORLD";
     hero_shield = 0;
     bullets = [];
-    hero_hp = hero_max_hp;
+    hero_hp = max(1, floor(hero_max_hp * 0.5));
+    global.player_injury = "BRUISED_RIBS";
+    global.player_injury_days = 2;
+    global.armor_durability = max(0, (variable_global_exists("armor_durability") ? global.armor_durability : 100) - 8);
+    global.hero_stamina = max(20, floor((variable_global_exists("hero_max_stamina") ? global.hero_max_stamina : 100) * 0.4));
+    cc_debt_add("chapel_salvage", "Wound Binding & Field Litter", 5, "Brother Dunstan");
     // Keep the current map/position: a world module may own map transitions.
-    overworld_dialogue_text = "* You collapse. A passing traveler tends your wounds; the foe lets you retreat.";
+    overworld_dialogue_text = "* You collapse from your wounds. A passing carter drags you clear of the fray; your ribs ache and your harness is dented. (50% HP, Bruised Ribs)";
 }
 
 function cc_card_location(_id) {

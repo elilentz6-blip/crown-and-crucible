@@ -65,7 +65,7 @@ function cc_contracts_init() {
             betrayal_contact_y: 1850,
             betrayal_gold: 120,
             betrayal_rep: { oakhaven: 25, crown: -25 },
-            dialogue_offer: "* Bailiff Sir Guy: 'Captain Malor defies the King's law on the river! Bring his silver badge to my pavilion, knight!'",
+            dialogue_offer: "* Bailiff Sir Guy: 'Captain Malor defies the King's law on the river! Bring his silver badge to my pavilion, man-at-arms!'",
             dialogue_complete: "* Bailiff Sir Guy: 'A righteous blow for the Crown! Here is your 85 Gold and the commendation of High Cairn!'",
             dialogue_betray: "* Lady Cecily smirks: 'You warned Captain Malor and brought us his seal? Splendid! Vivienne rewards loyalty with cold silver: 120 Gold!'"
         },

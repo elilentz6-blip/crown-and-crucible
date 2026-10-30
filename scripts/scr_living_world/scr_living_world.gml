@@ -1377,3 +1377,880 @@ function cc_tavern_get_ambient_banter() {
     var _idx = (_cycle + irandom(array_length(_rumors) - 1)) mod array_length(_rumors);
     return _rumors[_idx];
 }
+
+// --------------------------------------------------------------------------------------------
+// Ambient World Barks, Schedules & Rumor Network (M6)
+// --------------------------------------------------------------------------------------------
+
+/// @description Returns the current diurnal phase string: "DAWN", "MIDDAY", "DUSK", or "NIGHT".
+function cc_day_phase_get() {
+    var _tod = 1;
+    if (instance_exists(obj_game) && variable_instance_exists(obj_game, "time_of_day")) {
+        _tod = obj_game.time_of_day;
+    } else if (variable_global_exists("time_of_day")) {
+        _tod = global.time_of_day;
+    }
+
+    switch (_tod) {
+        case 0: return "DAWN";
+        case 1: return "MIDDAY";
+        case 2: return "DUSK";
+        case 3: return "NIGHT";
+        default: return "MIDDAY";
+    }
+}
+
+/// @description Calculates the total unpaid debts currently owed by Rowan.
+function cc_debt_total() {
+    var _tot = 0;
+    if (variable_global_exists("player_debts") && is_array(global.player_debts)) {
+        for (var _i = 0; _i < array_length(global.player_debts); _i++) {
+            var _d = global.player_debts[_i];
+            if (is_struct(_d) && variable_struct_exists(_d, "amount")) {
+                _tot += max(0, floor(_d.amount));
+            }
+        }
+    }
+    if (_tot == 0) {
+        if (instance_exists(obj_game) && variable_instance_exists(obj_game, "hero_debt")) {
+            _tot += max(0, floor(obj_game.hero_debt));
+        } else if (variable_global_exists("hero_debt")) {
+            _tot += max(0, floor(global.hero_debt));
+        }
+    }
+    return _tot;
+}
+
+function cc_ambient_life_init() {
+    global.ambient_life = {
+        initialized: true,
+        last_bark: "",
+        last_speaker: "",
+        bark_history: []
+    };
+}
+
+/// @description Returns an ambient scheduled post or task description for an NPC in a given phase.
+function cc_ambient_schedule_get(_npc_id, _phase = "") {
+    if (_phase == "" || is_undefined(_phase)) _phase = cc_day_phase_get();
+    _phase = string_upper(string_trim(string(_phase)));
+    if (_phase == "DAY") _phase = "MIDDAY";
+
+    var _nid = string_lower(string_trim(string(_npc_id)));
+    if (string_starts_with(_nid, "villager_")) _nid = string_delete(_nid, 1, 9);
+    if (string_starts_with(_nid, "npc_")) _nid = string_delete(_nid, 1, 4);
+
+    switch (_nid) {
+        case "alden":
+            if (_phase == "DAWN") return "Inside Manor, council table examining parish rolls";
+            if (_phase == "MIDDAY") return "Town square stroll, observing field rotations";
+            if (_phase == "DUSK") return "Town square bench, speaking with freeholders";
+            return "Inside Manor bedchamber, sleeping";
+
+        case "beatrice":
+            if (_phase == "DAWN") return "Inside Bakery, stoking peel oven and kneading dough";
+            if (_phase == "MIDDAY") return "Market stall, selling hot barley and wheat loaves";
+            if (_phase == "DUSK") return "Inside Bakery, wiping cooling racks and banking embers";
+            return "Inside Bakery quarters, resting";
+
+        case "odo":
+            if (_phase == "DAWN") return "Forge yard, checking charcoal bins and quenching trough";
+            if (_phase == "MIDDAY") return "Inside Forge, hammering billhooks at anvil";
+            if (_phase == "DUSK") return "Inside Boar & Flagon, nursing spiced cider by the hearth";
+            return "Inside Forge quarters, sleeping";
+
+        case "giles":
+            if (_phase == "DAWN") return "Farm pen, pitching clover to sow and sheep";
+            if (_phase == "MIDDAY") return "Crop fields, weeding furrow ridges and rye strips";
+            if (_phase == "DUSK") return "Inside Tithe Barn, inspecting harvest sacks";
+            return "Inside Farmhouse, resting by the hearth";
+
+        case "dunstan":
+            if (_phase == "DAWN") return "Eastern Chapel, morning Prime prayers at cold altar";
+            if (_phase == "MIDDAY") return "Chapel yard, tending physic garden comfrey and mead";
+            if (_phase == "DUSK") return "Eastern Chapel, lighting tallow candles for Vespers";
+            return "Eastern Chapel nave, keeping midnight candle vigil";
+
+        case "corin":
+            if (_phase == "DAWN") return "Livery Stables, cinching canvas and harness on pack mule";
+            if (_phase == "MIDDAY") return "Crossroads stall, peddling needles, shears, and salt";
+            if (_phase == "DUSK") return "General Store porch, counting coppers and locking crate";
+            return "Boar & Flagon taproom, lodging with lockbox in hand";
+
+        case "wulf":
+            if (_phase == "DAWN") return "Red Sike landing, checking flatboat moorings in mist";
+            if (_phase == "MIDDAY") return "Tavern yard shade, watching arriving cargo wagons";
+            if (_phase == "DUSK") return "Boar & Flagon corner, rolling Crown & Bones dice";
+            return "Boar & Flagon taproom, stacking groats and sipping cider";
+
+        case "maren":
+            if (_phase == "DAWN") return "Weaver Workshop, threading warp strings on upright loom";
+            if (_phase == "MIDDAY") return "Weaver Workshop porch, carding wool and sorting fleeces";
+            if (_phase == "DUSK") return "Weaver Workshop, winding spun skeins onto wooden bobbins";
+            return "Weaver Workshop quarters, shuttered against river damp";
+
+        case "margery":
+            if (_phase == "DAWN") return "Tavern porch, tuning gut lute strings in morning chill";
+            if (_phase == "MIDDAY") return "Tavern bench, singing lively drover songs for carters";
+            if (_phase == "DUSK") return "Boar & Flagon hearth, striking melancholy minor chords";
+            return "Boar & Flagon corner, humming low laments by candlelight";
+
+        case "balin":
+            if (_phase == "DAWN") return "Highroad verge, scowling toward the eastern marches";
+            if (_phase == "MIDDAY") return "Tavern sun-bench, resting swollen knee in midday light";
+            if (_phase == "DUSK") return "Boar & Flagon table, nursing pewter flagon of spiced cider";
+            return "Boar & Flagon chimney nook, dozing with hand on sword-belt";
+
+        case "brand":
+            if (_phase == "DAWN") return "Quarry wagon yard, checking bedding lines on ashlar stone";
+            if (_phase == "MIDDAY") return "Bridge works, directing mason mallets and mortar beds";
+            if (_phase == "DUSK") return "Lime kilns, scraping lime mortar from trowels";
+            return "Lime kiln shelter, watching slow-burning slaking coals";
+
+        case "grim":
+            if (_phase == "DAWN") return "Barrow roadside, scouring morning dew from poleaxe spike";
+            if (_phase == "MIDDAY") return "Barrow crossroads, leaning on poleaxe watching wagons";
+            if (_phase == "DUSK") return "Barrow ditch stockade, watching shadows on old tumuli";
+            return "Barrow guard camp, keeping sharp watch behind ditch stakes";
+
+        default:
+            return "Village commons, going about daily labor";
+    }
+}
+
+/// @description Returns grounded medieval contextual barks tailored to 12 NPCs, day phases, wartime stage, injury, and debt.
+/// @param {string} _npc_id Identifier of the NPC (e.g. "alden", "odo", "maren", "beatrice", "giles", "dunstan", "corin", "wulf", "margery", "balin", "brand", "grim")
+/// @param {string} _phase Day phase ("DAWN", "MIDDAY", "DUSK", "NIGHT"); defaults to current day phase if ""
+/// @param {real} _war_stage Civil war stage (0-4); defaults to global.civil_war_stage or war clock stage if -1
+function cc_ambient_get_contextual_bark(_npc_id = "alden", _phase = "", _war_stage = -1) {
+    // 1. Resolve diurnal phase
+    if (_phase == "" || is_undefined(_phase)) {
+        _phase = cc_day_phase_get();
+    }
+    _phase = string_upper(string_trim(string(_phase)));
+    if (_phase == "DAY") _phase = "MIDDAY";
+    if (_phase != "DAWN" && _phase != "MIDDAY" && _phase != "DUSK" && _phase != "NIGHT") {
+        _phase = "MIDDAY";
+    }
+
+    // 2. Resolve civil war stage
+    if (_war_stage == -1 || is_undefined(_war_stage)) {
+        if (variable_global_exists("civil_war_stage")) {
+            _war_stage = global.civil_war_stage;
+        } else if (variable_global_exists("war_clock") && is_struct(global.war_clock) && variable_struct_exists(global.war_clock, "stage")) {
+            _war_stage = global.war_clock.stage;
+        } else {
+            _war_stage = 0;
+        }
+    }
+
+    // 3. Normalize NPC identifier
+    var _nid = string_lower(string_trim(string(_npc_id)));
+    if (string_starts_with(_nid, "villager_")) _nid = string_delete(_nid, 1, 9);
+    if (string_starts_with(_nid, "npc_")) _nid = string_delete(_nid, 1, 4);
+    if (string_starts_with(_nid, "sir_")) _nid = string_delete(_nid, 1, 4);
+    if (string_starts_with(_nid, "master_")) _nid = string_delete(_nid, 1, 7);
+    if (string_starts_with(_nid, "elder_")) _nid = string_delete(_nid, 1, 6);
+    if (string_starts_with(_nid, "baker_")) _nid = string_delete(_nid, 1, 6);
+    if (string_starts_with(_nid, "farmer_")) _nid = string_delete(_nid, 1, 7);
+    if (string_starts_with(_nid, "brother_")) _nid = string_delete(_nid, 1, 8);
+    if (string_starts_with(_nid, "friar_")) _nid = string_delete(_nid, 1, 6);
+    if (string_starts_with(_nid, "peddler_")) _nid = string_delete(_nid, 1, 8);
+    if (string_starts_with(_nid, "minstrel_")) _nid = string_delete(_nid, 1, 9);
+    if (string_starts_with(_nid, "foreman_")) _nid = string_delete(_nid, 1, 8);
+    if (string_starts_with(_nid, "mercenary_")) _nid = string_delete(_nid, 1, 10);
+
+    // 4. Resolve player bodily injury state
+    var _has_injury = false;
+    var _inj = "NONE";
+    if (instance_exists(obj_game) && variable_instance_exists(obj_game, "hero_injury")) {
+        _inj = obj_game.hero_injury;
+    } else if (variable_global_exists("hero_injury")) {
+        _inj = global.hero_injury;
+    } else if (variable_global_exists("player_injury")) {
+        _inj = global.player_injury;
+    }
+    if (!is_undefined(_inj) && string(_inj) != "" && string_upper(string(_inj)) != "NONE") {
+        _has_injury = true;
+    }
+
+    // 5. Resolve player unpaid debt state
+    var _total_debt = cc_debt_total();
+    if (_total_debt == 0) {
+        if (instance_exists(obj_game) && variable_instance_exists(obj_game, "hero_debt")) {
+            _total_debt += max(0, floor(obj_game.hero_debt));
+        } else if (variable_global_exists("hero_debt")) {
+            _total_debt += max(0, floor(global.hero_debt));
+        }
+    }
+    var _has_debt = (_total_debt > 0);
+
+    // 6. Branch on contextual state: Injury > Debt > Wartime Stage 2+ > Peacetime Diurnal Phase
+
+    // --- CONTEXT A: INJURY REACTIVITY (Rowan visibly injured) ---
+    if (_has_injury) {
+        switch (_nid) {
+            case "alden":
+                return "* (Elder Alden examines your unsteady stance.) 'You are limping heavily, Rowan. A man-at-arms with cracked bone is no good to the parish watch. Let Brother Dunstan bind that before gangrene sets.'";
+            case "odo":
+                return "* (Master Odo spots your bleeding tunic.) 'You're favoring that side, man-at-arms. Flesh tears easier than boiled leather. Step away from the sparks before you drop on my apron.'";
+            case "maren":
+                return "* (Maren gasps, setting down her shears.) 'Mercy on us, Rowan! Your tunic is torn and stained with dark blood. Sit on this stool while I fetch clean boiled linen.'";
+            case "beatrice":
+                return "* (Baker Beatrice rushes over with a warm damp cloth.) 'Saints preserve us, Rowan, you look pale as sifted flour! Come sit by the oven warmth; broken ribs won't mend on trail dust and stubbornness.'";
+            case "giles":
+                return "* (Farmer Giles winces at your step.) 'You're dragging that leg like a plow through stony turf, Rowan! Sit your carcass down on the hay bale before you topple into the dung.'";
+            case "dunstan":
+                return "* (Brother Dunstan reaches for clean linen bindings.) 'Brother Rowan, you are bleeding through your doublet! Come inside the chancel; I have willow bark and wound-binding salve to staunch it.'";
+            case "corin":
+                return "* (Peddler Corin examines your gashes with a merchant's eye.) 'You took a bad beating on the road, friend. I sell clean linen bandage rolls and arnica ointment—two groats a pot, and worth every copper.'";
+            case "wulf":
+                return "* (Wulf sizes you up with a smirk.) 'You walk like a dead man walking, Rowan. Did a bailiff bounce a billhook off your ribs? Sit down and drown the ache in cider.'";
+            case "margery":
+                return "* (Margery pauses her strumming in concern.) 'Mercy, Rowan, that's a nasty limp! Even my lute weeps seeing a brave man-at-arms bruised to the marrow. Sit and rest.'";
+            case "balin":
+                return "* (Sir Balin nods with grim veteran recognition.) 'Ha! A proper soldier's wound! Smashed ribs or a sprained joint, Rowan? Rub it with goose grease, grit your teeth, and keep your shield raised.'";
+            case "brand":
+                return "* (Foreman Brand examines your bruised frame.) 'That's a heavy blow you took, Rowan. I've seen falling granite boulders do less damage to a man's frame. Don't go lifting any ashlar today.'";
+            case "grim":
+                return "* (Mercenary Grim glares at your bloody wound.) 'You're leaking blood on the gravel, Rowan. A wounded man-at-arms on the barrow road is just wolf bait. Bind it or find a ditch to die in.'";
+            default:
+                return "* (The villager steps back in alarm.) 'You are badly wounded, soldier! Find Brother Dunstan at the chapel to bind your hurts!'";
+        }
+    }
+
+    // --- CONTEXT B: DEBT REACTIVITY (Rowan has outstanding arrears / tallies) ---
+    if (_has_debt) {
+        switch (_nid) {
+            case "alden":
+                return "* (Elder Alden holds up a notched tally stick.) 'The manor court bailiff brought your unpaid debt tally to my table, Rowan. Settle your arrears before distress is levied upon your kit.'";
+            case "odo":
+                return "* (Master Odo grunts gruffly.) 'No credit on honest ironwork, Rowan. I have charcoal carters to pay and your debt tally is already whispered across the square.'";
+            case "maren":
+                return "* (Maren folds a piece of unwashed wool.) 'They say your purse is empty and your debt tallies are piling at the gatehouse. Honest weavers cannot barter wool for promises, soldier.'";
+            case "beatrice":
+                return "* (Baker Beatrice looks at you with weary pity.) 'The miller won't grind grain without hard silver, Rowan. Clear your debt tallies in town before you ask for an extra loaf on trust.'";
+            case "giles":
+                return "* (Farmer Giles shakes his head anxiously.) 'The bailiff was at my wattle fence asking if I'd seen you. Settle your debt tallies, Rowan; when bailiffs smell owed coin, they look at my sheep next!'";
+            case "dunstan":
+                return "* (Brother Dunstan places a gentle hand on your shoulder.) 'Render unto Caesar what is Caesar's, Rowan. Unpaid debts breed bitter strife and bring the bailiff's distress upon your threshold.'";
+            case "corin":
+                return "* (Peddler Corin keeps his wagon lock fastened.) 'Word travels fast along the road, Rowan. My wagon doesn't open on credit—clear your debt tallies with the reeve before we trade.'";
+            case "wulf":
+                return "* (Wulf taps his notched pocket-board.) 'Your tally sticks are looking pretty notched, friend. Unpaid debts have a nasty way of drawing bailiff thumping and broken knuckles.'";
+            case "margery":
+                return "* (Margery smiles wryly over her instruments.) 'I'd compose a ballad about your empty purse, Rowan, but the creditors might charge me for the performance. Pay your tallies!'";
+            case "balin":
+                return "* (Sir Balin scowls into his cider.) 'Debt is a dishonorable shackle for a man-at-arms. Settle what you owe the town, Rowan; a free blade shouldn't cringe before a book-keeper.'";
+            case "brand":
+                return "* (Foreman Brand taps his ledger board.) 'The quarry clerk says your account is in arrears, Rowan. Clear your debt tallies before you ask the masons for any favors.'";
+            case "grim":
+                return "* (Mercenary Grim sneers, resting a hand on his pommel.) 'You owe silver in town, Rowan? Settle it quick. Some creditors hire sellswords to collect, and I don't give discounts for friendly faces.'";
+            default:
+                return "* (The villager shakes their head.) 'The bailiff is looking for you regarding your unpaid debts, Rowan. Settle your tallies before they seize your goods!'";
+        }
+    }
+
+    // --- CONTEXT C: WARTIME REACTIVITY (Stage 2+, references Assize of Bread 18G, Crown purveyors, Iron Council salt blockades) ---
+    if (_war_stage >= 2) {
+        switch (_nid) {
+            case "alden":
+                return "* (Elder Alden sighs heavily over the manor rolls.) 'The Royal Assize of Bread grain ceiling of 18G cannot hold. Crown purveyors requisition our winter oats while the Iron Council salt blockades starve the shire.'";
+            case "odo":
+                return "* (Master Odo slams his tongs against the cold anvil.) 'Crown purveyors seize every bar of charcoal iron at fixed tallies, while the Iron Council salt blockades leave carters stranded despite the 18G Royal Assize of Bread ceiling.'";
+            case "maren":
+                return "* (Maren shakes her head over an empty carding bench.) 'The Iron Council salt blockades halt the wool barges, while Crown purveyors strip our larders under the Royal Assize of Bread 18G ceiling. Homespun is dearer than silver.'";
+            case "beatrice":
+                return "* (Baker Beatrice brushes soot from her brow in despair.) 'The Royal Assize of Bread sets the grain ceiling strictly at 18G a sack, but Crown purveyors buy up every bushel while Iron Council salt blockades leave our brine tubs bare.'";
+            case "giles":
+                return "* (Farmer Giles spits into the dust.) 'Crown purveyors commandeered half my winter seed under the Royal Assize of Bread 18G ceiling, and the Iron Council salt blockades keep us from curing pork for the frost.'";
+            case "dunstan":
+                return "* (Brother Dunstan blesses a bowl of thin broth.) 'The almshouse is crowded because the Iron Council salt blockades halted the river trade, and Crown purveyors strip our tithes despite the Royal Assize of Bread 18G ceiling.'";
+            case "corin":
+                return "* (Peddler Corin complains under his breath.) 'The Iron Council salt blockades shut down the southern salt pans, while Crown purveyors seize baggage mules under emergency writ. Even grain is choked by the Royal Assize of Bread 18G ceiling.'";
+            case "wulf":
+                return "* (Wulf grins cunningly, rolling bone dice.) 'Let Crown purveyors shout about the Royal Assize of Bread 18G ceiling. With the Iron Council salt blockades choking the channel, my hidden river cargo fetches triple silver.'";
+            case "margery":
+                return "* (Margery tunes a somber chord on her citole.) 'No songs of merriment while Crown purveyors seize the grain under the Royal Assize of Bread 18G ceiling, and Iron Council salt blockades starve the southern valley.'";
+            case "balin":
+                return "* (Sir Balin thumps his flagon onto the bench.) 'Disgraceful! Crown purveyors enforcing an 18G grain ceiling under the Royal Assize of Bread while the Iron Council salt blockades cut our supply train! We should ride out and break that blockade!'";
+            case "brand":
+                return "* (Foreman Brand spits limestone dust in anger.) 'Crown purveyors took our haulage oxen for the baggage train under the Royal Assize of Bread 18G ceiling, and the Iron Council salt blockades halted our mortar deliveries!'";
+            case "grim":
+                return "* (Mercenary Grim tests his poleaxe blade with a callous grin.) 'The Iron Council salt blockades have made this a sellsword's market. Let Crown purveyors bicker over the Royal Assize of Bread 18G grain ceiling; good steel names its own price.'";
+            default:
+                return "* (The villager whispers anxiously.) 'Between Crown purveyors seizing loads under the Royal Assize of Bread 18G grain ceiling and the Iron Council salt blockades, winter will be bitter.'";
+        }
+    }
+
+    // --- CONTEXT D: PEACETIME DIURNAL PHASE BARKS (DAWN, MIDDAY, DUSK, NIGHT) ---
+    switch (_nid) {
+        case "alden":
+            if (_phase == "DAWN") return "* (Elder Alden leans on his ash staff.) 'Dawn mists off the green. Let us see what boundary disputes the night frost has brought to the reeve's bench.'";
+            if (_phase == "MIDDAY") return "* (Elder Alden inspects the parish ditch.) 'Midday sun shows the furrow lines true. Keep your wits about you on the common pastures, Rowan.'";
+            if (_phase == "DUSK") return "* (Elder Alden watches the cattle driven in.) 'Dusk gathers over the ridge. Time to latch the livestock folds before the hill foxes scent the lambs.'";
+            return "* (Elder Alden listens for the curfew bell.) 'Curfew has sounded, Rowan. Keep within lantern light; only poachers and renegades walk the lanes past dark.'";
+
+        case "odo":
+            if (_phase == "DAWN") return "* (Master Odo rakes the forge hearth.) 'Raking the coals at dawn. Cold hearth needs the leather bellows before the first horse-shoe can be drawn.'";
+            if (_phase == "MIDDAY") return "* (Master Odo wipes soot from his leather apron.) 'Midday heat and forge fire together would sweat grease from a stone. What steel needs sharpening, Rowan?'";
+            if (_phase == "DUSK") return "* (Master Odo quenches a glowing blade in the brine trough.) 'Dusk settles the clinkers. My arms ache from drawing out plowshares, but honest iron never rests for long.'";
+            return "* (Master Odo damps the forge coals with ash.) 'The hearth fire is banked till cockcrow. Even iron must cool in the night, soldier. Go rest.'";
+
+        case "maren":
+            if (_phase == "DAWN") return "* (Maren threads the tall wooden loom.) 'Morning sun gives the only true light for threading the warp. A single knot missed at dawn ruins a yard of homespun.'";
+            if (_phase == "MIDDAY") return "* (Maren cards fleece at her workshop bench.) 'Midday brings the wool-packers from the hills. Rowan, mind you don't snag your surcoat on my tenterhooks.'";
+            if (_phase == "DUSK") return "* (Maren winds skeins of spun flax.) 'Dusk dims the thread. My eyes sting from staring at warp strings since prime. Good eventide, man-at-arms.'";
+            return "* (Maren bars the workshop shutters against the river damp.) 'Barring the shutters against the night mist. Damp air mildews spun linen if the hearth goes cold.'";
+
+        case "beatrice":
+            if (_phase == "DAWN") return "* (Baker Beatrice slides rye dough into the stone peel oven.) 'Stoking the peel oven before the cock crows. Stonecross wakes by the smell of hot crust, not by church bells.'";
+            if (_phase == "MIDDAY") return "* (Baker Beatrice dusts flour from her arms.) 'Hot barley loaves fresh from the birch peel! Take an end-crust with you, Rowan; empty bellies make sour soldiers.'";
+            if (_phase == "DUSK") return "* (Baker Beatrice cools loaves on the wooden racks.) 'Sundown cools the hearthstones. Just scrapings and bran loaves left for the swine mash tonight.'";
+            return "* (Baker Beatrice latches the flour bin against vermin.) 'The ovens are banked with white ash. The village sleeps and the mill mice are prowling. Go find your pallet, Rowan.'";
+
+        case "giles":
+            if (_phase == "DAWN") return "* (Farmer Giles pitches hay into Clover's wattle pen.) 'Dawn frost on the stubble. Clover is rooting through the clover already, snorting for her morning mash.'";
+            if (_phase == "MIDDAY") return "* (Farmer Giles leans on his weeding hoe.) 'Midday sun beats hard on the rye strip. A man's back stiffens early when the oxen pull stubborn.'";
+            if (_phase == "DUSK") return "* (Farmer Giles drives sheep through the wattle gate.) 'Sun's dipping behind the ridge. Getting the flock past the ditch hurdle before foxes come sniffing from the fen.'";
+            return "* (Farmer Giles latches the farmhouse oak door.) 'Night's when the barn owls hunt. Best be behind locked timber, Rowan; ditch tracks aren't safe after the curfew horn.'";
+
+        case "dunstan":
+            if (_phase == "DAWN") return "* (Brother Dunstan chants Prime in the cold chapel nave.) 'Morning orisons at prime. The altar stones are cold, but holy prayer warms the soul, brother Rowan.'";
+            if (_phase == "MIDDAY") return "* (Brother Dunstan gathers herbs in the physic garden.) 'Midday weeds grow faster than virtue. Gathering comfrey, willow bark, and woundwort while the dew is dry.'";
+            if (_phase == "DUSK") return "* (Brother Dunstan lights tallow tapers for Vespers.) 'Vesper shadows lengthen across the chapel yard. Peace be upon your steps this eventide, brother Rowan.'";
+            return "* (Brother Dunstan kneels in silent candle vigil.) 'The chapel door stays unbolted for the afflicted, but night carries bitter drafts from the crypt. Tread softly, Rowan.'";
+
+        case "corin":
+            if (_phase == "DAWN") return "* (Peddler Corin cinches leather straps on his pack mule.) 'Cinched the pack mule at sunrise. Heavy dew on the canvas means fair weather for the highroad.'";
+            if (_phase == "MIDDAY") return "* (Peddler Corin lays out wares upon his wagon cloth.) 'Midday trade is bustling! Bone needle-cases, shears, whetstones, and salt-cellars! What do you lack, Rowan?'";
+            if (_phase == "DUSK") return "* (Peddler Corin folds his oilcloth tarp.) 'Sundown at the crossroads. Time to pack the crate latches before twilight prowlers spot the copper tray.'";
+            return "* (Peddler Corin sits with his lockbox between his boots.) 'A dry bench and a locked coffer. The highroads belong to cutpurses once the night takes the hills.'";
+
+        case "wulf":
+            if (_phase == "DAWN") return "* (Wulf watches the river reeds at the Red Sike landing.) 'Dawn mist on the water. Best hour to slip a flatboat under the bridge before the toll guard rubs the sleep from his eyes.'";
+            if (_phase == "MIDDAY") return "* (Wulf loiters in the tavern yard, eyeing cargo wagons.) 'Midday sun brings heavy wagons and loose tongues. Got a taste for dice today, Rowan, or just watching the carts roll?'";
+            if (_phase == "DUSK") return "* (Wulf rolls two bone dice across the oak table.) 'Tallow candles are lit and the ale's flowing. The dice cup is warm, man-at-arms. Silver speaks louder than prayer.'";
+            return "* (Wulf stacks silver groats behind a mug of dark cider.) 'Night's the only honest hour in Aethelgard. The bailiff sleeps, but the dice roll on.'";
+
+        case "margery":
+            if (_phase == "DAWN") return "* (Margery tunes gut lute strings in the crisp morning air.) 'Morning chill plays havoc with gut strings. A new ballad needs cold dawn air to find its tune.'";
+            if (_phase == "MIDDAY") return "* (Margery strums a lively drover song for the tavern porch.) 'Singing for the teamsters at midday! Toss a copper into the tambour if you have one, Rowan!'";
+            if (_phase == "DUSK") return "* (Margery strikes minor chords as the hearth roars.) 'Dusk in the taproom. The working folk want melancholy ballads now—songs of harvest passed and distant sieges.'";
+            return "* (Margery hums a mournful lament to sleepy drinkers.) 'Midnight draws close. The drinkers are dozing over their tankards, and only sad songs keep the shadows back.'";
+
+        case "balin":
+            if (_phase == "DAWN") return "* (Sir Balin gazes toward the King's Highroad with a scowl.) 'Dawn wind off the hills. In my youth, we'd have been mounted and spurred by prime, not nursing old joint-aches in the cold.'";
+            if (_phase == "MIDDAY") return "* (Sir Balin suns his swollen knee on the tavern bench.) 'Warm sun does good for an old campaigner's knee. What word from the turnpike, Rowan? Any real skirmishing?'";
+            if (_phase == "DUSK") return "* (Sir Balin nurses a heavy pewter flagon of spiced cider.) 'Dusk settles in. A soldier's life ends in a tavern corner with spiced cider and memories of the shield-wall.'";
+            return "* (Sir Balin snoozes in the chimney nook with hand on his dagger.) 'Curfew already? Let the watch walk their rounds. A seasoned soldier sleeps with one ear cocked.'";
+
+        case "brand":
+            if (_phase == "DAWN") return "* (Foreman Brand inspects fresh quarry stone on the skids.) 'Dawn light shows cracks in fresh quarry ashlar before the chisel strikes. Check every bedding line true.'";
+            if (_phase == "MIDDAY") return "* (Foreman Brand bellows over the clatter of stone mallets.) 'Keep swinging those mallets! Midday sun dries the mortar fast, so bed the ashlar before it skims!'";
+            if (_phase == "DUSK") return "* (Foreman Brand scrapes lime mortar from his iron trowel.) 'Dusk at the lime kilns. My hands feel like dried sandstone, but the bridge arch stands solid.'";
+            return "* (Foreman Brand sits by the kiln coals with a jug of small beer.) 'The kiln fires burn through the dark to keep the lime slaking. Stone never sleeps, Rowan, and neither does a foreman.'";
+
+        case "grim":
+            if (_phase == "DAWN") return "* (Mercenary Grim scours morning dew from his poleaxe spike.) 'Cold dawn grease on the blade. If you don't scour the morning mist off your iron, rust will bite deeper than an arrow.'";
+            if (_phase == "MIDDAY") return "* (Mercenary Grim leans on his poleaxe at the crossroads.) 'Midday traffic is thin. Keep your dagger thong loosened on this road, man-at-arms; eyes are watching from the scrub.'";
+            if (_phase == "DUSK") return "* (Mercenary Grim watches the barrow shadows lengthen.) 'Dusk is when the carrion crows settle on the barrows. The highroad between here and Dunhollow isn't safe after sundown.'";
+            return "* (Mercenary Grim keeps watch behind the sharpened ditch stakes.) 'Night patrol. Keep your campfire banked low and listen for the clink of mail in the thicket.'";
+
+        default:
+            if (_phase == "DAWN") return "* (The villager rubs sleep from their eyes.) 'Dawn breaks cold over the vale. Another day of labor begins.'";
+            if (_phase == "MIDDAY") return "* (The villager wipes their brow.) 'Midday sun is high. Godspeed on your travels, man-at-arms.'";
+            if (_phase == "DUSK") return "* (The villager heads toward home.) 'Dusk is upon us. Best seek shelter before nightfall.'";
+            return "* (The villager pulls their cloak tight.) 'Past curfew, friend. Keep to the lantern light.'";
+    }
+}
+
+// ============================================================================
+// REGIONAL LIVELIHOODS & COMMONER CAREER PATHS (scr_career_paths)
+// ============================================================================
+
+/// @description Crown & Crucible - Regional Livelihoods & Commoner Career Paths
+/// @module scr_career_paths
+///
+/// PURPOSE:
+///   Provides grounded, low-medieval (c. 1150-1350, zero magic/supernatural, Rule 13)
+///   honest civilian and martial livelihood progression for Rowan.
+///   Tracks 6 distinct regional occupations:
+///     1. Farmhand (Agricultural Labor & Field Tenancy in Stonecross)
+///     2. Quarryman (Stone Extraction & Ashlar Dressing in Dunhollow)
+///     3. Merchant Carter (Freight Cartage & Haulage along Oakhaven roads)
+///     4. Forester (Crown Weald Coppicing, Timber Felling & Charcoal Burning)
+///     5. Clerk (Parish Rolls, Assize Weights & Tithe Scribing)
+///     6. Garrison Man-at-Arms (Gate Watch, Parish Defense & Militia Drills)
+///
+/// STATE OWNERSHIP:
+///   - global.career_state: struct containing:
+///       - initialized: bool
+///       - farm_tenancy: bool
+///       - quarry_tenancy: bool
+///       - carter_charter: bool
+///       - woodward_commission: bool
+///       - clerk_commission: bool
+///       - garrison_commission: bool
+///       - total_wages_earned: real (cumulative honest labor wages)
+///       - paths: struct of career path objects
+
+function _cc_career_normalize_id(_id) {
+    if (!is_string(_id)) return "";
+    var _clean = string_lower(string_trim(_id));
+    if (_clean == "farm" || _clean == "farmhand" || _clean == "farming" || _clean == "farmer") return "farmhand";
+    if (_clean == "quarry" || _clean == "quarryman" || _clean == "miner" || _clean == "stonecutter") return "quarryman";
+    if (_clean == "carter" || _clean == "merchant carter" || _clean == "merchant_carter" || _clean == "cartage" || _clean == "carting") return "carter";
+    if (_clean == "forester" || _clean == "woodcutter" || _clean == "woodsman" || _clean == "forestry") return "forester";
+    if (_clean == "clerk" || _clean == "scribe" || _clean == "parish clerk" || _clean == "toll clerk") return "clerk";
+    if (_clean == "garrison" || _clean == "garrison man-at-arms" || _clean == "garrison_man_at_arms" || _clean == "watch" || _clean == "guard" || _clean == "soldier" || _clean == "man_at_arms") return "garrison";
+    return _clean;
+}
+
+function _cc_career_update_standing_name(_p) {
+    var _lvl = _p.standing;
+    switch (_p.id) {
+        case "farmhand":
+            if (_lvl >= 3) _p.standing_name = "Yeoman Farmer";
+            else if (_lvl == 2) _p.standing_name = "Tenant Husbandman";
+            else if (_lvl == 1) _p.standing_name = "Field Reaper";
+            else _p.standing_name = "Greenhorn Hand";
+            break;
+        case "quarryman":
+            if (_lvl >= 3) _p.standing_name = "Master Mason";
+            else if (_lvl == 2) _p.standing_name = "Quarry Factor";
+            else if (_lvl == 1) _p.standing_name = "Ashlar Dresser";
+            else _p.standing_name = "Pit Striker";
+            break;
+        case "carter":
+            if (_lvl >= 3) _p.standing_name = "Master Transporter";
+            else if (_lvl == 2) _p.standing_name = "Chartered Carrier";
+            else if (_lvl == 1) _p.standing_name = "Teamster Carter";
+            else _p.standing_name = "Pack Drover";
+            break;
+        case "forester":
+            if (_lvl >= 3) _p.standing_name = "Master Forester";
+            else if (_lvl == 2) _p.standing_name = "Bailiff's Woodward";
+            else if (_lvl == 1) _p.standing_name = "Coppice Ranger";
+            else _p.standing_name = "Woodcutter";
+            break;
+        case "clerk":
+            if (_lvl >= 3) _p.standing_name = "Master of Rolls";
+            else if (_lvl == 2) _p.standing_name = "Assize Notary";
+            else if (_lvl == 1) _p.standing_name = "Tally Scribe";
+            else _p.standing_name = "Copyist";
+            break;
+        case "garrison":
+            if (_lvl >= 3) _p.standing_name = "Garrison Commander";
+            else if (_lvl == 2) _p.standing_name = "Sergeant of the Watch";
+            else if (_lvl == 1) _p.standing_name = "Gate Warden";
+            else _p.standing_name = "Militia Levy";
+            break;
+        default:
+            _p.standing_name = "Workman";
+            break;
+    }
+}
+
+function cc_career_init() {
+    if (variable_global_exists("career_state") && is_struct(global.career_state) && variable_struct_exists(global.career_state, "initialized") && global.career_state.initialized) {
+        return global.career_state;
+    }
+
+    var _state = {
+        initialized: true,
+        farm_tenancy: false,
+        quarry_tenancy: false,
+        carter_charter: false,
+        woodward_commission: false,
+        clerk_commission: false,
+        garrison_commission: false,
+        total_wages_earned: 0,
+        paths: {}
+    };
+
+    // 1. Farmhand & Field Tenancy (Stonecross)
+    _state.paths[$ "farmhand"] = {
+        id: "farmhand",
+        name: "Field Laborer & Farmhand",
+        category: "AGRICULTURE",
+        description: "Scything, furrowing, and threshing across the tenant strips of Stonecross.",
+        shifts_completed: 0,
+        daily_wage: 8,
+        ration_reward: 1,
+        reputation_faction: "stonecross",
+        reputation_gain: 2,
+        has_lease: false,
+        standing: 0,
+        standing_name: "Greenhorn Hand"
+    };
+
+    // 2. Stone Quarryman (Dunhollow)
+    _state.paths[$ "quarryman"] = {
+        id: "quarryman",
+        name: "Stone Quarryman",
+        category: "EXTRACTION",
+        description: "Hewing millstones and ashlar blocks from the high limestone scarps.",
+        shifts_completed: 0,
+        daily_wage: 14,
+        ration_reward: 1,
+        reputation_faction: "dunhollow",
+        reputation_gain: 2,
+        has_lease: false,
+        standing: 0,
+        standing_name: "Pit Striker"
+    };
+
+    // 3. Merchant Carter (Oakhaven routes)
+    _state.paths[$ "carter"] = {
+        id: "carter",
+        name: "Freight Carter",
+        category: "COMMERCE",
+        description: "Hauling wool packs, salt kegs, and grain bags along the parish causeways.",
+        shifts_completed: 0,
+        daily_wage: 18,
+        ration_reward: 0,
+        reputation_faction: "oakhaven",
+        reputation_gain: 2,
+        has_lease: false,
+        standing: 0,
+        standing_name: "Pack Drover"
+    };
+
+    // 4. Crown Weald Forester
+    _state.paths[$ "forester"] = {
+        id: "forester",
+        name: "Crown Weald Forester",
+        category: "FORESTRY",
+        description: "Coppicing alder, burning charcoal, and guarding the royal timber borders.",
+        shifts_completed: 0,
+        daily_wage: 15,
+        ration_reward: 1,
+        reputation_faction: "crown",
+        reputation_gain: 1,
+        has_lease: false,
+        standing: 0,
+        standing_name: "Woodcutter"
+    };
+
+    // 5. Parish Roll Clerk
+    _state.paths[$ "clerk"] = {
+        id: "clerk",
+        name: "Parish Roll Clerk",
+        category: "ADMINISTRATION",
+        description: "Assisting tithe tallies, drafting letters of safe-passage, and verifying Assize weights.",
+        shifts_completed: 0,
+        daily_wage: 12,
+        ration_reward: 0,
+        reputation_faction: "stonecross",
+        reputation_gain: 2,
+        has_lease: false,
+        standing: 0,
+        standing_name: "Copyist"
+    };
+
+    // 6. Town Garrison Man-at-Arms
+    _state.paths[$ "garrison"] = {
+        id: "garrison",
+        name: "Town Garrison Man-at-Arms",
+        category: "MARTIAL",
+        description: "Gatehouse watch, spear drill, parish defense, and maintaining civic order.",
+        shifts_completed: 0,
+        daily_wage: 16,
+        ration_reward: 1,
+        reputation_faction: "crown",
+        reputation_gain: 2,
+        has_lease: false,
+        standing: 0,
+        standing_name: "Militia Levy"
+    };
+
+    global.career_state = _state;
+    return _state;
+}
+
+function cc_career_get_state() {
+    if (!variable_global_exists("career_state") || !is_struct(global.career_state)) {
+        cc_career_init();
+    }
+    return global.career_state;
+}
+
+function cc_career_get_path(_path_id) {
+    var _cs = cc_career_get_state();
+    var _nid = _cc_career_normalize_id(_path_id);
+    if (variable_struct_exists(_cs.paths, _nid)) {
+        return _cs.paths[$ _nid];
+    }
+    return noone;
+}
+
+function cc_career_get_standing(_path_id) {
+    var _p = cc_career_get_path(_path_id);
+    if (_p == noone) {
+        return { standing: 0, standing_name: "Unknown", shifts_completed: 0, has_lease: false };
+    }
+    return {
+        standing: _p.standing,
+        standing_name: _p.standing_name,
+        shifts_completed: _p.shifts_completed,
+        has_lease: _p.has_lease
+    };
+}
+
+function cc_career_work_shift(_path_id) {
+    var _cs = cc_career_get_state();
+    var _nid = _cc_career_normalize_id(_path_id);
+    if (!variable_struct_exists(_cs.paths, _nid)) {
+        return { success: false, reason: "UNKNOWN_PATH", wage: 0, shifts: 0 };
+    }
+
+    var _p = _cs.paths[$ _nid];
+
+    // Wage calculation with standing incentive
+    var _standing_bonus = _p.standing * 2;
+    var _wage = _p.daily_wage + _standing_bonus;
+
+    _p.shifts_completed += 1;
+    _cs.total_wages_earned += _wage;
+
+    // Advance trade standing based on shift experience
+    if (_p.shifts_completed >= 5) {
+        _p.standing = 3;
+    } else if (_p.shifts_completed >= 3) {
+        _p.standing = 2;
+    } else if (_p.shifts_completed >= 1) {
+        _p.standing = 1;
+    }
+    _cc_career_update_standing_name(_p);
+
+    // Award gold directly to Rowan
+    var _g = instance_exists(obj_game) ? instance_find(obj_game, 0) : noone;
+    if (_g != noone && variable_instance_exists(_g, "hero_gold")) {
+        _g.hero_gold += _wage;
+    }
+
+    // Award ration stipend
+    if (_p.ration_reward > 0) {
+        if (!variable_global_exists("player_rations")) global.player_rations = 2;
+        global.player_rations = min(10, global.player_rations + _p.ration_reward);
+        if (variable_global_exists("chron") && is_struct(global.chron) && variable_struct_exists(global.chron, "day")) {
+            global.last_meal_day = global.chron.day;
+        }
+    }
+
+    // Advance time of day
+    if (_g != noone && variable_instance_exists(_g, "time_of_day")) {
+        _g.time_of_day = (_g.time_of_day + 1) mod 4;
+    }
+
+    // Civic faction reputation increment
+    if (_p.reputation_faction != "") {
+        if (is_callable(cc_rep_add)) {
+            cc_rep_add(_p.reputation_faction, _p.reputation_gain);
+        }
+    }
+
+    return {
+        success: true,
+        wage: _wage,
+        path_id: _nid,
+        shifts: _p.shifts_completed,
+        standing: _p.standing,
+        standing_name: _p.standing_name
+    };
+}
+
+function cc_career_lease_acquire(_path_id) {
+    var _cs = cc_career_get_state();
+    var _nid = _cc_career_normalize_id(_path_id);
+    if (!variable_struct_exists(_cs.paths, _nid)) {
+        return false;
+    }
+    var _p = _cs.paths[$ _nid];
+    _p.has_lease = true;
+
+    if (_nid == "farmhand") {
+        _cs.farm_tenancy = true;
+    } else if (_nid == "quarryman") {
+        _cs.quarry_tenancy = true;
+    } else if (_nid == "carter") {
+        _cs.carter_charter = true;
+    } else if (_nid == "forester") {
+        _cs.woodward_commission = true;
+    } else if (_nid == "clerk") {
+        _cs.clerk_commission = true;
+    } else if (_nid == "garrison") {
+        _cs.garrison_commission = true;
+    }
+
+    return true;
+}
+
+function cc_career_acquire_lease(_path_id) {
+    return cc_career_lease_acquire(_path_id);
+}
+
+function cc_career_set_tenancy(_path_id, _val) {
+    var _cs = cc_career_get_state();
+    var _nid = _cc_career_normalize_id(_path_id);
+    if (!variable_struct_exists(_cs.paths, _nid)) return false;
+
+    var _p = _cs.paths[$ _nid];
+    _p.has_lease = _val;
+    if (_nid == "farmhand") _cs.farm_tenancy = _val;
+    else if (_nid == "quarryman") _cs.quarry_tenancy = _val;
+    else if (_nid == "carter") _cs.carter_charter = _val;
+    else if (_nid == "forester") _cs.woodward_commission = _val;
+    else if (_nid == "clerk") _cs.clerk_commission = _val;
+    else if (_nid == "garrison") _cs.garrison_commission = _val;
+    return true;
+}
+
+/// @function cc_career_get_summary()
+/// @description Returns struct summarizing Rowan's regional livelihoods, farm tenancy, wages, and standing rank.
+function cc_career_get_summary() {
+    var _cs = cc_career_get_state();
+    var _active_count = 0;
+    var _keys = ["farmhand", "quarryman", "carter", "forester", "clerk", "garrison"];
+
+    for (var _i = 0; _i < array_length(_keys); _i++) {
+        var _k = _keys[_i];
+        if (variable_struct_exists(_cs.paths, _k)) {
+            var _p = _cs.paths[$ _k];
+            if (_p.shifts_completed > 0 || _p.has_lease) {
+                _active_count += 1;
+            }
+        }
+    }
+
+    var _farm_tenancy = (variable_global_exists("career_state") && variable_struct_exists(global.career_state, "farm_tenancy")) ? global.career_state.farm_tenancy : false;
+    var _total_wages = (variable_global_exists("career_state") && variable_struct_exists(global.career_state, "total_wages_earned")) ? global.career_state.total_wages_earned : 0;
+
+    // Labor reputation rank ladder:
+    // "Day-Laborer" -> "Known Workman" -> "Chartered Tenant & Factor" -> "Master of Trade & Arms"
+    var _rank = "Day-Laborer";
+    var _has_any_lease = _farm_tenancy || _cs.quarry_tenancy || _cs.carter_charter || _cs.woodward_commission || _cs.clerk_commission || _cs.garrison_commission;
+
+    if (_total_wages >= 160 && _active_count >= 4) {
+        _rank = "Master of Trade & Arms";
+    } else if (_has_any_lease || _total_wages >= 100) {
+        _rank = "Chartered Tenant & Factor";
+    } else if (_total_wages >= 30 || _active_count >= 2) {
+        _rank = "Known Workman";
+    }
+
+    return {
+        active_livelihoods: _active_count,
+        farm_tenancy: _farm_tenancy,
+        total_wages_earned: _total_wages,
+        standing_rank: _rank
+    };
+}
+
+/// @function cc_career_daily_yield()
+/// @description Daily dividend / collection from active tenancies and artisan holdings under seasonal and wartime pressures.
+function cc_career_daily_yield() {
+    var _cs = cc_career_get_state();
+
+    var _farm_p = variable_struct_exists(_cs.paths, "farmhand") ? _cs.paths[$ "farmhand"] : noone;
+    var _quarry_p = variable_struct_exists(_cs.paths, "quarryman") ? _cs.paths[$ "quarryman"] : noone;
+    var _carter_p = variable_struct_exists(_cs.paths, "carter") ? _cs.paths[$ "carter"] : noone;
+
+    var _has_farm = (_cs.farm_tenancy || (_farm_p != noone && (_farm_p.has_lease || _farm_p.standing >= 2)));
+    var _has_quarry = (_cs.quarry_tenancy || (_quarry_p != noone && (_quarry_p.has_lease || _quarry_p.standing >= 2)));
+    var _has_artisan = (_cs.carter_charter || (_carter_p != noone && (_carter_p.has_lease || _carter_p.standing >= 2)));
+
+    if (!_has_farm && !_has_quarry && !_has_artisan) {
+        return {
+            gold_yield: 0,
+            ration_yield: 0,
+            summary_text: "No active farm tenancy or artisan/quarry holdings to yield daily returns."
+        };
+    }
+
+    var _gold_yield = 0;
+    var _ration_yield = 0;
+    var _summary_details = [];
+
+    if (_has_farm) {
+        _gold_yield += 6;
+        _ration_yield += 1;
+        array_push(_summary_details, "Farm tenancy: +6G, +1 ration");
+    }
+
+    if (_has_quarry) {
+        _gold_yield += 8;
+        array_push(_summary_details, "Quarry holding: +8G");
+    }
+
+    if (_has_artisan) {
+        _gold_yield += 5;
+        array_push(_summary_details, "Carter charter: +5G");
+    }
+
+    // Wartime pressure checks (Civil War Stage 2+)
+    var _war_stage = 0;
+    if (variable_global_exists("civil_war_stage")) {
+        _war_stage = global.civil_war_stage;
+    } else if (variable_global_exists("war_clock") && is_struct(global.war_clock) && variable_struct_exists(global.war_clock, "stage")) {
+        _war_stage = global.war_clock.stage;
+    } else if (is_callable(war_clock_stage)) {
+        _war_stage = war_clock_stage();
+    }
+
+    if (_war_stage >= 2) {
+        var _war_levy = min(4, floor(_gold_yield * 0.35));
+        if (_war_levy > 0) {
+            _gold_yield = max(1, _gold_yield - _war_levy);
+            array_push(_summary_details, "Crown wartime levy: -" + string(_war_levy) + "G");
+        }
+    }
+
+    // Winter season pressure
+    var _season = "";
+    if (variable_global_exists("chron") && is_struct(global.chron) && variable_struct_exists(global.chron, "season")) {
+        _season = string_lower(global.chron.season);
+    }
+    if (_season == "winter") {
+        var _frost_cut = min(3, floor(_gold_yield * 0.25));
+        if (_frost_cut > 0) {
+            _gold_yield = max(1, _gold_yield - _frost_cut);
+            array_push(_summary_details, "Winter frost slowdown: -" + string(_frost_cut) + "G");
+        }
+    }
+
+    // Increment cumulative wages earned
+    _cs.total_wages_earned += _gold_yield;
+
+    // Disburse gold yield
+    var _g = instance_exists(obj_game) ? instance_find(obj_game, 0) : noone;
+    if (_g != noone && variable_instance_exists(_g, "hero_gold")) {
+        _g.hero_gold += _gold_yield;
+    }
+
+    // Disburse ration credit
+    if (_ration_yield > 0) {
+        if (!variable_global_exists("player_rations")) global.player_rations = 2;
+        global.player_rations = min(10, global.player_rations + _ration_yield);
+        if (variable_global_exists("chron") && is_struct(global.chron) && variable_struct_exists(global.chron, "day")) {
+            global.last_meal_day = global.chron.day;
+        }
+    }
+
+    var _summary_text = "Daily Livelihood Yield: +" + string(_gold_yield) + "G, +" + string(_ration_yield) + " rations.";
+    if (array_length(_summary_details) > 0) {
+        _summary_text += " (";
+        for (var _d = 0; _d < array_length(_summary_details); _d++) {
+            if (_d > 0) _summary_text += ", ";
+            _summary_text += _summary_details[_d];
+        }
+        _summary_text += ")";
+    }
+
+    return {
+        gold_yield: _gold_yield,
+        ration_yield: _ration_yield,
+        summary_text: _summary_text
+    };
+}

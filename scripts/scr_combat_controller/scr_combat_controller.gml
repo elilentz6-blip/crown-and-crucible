@@ -147,6 +147,8 @@ function cc_resolve_attack() {
     battle_enemy.hp = max(0, battle_enemy.hp - attack_outcome.damage);
     if (weapon_attack.result.quality >= 0.65 && attack_outcome.damage > 0) hero_hp = min(hero_max_hp, hero_hp + combat_modifiers.heal_on_hit);
     if (weapon_attack.result.perfect) hero_shield += combat_modifiers.ward_on_perfect;
+    global.weapon_durability = max(0, (variable_global_exists("weapon_durability") ? global.weapon_durability : 100) - 2);
+    global.hero_stamina = max(0, (variable_global_exists("hero_stamina") ? global.hero_stamina : 100) - 8);
     screen_shake = attack_outcome.damage > 0 ? (_crit ? 8 : 4) : 0;
     if (attack_outcome.damage > 0) cc_sfx_play("snd_hit_impact", _crit ? 1.2 : 1.0, 0.9);
     combat_result_timer = 0.8;
@@ -324,6 +326,9 @@ function cc_defense_tick(_dt) {
                 }
                 var _raw = max(1, 4 - floor(_fighter_def / 5));
                 var _damage = cc_take_hit(max(1, _raw - _reduction));
+                if (_damage.hp_lost > 0) {
+                    global.armor_durability = max(0, (variable_global_exists("armor_durability") ? global.armor_durability : 100) - 3);
+                }
                 if (_is_comp) {
                     retinue_member_take_damage(_comp_id, _damage.hp_lost);
                 }
@@ -341,6 +346,7 @@ function cc_defense_tick(_dt) {
     }
     if (dodge_timer <= 0) {
         hero_hp = min(hero_max_hp, hero_hp + stat_regen);
+        global.hero_stamina = min(variable_global_exists("hero_max_stamina") ? global.hero_max_stamina : 100, (variable_global_exists("hero_stamina") ? global.hero_stamina : 100) + 6);
         battle_phase = "PLAYER_MENU";
         bullets = [];
         defense_warnings = [];

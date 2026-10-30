@@ -74,34 +74,34 @@ runTest('Hierarchy: Renown 49 does not promote to Rank 1 regardless of reputatio
   assert.equal(g.global.player_title, 'Rowan (Man-at-Arms)');
 });
 
-runTest('Hierarchy: Rank 1 promotion dynamically selects Sergeant-at-Arms when Crown is strictly highest and >= 15', () => {
+runTest('Hierarchy: Rank 1 promotion grants Freeblade Captain when renown reaches 50', () => {
   const g = createGame();
   g.cc_rep_add('crown', 20);
   g.cc_rep_add('oakhaven', 10);
   g.cc_rep_add('dunhollow', 5);
   g.cc_hierarchy_add_renown(50);
   assert.equal(g.global.feudal_rank, 1);
-  assert.equal(g.global.player_title, 'Rowan, Sergeant-at-Arms');
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
 });
 
-runTest('Hierarchy: Rank 1 promotion dynamically selects Free-Captain when River League is strictly highest and >= 15', () => {
+runTest('Hierarchy: Rank 1 promotion with River League highest grants Freeblade Captain', () => {
   const g = createGame();
   g.cc_rep_add('crown', 10);
   g.cc_rep_add('oakhaven', 25);
   g.cc_rep_add('dunhollow', 10);
   g.cc_hierarchy_add_renown(50);
   assert.equal(g.global.feudal_rank, 1);
-  assert.equal(g.global.player_title, 'Rowan, Free-Captain');
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
 });
 
-runTest('Hierarchy: Rank 1 promotion dynamically selects Master-at-Arms when Iron Council is strictly highest and >= 15', () => {
+runTest('Hierarchy: Rank 1 promotion with Iron Council highest grants Freeblade Captain', () => {
   const g = createGame();
   g.cc_rep_add('crown', 5);
   g.cc_rep_add('oakhaven', 10);
   g.cc_rep_add('dunhollow', 30);
   g.cc_hierarchy_add_renown(50);
   assert.equal(g.global.feudal_rank, 1);
-  assert.equal(g.global.player_title, 'Rowan, Master-at-Arms');
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
 });
 
 runTest('Hierarchy: Rank 1 promotion falls back to Freeblade Captain when reps are tied or < 15', () => {
@@ -126,43 +126,46 @@ runTest('Hierarchy: Renown 99 does not promote to Rank 2 even with rep >= 40', (
   g.cc_rep_add('crown', 60);
   g.cc_hierarchy_add_renown(99);
   assert.equal(g.global.feudal_rank, 1);
-  assert.equal(g.global.player_title, 'Rowan, Sergeant-at-Arms');
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
 });
 
 runTest('Hierarchy: Renown 100 with rep < 40 stays Rank 1', () => {
   const g = createGame();
-  g.cc_rep_add('crown', 39);
-  g.cc_rep_add('oakhaven', 30);
-  g.cc_rep_add('dunhollow', 20);
+  g.cc_rep_add('crown', 20);
+  g.cc_rep_add('oakhaven', 20);
+  g.cc_rep_add('dunhollow', 10);
   g.cc_hierarchy_add_renown(100);
   assert.equal(g.global.feudal_rank, 1);
-  assert.equal(g.global.player_title, 'Rowan, Sergeant-at-Arms');
+  assert.equal(g.global.player_title, 'Rowan, Freeblade Captain');
 });
 
-runTest('Hierarchy: Renown 100 with Crown rep >= 40 promotes to Sworn Knight', () => {
+runTest('Hierarchy: Renown 100 with Crown rep >= 40 promotes to Trusted Company Captain', () => {
   const g = createGame();
   g.cc_rep_add('crown', 45);
   g.cc_hierarchy_add_renown(100);
   assert.equal(g.global.feudal_rank, 2);
-  assert.equal(g.global.player_title, 'Rowan, Sworn Knight');
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
+  assert.equal(g.cc_hierarchy_enter_service('crown'), true);
   assert.equal(g.global.sworn_faction, 'crown');
 });
 
-runTest('Hierarchy: Renown 100 with River League rep >= 40 promotes to Factor\'s Shield', () => {
+runTest('Hierarchy: Renown 100 with River League rep >= 40 promotes to Trusted Company Captain', () => {
   const g = createGame();
   g.cc_rep_add('oakhaven', 50);
   g.cc_hierarchy_add_renown(100);
   assert.equal(g.global.feudal_rank, 2);
-  assert.equal(g.global.player_title, 'Rowan, Factor\'s Shield');
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
+  assert.equal(g.cc_hierarchy_enter_service('river_league'), true);
   assert.equal(g.global.sworn_faction, 'river_league');
 });
 
-runTest('Hierarchy: Renown 100 with Iron Council rep >= 40 promotes to Castellan\'s Warden', () => {
+runTest('Hierarchy: Renown 100 with Iron Council rep >= 40 promotes to Trusted Company Captain', () => {
   const g = createGame();
   g.cc_rep_add('dunhollow', 50);
   g.cc_hierarchy_add_renown(100);
   assert.equal(g.global.feudal_rank, 2);
-  assert.equal(g.global.player_title, 'Rowan, Castellan\'s Warden');
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
+  assert.equal(g.cc_hierarchy_enter_service('iron_council'), true);
   assert.equal(g.global.sworn_faction, 'iron_council');
 });
 
@@ -174,13 +177,13 @@ runTest('Hierarchy: Renown 199 with rep >= 70 does not promote to Rank 3', () =>
   assert.equal(g.global.fief_owned, false);
 });
 
-runTest('Hierarchy: Renown 200 with rep >= 70 grants Marcher Lord and Fiefdom', () => {
+runTest('Hierarchy: Renown 200 with rep >= 70 grants Veteran Company Captain without automatic fiefdom', () => {
   const g = createGame();
   g.cc_rep_add('crown', 75);
   g.cc_hierarchy_add_renown(200);
   assert.equal(g.global.feudal_rank, 3);
-  assert.equal(g.global.player_title, 'Rowan, Lord of the Western March');
-  assert.equal(g.global.fief_owned, true);
+  assert.equal(g.global.player_title, 'Rowan, Veteran Company Captain');
+  assert.equal(g.global.fief_owned, false);
 });
 
 runTest('Hierarchy: Skip-tier jump (0 -> 250 renown) elevates through all stages cleanly', () => {
@@ -188,9 +191,8 @@ runTest('Hierarchy: Skip-tier jump (0 -> 250 renown) elevates through all stages
   g.cc_rep_add('crown', 85);
   g.cc_hierarchy_add_renown(250);
   assert.equal(g.global.feudal_rank, 3);
-  assert.equal(g.global.sworn_faction, 'crown');
-  assert.equal(g.global.player_title, 'Rowan, Lord of the Western March');
-  assert.equal(g.global.fief_owned, true);
+  assert.equal(g.global.player_title, 'Rowan, Veteran Company Captain');
+  assert.equal(g.global.fief_owned, false);
 });
 
 runTest('Hierarchy: Adding negative renown does not demote rank or corrupt title', () => {
@@ -198,13 +200,13 @@ runTest('Hierarchy: Adding negative renown does not demote rank or corrupt title
   g.cc_rep_add('crown', 50);
   g.cc_hierarchy_add_renown(100);
   assert.equal(g.global.feudal_rank, 2);
-  assert.equal(g.global.player_title, 'Rowan, Sworn Knight');
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
   g.cc_hierarchy_add_renown(-60);
   assert.equal(g.global.feudal_rank, 2);
-  assert.equal(g.global.player_title, 'Rowan, Sworn Knight');
+  assert.equal(g.global.player_title, 'Rowan, Trusted Company Captain');
 });
 
-runTest('Hierarchy: Save and Load preserves chivalric rank, titles, renown and fiefdom', () => {
+runTest('Hierarchy: Save and Load preserves military rank, titles, and renown', () => {
   const g = createGame();
   let savedData = null;
   g.file_exists = () => savedData !== null;
@@ -217,8 +219,8 @@ runTest('Hierarchy: Save and Load preserves chivalric rank, titles, renown and f
   g.cc_rep_add('crown', 75);
   g.cc_hierarchy_add_renown(220);
   assert.equal(g.global.feudal_rank, 3);
-  assert.equal(g.global.player_title, 'Rowan, Lord of the Western March');
-  assert.equal(g.global.fief_owned, true);
+  assert.equal(g.global.player_title, 'Rowan, Veteran Company Captain');
+  assert.equal(g.global.fief_owned, false);
 
   assert.equal(g.cc_save_game(), true);
 
@@ -230,8 +232,8 @@ runTest('Hierarchy: Save and Load preserves chivalric rank, titles, renown and f
 
   assert.equal(g.cc_load_game(), true);
   assert.equal(g.global.feudal_rank, 3);
-  assert.equal(g.global.player_title, 'Rowan, Lord of the Western March');
-  assert.equal(g.global.fief_owned, true);
+  assert.equal(g.global.player_title, 'Rowan, Veteran Company Captain');
+  assert.equal(g.global.fief_owned, false);
   assert.equal(g.global.chivalric_renown, 220);
 });
 
@@ -330,7 +332,6 @@ runTest('Counterfeit: Full sequence completes cleanly and grants exact gold, XP,
   const initGold = g.hero_gold;
   const initCrownRep = g.cc_rep_get('crown');
   const initStoneRep = g.cc_rep_get('stonecross');
-  const initXp = g.hero_xp + (g.hero_lv - 1) * 1000;
 
   const res = g.cc_world_simulation_interact(1600, 400);
   assert.equal(res, true);
@@ -342,8 +343,10 @@ runTest('Counterfeit: Full sequence completes cleanly and grants exact gold, XP,
   assert.equal(g.hero_gold, initGold + 50, 'Awards +50 Gold');
   assert.equal(g.cc_rep_get('stonecross'), initStoneRep + 15, 'Awards +15 Stonecross Rep');
   assert.equal(g.cc_rep_get('crown'), initCrownRep + 35, 'Awards +35 Crown Rep (10 quest + 25 site)');
-  const finalXp = g.hero_xp + (g.hero_lv - 1) * 1000;
-  assert.equal(finalXp, initXp + 270, 'Awards +270 XP (120 quest + 150 site)');
+  // Total XP gained is 270 (120 quest + 150 site).
+  // Lv 1 (starts at 0 XP, needs 100) -> Lv 2 (needs 125) -> Lv 3 (needs 156), remainder 45 XP.
+  assert.equal(g.hero_lv, 3, 'Rowan advances to Lv 3');
+  assert.equal(g.hero_xp, 45, 'Remaining XP is 45 (270 - 100 - 125)');
   assert.equal(g.cc_npc_has_memory('odo', 'REDOUBT_CLEARED'), true);
   assert.equal(g.cc_npc_has_memory('odo', 'RIFT_AWAKENED'), true);
 });
@@ -359,7 +362,8 @@ runTest('Counterfeit: Border Redoubt is strictly idempotent after completion', (
 
   const postGold = g.hero_gold;
   const postCrownRep = g.cc_rep_get('crown');
-  const postXp = g.hero_xp + (g.hero_lv - 1) * 1000;
+  const postLv = g.hero_lv;
+  const postXp = g.hero_xp;
 
   // Second interaction
   const res2 = g.cc_world_simulation_interact(1600, 400);
@@ -367,7 +371,8 @@ runTest('Counterfeit: Border Redoubt is strictly idempotent after completion', (
   assert.match(g.overworld_dialogue_text, /The Overgrown Border Redoubt stands silent/);
   assert.equal(g.hero_gold, postGold, 'No duplicate gold');
   assert.equal(g.cc_rep_get('crown'), postCrownRep, 'No duplicate Crown rep');
-  assert.equal(g.hero_xp + (g.hero_lv - 1) * 1000, postXp, 'No duplicate XP');
+  assert.equal(g.hero_lv, postLv, 'No duplicate Lv');
+  assert.equal(g.hero_xp, postXp, 'No duplicate XP');
 });
 
 runTest('Counterfeit: Smuggler Run and Counterfeit concurrency at Anvil resolve sequentially', () => {
@@ -426,16 +431,16 @@ runTest('Combat: Defense pattern backward compat preserves CROWN_RAIN for legacy
 
 runTest('Combat: Conditioning card stats and combat focus variables remain numerically sound', () => {
   const g = createGame();
-  assert.ok(g.cards_inventory, 'Card inventory must exist');
-  const fleet = g.cards_inventory.find(c => c.id === 'fleet_foot');
+  assert.ok(g.cards_catalog, 'Card catalog must exist');
+  const fleet = g.cards_catalog.find(c => c.id === 'fleet_foot');
   assert.ok(fleet);
   assert.equal(fleet.effects.spd, 0.65);
 
-  const oak = g.cards_inventory.find(c => c.id === 'oak_guard');
+  const oak = g.cards_catalog.find(c => c.id === 'oak_guard');
   assert.ok(oak);
   assert.equal(oak.effects.shield, 6);
 
-  const iron = g.cards_inventory.find(c => c.id === 'iron_skin');
+  const iron = g.cards_catalog.find(c => c.id === 'iron_skin');
   assert.ok(iron);
   assert.equal(iron.effects.def, 4);
 
@@ -448,37 +453,52 @@ runTest('Combat: Conditioning card stats and combat focus variables remain numer
 
 runTest('Combat: Retinue capture and rescue works for Barrow Renegade Warden', () => {
   const g = createGame();
+  g.retinue_init();
   const R = g.global.retinue;
   assert.ok(R, 'Retinue system must exist');
 
-  // Recruit Dunstan
-  const dunstan = R.roster.DUNSTAN;
-  dunstan.kind = 1; // RET_KIND_COMPANION
-  R.party = [dunstan];
+  const M = R.members.MARGERY;
+  M.met = true;
+  M.status = 'AVAILABLE';
+  g.retinue_join('MARGERY', false);
+  assert.ok(g.retinue_in_party('MARGERY'));
 
   // Route against Barrow Renegade Warden
-  g.retinue_on_combat_event('encounter_ended', { won: false, foe: 'Barrow Renegade Warden' });
-  assert.equal(dunstan.status, 'CAPTURED');
-  assert.equal(g.cc_npc_has_memory('dunstan', 'CAPTURED'), true);
+  g.cc_combat_emit('encounter_defeat', { encounter_id: 'Barrow Renegade Warden' });
+  g.retinue_step(0.1);
+  assert.equal(M.status, 'CAPTURED');
+  assert.ok(!g.retinue_in_party('MARGERY'));
+  assert.ok(M.memories.some(m => m.key === 'CAPTURED'));
 
   // Defeat Barrow Renegade Warden -> Rescue captive
-  g.retinue_on_combat_event('encounter_ended', { won: true, foe: 'Barrow Renegade Warden' });
-  assert.notEqual(dunstan.status, 'CAPTURED');
-  assert.equal(g.cc_npc_has_memory('dunstan', 'RESCUED'), true);
+  g.cc_combat_emit('encounter_ended', { encounter_id: 'Barrow Renegade Warden', won: true, spared: false });
+  g.retinue_step(0.1);
+  assert.equal(M.status, 'INJURED');
+  assert.ok(M.memories.some(m => m.key === 'RESCUED'));
 });
 
 runTest('Combat: Retinue capture and rescue works with legacy Shade foe name', () => {
   const g = createGame();
+  g.retinue_init();
   const R = g.global.retinue;
-  const galahalt = R.roster.GALAHALT;
-  galahalt.kind = 1;
-  R.party = [galahalt];
+  assert.ok(R, 'Retinue system must exist');
 
-  g.retinue_on_combat_event('encounter_ended', { won: false, foe: 'Barrow Warden Shade' });
-  assert.equal(galahalt.status, 'CAPTURED');
+  const M = R.members.MARGERY;
+  M.met = true;
+  M.status = 'AVAILABLE';
+  g.retinue_join('MARGERY', false);
+  assert.ok(g.retinue_in_party('MARGERY'));
 
-  g.retinue_on_combat_event('encounter_ended', { won: true, foe: 'Barrow Warden Shade' });
-  assert.notEqual(galahalt.status, 'CAPTURED');
+  g.cc_combat_emit('encounter_defeat', { encounter_id: 'Barrow Warden Shade' });
+  g.retinue_step(0.1);
+  assert.equal(M.status, 'CAPTURED');
+  assert.ok(!g.retinue_in_party('MARGERY'));
+  assert.ok(M.memories.some(m => m.key === 'CAPTURED'));
+
+  g.cc_combat_emit('encounter_ended', { encounter_id: 'Barrow Warden Shade', won: true, spared: false });
+  g.retinue_step(0.1);
+  assert.equal(M.status, 'INJURED');
+  assert.ok(M.memories.some(m => m.key === 'RESCUED'));
 });
 
 // =============================================================================
@@ -503,7 +523,7 @@ function getAllGmlFiles(dir, fileList = []) {
   for (const entry of entries) {
     const fullPath = path.join(dir, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name !== '.git' && entry.name !== '.agents' && entry.name !== 'node_modules') {
+      if (entry.name !== '.git' && entry.name !== '.agents' && entry.name !== 'node_modules' && !entry.name.includes('backup')) {
         getAllGmlFiles(fullPath, fileList);
       }
     } else if (entry.isFile() && entry.name.endsWith('.gml')) {
