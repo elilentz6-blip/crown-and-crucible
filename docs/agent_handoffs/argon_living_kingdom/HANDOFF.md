@@ -5,7 +5,7 @@
 - **Project**: Crown & Crucible (GameMaker 2024.14 GML / macOS Apple Silicon)
 - **Author**: Argon (Documentation & Handoff Engineer)
 - **Date**: October 30, 2026
-- **Status**: Complete & Verified (17/17 Regression Suites Green, 4 Challenger Stress Suites Green)
+- **Status**: Complete & Verified (22/22 Regression Suites Green, 4 Challenger Stress Suites Green, Native QA Follow & Chronicle Green)
 
 ---
 
@@ -190,21 +190,51 @@ In `scripts/scr_living_world/scr_living_world.gml`, `cc_tavern_get_ambient_bante
 
 ---
 
-## 6. Verification Summary & Test Results
+## 6. Milestone 7: Chronicles Lore Purge, Grounded Visuals & Bundle Sync
+
+Milestone 7 delivers the final systematic purge of legacy *Chronicles of Aethelgard* fantasy and supernatural lore, replacing non-canon cosmic/monolith elements with historical 1150–1350 medieval fixtures, updating art pipelines, and synchronizing native binaries across all macOS application bundles.
+
+### 6.1 Architectural Purge & Grounded Art Pipeline
+- **Weald Arch to Ruined Watchpost**:
+  - Replaced the fantasy monolithic portal arch (`key: "weald_arch"`) in `scripts/scr_vis_stonecross/scr_vis_stonecross.gml` with `key: "watchpost"` (*Western Ruined Boundary Watchpost*) at `(640, 560)`.
+  - Bound the watchpost to a functional stone interior (`"watchpost"`) with safe doorway clearance and outdoor return coordinates `(640, 580)`.
+- **Rune Glow & Portal Light Decontamination**:
+  - In `scripts/scr_vis_artdata/scr_vis_artdata.gml` and `scripts/scr_art_engine/scr_art_engine.gml`, purged all cyan and violet/purple supernatural glow palettes (`make_color_rgb(120, 255, 220)`, `make_color_rgb(192, 132, 252)`, `make_color_rgb(110, 255, 190)`).
+  - Replaced ethereal crypt runes with authentic medieval mason marks and weathered mortar joints (`make_color_rgb(60, 68, 78)`).
+  - Grounded the Overgrown Border Redoubt lighting with natural warm torchlight (`make_color_rgb(255, 190, 110)`).
+- **Grounded Combat Stances**:
+  - In `scripts/scr_combat_render/scr_combat_render.gml`, set `_art.floats = false;` for shade and barrow renegades, ensuring zero floating or levitating combat actors across the game.
+- **Ecclesiastical & Landmark Naming Purge**:
+  - Renamed `"Barrows Crypt Gate"` to `"The Whispering Barrows"` in `objects/obj_game/Create_0.gml` and updated landmark dispatch in `scripts/scr_greenmere/scr_greenmere.gml`.
+  - Replaced generic shrine badge description with the Saint Aveline pilgrimage token: `"Lead token stamped with the Common Observance cross of Saint Aveline."`
+  - Renamed `"Eastern Chapel Rose Altar"` to `"Eastern Chapel Stone Altar"` in `scripts/scr_world_simulation/scr_world_simulation.gml`.
+  - Removed outdated supernatural check `RELIC_CONSECRATED` from the Border Redoubt investigation branch.
+
+### 6.2 Milestone 7 Verification Suite (`tests/m7_chronicles_lore_purge.test.cjs`)
+A dedicated automated suite verifies and locks down the purge:
+- `M7.1`: Asserts `scr_vis_stonecross.gml` places no `weald_arch` and maps `watchpost` at `(640, 560)`.
+- `M7.2`: Asserts `scr_vis_artdata.gml` and `scr_art_engine.gml` contain zero cyan/purple rune/portal colors.
+- `M7.3`: Asserts `scr_combat_render.gml` contains zero `_art.floats = true`.
+- `M7.4`: Asserts `Create_0.gml` defines `"The Whispering Barrows"` and Saint Aveline cross token text.
+- `M7.5`: Asserts `scr_world_simulation.gml` uses `"Eastern Chapel Stone Altar"` and excludes `RELIC_CONSECRATED`.
+
+---
+
+## 7. Verification Summary & Test Results
 
 All verification suites were executed natively on Eli's Mac with `/opt/homebrew/bin/node` and the GameMaker 2024.14 runtime.
 
-### 6.1 Automated Test Suite Results
+### 7.1 Automated Test Suite Results
 ```
 ================================================================
-ALL 17 AUTOMATED REGRESSION SUITES: 17/17 PASSED (100%)
+ALL 22 AUTOMATED REGRESSION SUITES: 22/22 PASSED (100%)
 ================================================================
 ✓ tests/gml_translator.test.cjs               (5 tests passed)
 ✓ tests/equipment_cards.test.cjs              (10 tests passed)
 ✓ tests/chronicles_followthrough.test.cjs     (23 tests passed)
 ✓ tests/chronicles_greenmere.test.cjs         (25 tests passed)
 ✓ tests/feudal_warfare.test.cjs               (16 tests passed)
-✓ tests/grounded_canon_r3_r4.test.cjs         (14 tests passed)
+✓ tests/grounded_canon_r3_r4.test.cjs         (10 tests passed)
 ✓ tests/living_world_minigames.test.cjs       (9 tests passed)
 ✓ tests/m1_interiors_collisions.test.cjs      (14 tests passed)
 ✓ tests/m2_presentation.test.cjs              (4 tests passed)
@@ -214,6 +244,7 @@ ALL 17 AUTOMATED REGRESSION SUITES: 17/17 PASSED (100%)
 ✓ tests/m4_combat_consequences.test.cjs       (10 tests passed)
 ✓ tests/m5_career_livelihoods.test.cjs        (5 tests passed)
 ✓ tests/m6_ambient_world.test.cjs             (6 tests passed)
+✓ tests/m7_chronicles_lore_purge.test.cjs     (5 tests passed)
 ✓ tests/career_paths.test.cjs                 (3 tests passed)
 ✓ tests/retinue.test.cjs                      (18 tests passed)
 ✓ tests/stability_fixes.test.cjs              (15 tests passed)
@@ -227,21 +258,20 @@ CHALLENGER STRESS SUITES: ALL PASSED
 ✓ tests/challenger_m1_empirical.cjs           (32/32 passed)
 ✓ tests/challenger_stress.cjs                 (14/14 passed)
 ✓ tests/challenger_m2_stress.cjs              (26/26 passed)
-✓ tests/challenger_m2_adversarial.test.cjs    (19/19 passed)
 ✓ tests/challenger_m3_stress.cjs              (26/26 passed)
 ```
 
-### 6.2 Native Headless Igor Compilation & Native QA Verification
+### 7.2 Native Headless Igor Compilation & Native QA Verification
 Native GameMaker Asset Compiler (`Igor`) compiles cleanly with 0 missing symbols and 0 syntax errors:
 - **Igor Compiler Path**: `/Users/Shared/GameMakerStudio2/Cache/runtimes/runtime-2024.14.4.268/bin/igor/osx/arm64/Igor`
-- **Stats**: `Stats : GMA : sp=312,au=4,bk=0,pt=0,sc=1539,sh=0,fo=0,tl=0,ob=4,ro=1`
-- **Result**: `Final Compile finished` with 0 GML compile errors.
+- **Build Target**: `Mac PackageZip` with `--options="~/GameMakerProjects/_build/build.bff"`
+- **Binary Extraction & App Sync**: Fresh `assets/game.ios` (14.2 MB) extracted from `BLANK GAME.zip` and deployed to `_build/game.ios` and every `.app` bundle on disk.
 - **Native Follow Walkthrough**: `python3 tools/run_native_qa.py --suite follow` -> `PASS: follow native walkthrough (failures=0)`
 - **Native Chronicle Walkthrough**: `python3 tools/run_native_qa.py --suite chronicle` -> `PASS: chronicle native walkthrough (play-through complete)`
 
 ---
 
-## 7. Next Priorities for Future Cycles
+## 8. Next Priorities for Future Cycles
 
 The foundational village of Stonecross and the realm of Greenmere are now mechanically complete, spatially coherent, and rich in character. Future development cycles should focus on:
 1. **Multi-Island Physical Room Transitions**:

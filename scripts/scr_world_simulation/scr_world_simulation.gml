@@ -117,7 +117,7 @@ function cc_world_simulation_init() {
         // Chapel: Sacred Solar Altar
         {
             id: "CHAPEL_ALTAR",
-            name: "Eastern Chapel Rose Altar",
+            name: "Eastern Chapel Stone Altar",
             room_id: "chapel",
             x: 1304,
             y: 2634,
@@ -280,7 +280,7 @@ function cc_world_simulation_interact(_hx, _hy) {
                     return true;
                 }
 
-                // Hotspot D: Chapel Rose Altar & Brother Dunstan
+                // Hotspot D: Chapel Stone Altar & Brother Dunstan
                 else if (_spot.id == "CHAPEL_ALTAR") {
                     var _day = (variable_global_exists("chron") && is_struct(global.chron)) ? global.chron.day : 1;
                     if (chron_get("chapel_pray_day", -1) != _day) {
@@ -398,7 +398,7 @@ function cc_world_simulation_interact(_hx, _hy) {
                 if (cc_npc_has_memory("odo", "REDOUBT_CLEARED") || cc_npc_has_memory("odo", "RIFT_AWAKENED")) {
                     obj_game.overworld_dialogue_text = "* (The Overgrown Border Redoubt stands silent. The illegal screw-press lies smashed among iron shavings, and the stolen royal die is secured for the King's bailiff.)";
                     return true;
-                } else if ((cc_quest_is_active("QUEST_COUNTERFEIT") && (cc_quest_get("QUEST_COUNTERFEIT").stage >= 3 || cc_npc_has_memory("odo", "COUNTERFEIT_ASSAYED"))) || cc_quest_is_completed("QUEST_COUNTERFEIT") || cc_npc_has_memory("odo", "COUNTERFEIT_ASSAYED") || cc_npc_has_memory("odo", "RELIC_CONSECRATED")) {
+                } else if ((cc_quest_is_active("QUEST_COUNTERFEIT") && (cc_quest_get("QUEST_COUNTERFEIT").stage >= 3 || cc_npc_has_memory("odo", "COUNTERFEIT_ASSAYED"))) || cc_quest_is_completed("QUEST_COUNTERFEIT") || cc_npc_has_memory("odo", "COUNTERFEIT_ASSAYED")) {
                     cc_npc_add_affinity("odo", 0, "REDOUBT_CLEARED");
                     cc_npc_add_affinity("odo", 0, "RIFT_AWAKENED"); // backward compat for saves and test assertions
                     if (cc_quest_is_active("QUEST_COUNTERFEIT")) {

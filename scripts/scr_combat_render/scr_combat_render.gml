@@ -73,7 +73,7 @@ function cbt_foe_art(_enemy) {
     } else if (string_pos("warden", _n) > 0 || string_pos("renegade", _n) > 0) {
         _art.spr = "spr_cbt_warden";
     } else if (string_pos("shade", _n) > 0) {
-        _art.spr = "spr_char_shade"; _art.floats = true;
+        _art.spr = "spr_char_shade"; _art.floats = false;
     }
     if (string_pos("barrow", _n) > 0) { _art.barrows = true; _art.label = "The Barrows"; }
     return _art;

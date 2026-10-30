@@ -1006,7 +1006,7 @@ def build_ruin_house():
 
 
 def build_weald_arch():
-    """Weald monument: a broken arch of old runestones swallowed by roots, runes faintly glowing."""
+    """Weald monument: a broken arch of old weathered boundary stones swallowed by roots and ivy."""
     b = Build(90, 36, 110, pad=16)
     cv, e = b.cv, b.emit
     x0, x1, base = b.x0, b.x1, b.oy
@@ -1023,8 +1023,7 @@ def build_weald_arch():
     for (rx, ry) in runes:
         if 0 <= ry < cv.h and am[ry, rx]:
             for (dx, dy) in ((0, 0), (1, 1), (0, 2), (-1, 1), (0, 3)):
-                cv.px(rx + dx, ry + dy, (130, 220, 200))
-                e.px(rx + dx, ry + dy, (120, 255, 220))
+                cv.px(rx + dx, ry + dy, (90, 95, 90))
     for k in range(6):  # roots
         sx = x0 + int(hash01(k, 2, 433) * (x1 - x0))
         pts = [(sx, base)]
@@ -1038,7 +1037,6 @@ def build_weald_arch():
     fallen = blank(cv.w, cv.h)
     m_poly(fallen, [(x1 - 10, base), (x1 + 14, base - 6), (x1 + 16, base), (x1 - 8, base + 3)])
     fill_shaded(cv, fallen, st)
-    b.light(cx, base - 50, 70, (120, 255, 220))
     return b.finish(shadow=False)
 
 

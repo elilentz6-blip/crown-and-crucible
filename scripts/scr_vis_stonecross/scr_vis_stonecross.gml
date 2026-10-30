@@ -149,7 +149,7 @@ function vis_layout_stonecross() {
             { key: "ruin_cottage", x: 2120, y: 2060, solid: true },
             { key: "ruin_house", x: 2760, y: 2120, solid: true },
             { key: "border_redoubt", x: 1600, y: 380, solid: true },
-            { key: "weald_arch", x: 640, y: 560, solid: true },
+            { key: "watchpost", x: 640, y: 560, solid: true, interior: "watchpost", door_dx: 0, return_x: 640, return_y: 580, title: "Ruined Boundary Watchpost" },
         ],
 
         // Ground-level art drawn under actors (bridges, river jetties).
@@ -308,7 +308,8 @@ function vis_layout_stonecross() {
             [880, 1900, 70],    // camp
         ],
 
-        // The border redoubt ruins centrepiece
+        // The border redoubt ruins centrepiece (grounded drystone outpost)
+        redoubt: { x: 1600, y: 400 },
         portal: { x: 1600, y: 400 },
 
         // Ambient fx regions

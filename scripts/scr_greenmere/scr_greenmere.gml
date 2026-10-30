@@ -151,7 +151,7 @@ function gm_init() {
     for (var _i = 0; _i < array_length(_g.world_landmarks); _i++) {
         var _l = _g.world_landmarks[_i];
         if (_l.name == "Ruined Watchtower") _l.chron_site = "tower";
-        else if (_l.name == "Barrows Crypt Gate") { _l.chron_site = "barrows"; _l.name = "The Barrows"; }
+        else if (_l.name == "The Whispering Barrows" || _l.name == "Barrows Crypt Gate") { _l.chron_site = "barrows"; _l.name = "The Barrows"; }
         else if (_l.name == "Town Notice Board & Quest Ledger") _l.chron_site = "board";
     }
     gm_new_game();

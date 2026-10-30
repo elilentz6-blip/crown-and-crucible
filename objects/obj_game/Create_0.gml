@@ -70,7 +70,7 @@ armors_owned = [
 ];
 
 relics_owned = [
-    { name: "Pilgrim's Badge", perk: "+5% Crit", crit_bonus: 5, spd_bonus: 0, desc: "Lead token from an ancient mountain shrine." }
+    { name: "Pilgrim's Badge", perk: "+5% Crit", crit_bonus: 5, spd_bonus: 0, desc: "Lead token stamped with the Common Observance cross of Saint Aveline." }
 ];
 
 eq_weapon_idx = 0;
@@ -416,7 +416,7 @@ world_landmarks = [
         text: "* (A cold wind whistles through the crumbling castle crenelations. A warm campfire crackles amidst the fallen stones.)"
     },
     {
-        name: "Barrows Crypt Gate",
+        name: "The Whispering Barrows",
         x: 2450,
         y: 2020,
         rad: 75,

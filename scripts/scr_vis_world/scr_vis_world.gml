@@ -488,7 +488,7 @@ function vis_place_layout() {
             array_push(V.emitters, { type: "smoke", x: _bd.x + _info.smoke[_s][0], y: _bd.y + _info.smoke[_s][1], rate: 3, acc: 0 });
         }
         if (_bd.key == "forge") array_push(V.emitters, { type: "sparks", x: _bd.x - 44, y: _bd.y - 18, rate: 7, acc: 0 });
-        if (_bd.key == "crypt") array_push(V.emitters, { type: "wisp", x: _bd.x, y: _bd.y - 24, rate: 1.5, acc: 0 });
+        if (_bd.key == "crypt") array_push(V.emitters, { type: "mist", x: _bd.x, y: _bd.y - 24, rate: 1.2, acc: 0 });
         var _custom = _info[$ "solids"];
         if (_bd.solid && _custom != undefined) {
             // open structures (gatehouse arch, market hall) only block at their towers / piers
@@ -574,7 +574,8 @@ function vis_place_layout() {
         vis_solid_add(_s[0], _s[1], _s[2], _s[3]);
     }
     // the border redoubt ruins
-    var _po = L.portal;
+    var _po = L[$ "redoubt"] ?? L.portal;
+    V.redoubt = _po;
     V.portal = _po;
     // Grounded Border Redoubt: rendered via L.buildings (border_redoubt) and L.props
     array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 160, col: make_color_rgb(255, 190, 110), k: 0.6, flicker: 0.03, always: true });
@@ -851,7 +852,7 @@ function vis_spawn(_type, _x, _y) {
             _p.max = random_range(0.5, 1.0); _p.add = true; _p.s = random_range(0.6, 1.0); _p.col = choose(make_color_rgb(255, 220, 120), make_color_rgb(255, 250, 210)); break;
         case "dust": _p.img = 0; _p.vx = random_range(-10, 10); _p.vy = random_range(-8, -3); _p.max = random_range(0.4, 0.7); _p.s = random_range(0.12, 0.2); _p.a = 0.35;
             _p.col = make_color_rgb(200, 180, 150); break;
-        case "wisp": _p.img = 5; _p.vx = random_range(-10, 10); _p.vy = random_range(-10, -4); _p.max = random_range(2, 4); _p.add = true; _p.col = make_color_rgb(120, 255, 190); break;
+        case "wisp": _p.img = 0; _p.vx = random_range(-10, 10); _p.vy = random_range(-8, -3); _p.max = random_range(0.4, 0.7); _p.s = random_range(0.12, 0.2); _p.a = 0.35; _p.col = make_color_rgb(200, 180, 150); break;
     }
     _p.life = _p.max;
     array_push(V.particles, _p);

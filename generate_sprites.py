@@ -614,10 +614,10 @@ def render_crypt():
     d.rounded_rectangle([cx + 18, cy - 70, cx + 45, cy], radius=4, fill=(24, 28, 38, 255))
     d.rounded_rectangle([cx - 52, cy - 88, cx + 52, cy - 60], radius=4, fill=(32, 38, 50, 255))
     
-    d.line([(cx - 32, cy - 50), (cx - 32, cy - 25)], fill=(192, 132, 252, 255), width=2)
-    d.line([(cx - 38, cy - 38), (cx - 26, cy - 38)], fill=(192, 132, 252, 255), width=2)
-    d.line([(cx + 32, cy - 50), (cx + 32, cy - 25)], fill=(192, 132, 252, 255), width=2)
-    d.line([(cx + 26, cy - 42), (cx + 38, cy - 30)], fill=(192, 132, 252, 255), width=2)
+    d.line([(cx - 32, cy - 50), (cx - 32, cy - 25)], fill=(45, 52, 65, 255), width=2)
+    d.line([(cx - 38, cy - 38), (cx - 26, cy - 38)], fill=(45, 52, 65, 255), width=2)
+    d.line([(cx + 32, cy - 50), (cx + 32, cy - 25)], fill=(45, 52, 65, 255), width=2)
+    d.line([(cx + 26, cy - 42), (cx + 38, cy - 30)], fill=(45, 52, 65, 255), width=2)
     
     d.rectangle([cx - 18, cy - 60, cx + 18, cy], fill=(0, 0, 0, 255))
     

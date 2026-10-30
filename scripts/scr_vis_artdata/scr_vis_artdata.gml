@@ -27,7 +27,7 @@ function vis_artdata() {
             guardhouse: { spr: spr_bld_guardhouse, fw: 100, fd: 70, lights: [[-15, -42, 60, make_color_rgb(255, 170, 80)], [13, -42, 60, make_color_rgb(255, 170, 80)]], smoke: [], door: undefined, solids: undefined },
             farmhouse: { spr: spr_bld_farmhouse, fw: 100, fd: 80, lights: [[-34, -22, 44, make_color_rgb(255, 196, 110)]], smoke: [[-35, -105]], door: undefined, solids: undefined },
             watchtower: { spr: spr_bld_watchtower, fw: 80, fd: 80, lights: [[-1, -20, 40, make_color_rgb(255, 196, 110)]], smoke: [], door: undefined, solids: undefined },
-            crypt: { spr: spr_bld_crypt, fw: 120, fd: 70, lights: [[-1, -20, 70, make_color_rgb(110, 255, 190)]], smoke: [], door: undefined, solids: undefined },
+            crypt: { spr: spr_bld_crypt, fw: 120, fd: 70, lights: [[-1, -20, 50, make_color_rgb(255, 160, 70)]], smoke: [], door: undefined, solids: undefined },
             cottage_a: { spr: spr_bld_cottage_a, fw: 72, fd: 56, lights: [[19, -20, 40, make_color_rgb(255, 196, 110)]], smoke: [[21, -85]], door: -21, solids: undefined },
             cottage_b: { spr: spr_bld_cottage_b, fw: 72, fd: 56, lights: [[-21, -19, 40, make_color_rgb(255, 196, 110)]], smoke: [[-22, -79]], door: 20, solids: undefined },
             cottage_c: { spr: spr_bld_cottage_c, fw: 72, fd: 56, lights: [[-1, -14, 44, make_color_rgb(255, 196, 110)]], smoke: [[22, -83]], door: -1, solids: undefined },
@@ -51,7 +51,8 @@ function vis_artdata() {
             ruin_cottage: { spr: spr_bld_ruin_cottage, fw: 80, fd: 60, lights: [], smoke: [], door: undefined, solids: undefined },
             ruin_house: { spr: spr_bld_ruin_house, fw: 96, fd: 70, lights: [], smoke: [], door: undefined, solids: undefined },
             border_redoubt: { spr: spr_bld_ruin_house, fw: 96, fd: 70, lights: [[-1, -20, 60, make_color_rgb(255, 180, 100)]], smoke: [], door: undefined, solids: undefined },
-            weald_arch: { spr: spr_bld_weald_arch, fw: 90, fd: 36, lights: [[-1, -50, 70, make_color_rgb(120, 255, 220)]], smoke: [], door: undefined, solids: undefined },
+            watchpost: { spr: spr_bld_ruin_cottage, fw: 80, fd: 60, lights: [[-1, -16, 40, make_color_rgb(255, 180, 100)]], smoke: [], door: 0, solids: undefined },
+            weald_arch: { spr: spr_bld_ruin_house, fw: 96, fd: 70, lights: [], smoke: [], door: undefined, solids: undefined },
         },
         characters: {
             geoffrey: { spr: spr_char_geoffrey, portrait: spr_portrait_geoffrey, shadow: spr_char_shadow, name: "Lord Geoffrey", floats: false, idle_fps: 4, walk_fps: 8 },

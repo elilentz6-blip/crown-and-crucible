@@ -409,7 +409,7 @@ function vis_draw_world_labels() {
         var _d = point_distance(_px, _py, _f.x, _f.y);
         if (_d < 170) _plate(_f.x, _f.y - 58, _f.name, UI_COL_HP, clamp((170 - _d) / 50, 0, 1));
     }
-    var _po = V.portal;
+    var _po = V[$ "redoubt"] ?? V.portal;
     var _dp = point_distance(_px, _py, _po.x, _po.y);
     if (_dp < 260) _plate(_po.x, _po.y - 196, "Overgrown Border Redoubt", make_color_rgb(229, 189, 86), clamp((260 - _dp) / 80, 0, 1));
 

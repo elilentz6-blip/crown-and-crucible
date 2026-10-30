@@ -547,7 +547,7 @@ function draw_hd_chapel(_cx, _cy, _time) {
         draw_line(_cx, _sy, _cx + _cw, _sy);
     }
 
-    // Gothic Pointed Arch Portal (Main Entrance)
+    // Gothic Pointed Arch Timber Entrance (Main Oak Doors)
     var _ax = _cx + (_cw div 2);
     var _ay = _cy + _ch;
     draw_set_color(make_color_rgb(35, 40, 48));
@@ -559,11 +559,11 @@ function draw_hd_chapel(_cx, _cy, _time) {
     draw_line_width(_ax, _ay - 44, _ax, _ay - 6, 2);
     draw_line_width(_ax - 8, _ay - 32, _ax + 8, _ay - 32, 2);
 
-    // Glowing Stained Glass Rose Window (Celestial Purple & Solar Gold)
+    // Stained Glass Rose Window (Lead-Cased Amber & Solar Gold)
     var _rose_y = _cy + 28;
-    draw_set_color(make_color_rgb(45, 30, 60));
+    draw_set_color(make_color_rgb(45, 40, 35));
     draw_circle(_ax, _rose_y, 22, false);
-    draw_set_color(make_color_rgb(168, 85, 247));
+    draw_set_color(make_color_rgb(180, 130, 50));
     draw_circle(_ax, _rose_y, 18, false);
     draw_set_color(make_color_rgb(251, 191, 36));
     draw_circle(_ax, _rose_y, 10, false);
@@ -676,10 +676,9 @@ function draw_hd_crypt_gate(_gx, _gy, _time) {
     // Heavy Lintel Beam
     draw_roundrect(_gx - 54, _gy - 95, _gx + 54, _gy - 65, false);
 
-    // Ethereal Glowing Runes (Violet/Purple)
-    var _rune_glow = 0.6 + sin(_time * 3.0) * 0.35;
-    draw_set_alpha(_rune_glow);
-    draw_set_color(make_color_rgb(192, 132, 252));
+    // Chiseled Mason Marks & Weathered Granite Mortar Joints (Historical Medieval Stonework)
+    draw_set_alpha(0.85);
+    draw_set_color(make_color_rgb(60, 68, 78));
     draw_line_width(_gx - 34, _gy - 50, _gx - 34, _gy - 20, 2);
     draw_line_width(_gx - 40, _gy - 35, _gx - 28, _gy - 35, 2);
 
