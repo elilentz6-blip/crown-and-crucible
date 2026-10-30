@@ -74,7 +74,7 @@ The numbered positions below are the controlling summary. The fuller sections ex
 
 
 
-Use one label for each claim. Where design authority and implementation need separate statements, split them: “LOCKED CANON: Rowan begins common-born” and “VERIFIED IMPLEMENTATION: the current rank initializer still calls him Sir Rowan.” A shipped contradiction does not become canon through repetition.
+Use one label for each claim. Where design authority and implementation need separate statements, split them: “LOCKED CANON: Rowan begins common-born” and “VERIFIED IMPLEMENTATION: the native initializer gives Rowan an unknighted man-at-arms title.” A shipped contradiction does not become canon through repetition.
 
 Approval practice: only an explicit owner decision promotes PROVISIONAL or OPEN DECISION material to LOCKED CANON. Only inspection of a named native source path supports VERIFIED IMPLEMENTATION. A data definition, UI description, or HTML prototype alone does not prove that its promised gameplay runs.
 
@@ -387,7 +387,7 @@ This register records source inspection at main 73fe672, not a new build or game
 | --- | --- | --- |
 | **Combat · controller and weapon mechanics** | Five weapon interactions, ACT/ITEM/MERCY, telegraphed dodge patterns. ACT currently enables Mercy immediately. | Keep the interaction structure. Soul and Ward are abstractions; per-enemy social depth is not established by the ACT label. |
 | **Cards · equipment definitions** | Twelve typed cards; actual disciplines and effects are in native definitions. Second Wind heals after a surviving wave. | Use nonmagical preparation/technique explanations. No confirmed enchantment, resurrection, or time reversal. |
-| **Rowan · hero initialization and rank rules** | Player-facing “Sir Rowan” text is now “Rowan” (Chronicles branch). Rank 2 still grants “Sworn Knight”, and rank 3 grants a “Lord of the Western March” title and fief. | These still conflict with the common-born man-at-arms start. Separate knighthood, office, property, and hereditary nobility. The Greenmere tower captaincy models an office that does not ennoble. |
+| **Rowan · hero initialization and rank rules** | Follow-through branch: common-born man-at-arms start; four professional ranks, explicit service, no automatic knighthood, lordship, estate or tribute. Old saves retain earned rank and employer while removing automatic lordship. | Native logic and automated save tests verified; this branch still needs a Mac compile/playthrough. Tower captaincy remains an office requiring nomination and assent. |
 | **Legacy mystery · world interactions** | Relic consecration and a gate interaction explicitly describe supernatural light and Seraphina’s voice; no actual interdimensional map travel is established. | Remove objective supernatural claims in a future code pass. Final grounded replacements require owner approval. |
 | **Encounters and recovery · combat rules** | A Shade foe, HP recovery, defeat recovery, and timed foe respawn exist. | The Shade’s current presentation conflicts with canon. Recovery and respawn are prototype mechanics, not returning dead or miraculous medicine. |
 | **Retinue · companion modules** | Recruitment, wages, memories, routines, injuries, temporary allies, personal quest state, and combat-facing APIs. | Preserve people and social consequences. Support definitions do not by themselves verify controller integration or every advertised bonus. |
@@ -460,3 +460,52 @@ PROVISIONAL — Alden: “Some here remember quiet years. Others arrived with no
 - Record native source paths and the inspected revision for implementation claims. Do not turn old documentation claims into new evidence.
 - When the owner approves a decision, update every dependent character, quest, faction, and system description together.
 - Treat this document’s reconstruction as a narrative and editorial change only. Repository migration and technical-dossier reconciliation are separate assignments.
+
+## 18 · Chronicles follow-through implementation note — 30 October 2026
+
+**VERIFIED IMPLEMENTATION (native source and automated behavior tests; native Mac execution pending):**
+The branch `chatgpt/chronicles-followthrough`, based on main `53a7e16`, extends the existing Greenmere
+situations. This note supersedes older implementation snapshots above where they describe features
+subsequently changed. It does not promote all invented details to LOCKED CANON.
+
+The Red Sike account is now heard after a delayed filing rather than ending at the removal of cargo.
+A prior sale, the grower's debt, the bailiff's requisition and Rowan's restitution are separate claims.
+The fifty-mark cartage demand proceeds without Rowan; comparing a furnished cart's receipt with
+Fenner's assessment can establish duplicated service without proving the Chancellor personally stole
+it. Credit is limited to that service. Refusal and collection leave the town's objection on record.
+
+If the vale nominates Edwin Hessel, the King's assent brings a keeper to the tower after twelve days.
+Rowan can separately choose military service through intermediaries. Fame alone neither creates
+noble ancestors nor grants a knighthood, an estate or personal access to the King. Existing sworn
+employment is preserved when loading an older save; it is not silently reassigned.
+
+Hawise can pass on fresh reports. Rowan's notebook records a report only after he hears it, preserving
+the distinction between what happened elsewhere, what someone says, and what evidence establishes.
+Galahalt's testimony is available through his retinue conversation when present. No objective arrows
+or undiscovered errands are added. Other people keep their deadlines during overworld days; reading
+and menus pause time.
+
+**PROVISIONAL:** Martin Roke is an Oakhaven buyers' clerk; Edwin Hessel is Maud's eldest son and Lady
+Joan's nominee. Their names, local duties, hearing procedure, amounts, deadlines and tuning are
+compatible inventions. The source is the proposed Chronicles, not a new claim that every island's
+constitution or social structure is finally approved.
+
+**OPEN DECISION:** Theology and Rule 13 economic organization remain undecided. The interface's G,
+marks of account, a copying fee and one particular assessment do not establish a kingdom-wide
+currency conversion or uniform system of taxation, tenancy or commerce.
+
+**VERIFIED IMPLEMENTATION (presentation source, layout inspection and Node tests):** The native
+splash/title/pause/loading screens reuse the supplied logo, Greenmere scene and parchment alongside
+matching Oakhaven, Dunhollow and emblem illustrations. Thirty contextual tips explain controls,
+weapon interactions and material/social consequences. These are illustrative views; Oakhaven and
+Dunhollow loading pictures do not establish playable maps. There are no supernatural motifs or
+new theological claims. See the Master Dossier's follow-through section for resource names and tests.
+
+**PLANNED SYSTEM:** The dynamic kingdom-wide civil war and four final outcomes, including collapse
+through insufficient intervention, remain established direction. Greenmere's four implemented
+season epilogues are local consequences with continued play, not completed kingdom endings.
+
+**Verification boundary:** Twelve Node suites pass, including 23 new cases. Six front-end layouts
+were rendered from translated GML with native sprites/fonts. No native compile or manual GameMaker
+walkthrough was available in the Linux environment. The opt-in native QA driver and Mac runner helper
+are prepared for that gate; their presence does not count as passing it.

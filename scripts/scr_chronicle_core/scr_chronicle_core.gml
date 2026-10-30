@@ -69,7 +69,7 @@ function chron_add(_key, _delta) {
 
 /// Gives a reward exactly once per key, whatever path reaches it.
 function chron_reward_once(_key, _gold, _xp) {
-    if (chron_flag("rw_" + _key)) return false;
+    if (!chron_ready() || chron_flag("rw_" + _key)) return false;
     chron_set("rw_" + _key, true);
     if (instance_exists(obj_game)) {
         if (_gold != 0) obj_game.hero_gold = max(0, obj_game.hero_gold + _gold);
@@ -167,15 +167,14 @@ function chron_step(_dt) {
     if (!chron_ready() || !instance_exists(obj_game)) return;
     var C = global.chron;
     if (global.game_mode != "OVERWORLD") return;
-    C.clock += _dt;
-    if (C.clock >= CHRON_DAY_SECONDS) {
-        C.clock -= CHRON_DAY_SECONDS;
-        chron_new_day();
-    }
+    C.clock += max(0, _dt);
     var _tod = obj_game.time_of_day;
-    if (_tod != C.last_tod) {
-        if (C.last_tod == 3 && _tod == 0) { C.clock = 0; chron_new_day(); }
-        C.last_tod = _tod;
+    var _dawn = C.last_tod == 3 && _tod == 0;
+    var _elapsed = C.clock >= CHRON_DAY_SECONDS;
+    C.last_tod = _tod;
+    if (_dawn || _elapsed) {
+        C.clock = _dawn ? 0 : C.clock - CHRON_DAY_SECONDS;
+        chron_new_day();
     }
     gm_step(_dt);
 }

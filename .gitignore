@@ -49,3 +49,9 @@ node_modules/
 
 # Agent board lock (tools/board.sh)
 docs/AGENT_BOARD.md.lock/
+# Reproducible local QA renders and native build outputs
+qa_artifacts/
+_native/
+
+# Python tool caches
+__pycache__/

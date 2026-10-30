@@ -37,6 +37,14 @@
   },
   "name": "BLANK GAME",
   "resources": [
+    {"id":{"name":"spr_front_logo","path":"sprites/spr_front_logo/spr_front_logo.yy"}},
+    {"id":{"name":"spr_front_emblem","path":"sprites/spr_front_emblem/spr_front_emblem.yy"}},
+    {"id":{"name":"spr_front_parchment","path":"sprites/spr_front_parchment/spr_front_parchment.yy"}},
+    {"id":{"name":"spr_loading_greenmere","path":"sprites/spr_loading_greenmere/spr_loading_greenmere.yy"}},
+    {"id":{"name":"spr_loading_oakhaven","path":"sprites/spr_loading_oakhaven/spr_loading_oakhaven.yy"}},
+    {"id":{"name":"spr_loading_dunhollow","path":"sprites/spr_loading_dunhollow/spr_loading_dunhollow.yy"}},
+    {"id":{"name":"scr_frontend","path":"scripts/scr_frontend/scr_frontend.yy"}},
+    {"id":{"name":"scr_chronicle_followthrough","path":"scripts/scr_chronicle_followthrough/scr_chronicle_followthrough.yy"}},
     {
       "id": {
         "name": "obj_game",

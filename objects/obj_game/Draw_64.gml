@@ -23,6 +23,8 @@
 ///   - scr_combat_render, scr_equipment_cards, scr_minigames, scr_living_world,
 ///     scr_knight_contracts, ui_screens, obj_vis_renderer.
 
+if (frontend_active()) { frontend_draw(); exit; }
+
 var _sx = (screen_shake > 0) ? random_range(-screen_shake, screen_shake) : 0;
 var _sy = (screen_shake > 0) ? random_range(-screen_shake, screen_shake) : 0;
 

@@ -90,7 +90,7 @@ function gm_site_entity(_name, _x, _y, _rad, _site) {
 }
 
 /// Puts the right people and places in the world for today. Safe to call any time.
-function gm_world_refresh() {
+function gm_world_refresh_greenmere() {
     if (!chron_ready() || !instance_exists(obj_game)) return;
     gm_world_reset();
     var _g = obj_game;
@@ -215,7 +215,7 @@ function gm_legacy_pending() {
 }
 
 /// Legacy townsfolk whose talk this module takes over while they have something to discuss.
-function gm_tree_for_legacy(_vid) {
+function gm_tree_for_legacy_greenmere(_vid) {
     switch (_vid) {
         // Alden and Mira keep their everyday greeting until Rowan has some business in the vale
         case "ALDEN": return gm_has_business() ? "alden" : "";
@@ -270,7 +270,7 @@ function gm_site_active(_site) {
 // People
 // --------------------------------------------------------------------------------------------
 
-function gm_person(_who) {
+function gm_person_greenmere(_who) {
     switch (_who) {
         case "maud": return { name: "Maud Hessel", visual: "maud" };
         case "fenner": return { name: "Hugh Fenner", visual: "fenner" };
@@ -321,7 +321,7 @@ function gm_cond(_id) {
     return true;
 }
 
-function gm_cond_one(_p) {
+function gm_cond_one_greenmere(_p) {
     if (string_starts_with(_p, "doc:")) return chron_doc_has(string_delete(_p, 1, 4));
     if (string_starts_with(_p, "note:")) return chron_has_note(string_delete(_p, 1, 5));
     switch (_p) {
@@ -414,7 +414,7 @@ function gm_sleep(_heal_frac) {
 }
 
 /// Settles the barge one way. Every path ends here exactly once.
-function gm_barge_resolve(_outcome) {
+function gm_barge_resolve_greenmere(_outcome) {
     if (chron_flag("barge_resolved")) return false;
     chron_set("barge_resolved", true);
     chron_set("barge_outcome", _outcome);
@@ -468,7 +468,7 @@ function gm_barge_resolve(_outcome) {
 // Scheduled events: what other people do on their own time
 // --------------------------------------------------------------------------------------------
 
-function gm_event_fire(_id) {
+function gm_event_fire_greenmere(_id) {
     switch (_id) {
         case "barge_arrives":
             if (chron_flag("barge_arrived")) break;
@@ -539,7 +539,7 @@ function gm_event_fire(_id) {
 // Effects
 // --------------------------------------------------------------------------------------------
 
-function gm_fx(_id) {
+function gm_fx_greenmere(_id) {
     var _g = instance_exists(obj_game) ? obj_game : noone;
     switch (_id) {
         // ---------- shared ----------
@@ -574,7 +574,7 @@ function gm_fx(_id) {
             gm_sleep(1.0);
             break;
         case "alden_lodging":
-            if (gm_rep("stonecross") >= 15 || chron_flag("maud_accepted") || chron_flag("barge_outcome") == "split") {
+            if (gm_rep("stonecross") >= 15 || chron_flag("maud_accepted") || chron_get("barge_outcome", "") == "split") {
                 chron_set("alden_lodging", true);
                 convo_redirect("lodge_yes");
             } else convo_redirect("lodge_no");
@@ -924,7 +924,7 @@ function gm_rumours_heard() {
 // Papers Rowan carries
 // --------------------------------------------------------------------------------------------
 
-function gm_doc_desc(_id) {
+function gm_doc_desc_greenmere(_id) {
     switch (_id) {
         case "settlement_copy": return ["Copy of the tower settlement", "Pippin's fair copy of the chapel's roll: the tower of 192 in royal keeping, the timber lord naming its captain subject to the sovereign's assent, the households giving victuals and repairs."];
         case "petition": return ["Maud Hessel's petition", "Two fair copies, to the Harrow steward and the King's bailiff: name a captain or quit the households of victuals for a garrison that isn't there, and give Maud an acquittance for what she has paid."];
@@ -949,7 +949,7 @@ function gm_legacy_line(_vid) {
     return _s;
 }
 
-function gm_text(_id) {
+function gm_text_greenmere(_id) {
     var _stage = war_clock_stage();
     switch (_id) {
         // ---------- Hawise ----------
@@ -1091,7 +1091,7 @@ function gm_add_galahalt(T) {
     T.disp_accuse = cv("galahalt", "It does? ...Then I'll write it. I'll have it cried at the Stonecross cross that the King's officers sold the Ashen Lance, and let them answer for it.", []);
 }
 
-function gm_tree(_id) {
+function gm_tree_greenmere(_id) {
     var T = {};
     switch (_id) {
         // ================= HAWISE (the Boar & Flagon) =================
@@ -1295,7 +1295,7 @@ function gm_tree(_id) {
                 cvo("Not on those terms.", "start")
             ]);
             T.timber_ok = cv("fenner", "Then the beams will be at the tower when the households are.", [cvo("(Back)", "start")]);
-            T.timber_paid = cv("fenner", "Twenty marks. The Lady's carpenters will be pleased, and the Lady's right is unchanged either way. The beams will be there when the households are.", [cvo("(Back)", "start")]);
+            T.timber_paid = cv("fenner", "Twenty in coin. The Lady's carpenters will be pleased, and the Lady's right is unchanged either way. The beams will be there when the households are.", [cvo("(Back)", "start")]);
             T.captain = cv("fenner", "You? A captain needn't be well born; he needs to be paid and to stay. Naming you makes you the Lady's captain under the King's assent. It makes you no lord, and the levy won't pay you much. Still want it?", [
                 cvo("Yes. Put my name forward.", "captain_yes", "captain_ask"),
                 cvo("No. Name someone from the vale.", "captain_vale", "captain_vale"),

@@ -34,10 +34,12 @@ function retinue_step(_dt) {
 
     // calendar
     R.clock += _dt;
-    if (R.clock >= RET_DAY_SECONDS) { R.clock -= RET_DAY_SECONDS; retinue_new_day(); }
-    if (_g.time_of_day != R.last_tod) {
-        if (R.last_tod == 3 && _g.time_of_day == 0) { R.clock = 0; retinue_new_day(); }
-        R.last_tod = _g.time_of_day;
+    var _dawn = R.last_tod == 3 && _g.time_of_day == 0;
+    var _elapsed = R.clock >= RET_DAY_SECONDS;
+    R.last_tod = _g.time_of_day;
+    if (_dawn || _elapsed) {
+        R.clock = _dawn ? 0 : R.clock - RET_DAY_SECONDS;
+        retinue_new_day();
     }
 
     // people walk to their routine spots (only while Rowan can't see the jump)

@@ -13,4 +13,4 @@
 ///
 /// INTER-MODULE INTERFACES:
 ///   - vis_draw_gui() in scr_vis_draw, ui_hud, ui_dialogue.
-vis_draw_gui();
+if (!frontend_active()) vis_draw_gui();

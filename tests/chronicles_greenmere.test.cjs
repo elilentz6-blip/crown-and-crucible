@@ -536,11 +536,11 @@ test('a save from before the Chronicles loads cleanly and the region starts fres
 
 test('content integrity: every reply leads somewhere, every id is handled, every page fits the box', () => {
   const { g } = world();
-  const src = fs.readFileSync(path.join(ROOT, 'scripts/scr_greenmere/scr_greenmere.gml'), 'utf8');
+  const src = fs.readFileSync(path.join(ROOT, 'scripts/scr_greenmere/scr_greenmere.gml'), 'utf8') + fs.readFileSync(path.join(ROOT, 'scripts/scr_chronicle_followthrough/scr_chronicle_followthrough.gml'), 'utf8');
   const caseIds = new Set([...src.matchAll(/case "([^"]+)"/g)].map(m => m[1]));
   const trees = ['hawise', 'maud', 'site_tower', 'site_barrows', 'site_cache', 'site_bookchest', 'site_bed', 'site_board', 'site_mill',
     'site_checkpoint', 'alden', 'pippin', 'fenner', 'jory', 'guy', 'cecily', 'vane', 'beatrice', 'mallow', 'oswin', 'mira', 'refugee', 'ebbe', 'piers', 'epilogue'];
-  const knownCond = new Set(['galahalt_here', 'isolde_here', 'night', 'barge_open', 'stage2', 'stage3', 'maud_decided', 'crown_trusts', 'can_repair', 'has_cargo']);
+  const knownCond = new Set(['galahalt_here', 'isolde_here', 'night', 'barge_open', 'stage2', 'stage3', 'maud_decided', 'crown_trusts', 'can_repair', 'has_cargo', 'cf_hearing_pending', 'cf_hearing_decided', 'cf_can_file', 'cf_owes_grain', 'cf_levy_open', 'cf_levy_decided', 'cf_audit_evidence', 'cf_can_copy', 'cf_crown_service', 'cf_league_service', 'cf_rusk_service']);
   // conditions that are plain chronicle flags must be set somewhere
   const setFlags = new Set([...src.matchAll(/chron_set\("([^"]+)"/g)].map(m => m[1]));
   for (const t of trees) {

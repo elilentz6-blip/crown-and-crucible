@@ -25,6 +25,14 @@
 
 ---
 
+> **Current branch verification — Chronicles follow-through, 30 October 2026.** Native source now
+> includes the follow-through situations and branded front end described below. The 12 Node suites
+> pass; the new suite has 23 cases. Six screens were rendered from the translated GML draw code and
+> native bitmap assets for layout inspection. **This revision has not been compiled or played in
+> GameMaker on macOS**: work resumed in Linux. Earlier native certification, counts, debt claims and
+> governance snapshots in this document describe older revisions and do not certify this branch.
+> The current no-magic canon and Chronicles supersede earlier fantasy or automatic-lordship text.
+
 ## Executive Dashboard: The Four Core Inquiries
 
 This opening dashboard provides an immediate, verifiable status assessment of Crown & Crucible for project leadership and incoming engineering agents.
@@ -47,7 +55,7 @@ This opening dashboard provides an immediate, verifiable status assessment of Cr
                                   • Native macOS GameMaker compilation via Igor CLI (~2.5s compile time)
                                   • Native Mac_Runner boot into stable 60 FPS main loop on Metal/OpenGL 2.1
                                   • Autonomous 3-faction Feudal Warfare state machine (3600-frame cycle)
-                                  • Chivalric hierarchy progression (Ranks 0–3 with Old Watchtower Fief)
+                                  • Professional military standing (Ranks 0–3; separate office and birth)
                                   • Equipment armory with 6 socket classes, 12 tactical cards, stat scaling
                                   • Bug fixes B1 through B9, B11, and B12 fully verified in code and tests
 ----------------------------------------------------------------------------------------------------
@@ -69,7 +77,7 @@ This opening dashboard provides an immediate, verifiable status assessment of Cr
 ### Detailed Breakdown of Dashboard Answers
 
 #### 1. What can I play right now?
-The player can launch `BLANK GAME.app` on macOS or run via GameMaker IDE (F5) and immediately step into the boots of **Sir Rowan** in the hamlet of **Stonecross** within the **Greenmere Vale**. The overworld features responsive 8-way movement with axis-separated slide collision across a 3200 × 3072 world map. 
+The player can launch `BLANK GAME.app` on macOS or run via GameMaker IDE (F5) and immediately step into the boots of **Rowan** in the hamlet of **Stonecross** within the **Greenmere Vale**. The overworld features responsive 8-way movement with axis-separated slide collision across a 3200 × 3072 world map.
 
 Players can seamlessly walk into four interactive interiors (Tavern, Forge, Chapel, Cottage) in the lower interior strip (`y >= 2400`) via proximity doors. The world is populated by 16 living villagers who follow schedules and respond to faction reputation. Rowan can recruit up to 2 active companions from a 9-member retinue roster, open the retinue ledger with **P**, execute 6 handcrafted side quests, accept 4 freelance knight contracts (or betray employers for bribes), gamble at the tavern in "Crown & Bones" dice poker against 4 distinct AI profiles, compete in the "Warden's Target" archery range, and trade 4 commodities across regional markets with volatile wartime prices. 
 
@@ -80,7 +88,7 @@ The core systems are algorithmically and architecturally complete. **121 automat
 
 Headless native compilation via Igor CLI packages the game into native bytecode (`game.ios`, 1.55 MB) in ~2.5 seconds. When ad-hoc signed, `Mac_Runner` launches natively on macOS Apple Silicon, initializes Apple Metal running OpenGL 2.1, creates the 1366 × 768 display surface, and runs the 60 FPS main game loop without crashing. 
 
-The autonomous **Feudal Warfare simulation** runs on a 3600-frame cycle, simulating military power, treasuries, granaries, and contested border checkpoints across three warring kingdoms. The chivalric hierarchy system promotes Rowan across four ranks, culminating in the grant of the Old Watchtower Fief and weekly gold tribute.
+The autonomous **Feudal Warfare simulation** runs on a 3600-frame cycle, simulating military power, treasuries, granaries, and contested border checkpoints across three warring kingdoms. Professional standing advances across four ranks. It does not grant noble birth, an automatic oath, an estate or tribute; see section 5.1.
 
 #### 3. What is broken or incomplete?
 - **Bug B10 (Visual Presentation Debt)**: Menus (Armory, Trade, Quests, Contracts) and the battle arena are currently rendered using primitive flat-color rectangles rather than the nine-slice panels, textured buttons, and typography provided by the `ui_kit` framework. Battle encounters currently draw primitive vector silhouettes (`spr_foe_*`) rather than character sprites.
@@ -92,7 +100,7 @@ The autonomous **Feudal Warfare simulation** runs on a 3600-frame cycle, simulat
 1. **Phase 5 Presentation Pass**: Replace legacy flat GUI screens with the polished UI Kit components, wire `ui_equipment.gml` into the screen router, and replace primitive battle sprites with full character art.
 2. **Hidden War Clock Implementation**: Transition the autonomous warfare simulation from a cyclical state machine into a systemic countdown clock featuring Realm Exhaustion (0–100), Economic Collapse, and Territorial Devastation.
 3. **Four Endings Progression**: Implement narrative triggers and endgame sequences for the Four Endings (Rebel Victory, Loyalist Restoration, Secret Settlement, Ashen Kingdom).
-4. **Future Expansion Horizons**: Build the Archipelago naval expansion, systemic crime and evidence gathering, modular homebuilding at the Watchtower Fief, and seasonal chivalric tournaments.
+4. **Future Expansion Horizons**: Build the Archipelago naval expansion, systemic crime and evidence gathering, modular homebuilding after a separately established property grant, and seasonal chivalric tournaments.
 
 ---
 
@@ -292,12 +300,21 @@ The earlier design proposal it grew from:
 
 ## V. Protagonist, Retinue & Living NPCs
 
-### 5.1 Protagonist: Sir Rowan & Chivalric Hierarchy
-Sir Rowan progresses across four chivalric ranks (`scripts/scr_feudal_hierarchy/scr_feudal_hierarchy.gml`):
-- **Rank 0: Wandering Hedge Knight** (0 Renown) — Starting status; unlanded mercenary.
-- **Rank 1: Recognized Freeblade Captain** (50 Renown) — +10% merchant sell prices. (Larger retinue at this rank is planned; the cap is still two companions.)
-- **Rank 2: Sworn Knight-Banneret** (100 Renown + ≥40 Faction Rep) — Unlocks faction noble audience and heraldic tabard.
-- **Rank 3: Landed Marcher Castellan** (200 Renown + ≥70 Faction Rep) — Awards the Old Watchtower Fief Writ (`800, 1890`) and +50 Gold weekly tribute.
+### 5.1 Rowan: professional standing, office and birth
+
+Rowan begins as a common-born, experienced, unknighted man-at-arms. The native
+`scr_feudal_hierarchy` retains rank fields for save compatibility but now tracks professional standing:
+
+- **Rank 0: Common Man-at-Arms** — no initial office, estate or political influence.
+- **Rank 1: Recognized Company Officer** (50 renown) — displayed as Freeblade Captain.
+- **Rank 2: Trusted Company Captain** (100 renown and 40 Crown/Oakhaven/Dunhollow reputation) — may explicitly enter local service through Guy, Cecily or Vane.
+- **Rank 3: Veteran Company Captain** (200 renown and 70 local reputation) — no automatic lordship, knighthood or property grant.
+
+Service is a conversation choice, never an inference from popularity. The separate Greenmere tower
+appointment still requires nomination and royal assent. Old automatic fief/title fields migrate to
+professional standing; earned rank and existing employer are retained, but automatic tribute ends.
+The faction-support query requires rank 2 and actual service; its battle integration remains separate. There is no implemented audience, tabard or property
+benefit merely because a rank description claims one.
 
 ### 5.2 The Knight's Retinue (8 people in `retinue_defs`, plus allies in `retinue_ally_templates`)
 
@@ -534,7 +551,7 @@ To ensure flawless multi-agent coordination without race conditions, strict file
 1. ~~Implement the Hidden War Clock~~ Done for Greenmere (provisional numbers, `scr_war_clock`). Extend its causes to contracts and the other islands.
 2. Wire quest branches and contract defections into the Four Civil War Endings.
 3. Build the Archipelago maritime expansion, introducing riverboat naval mechanics, contraband smuggling, and island ports.
-4. Implement modular homebuilding at the Old Watchtower Fief and seasonal chivalric tournament brackets.
+4. Implement modular homebuilding after a separately established property grant and seasonal chivalric tournament brackets.
 
 ---
 
@@ -561,10 +578,11 @@ To ensure flawless multi-agent coordination without race conditions, strict file
 
 ```gml
 // Authoritative Global State Tree:
-global.game_mode             // "OVERWORLD", "BATTLE", "EQUIPMENT", "DICE_GAME", "ARCHERY_GAME", "TRADE_MENU", "QUEST_LOG", "CONTRACTS", "RETINUE", "CONVERSATION", "NOTEBOOK"
+global.game_mode             // "OVERWORLD", "BATTLE", "EQUIPMENT", "DICE_GAME", "ARCHERY_GAME", "TRADE_MENU", "QUEST_LOG", "CONTRACTS", "RETINUE", "CONVERSATION", "NOTEBOOK", "FRONTEND"
 global.chron                 // { day, clock, flags, notes[], docs[], heard{}, sched[], news[] }  saved as "chronicle"
 global.war_clock             // { started, pressure 0-100, stage 0-4, mediation, notice, ended, ending }  saved inside "chronicle"
 global.convo                 // transient conversation / notebook UI state (never saved)
+global.frontend              // splash/title/pause/loading state; never saved
 global.reputation            // { crown: int, river_league: int, iron_council: int, stonecross: int }
 global.side_quests           // { QUEST_PIG, QUEST_GAMBLER, QUEST_COUNTERFEIT, QUEST_DRUNKEN_KNIGHT, QUEST_MISSING_WINE, QUEST_SMUGGLER_RUN }
 global.commodities           // { WHEAT, FISH, IRON, WINE }
@@ -577,3 +595,80 @@ global.retinue               // { members, order, active, temp, day, bonds, chro
 global.war_chronicle         // array[string] (Last 20 campaign entries)
 global.vis                   // Rendering surfaces, particle emitters, camera state
 ```
+
+## Chronicles follow-through and branded native front end — 30 October 2026
+
+**IMPLEMENTED IN NATIVE SOURCE; MAC RUNTIME VERIFICATION PENDING.** Branch
+`chatgpt/chronicles-followthrough`, based on main `53a7e16`. The newer historical-paper reading
+changes in `scr_greenmere` are retained. This pass does not change the combat minigame registry,
+equipment formulas, save file name, Chronicle save version or room map.
+
+### Player-visible changes
+
+- Martin Roke arrives independently after three days. Red Sike cargo outcomes open an eight-day
+  hearing deadline. Filing requires the purchase account and knowledge of Ordel. Answers take four
+  further days; an ignored hearing proceeds on existing papers. Findings distinguish a prior
+  purchase, Crown requisition, shared cargo and unpaid taking. Restitution is an explicit, one-time
+  20G payment; a receipt does not sell a pardon or erase a prior judgment.
+- The additional cartage assessment is issued after four days even if Rowan never asks. Collection
+  follows seven days later. Alden's composition account, Oswin's receipt and Fenner's assessment
+  support an inquiry. A clerk's copy costs 3G once or is available with local backing. The answer
+  credits duplicated cartage after four days; it neither cancels the remaining assessment nor proves
+  personal theft. Collection, public refusal and inaction have different consequences. No household
+  liability is silently charged to Rowan's purse.
+- Edwin Hessel appears at the western tower twelve days after the vale nomination receives the
+  required assent. Keeping an office does not make him owner, noble or knight. Galahalt's existing
+  testimony/dispatch options are reachable with **P → select Galahalt → T** when met and nearby/in party.
+- Hawise relays fresh world news on request. Only reports actually heard enter the notebook; they
+  remain there after the short world-news queue turns over. Conversations show at most six replies
+  at once and scroll to the selected reply, allowing wrapped labels without off-screen options.
+- The elapsed-day/night-to-dawn coincidence advances the Chronicle and retinue calendars once,
+  preventing doubled wages/deadlines. Sharing the cargo correctly qualifies for Alden's lodging.
+
+### Front-end integration
+
+`scr_frontend` owns transient `global.frontend` and mode `FRONTEND`. It pauses gameplay, provides a
+skippable splash, Continue/New Journey/Controls/Quit, an Esc pause menu with Save/Load, and confirms
+replacement of unsaved progress. Beginning a new journey does not overwrite the old disk save until
+an explicit save. Corrupt save feedback returns to the menu. Held confirmation input must be
+released before entering play.
+
+Loading displays a frame before synchronous file work, then builds missing terrain chunks one per
+frame. It reports actual work with no invented percentage. Thirty tips cover controls, five weapon
+classes, evidence, local rights, company care and recovery. Background captions are illustrations
+from the isles, not claims of travel to a not-yet-playable island.
+
+Six original PNGs are preserved under `art_src/branding/`: the supplied logo, Greenmere landscape
+and parchment, plus the matching Oakhaven wharf, Dunhollow quarry and compact emblem. Six native
+sprites and two scripts are registered in the project. Mac display name, icon and startup image
+reference those assets. `tools/register_branding.py` reproduces registration without modifying
+source-image pixels. Parchment components use nine-part drawing; existing art is not regenerated.
+
+### Persistence and interfaces
+
+The follow-through module wraps the existing public `gm_*` interfaces; original functions live as
+`*_greenmere` implementations. Persistent flags, evidence and deadlines use the existing
+`global.chron` serialization. Heard news uses string keys in `chron.heard`. No callbacks or UI state
+are saved. Existing saves gain future deadlines instead of an immediate retroactive failure.
+New names (Martin Roke and Edwin Hessel), amounts, deadlines and reputation/pressure tuning remain
+**PROVISIONAL** content choices. Exact theology and the kingdom's economic organization remain
+**OPEN DECISIONS**. G and marks of account have no established conversion.
+
+### Verification and remaining gates
+
+- `node tests/run_all.cjs`: **12/12 suites passed**, including 23 follow-through/front-end cases.
+- `node tests/gml_translator.test.cjs`: static translation validation; this is not an Igor compile.
+- `node tools/render_frontend.cjs`: six layout renders using actual GML draw logic and native PNG
+  bitmap fonts; requires optional `@napi-rs/canvas`.
+- `CC_FOLLOW_QA=1`: opt-in native walkthrough driver for live conversations, delayed rulings,
+  evidence, service, nomination and in-memory persistence. The driver was exercised under the Node
+  harness; **its native execution remains unverified**. It does not write a player save.
+- After compiling this checkout with GameMaker 2024.14.4.222 on macOS, use
+  `tools/run_native_qa.py --runner /absolute/path/to/Mac_Runner --build ~/GameMakerProjects/_build
+  --suite follow`. The build folder must contain `game.ios`, `options.ini` and `splash.png` from the
+  same fresh build. Run the existing `--suite chronicle` walkthrough as well. Never launch the runner
+  bare. A fresh IDE compile also ensures `${options_dir}` refers to this checkout, not an old one.
+
+Kingdom-wide travel, a final economic model, terminal kingdom collapse and all four civil-war ending
+sequences remain **PLANNED SYSTEMS**. The four current Greenmere season epilogues allow play to
+continue and are not those endings. Malor's League protection at Red Sike remains a later integration.

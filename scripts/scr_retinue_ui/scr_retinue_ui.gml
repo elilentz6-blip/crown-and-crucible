@@ -84,6 +84,9 @@ function retinue_ui_step(_dt) {
     if (_req != undefined && keyboard_check_pressed(ord("N"))) { retinue_ui_say(retinue_request_answer(_req, false)); return; }
 
     if (keyboard_check_pressed(ord("T"))) {
+        if (M.id == "GALAHALT" && M.met && (retinue_in_party(M.id) || retinue_near(M))) {
+            retinue_ui_close(); convo_open("cf_galahalt"); return;
+        }
         if (!M.met) retinue_ui_say("* You have only heard of them. Find them first.");
         else if (retinue_in_party(_id) || retinue_near(M)) retinue_ui_say("* " + M.name + ": " + retinue_talk_line(M));
         else retinue_ui_say("* " + M.name + " is not here. Last you heard: " + retinue_location_text(M) + ".");

@@ -120,7 +120,7 @@ function vis_init() {
         title_t: 0,
         hint_t: 0,
         title_main: "Stonecross",
-        title_sub: "Heart of the Verdant Kingdom",
+        title_sub: "The Greenmere Vale, Maroven",
         // interiors (scr_vis_interiors)
         outdoor_h: _layout[$ "outdoor_h"] ?? room_height,
         doors: [],
@@ -765,6 +765,7 @@ function vis_draw_char(_key, _x, _y, _dir, _moving, _t, _alpha = 1) {
 function vis_step() {
     var V = global.vis;
     if (!V.ready) return;
+    if (frontend_active()) return; // do not finish a pending door teleport underneath pause/load
     var _dt = 1 / 60;
     V.time += _dt;
     V.title_t += _dt;
