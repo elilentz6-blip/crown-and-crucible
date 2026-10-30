@@ -285,7 +285,7 @@ function baseShims(extra = {}) {
     method: (receiver, fn) => fn, method_get_self: () => g, method_get_index: fn => fn,
     script_execute: (fn, ...a) => fn(...a), script_exists: f => typeof f === 'function',
     show_debug_message() {}, show_message() {}, show_error: m => { throw new Error(String(m)); },
-    get_timer: () => 0, date_current_datetime: () => 0,
+    get_timer: () => 0, date_current_datetime: () => 0, environment_get_variable: (key) => "",
     // Inside the VM the instance is seen through its global proxy, so compare
     // against both identities.
     instance_exists: obj => obj != null && (obj === g || obj === g.obj_game),
