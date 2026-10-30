@@ -275,59 +275,86 @@ function frontend_step(_dt) {
     if (_yes) frontend_choose(F.cursor);
 }
 
+/// Draws a sprite through a low-resolution surface so the painted brand art lands on the same
+/// chunky pixel grid as the world. _px is the pixel size of one art pixel on screen.
+function frontend_pixelate(_spr, _x, _y, _w, _h, _px, _alpha = 1) {
+    var F = global.frontend;
+    var _sw = max(1, floor(_w / _px)), _sh = max(1, floor(_h / _px));
+    if (!variable_struct_exists(F, "pix") || !surface_exists(F.pix) || surface_get_width(F.pix) != _sw || surface_get_height(F.pix) != _sh) {
+        if (variable_struct_exists(F, "pix") && surface_exists(F.pix)) surface_free(F.pix);
+        F.pix = surface_create(_sw, _sh);
+    }
+    surface_set_target(F.pix);
+    draw_clear_alpha(c_black, 0);
+    gpu_set_texfilter(true);
+    draw_sprite_stretched(_spr, 0, 0, 0, _sw, _sh);
+    gpu_set_texfilter(false);
+    surface_reset_target();
+    draw_surface_ext(F.pix, _x, _y, _px, _px, 0, c_white, _alpha);
+}
+
 function frontend_background(_index, _alpha = 1) {
     var _sprites = [spr_loading_greenmere, spr_loading_oakhaven, spr_loading_dunhollow];
     var _spr = _sprites[clamp(_index, 0, 2)];
     var _scale = max(1366 / sprite_get_width(_spr), 768 / sprite_get_height(_spr));
-    draw_sprite_ext(_spr, 0, (1366 - sprite_get_width(_spr) * _scale) / 2,
-        (768 - sprite_get_height(_spr) * _scale) / 2, _scale, _scale, 0, c_white, _alpha);
+    var _w = sprite_get_width(_spr) * _scale, _h = sprite_get_height(_spr) * _scale;
+    frontend_pixelate(_spr, floor((1366 - _w) / 2), floor((768 - _h) / 2), _w, _h, 4, _alpha);
 }
 
-/// Nine-part drawing preserves the supplied parchment's corners without altering the artwork.
-function frontend_parchment(_x, _y, _w, _h) {
-    // The source includes a transparent surround. Draw from the paper's bounds so
-    // the component's requested rectangle is also its usable visual rectangle.
-    var _ox = 48, _oy = 68;
-    var _sw = sprite_get_width(spr_front_parchment) - 96, _sh = sprite_get_height(spr_front_parchment) - 136;
-    var _edge = 110, _out = 40;
-    var _sx = [_ox, _ox + _edge, _ox + _sw - _edge], _sy = [_oy, _oy + _edge, _oy + _sh - _edge];
-    var _srcw = [_edge, _sw - _edge * 2, _edge], _srch = [_edge, _sh - _edge * 2, _edge];
-    var _dx = [_x, _x + _out, _x + _w - _out], _dy = [_y, _y + _out, _y + _h - _out];
-    var _dw = [_out, _w - _out * 2, _out], _dh = [_out, _h - _out * 2, _out];
-    for (var _j = 0; _j < 3; _j++) for (var _i = 0; _i < 3; _i++)
-        draw_sprite_part_ext(spr_front_parchment, 0, _sx[_i], _sy[_j], _srcw[_i], _srch[_j],
-            _dx[_i], _dy[_j], _dw[_i] / _srcw[_i], _dh[_j] / _srch[_j], c_white, 1);
+/// The menus share the world's gilded panel, parchment grain and bitmap fonts (ui_kit).
+function frontend_parchment(_x, _y, _w, _h) { ui_panel("gilded", _x, _y, _w, _h); }
+
+function frontend_logo(_x, _y, _size, _alpha = 1) { frontend_pixelate(spr_front_logo, _x, _y, _size, _size, 3, _alpha); }
+
+/// A row of key hints: ["W/S", "choose", "Z", "confirm"].
+function frontend_hints(_x, _y, _pairs) {
+    for (var _i = 0; _i < array_length(_pairs); _i += 2) {
+        _x += ui_keycap(_x, _y, _pairs[_i]) + 6;
+        ui_text_draw(_x, _y + 3, _pairs[_i + 1], "small", UI_COL_INK_SOFT);
+        _x += ui_text_width(_pairs[_i + 1], "small") + 18;
+    }
 }
 
 function frontend_draw() {
     if (!frontend_active()) return;
     var F = global.frontend;
-    gpu_set_texfilter(true);
+    var _wine = make_color_rgb(107, 41, 47);
     frontend_background(F.art);
     draw_set_color(c_black); draw_set_alpha(0.42); draw_rectangle(0, 0, 1366, 768, false);
     draw_set_alpha(1); draw_set_color(c_white);
     if (F.phase == "splash") {
         draw_set_color(make_color_rgb(15, 13, 12)); draw_rectangle(0, 0, 1366, 768, false);
-        draw_sprite_ext(spr_front_logo, 0, 418, 45, 530 / sprite_get_width(spr_front_logo), 530 / sprite_get_height(spr_front_logo), 0, c_white, min(1, F.elapsed * 2));
+        draw_set_color(c_white);
+        frontend_logo(418, 45, 530, min(1, F.elapsed * 2));
+        ui_divider(483, 592, 400);
         var _sub = "THE CHRONICLES OF AETHELGARD";
         ui_text_draw((1366 - ui_text_width(_sub, "small")) / 2, 615, _sub, "small", UI_COL_GOLD);
         var _skip = "Z / Enter to skip";
-        ui_text_draw((1366 - ui_text_width(_skip, "small")) / 2, 690, _skip, "small", UI_COL_PARCHMENT);
+        ui_text_draw((1366 - ui_text_width(_skip, "small")) / 2, 690, _skip, "small", UI_COL_MUTED);
     } else if (F.phase == "controls") {
         frontend_parchment(245, 72, 876, 558);
-        ui_text_draw(305, 120, "A Man-at-Arms' Handbook", "title", UI_COL_INK, 740);
-        var _lines = ["WASD / Arrows   Move", "Z / Space   Interact", "C   Equipment and card sockets", "P   Retinue ledger", "J   Notes, papers and rumors",
-            "Q   Known quests     B   Contracts", "F5   Save     F9   Load     Esc   Pause / leave", "FIGHT   Follow the equipped weapon's instructions", "Conversations   W/S select, Z confirm, Esc leave"];
-        for (var _i = 0; _i < array_length(_lines); _i++) ui_text_draw(305, 190 + _i * 35, _lines[_i], "body", UI_COL_INK, 750);
-        ui_text_draw(305, 550, "Z / Enter / Esc to return", "small", UI_COL_INK_SOFT, 700);
+        ui_text_draw(305, 110, "A Man-at-Arms' Handbook", "title", UI_COL_INK, 740);
+        ui_divider(305, 150, 760);
+        var _rows = [["WASD", "Move"], ["Z", "Interact / confirm"], ["C", "Equipment and card sockets"], ["P", "Retinue ledger"],
+            ["J", "Notes, papers and rumors"], ["Q", "Known quests"], ["B", "Contracts"], ["M", "Map"],
+            ["F5", "Save"], ["F9", "Load"], ["Esc", "Pause, or leave a screen"]];
+        for (var _i = 0; _i < array_length(_rows); _i++) {
+            var _cx = 305 + (_i mod 2) * 400, _cy = 178 + floor(_i / 2) * 44;
+            var _kw = ui_keycap(_cx, _cy, _rows[_i][0]);
+            ui_text_draw(_cx + _kw + 12, _cy + 3, _rows[_i][1], "body", UI_COL_INK, 330);
+        }
+        ui_text_draw(305, 455, "FIGHT follows the equipped weapon's instructions. In conversation, W/S select a reply, Z confirms, Esc leaves.", "small", UI_COL_INK_SOFT, 760);
+        frontend_hints(305, 560, ["Z", "return", "Esc", "return"]);
     } else if (F.phase == "loading" || F.phase == "fade") {
-        draw_sprite_ext(spr_front_emblem, 0, 72, 68, 80 / sprite_get_width(spr_front_emblem), 80 / sprite_get_height(spr_front_emblem), 0, c_white, 1);
-        ui_text_draw(175, 88, "Crown & Crucible", "title", UI_COL_PARCHMENT, 900);
+        ui_panel("gilded_dark", 56, 52, 500, 112);
+        frontend_pixelate(spr_front_emblem, 76, 68, 80, 80, 2);
+        ui_text_draw(172, 82, "Crown & Crucible", "title", UI_COL_PARCHMENT, 290);
         var _places = ["Greenmere, Maroven", "Oakhaven, Maroven", "Dunhollow, Rusk"];
-        ui_text_draw(78, 535, "From the isles: " + _places[F.art], "title", UI_COL_PARCHMENT, 1100);
-        ui_text_draw(80, 585, F.status + string_repeat(".", floor(F.elapsed * 3) mod 4), "small", UI_COL_PARCHMENT, 1100);
+        ui_text_draw(172, 118, "From the isles: " + _places[F.art], "small", UI_COL_GOLD, 370);
+        ui_panel("gilded_dark", 56, 540, 560, 72);
+        ui_text_draw(80, 562, F.status + string_repeat(".", floor(F.elapsed * 3) mod 4), "body", UI_COL_PARCHMENT, 520);
     } else {
-        draw_sprite_ext(spr_front_logo, 0, 115, 80, 510 / sprite_get_width(spr_front_logo), 510 / sprite_get_height(spr_front_logo), 0, c_white, 1);
+        frontend_logo(115, 80, 510);
         frontend_parchment(765, 130, 495, 470);
         var _title = F.phase == "pause" ? "Your Journey" : "Enter Aethelgard";
         if (F.phase == "confirm_new") _title = "A New Journey";
@@ -335,30 +362,38 @@ function frontend_draw() {
         if (F.phase == "confirm_menu") _title = "Leave This Journey?";
         if (F.phase == "confirm_quit") _title = "Quit the Game?";
         if (F.phase == "settings") _title = "Settings";
-        ui_text_draw(820, 175, _title, "title", UI_COL_INK, 385);
+        ui_text_draw(820, 165, _title, "title", UI_COL_INK, 385);
+        ui_divider(820, 203, 385);
         var _menu = frontend_menu();
         for (var _i = 0; _i < array_length(_menu); _i++) {
             var _disabled = _menu[_i] == "Continue" && !file_exists(CC_SAVE_FILE);
-            ui_text_draw(825, 232 + _i * 36, (F.cursor == _i ? ">  " : "    ") + _menu[_i], "body_bold",
-                _disabled ? make_color_rgb(133, 118, 96) : (F.cursor == _i ? make_color_rgb(107, 41, 47) : UI_COL_INK), 365);
+            var _ry = 232 + _i * 36;
+            if (F.cursor == _i) {
+                draw_set_alpha(0.16); draw_set_color(_wine); draw_rectangle(812, _ry - 6, 1212, _ry + 24, false);
+                draw_set_alpha(1); draw_set_color(c_white);
+                var _arrow = ui_spr("spr_ui_next_arrow");
+                if (_arrow >= 0) draw_sprite(_arrow, 0, 826, _ry + 2);
+            }
+            ui_text_draw(848, _ry, _menu[_i], "body_bold", _disabled ? UI_COL_MUTED : (F.cursor == _i ? _wine : UI_COL_INK), 350);
         }
         var _status = F.status;
         if (F.phase == "confirm_new") _status = "Your saved journey remains until you choose to save the new one.";
         if (F.phase == "confirm_load") _status = "Current unsaved progress will be replaced.";
         if (F.phase == "confirm_menu" || F.phase == "confirm_quit") _status = "Unsaved progress will be lost. Your saved journey is not changed.";
-        if (_status != "") ui_text_draw(817, 495, _status, "small", UI_COL_INK_SOFT, 380);
-        ui_text_draw(822, 558, F.phase == "settings" ? "W/S choose   A/D change" : "W/S choose   Z / Enter confirm", "small", UI_COL_INK_SOFT, 390);
+        if (_status != "") ui_text_draw(820, 495, _status, "small", UI_COL_INK_SOFT, 380);
+        if (F.phase == "settings") frontend_hints(820, 555, ["W/S", "choose", "A/D", "change"]);
+        else frontend_hints(820, 555, ["W/S", "choose", "Z", "confirm"]);
     }
     if (F.phase != "splash") {
         var _tips = frontend_tips(), _tip = _tips[F.tip];
-        frontend_parchment(72, 632, 1222, 116);
-        ui_text_draw(115, 657, _tip[0], "body_bold", make_color_rgb(107, 41, 47), 170);
-        ui_text_draw(285, 653, _tip[1], "small", UI_COL_INK, 920);
-        ui_text_draw(115, 710, "Left / Right: another tip", "small", UI_COL_INK_SOFT, 400);
+        ui_panel("parchment", 72, 632, 1222, 116);
+        ui_text_draw(100, 652, _tip[0], "body_bold", _wine, 170);
+        ui_text_draw(270, 652, _tip[1], "small", UI_COL_INK, 990);
+        frontend_hints(100, 700, ["A/D", "another tip"]);
     }
     if (F.phase == "fade") {
         // Cover with a brief black fade, then reveal the prepared world after key release.
         draw_set_color(c_black); draw_set_alpha(F.fade); draw_rectangle(0, 0, 1366, 768, false);
     }
-    draw_set_alpha(1); draw_set_color(c_white); gpu_set_texfilter(false);
+    draw_set_alpha(1); draw_set_color(c_white);
 }
