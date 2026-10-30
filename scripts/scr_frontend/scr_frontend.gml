@@ -42,7 +42,7 @@ function frontend_active() { return frontend_ready() && global.game_mode == "FRO
 
 /// The renderer calls this after native setup; gameplay automation retains its direct boot.
 function frontend_init(_force = false) {
-    if (!_force && (environment_get_variable("CC_CHRON_QA") == "1" || environment_get_variable("CC_FOLLOW_QA") == "1" || environment_get_variable("CC_RETINUE_QA") == "1"
+    if (!_force && (environment_get_variable("CC_CHRON_QA") == "1" || environment_get_variable("CC_FOLLOW_QA") == "1" || environment_get_variable("CC_RETINUE_QA") == "1" || environment_get_variable("CC_RETINUE_SNAP") == "1"
         || environment_get_variable("CC_VIS_TOUR") != "" || environment_get_variable("CC_VIS_SCREENS") != "" || environment_get_variable("CC_VIS_SNAP") != "")) return;
     window_set_caption("Crown & Crucible");
     global.frontend = {phase:"splash", elapsed:0, cursor:0, tip:0, art:0, session:false,

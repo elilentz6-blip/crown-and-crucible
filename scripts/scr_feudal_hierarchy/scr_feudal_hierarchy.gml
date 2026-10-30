@@ -22,10 +22,21 @@ function cc_hierarchy_title() {
     if (global.feudal_rank >= 1) return "Rowan, Freeblade Captain";
     return "Rowan (Man-at-Arms)";
 }
-function cc_hierarchy_reconcile() {
+function cc_hierarchy_reconcile(_keep_earned_title = false) {
+    var _old_title = global.player_title;
     global.fief_owned = false;
     global.weekly_fief_income = 0;
     global.player_title = cc_hierarchy_title();
+    // Older saves also contain legitimate professional styles. Retain those
+    // until a new promotion/appointment instead of stripping every title.
+    if (_keep_earned_title && !chron_flag("rowan_captain")) {
+        switch (_old_title) {
+            case "Sergeant-at-Arms Rowan": case "Rowan, Sergeant-at-Arms":
+            case "Rowan, Free-Captain": case "Rowan, Master-at-Arms":
+            case "Rowan, Factor's Shield": case "Rowan, Castellan's Warden":
+                global.player_title = _old_title; break;
+        }
+    }
 }
 function cc_hierarchy_add_renown(_delta) {
     if (!is_real(_delta)) return global.chivalric_renown;
@@ -40,7 +51,7 @@ function cc_hierarchy_check_promotion() {
     if (global.chivalric_renown >= 100 && _rep >= 40) _rank = max(_rank, 2);
     if (global.chivalric_renown >= 200 && _rep >= 70) _rank = max(_rank, 3);
     global.feudal_rank = _rank;
-    cc_hierarchy_reconcile();
+    cc_hierarchy_reconcile(_rank == _old);
     if (_rank > _old && instance_exists(obj_game)) obj_game.add_floating_text(
         instance_exists(obj_player) ? obj_player.x : 683,
         instance_exists(obj_player) ? obj_player.y - 50 : 384,

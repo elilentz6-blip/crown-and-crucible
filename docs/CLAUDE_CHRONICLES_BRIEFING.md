@@ -14,7 +14,7 @@ native resource tree. The primary project is `BLANK GAME.yyp` in the `crown-and-
 using GameMaker 2024.14.4.222 / runtime 2024.14.4.268. Ignore the older Retro Game and Blank Pixel Game
 projects. An HTML mockup is not completion of a native feature.
 
-The `chatgpt/chronicles-followthrough` branch already contains functional branding, loading, menu
+The `agent/codex-chronicles-followthrough` branch already contains functional branding, loading, menu
 behavior and additional historical situations. Review and integrate it before making a competing
 front end. Its Node tests pass; the current branch still requires a fresh Mac compile and actual
 GameMaker walkthrough. Do not inherit older documentation's native certification as proof for it.

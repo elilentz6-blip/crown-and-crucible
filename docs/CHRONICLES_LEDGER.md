@@ -1,7 +1,7 @@
 # Chronicles of Aethelgard: implementation ledger
 
 Original pass: branch `claude/chronicles-greenmere`, based on main `ee559e7`. Follow-through:
-`chatgpt/chronicles-followthrough`, based on main `53a7e16`. This ledger tracks how the Chronicles
+`agent/codex-chronicles-followthrough`, based on main `47f045c` (preserving `53a7e16` historical inquiries and `334ff95` combat support). This ledger tracks how the Chronicles
 (docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md) became playable in the native GameMaker build. It keeps
 four things apart: behaviour that already existed and was verified, work completed here, choices that
 are provisional, and work that remains.
@@ -126,7 +126,7 @@ The existing Greenmere content and main's newer historical-paper reading/inquiry
 | Oakhaven account | Clerk Martin Roke arrives after three days. Resolve cargo, obtain the account, learn Ordel and file before an eight-day deadline. A finding arrives four days after filing. Ignoring it permits a hearing without Rowan. | Existing Chronicle flags, schedules and documents; rewards once. Restitution costs 20G once and does not pardon the taking. A late receipt does not rewrite the original judgment. |
 | Additional cartage | Independently issued after four days; collection due seven days later. Alden's composition, Oswin's receipt and Fenner's assessment support a four-day inquiry. Collection, refusal and unattended distress differ. | Copy fee 3G once or waived with local backing. Credits duplicated cartage only; remaining assessment survives. No personal debt invented for Rowan. |
 | Vale captain | Edwin Hessel appears at the tower twelve days after nomination, with royal assent. | Appointment is an office, not ownership, noble birth or knighthood. |
-| Professional standing | Four military ranks, explicit service through Guy/Cecily/Vane. Rank never grants an oath, estate, lordship or knighthood. | Old saves retain rank and existing employer. Automatic fief fields/income are removed. Actual tower appointment still takes precedence in title. |
+| Professional standing | Four military ranks, explicit service through Guy/Cecily/Vane. Rank never grants an oath, estate, lordship or knighthood. | Old saves retain rank, existing employer and recognized professional titles. Automatic fief fields/income are removed. Actual tower appointment still takes precedence in title. |
 | Companion testimony | P, select met Galahalt, T opens existing testimony/dispatch choices when near or in party. | No remote conversation with absent companions. Other retinue controls remain. |
 | News and reading | Hawise relays fresh news on request. Notebook retains only reports heard, even after the world queue moves on. Six visible reply rows follow selection and accommodate wrapped labels. | Uses existing heard-state serialization; no undiscovered objectives or automatic omniscience. |
 
@@ -160,6 +160,8 @@ changing loading, save or timing mechanics. These pictures do not create playabl
 | Gate | Fresh GameMaker compile, native screenshots and manual walkthrough | **NOT RUN for this revision.** Work resumed on Linux without the macOS SDK/runner. Must pass on the Mac before merge. |
 
 `node tests/run_all.cjs`: **12/12 suites pass**, including **23 follow-through/frontend cases**.
+Additional required stress suites: `challenger_stress.cjs` **14/14**, `challenger_m2_stress.cjs` **26/26**.
+The professional-title round-trip test passes unchanged; only obsolete knight/lord styles migrate.
 `node tests/gml_translator.test.cjs` checks translation, not native compilation. The visual QA script
 renders six screens from translated `frontend_draw`, native PNGs and bitmap font glyphs; it is not a
 GameMaker playtest or an HTML implementation. `tools/register_branding.py` is idempotent.
@@ -186,3 +188,11 @@ It also supports the existing Chronicle walkthrough. It does not compile or repa
 - **Historical tests:** `tests/challenger_m1_empirical.cjs` is an older standalone report, outside
   `run_all.cjs`; its automatic-lordship expectations are superseded. Current hierarchy behavior is
   covered by `feudal_warfare.test.cjs`, grounded-canon tests and the follow-through suite.
+
+
+**Shared-board limitation:** Main `47f045c` and its Codex inbox were read after fetch; the listed
+Codex claims match the new modules. The authoritative board on Eli's disconnected Mac could not be
+read live or updated from Linux. No private board fork was edited. This branch therefore stays in
+review/draft for Grok's native verification and live-board reconciliation; it does not merge itself.
+Claude's claimed minigame code/art directories are untouched. The old Mac clone may still hold an
+older uncommitted patch; do not apply it over this newer tested branch without comparing first.

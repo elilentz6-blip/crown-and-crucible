@@ -29,7 +29,7 @@ def main():
         if not file.is_file() or not file.stat().st_size:
             parser.error(f'Missing required compiled file: {file}')
     env = os.environ.copy()
-    for key in ['CC_CHRON_QA', 'CC_FOLLOW_QA', 'CC_RETINUE_QA', 'CC_VIS_TOUR', 'CC_VIS_SCREENS', 'CC_VIS_SNAP']:
+    for key in ['CC_CHRON_QA', 'CC_FOLLOW_QA', 'CC_RETINUE_QA', 'CC_RETINUE_SNAP', 'CC_VIS_TOUR', 'CC_VIS_SCREENS', 'CC_VIS_SNAP']:
         env.pop(key, None)
     env['CC_FOLLOW_QA' if args.suite == 'follow' else 'CC_CHRON_QA'] = '1'
     log = build / ('qa-' + args.suite + '.log')

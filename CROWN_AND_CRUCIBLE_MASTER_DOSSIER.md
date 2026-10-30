@@ -312,7 +312,7 @@ Rowan begins as a common-born, experienced, unknighted man-at-arms. The native
 
 Service is a conversation choice, never an inference from popularity. The separate Greenmere tower
 appointment still requires nomination and royal assent. Old automatic fief/title fields migrate to
-professional standing; earned rank and existing employer are retained, but automatic tribute ends.
+professional standing; earned rank, existing employer and recognized professional styles such as Sergeant-at-Arms are retained, but automatic tribute ends.
 The faction-support query requires rank 2 and actual service; its battle integration remains separate. There is no implemented audience, tabard or property
 benefit merely because a rank description claims one.
 
@@ -332,7 +332,7 @@ Full spec and interfaces: `docs/RETINUE.md`. Rowan travels with up to two compan
 | `AGNES` | Sister Agnes | Healer | 25g + 5/day, 5 days | Chapel sickbed | Heals Rowan 6 HP after each fight (scales with morale) |
 | `MILITIA_HALE` | Corporal Hale | Mission ally | free | Joins once on the Barrows road | Leaves after a won battle or a day |
 
-The support abilities and fighter switching in `retinue_support_abilities` / `retinue_set_active_fighter` are exposed for the combat engine but not yet called by it, so they have no battle effect except Agnes's post-fight healing.
+Main commit `334ff95`, retained in this branch, connects `retinue_support_abilities` and active-fighter weapon selection to the combat controller. It adds battle-start support, first-hit protection and limited healing checks. The retinue regression suite covers support application and companion weapon switching. Live feedback and the exact persistence of each bonus still need native playtesting. Agnes's post-fight healing remains.
 
 ### 5.3 Living Villager Population (16 NPCs in `world_villagers`)
 Includes Alderman Alden, Baker Beatrice, Watchman Donald, Swineherd Giles, Clerk Pippin, Smuggler Wulf, Sir Balin, Peddler Corin, Bailiff Guy, Emissary Cecily, Sapper Vane, Refugee Mira, Hermit Mallow, Outlaw Grim, Foreman Brand, and Factor Malo.
@@ -599,7 +599,7 @@ global.vis                   // Rendering surfaces, particle emitters, camera st
 ## Chronicles follow-through and branded native front end — 30 October 2026
 
 **IMPLEMENTED IN NATIVE SOURCE; MAC RUNTIME VERIFICATION PENDING.** Branch
-`chatgpt/chronicles-followthrough`, based on main `53a7e16`. The newer historical-paper reading
+`agent/codex-chronicles-followthrough`, based on main `47f045c` (preserving `53a7e16` historical inquiries and `334ff95` combat support). The newer historical-paper reading
 changes in `scr_greenmere` are retained. This pass does not change the combat minigame registry,
 equipment formulas, save file name, Chronicle save version or room map.
 
@@ -657,6 +657,7 @@ New names (Martin Roke and Edwin Hessel), amounts, deadlines and reputation/pres
 ### Verification and remaining gates
 
 - `node tests/run_all.cjs`: **12/12 suites passed**, including 23 follow-through/front-end cases.
+- `node tests/challenger_stress.cjs`: **14/14 passed**; `node tests/challenger_m2_stress.cjs`: **26/26 passed**, including legitimate professional-title persistence. The old stress expectations pass without being rewritten.
 - `node tests/gml_translator.test.cjs`: static translation validation; this is not an Igor compile.
 - `node tools/render_frontend.cjs`: six layout renders using actual GML draw logic and native PNG
   bitmap fonts; requires optional `@napi-rs/canvas`.
@@ -672,3 +673,11 @@ New names (Martin Roke and Edwin Hessel), amounts, deadlines and reputation/pres
 Kingdom-wide travel, a final economic model, terminal kingdom collapse and all four civil-war ending
 sequences remain **PLANNED SYSTEMS**. The four current Greenmere season epilogues allow play to
 continue and are not those endings. Malor's League protection at Red Sike remains a later integration.
+
+
+**Coordination handoff:** The branch was rebased onto the new board/retinue commits. The board's
+inbox was read from the fetched copy; its authoritative live Mac path is inaccessible from Linux.
+No clone-board claims were written or presented as live locks. A draft PR carries the integration
+handoff, and main remains untouched. Grok's prior four failures are addressed: the dynamic finding
+text is included in content integrity, current rank expectations are coherent, and legitimate
+professional titles still round-trip. Final native gates must be run on the Mac before merge.

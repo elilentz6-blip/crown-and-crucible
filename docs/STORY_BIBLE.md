@@ -387,7 +387,7 @@ This register records source inspection at main 73fe672, not a new build or game
 | --- | --- | --- |
 | **Combat · controller and weapon mechanics** | Five weapon interactions, ACT/ITEM/MERCY, telegraphed dodge patterns. ACT currently enables Mercy immediately. | Keep the interaction structure. Soul and Ward are abstractions; per-enemy social depth is not established by the ACT label. |
 | **Cards · equipment definitions** | Twelve typed cards; actual disciplines and effects are in native definitions. Second Wind heals after a surviving wave. | Use nonmagical preparation/technique explanations. No confirmed enchantment, resurrection, or time reversal. |
-| **Rowan · hero initialization and rank rules** | Follow-through branch: common-born man-at-arms start; four professional ranks, explicit service, no automatic knighthood, lordship, estate or tribute. Old saves retain earned rank and employer while removing automatic lordship. | Native logic and automated save tests verified; this branch still needs a Mac compile/playthrough. Tower captaincy remains an office requiring nomination and assent. |
+| **Rowan · hero initialization and rank rules** | Follow-through branch: common-born man-at-arms start; four professional ranks, explicit service, no automatic knighthood, lordship, estate or tribute. Old saves retain earned rank, employer and recognized professional titles while removing automatic lordship. | Native logic and automated save tests verified; this branch still needs a Mac compile/playthrough. Tower captaincy remains an office requiring nomination and assent. |
 | **Legacy mystery · world interactions** | Relic consecration and a gate interaction explicitly describe supernatural light and Seraphina’s voice; no actual interdimensional map travel is established. | Remove objective supernatural claims in a future code pass. Final grounded replacements require owner approval. |
 | **Encounters and recovery · combat rules** | A Shade foe, HP recovery, defeat recovery, and timed foe respawn exist. | The Shade’s current presentation conflicts with canon. Recovery and respawn are prototype mechanics, not returning dead or miraculous medicine. |
 | **Retinue · companion modules** | Recruitment, wages, memories, routines, injuries, temporary allies, personal quest state, and combat-facing APIs. | Preserve people and social consequences. Support definitions do not by themselves verify controller integration or every advertised bonus. |
@@ -464,7 +464,7 @@ PROVISIONAL — Alden: “Some here remember quiet years. Others arrived with no
 ## 18 · Chronicles follow-through implementation note — 30 October 2026
 
 **VERIFIED IMPLEMENTATION (native source and automated behavior tests; native Mac execution pending):**
-The branch `chatgpt/chronicles-followthrough`, based on main `53a7e16`, extends the existing Greenmere
+The branch `agent/codex-chronicles-followthrough`, based on main `47f045c` (preserving `53a7e16` historical inquiries and `334ff95` combat support), extends the existing Greenmere
 situations. This note supersedes older implementation snapshots above where they describe features
 subsequently changed. It does not promote all invented details to LOCKED CANON.
 
