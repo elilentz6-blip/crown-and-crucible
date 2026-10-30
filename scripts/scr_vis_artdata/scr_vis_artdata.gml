@@ -54,6 +54,7 @@ function vis_artdata() {
             weald_arch: { spr: spr_bld_weald_arch, fw: 90, fd: 36, lights: [[-1, -50, 70, make_color_rgb(120, 255, 220)]], smoke: [], door: undefined, solids: undefined },
         },
         characters: {
+            warden: { spr: spr_cbt_warden, portrait: spr_cbt_portrait_warden, shadow: spr_char_shadow, name: "Barrow Renegade Warden", floats: false, idle_fps: 4, walk_fps: 8 },
             malo: { spr: spr_char_malo, portrait: spr_portrait_malo, shadow: spr_char_shadow, name: "Factor Malo", floats: false, idle_fps: 4, walk_fps: 8 },
             brand: { spr: spr_char_brand, portrait: spr_portrait_brand, shadow: spr_char_shadow, name: "Foreman Brand", floats: false, idle_fps: 4, walk_fps: 8 },
             grim: { spr: spr_char_grim, portrait: spr_portrait_grim, shadow: spr_char_shadow, name: "Barrow Mercenary Grim", floats: false, idle_fps: 4, walk_fps: 8 },

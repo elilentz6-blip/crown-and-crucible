@@ -67,9 +67,9 @@ function cbt_rand(F) {
 /// What a foe looks like and where it is fought.
 function cbt_foe_art(_enemy) {
     var _n = string_lower(_enemy.name);
-    var _art = { spr: "spr_char_highwayman", portrait: "spr_portrait_highwayman", scale: 5, chest: 110, floats: false, barrows: false, label: "The Greenway Road" };
+    var _art = { spr: "spr_char_highwayman", portrait: "spr_portrait_highwayman", scale: 5, chest: 110, top: 262, floats: false, barrows: false, label: "The Greenway Road" };
     if (string_pos("boar", _n) > 0) {
-        _art.spr = "spr_char_boar"; _art.chest = 62;
+        _art.spr = "spr_char_boar"; _art.chest = 62; _art.top = 180;
     } else if (string_pos("warden", _n) > 0 || string_pos("renegade", _n) > 0) {
         _art.spr = "spr_cbt_warden";
     } else if (string_pos("shade", _n) > 0) {
@@ -105,7 +105,7 @@ function cbt_fx_foe_hit(F, _damage, _critical) {
     var _cy = CBT_FEET_Y - F.art.chest;
     cbt_fx_spark(F, CBT_FOE_X, _cy, _critical ? 5 : 3);
     cbt_fx_spark(F, CBT_FOE_X - 26, _cy + 30, 2);
-    cbt_fx_number(F, CBT_FOE_X - 30, _cy - 66, "-" + string(_damage), _critical ? UI_COL_GOLD : UI_COL_PARCHMENT, _critical ? 3 : 2);
+    cbt_fx_number(F, CBT_FOE_X, CBT_FEET_Y - F.art.top, "-" + string(_damage), _critical ? UI_COL_GOLD : UI_COL_PARCHMENT, _critical ? 3 : 2);
     F.foe_flash = 0.16;
     if (_critical) {
         F.crit = 0.55;
@@ -131,7 +131,7 @@ function cbt_tick() {
         F.phase = battle_phase;
         F.phase_t = 0;
         if (battle_phase == "FIGHT_RESULT" && !is_undefined(attack_outcome) && attack_outcome.damage <= 0) {
-            cbt_fx_number(F, CBT_FOE_X - 34, CBT_FEET_Y - F.art.chest - 60, "MISS", UI_COL_MUTED, 2);
+            cbt_fx_number(F, CBT_FOE_X, CBT_FEET_Y - F.art.top, "MISS", UI_COL_MUTED, 2);
         }
     }
     F.phase_t += F.dt;
@@ -147,16 +147,16 @@ function cbt_tick() {
 
     if (hero_hp < F.hp) {
         F.hero_flash = 0.35;
-        cbt_fx_number(F, CBT_HERO_X - 12, CBT_FEET_Y - 170, "-" + string(F.hp - hero_hp), UI_COL_HP, 2);
+        cbt_fx_number(F, CBT_HERO_X, CBT_FEET_Y - 214, "-" + string(F.hp - hero_hp), UI_COL_HP, 2);
         if (battle_phase == "DODGE") cbt_fx_spark(F, soul_x, soul_y, 2);
     } else if (hero_hp > F.hp) {
-        cbt_fx_number(F, CBT_HERO_X - 12, CBT_FEET_Y - 170, "+" + string(hero_hp - F.hp), make_color_rgb(150, 230, 120), 2);
+        cbt_fx_number(F, CBT_HERO_X, CBT_FEET_Y - 214, "+" + string(hero_hp - F.hp), make_color_rgb(150, 230, 120), 2);
         cbt_fx_motes(F, CBT_HERO_X, CBT_FEET_Y - 90, 10, make_color_rgb(150, 230, 120));
     }
     F.hp = hero_hp;
     if (hero_shield != F.ward) {
         var _dw = hero_shield - F.ward;
-        cbt_fx_number(F, CBT_HERO_X + 30, CBT_FEET_Y - 150, (_dw > 0 ? "+" : "") + string(_dw) + " WARD", make_color_rgb(130, 180, 240), 1);
+        cbt_fx_number(F, CBT_HERO_X, CBT_FEET_Y - 244, (_dw > 0 ? "+" : "") + string(_dw) + " WARD", make_color_rgb(130, 180, 240), 1);
         if (battle_phase == "DODGE" && _dw < 0) cbt_fx_spark(F, soul_x, soul_y, 2);
     }
     F.ward = hero_shield;
@@ -173,7 +173,7 @@ function cbt_tick() {
         if (_e.t >= _e.life) { array_delete(F.fx, _i, 1); continue; }
         _e.x += _e.vx * F.dt;
         _e.y += _e.vy * F.dt;
-        if (_e.kind == "num") _e.vy *= 0.94;
+        if (_e.kind == "num") _e.vy *= 0.97;
     }
     return F;
 }
@@ -196,11 +196,11 @@ function cbt_draw(_name, _sub, _x, _y, _scale = 1, _rot = 0, _col = c_white, _al
 }
 
 /// Kit title font at a whole-pixel scale, outlined one scaled pixel. _center: _x is the middle.
-function cbt_big(_x, _y, _text, _col, _scale = 2, _center = true, _alpha = 1) {
+function cbt_big(_x, _y, _text, _col, _scale = 2, _center = true, _alpha = 1, _style = "title") {
     _text = string(_text);
-    var _f = ui_text_font("title");
+    var _f = ui_text_font(_style);
     var _spr = ui_spr(_f.sprite);
-    var _cx = floor(_center ? _x - ui_text_width(_text, "title") * _scale / 2 : _x);
+    var _cx = floor(_center ? _x - ui_text_width(_text, _style) * _scale / 2 : _x);
     _y = floor(_y);
     var _n = string_length(_text);
     for (var _i = 1; _i <= _n; _i++) {
@@ -222,6 +222,20 @@ function cbt_ribbon(_cx, _y, _text, _col = UI_COL_PARCHMENT) {
     var _rw = ui_text_width(_text, "title") + 120;
     ui_nine("spr_ui_ribbon", 0, _cx - _rw / 2, _y, _rw, 32);
     ui_text_draw(_cx - ui_text_width(_text, "title") / 2, _y + 3, _text, "title_shadow", _col);
+}
+
+/// A big title on a gilded plaque, with rays or a soft light behind it.
+function cbt_banner(_cy, _title, _col, _rays, _alpha) {
+    var _w = ui_text_width(_title, "title") * 3 + 96, _h = 104;
+    gpu_set_blendmode(CBT_BM_ADD);
+    if (_rays) cbt_draw("spr_cbt_rays", 0, 683, _cy, 6, current_time * 0.03, c_white, _alpha * 0.8);
+    else cbt_draw("spr_fx_light", 0, 683, _cy, 3, 0, make_color_rgb(150, 140, 110), _alpha);
+    gpu_set_blendmode(CBT_BM_NORMAL);
+    var _old = draw_get_alpha();
+    draw_set_alpha(_alpha);
+    ui_panel("gilded_dark", 683 - _w / 2, _cy - _h / 2, _w, _h);
+    draw_set_alpha(_old);
+    cbt_big(683, _cy - 38, _title, _col, 3, true, _alpha);
 }
 
 function cbt_center(_cx, _y, _text, _style, _col) {
@@ -366,7 +380,7 @@ function cc_draw_sword(_state) {
 
 function cc_draw_greatsword(_state) {
     var F = cbt_state();
-    var _cx = 683, _cy = 372, _radius = 134;
+    var _cx = 683, _cy = 350, _radius = 176;
     var _over = _state.charge > 0.95;
     for (var _i = 0; _i <= 32; _i++) {
         var _charge = _i / 32 * 1.28;
@@ -383,15 +397,15 @@ function cc_draw_greatsword(_state) {
     gpu_set_blendmode(CBT_BM_ADD);
     cbt_draw("spr_fx_light", 0, _cx, _cy, 1, 0, _over ? make_color_rgb(160, 50, 40) : make_color_rgb(110, 80, 30), 0.3 + _state.charge * 0.5);
     gpu_set_blendmode(CBT_BM_NORMAL);
-    cbt_draw("spr_cbt_greatsword", 0, _cx + _jit, _cy, 2, _swing - 90);
+    cbt_draw("spr_cbt_greatsword", 0, _cx + _jit, _cy, 3, _swing - 90);
     cbt_draw("spr_cbt_stud", 1, _cx, _cy, 4);
     var _msg = (_state.stage == "READY") ? "Hold to lift the blade" : (_over ? "Overcharging! Release!" : "Build force, release in the gold");
-    cbt_big(683, 480, _msg, _over ? UI_COL_HP : UI_COL_PARCHMENT, 1);
+    cbt_big(683, 500, _msg, _over ? UI_COL_HP : UI_COL_PARCHMENT, 1);
 }
 
 function cc_draw_dagger(_state) {
     var _spacing = 600 / _state.strikes;
-    var _top = 134, _line = 330;
+    var _top = 128, _line = 276;
     for (var _i = 0; _i < _state.strikes; _i++) {
         var _x = 383 + (_i + 0.5) * _spacing;
         cbt_draw("spr_cbt_lane", 0, _x - 32, _top, 4);
@@ -400,13 +414,13 @@ function cc_draw_dagger(_state) {
         if (_i < array_length(_state.marks)) {
             var _good = _state.marks[_i] >= 0.45;
             cbt_draw("spr_cbt_mark", _good ? 0 : 1, _x, _line, 4);
-            cbt_center(_x, _line + 34, _good ? "HIT" : "MISS", "small_outline", _good ? UI_COL_GOLD : UI_COL_HP);
-        } else if (_note_y - 60 >= _top + 6 && _note_y <= _top + 178) {
+            cbt_center(_x, _top + 192, _good ? "HIT" : "MISS", "small_outline", _good ? UI_COL_GOLD : UI_COL_HP);
+        } else if (_note_y - 60 >= _top + 6 && _note_y <= _top + 180) {
             cbt_draw("spr_cbt_dagger", 0, _x, _note_y, 3);
         }
         ui_divider(_x - 40, _line - 7, 80);
     }
-    cbt_big(500, 408, "Combo " + string(_state.combo), UI_COL_PARCHMENT, 2);
+    cbt_big(500, 412, "Combo " + string(_state.combo), UI_COL_PARCHMENT, 1, true, 1, "body");
     cbt_big(860, 416, _state.last_feedback, UI_COL_GOLD, 1);
     cbt_center(683, 486, "Best run: " + string(_state.max_combo), "small_outline", UI_COL_MUTED);
 }
@@ -474,8 +488,6 @@ function cc_draw_spear(_state) {
     ui_divider(CBT_ARENA_X + 20, _floor - 2, CBT_ARENA_W - 40);
     cbt_band(_reach - _gw, _floor - 124, _reach + _gw, 120, 1, make_color_rgb(150, 110, 50), 0.32);
     cbt_band(_reach - _gw, _floor + 12, _reach + _gw, 8, 1, c_white, 1);
-    cbt_draw("spr_cbt_bracket", 0, _reach - _gw - 6, _floor - 62, 3);
-    cbt_draw("spr_cbt_bracket", 1, _reach + _gw + 6, _floor - 62, 3);
     cbt_center(_reach, _floor + 26, "Ideal reach", "small_outline", UI_COL_GOLD);
 
     var _res = (battle_phase == "FIGHT_RESULT");
@@ -484,11 +496,14 @@ function cc_draw_spear(_state) {
     cbt_draw("spr_cbt_shadow", 0, 420, _floor, 2);
     cbt_draw_char("spr_char_rowan", 2, false, 420, _floor, 3, F.t, c_white, 1);
 
+    cbt_draw("spr_cbt_bracket", 0, _reach - _gw - 6, _floor - 62, 3);
+    cbt_draw("spr_cbt_bracket", 1, _reach + _gw + 6, _floor - 62, 3);
+
     var _ext = 0;
     if (_state.stage == "THRUST") _ext = _res ? clamp(combat_result_timer / 0.8, 0, 1) : sin(clamp(_state.local_time / 0.23, 0, 1) * pi / 2);
     var _rest = (_state.stage == "BRACED") ? 500 : 516;
     var _tip = _rest + _ext * (_reach - _rest);
-    cbt_draw("spr_cbt_spear", 0, _tip, _floor - 66, 3);
+    cbt_draw("spr_cbt_spear", 0, _tip, _floor - 42, 3);
     cbt_big(683, 150, (_state.stage == "READY") ? "Hold to brace" : "Let the foe come to you", UI_COL_PARCHMENT, 1);
 }
 
@@ -517,7 +532,7 @@ function cbt_draw_warning(F, _w, _bx1, _by1, _by2) {
         cbt_draw("spr_cbt_warn", 2, _w.x, _by1 + 8, 2, 0, c_white, _pulse);
     } else {
         // a glint from cover, then the line of the throw
-        cbt_draw("spr_cbt_warn", 0, _w.x, _w.y, 2, F.t * 200, c_white, _pulse);
+        cbt_draw("spr_cbt_warn", 0, _w.x, _w.y, 3, 0, c_white, _pulse);
         for (var _i = 1; _i <= 5; _i++) cbt_draw("spr_cbt_stud", 1, _w.x + _w.vx * 0.08 * _i, _w.y + _w.vy * 0.08 * _i, 1, 0, c_white, (1 - _p) * (1.1 - _i * 0.16));
     }
 }
@@ -527,10 +542,10 @@ function cbt_draw_bullet(F, _b) {
         cbt_draw("spr_cbt_puff", floor(F.t * 12) mod 4, _b.x - 30, _b.y + 8, 1, 0, c_white, 0.7);
         cbt_draw("spr_cbt_boar_run", floor(F.t * 14) mod 2, _b.x, _b.y, 2);
     } else if (defense_pattern == "CROWN_RAIN") {
-        cbt_draw("spr_cbt_bolt", 0, _b.x, _b.y - 18, 2, 0, c_white, 0.22);
-        cbt_draw("spr_cbt_bolt", 0, _b.x, _b.y + 6, 2);
+        cbt_draw("spr_cbt_bolt", 0, _b.x, _b.y - 22, 3, 0, c_white, 0.22);
+        cbt_draw("spr_cbt_bolt", 0, _b.x, _b.y + 12, 3);
     } else {
-        cbt_draw("spr_cbt_knife", 0, _b.x, _b.y, 2, point_direction(0, 0, _b.vx, _b.vy) + F.t * 0);
+        cbt_draw("spr_cbt_knife", 0, _b.x, _b.y, 3, point_direction(0, 0, _b.vx, _b.vy));
     }
 }
 
@@ -543,7 +558,7 @@ function cbt_draw_defence(F) {
     var _fx2 = lerp(CBT_ARENA_X + CBT_ARENA_W, _x1 + dodge_box_w + _pad, _blend), _fy2 = lerp(CBT_ARENA_Y + CBT_ARENA_H, _y1 + dodge_box_h + _pad, _blend);
     var _tint = (defense_pattern == "BOAR_LANES") ? make_color_rgb(150, 110, 84) : ((defense_pattern == "CROWN_RAIN") ? make_color_rgb(116, 96, 150) : make_color_rgb(100, 130, 112));
     ui_fill("spr_ui_tex_leather", _fx1 + 6, _fy1 + 6, _fx2 - _fx1 - 12, _fy2 - _fy1 - 12, _tint, 1);
-    draw_set_alpha(0.62);
+    draw_set_alpha(0.38);
     draw_set_color(make_color_rgb(18, 12, 20));
     draw_rectangle(_fx1 + 6, _fy1 + 6, _fx2 - 7, _fy2 - 7, false);
     draw_set_alpha(1);
@@ -633,12 +648,12 @@ function cbt_draw_hero_plate(F) {
     var _hp = max(0, hero_hp), _mhp = max(1, hero_max_hp);
     var _hurt = F.hero_flash > 0 ? 3 * sin(F.t * 60) : 0;
     ui_icon(UI_ICON_HEART, _cx - 2 + _hurt, _y + 48);
-    ui_bar(_cx + 30, _y + 54, 154, _hp / _mhp, 0);
-    ui_text_draw(_cx + 190, _y + 47, string(_hp) + "/" + string(hero_max_hp), "body_shadow", UI_COL_PARCHMENT);
+    ui_bar(_cx + 30, _y + 54, 130, _hp / _mhp, 0);
+    ui_text_draw(_cx + 166, _y + 47, string(_hp) + "/" + string(hero_max_hp), "body_shadow", UI_COL_PARCHMENT);
 
     ui_icon(UI_ICON_SHIELD, _cx - 2, _y + 80);
-    ui_bar(_cx + 30, _y + 86, 154, hero_shield / max(1, max(hero_shield, stat_shield)), 2);
-    ui_text_draw(_cx + 190, _y + 79, string(hero_shield) + " ward", "body_shadow", make_color_rgb(150, 190, 240));
+    ui_bar(_cx + 30, _y + 86, 130, hero_shield / max(1, max(hero_shield, stat_shield)), 2);
+    ui_text_draw(_cx + 166, _y + 79, string(hero_shield) + " ward", "body_shadow", make_color_rgb(150, 190, 240));
 
     // mead flasks left, and how quickly the heart moves
     var _items = ui_spr("spr_ui_items");
@@ -660,16 +675,18 @@ function cbt_draw_message(F) {
     draw_set_color(c_white);
     var _tx = _x + 26, _tw = _w - 52;
     if (battle_phase == "PLAYER_MENU") {
-        ui_text_draw(_tx, _y + 18, battle_box_text, "body_bold", UI_COL_DIALOGUE_INK, _tw, floor(F.msg_t * 70));
+        // the "* " lead-in reads as a stray mark in the kit font
+        var _box = (string_copy(battle_box_text, 1, 2) == "* ") ? string_delete(battle_box_text, 1, 2) : battle_box_text;
+        ui_text_draw(_tx, _y + 20, _box, "body_bold", UI_COL_DIALOGUE_INK, _tw, floor(F.msg_t * 70));
         ui_text_draw(_tx, _y + 78, "FIGHT with your weapon. ACT to reason. ITEM for mead. MERCY once they yield.", "small", UI_COL_INK_SOFT);
     } else if (battle_phase == "DODGE") {
-        ui_text_draw(_tx, _y + 16, "Defend", "title", UI_COL_DIALOGUE_INK);
-        ui_bar(_tx + 96, _y + 22, 280, max(0, dodge_timer) / 4, 1);
-        ui_text_draw(_tx + 386, _y + 16, string_format(max(0, dodge_timer), 1, 1) + "s", "body", UI_COL_DIALOGUE_INK);
-        ui_text_draw(_tx, _y + 58, "Arrows or WASD move your heart. Red and gold marks warn where the attack will come.", "small", UI_COL_INK_SOFT);
+        ui_text_draw(_tx, _y + 22, "Defend", "title", UI_COL_DIALOGUE_INK);
+        ui_bar(_tx + 96, _y + 28, 280, max(0, dodge_timer) / 4, 1);
+        ui_text_draw(_tx + 386, _y + 20, string_format(max(0, dodge_timer), 1, 1) + "s", "body", UI_COL_DIALOGUE_INK);
+        ui_text_draw(_tx, _y + 62, "Arrows or WASD move your heart. Red and gold marks warn where the attack will come.", "small", UI_COL_INK_SOFT);
     } else if (!is_undefined(weapon_attack)) {
-        ui_text_draw(_tx, _y + 16, weapon_attack.title, "title", UI_COL_DIALOGUE_INK);
-        ui_text_draw(_tx, _y + 52, weapon_attack.instructions, "small", UI_COL_INK);
+        ui_text_draw(_tx, _y + 20, weapon_attack.title, "title", UI_COL_DIALOGUE_INK);
+        ui_text_draw(_tx, _y + 50, weapon_attack.instructions, "small", UI_COL_INK);
         if (!battle_input_armed) ui_text_draw(_tx, _y + 76, "Release confirm to ready your weapon.", "small", UI_COL_INK_SOFT);
         else if (weapon_attack.retry_flash > 0) ui_text_draw(_tx, _y + 76, "Luck! One more chance.", "small", make_color_rgb(150, 80, 20));
         if (battle_phase == "FIGHT_RESULT") {
@@ -722,7 +739,7 @@ function cbt_draw_fx(F) {
         } else if (_e.kind == "num") {
             // pops up a whole pixel size, then settles
             var _s = (_e.t < 0.1) ? _e.scale + 1 : _e.scale;
-            cbt_big(_e.x, _e.y, _e.text, _e.col, _s, true, clamp((1 - _k) * 3, 0, 1));
+            cbt_big(_e.x, _e.y, _e.text, _e.col, _s, true, clamp((1 - _k) * 3, 0, 1), "body");
         }
     }
 }
@@ -738,11 +755,7 @@ function cbt_draw_result(F) {
         return;
     }
     if (_t > 0.2) {
-        var _k = clamp((_t - 0.2) / 0.2, 0, 1);
-        gpu_set_blendmode(CBT_BM_ADD);
-        cbt_draw("spr_cbt_rays", 0, 683, 300, 7, F.t * 25, c_white, _k * 0.7);
-        gpu_set_blendmode(CBT_BM_NORMAL);
-        cbt_big(683, 266, "Victory", UI_COL_GOLD, 3 + (_t < 0.3 ? 1 : 0), true, _k);
+        cbt_banner(280, "Victory", UI_COL_GOLD, true, clamp((_t - 0.2) / 0.2, 0, 1));
     }
 }
 
@@ -775,19 +788,15 @@ function cbt_draw_outro_banner(F) {
     var _a = min(_k, _in);
     var _mercy = (F.out_kind == "mercy");
     var _title = _mercy ? "Quarter Granted" : "Victory";
-    var _y = 150 - round((1 - _in) * 16);
-    gpu_set_blendmode(CBT_BM_ADD);
-    if (!_mercy) cbt_draw("spr_cbt_rays", 0, 683, _y + 26, 5, current_time * 0.03, c_white, _a * 0.7);
-    else cbt_draw("spr_fx_light", 0, 683, _y + 26, 3, 0, make_color_rgb(150, 140, 110), _a);
-    gpu_set_blendmode(CBT_BM_NORMAL);
-    cbt_big(683, _y, _title, _mercy ? UI_COL_PARCHMENT : UI_COL_GOLD, 3, true, _a);
+    var _y = 170 - round((1 - _in) * 16);
+    cbt_banner(_y, _title, _mercy ? UI_COL_PARCHMENT : UI_COL_GOLD, !_mercy, _a);
     if (_mercy) {
         // doves rise from either side of the banner
         var _p = 1.8 - F.out_t;
         for (var _i = 0; _i < 6; _i++) {
             var _side = (_i % 2 == 0) ? -1 : 1;
-            var _dx = 683 + _side * (150 + _i * 32 + _p * 110);
-            var _dy = _y + 70 - _p * (70 + _i * 14) + sin(_p * 6 + _i) * 6;
+            var _dx = 683 + _side * (330 + _i * 28 + _p * 110);
+            var _dy = _y + 30 - _p * (40 + _i * 14) + sin(_p * 6 + _i) * 6;
             draw_sprite_ext(ui_spr("spr_cbt_dove"), floor(_p * 10 + _i) mod 2, round(_dx), round(_dy), 3 * _side, 3, 0, c_white, _a);
         }
     }

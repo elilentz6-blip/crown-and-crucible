@@ -736,6 +736,7 @@ function vis_char_key(_e) {
     if (string_pos("highwayman", _n)) return "highwayman";
     if (string_pos("boar", _n)) return "boar";
     if (string_pos("shade", _n)) return "shade";
+    if (string_pos("warden", _n) || string_pos("renegade", _n)) return "warden";
     return "giles";
 }
 

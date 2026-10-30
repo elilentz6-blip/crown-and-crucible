@@ -149,3 +149,5 @@ else if (global.game_mode == "NOTEBOOK") {
 }
 
 ui_screens_close_fx();
+
+cc_draw_combat_outro();  // victory / quarter banner, just after a battle ends (scr_combat_render)

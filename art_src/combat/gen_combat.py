@@ -384,7 +384,7 @@ DAGGER = ["..ooo..", "..oGo..", "..obo..", "..owo..", "..obo..", "ooooooo", "oYg
 KNIFE = ["....o.oooo..", "oooooWWWWWo.", "obwboWssssso", "oooooddddo..", "....o......."]
 BOLT = ["..o..", ".oso.", ".oDo.", ".obo.", ".owo.", ".obo.", ".owo.", ".obo.", ".owo.", ".obo.", ".owo.", "oRoRo", "oRoRo", "o.o.o"]
 HEART = ["..ooo.ooo..", ".opprorrrRo", "opprrrrrrRo", "orrrrrrrrRo", ".orrrrrrRo.", "..orrrrRo..", "...orrRo...", "....oRo....", ".....o....."]
-ARROW = ["..................o.....", "ooo..............oso....", "RwwboooooooooooooosWWo..", "ooo..............oso....", "..................o....."]
+ARROW = ["..................oo....", "oooooooooooooooooooWso..", "RwwbwbwbwbwbwbwbwbwsWWWo", "oooooooooooooooooooWso..", "..................oo...."]
 SPEAR = [".............................................oo...",
          "ooooooooooooooooooooooooooooooooooooooooooooGoWWo.",
          "obwbwbwbwbwbwbwbwbwbwbwbwbwbwbwbwbwbwbwbwbwgGoWsso",
@@ -519,7 +519,7 @@ def lane():
             elif x in (1, 14) or y in (1, 44):
                 c = (106, 104, 122) if (y % 8) else (168, 166, 176)
             else:
-                c = wood[int(px.hash01(x // 3, y // 6, 9) * 3)]
+                c = wood[int(px.hash01(x // 7, y // 3, 9) * 2.2 + (y % 12 == 0) * 0)] if y % 12 else OUTLINE
             im[y, x] = (*c, 255)
     return Image.fromarray(im, 'RGBA')
 

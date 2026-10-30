@@ -91,8 +91,9 @@ Verified in a native Igor build with `CC_VIS_SCREENS=1` (no runtime errors) on 2
 | Armory, journal, contract ledger, trade: flat boxes, default font, overflow, emoji | Rebuilt on the UI kit with item and goods icons, card art in sockets, keycap hints, open and close animation. Menus now sit over the dimmed town instead of black. | `ui_screens`, `ui_equipment`, `art_src/ui` |
 | Dice: green rectangle, white squares, "6" for a crown | Illustrated tavern table, dice sprites, opponent portrait, stake chips | `ui_minigame_screens`, `art_src/minigames` |
 | Archery: colour bands, circle on a line | Painted range with butts and treeline, bow and hands in the foreground, quiver, score card | same |
-| Battle: black screen, blob foes, primitive buttons | Painted backdrops by area, finished hero and foe sprites, kit panels and bars, illustrated weapon minigames, themed attack patterns | `scr_combat_render`, `art_src/combat` |
+| Battle: black screen, blob foes, primitive buttons | Painted backdrops by area, finished hero and foe sprites (29 `spr_cbt_*`), kit panels and bars, illustrated weapon minigames, themed attack patterns (knives, boar lanes, bolts), hit effects and a victory or quarter banner | `scr_combat_render`, `art_src/combat` |
 | `spr_foe_*` in battle | Replaced by the finished character art | `scr_combat_render` |
+| Barrow Renegade Warden drawn as Farmer Giles in the overworld | Uses the battle thread's warden sheet, now a registered character | `vis_char_key`, `build_all.py` |
 | 8 NPCs drawn as Farmer Giles (Bailiff Guy, Lady Cecily, Sapper Vane, Refugee Mira, Old Mallow, Grim, Foreman Brand, Factor Malo) | Each has an original sprite sheet and portrait | `art_src/characters/defs`, `vis_char_key` |
 | Emoji in menu titles | Gone with the old screens; `vis_glyph_safe` also strips unsupported glyphs from floating text and toasts | `scr_vis_feel` |
 | No map or navigation screen (the brief lists one; the game had none) | **New realm map (M):** inked parchment baked from the live terrain and building layout, place names, compass, hero banner. Places only, no quest markers. | `scr_vis_map`, `art_src/world/map_art.py` |
@@ -110,6 +111,7 @@ Verified in a native Igor build with `CC_VIS_SCREENS=1` (no runtime errors) on 2
 | Close-fade path for menus (`ui_screens_close_fx`) is now wired but not visually checked | Could look wrong on exit | Open |
 | Interiors: the forge is sparse, and the manor, weaver and six houses share one cottage room | "Empty buildings" is only partly solved | Open |
 | Environment art (buildings, terrain, water, vegetation) was reviewed but not redrawn in this phase; it already matched the target look | Brief asks to improve every environment | Partly done |
+| Foes with no art of their own, such as Captain Malor from contracts, use the highwayman sprite and the Greenway Road backdrop | Duplicate art on contract fights | Open |
 | Barnaby and Lord Geoffrey borrow the Giles and Balin portraits in dice | Duplicate portraits | Open |
 | "Reconnaissance: Inspect Royal Checkpoint" truncates in the ledger list | Minor | Open |
 | Retinue screens were built by their own thread and not re-audited here | Consistency unverified | Open |

@@ -183,6 +183,8 @@ def main():
                  % (key, key, m['footprint'][0], m['footprint'][1], lights, smoke, door, solids))
     L.append('        },')
     L.append('        characters: {')
+    # the warden's sheet comes from art_src/combat/gen_combat.py, in the standard character layout
+    L.append('            warden: { spr: spr_cbt_warden, portrait: spr_cbt_portrait_warden, shadow: spr_char_shadow, name: "Barrow Renegade Warden", floats: false, idle_fps: 4, walk_fps: 8 },')
     for key, c in char_entries:
         beast = c['frame_w'] != 32
         L.append('            %s: { spr: spr_char_%s, portrait: spr_portrait_%s, shadow: %s, name: "%s", '

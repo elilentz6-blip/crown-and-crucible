@@ -489,7 +489,7 @@ These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the p
 ---
 
 ### XI-A. Phase 5 presentation pass (2026-10-30)
-Every GUI screen now uses the UI kit: `ui_screens` (armory, journal, ledger, trade), `ui_minigame_screens` + `spr_mg_*` (dice, archery), `scr_combat_render` + `spr_cbt_*` (battle). New: `scr_vis_feel` (transitions, toasts, HUD counters), `scr_vis_map` + `spr_map_*` (realm map on **M**, game mode `MAP`, places only, no quest markers), eight unique NPC sprites. Dev capture: `CC_VIS_SCREENS=1` or a name filter such as `fight`. Found, replaced and remaining: `docs/PHASE5_VISUAL_AUDIT.md`. Checked through headless captures; a by-hand playthrough at speed is still outstanding.
+Every GUI screen now uses the UI kit: `ui_screens` (armory, journal, ledger, trade), `ui_minigame_screens` + `spr_mg_*` (dice, archery), `scr_combat_render` + `spr_cbt_*` (battle, with `cc_draw_combat_outro()` drawing the victory or quarter banner after a fight; the third foe is the Barrow Renegade Warden and its pattern is bolts). New: `scr_vis_feel` (transitions, toasts, HUD counters), `scr_vis_map` + `spr_map_*` (realm map on **M**, game mode `MAP`, places only, no quest markers), eight unique NPC sprites. Dev capture: `CC_VIS_SCREENS=1` or a name filter such as `fight`. Found, replaced and remaining: `docs/PHASE5_VISUAL_AUDIT.md`. Checked through headless captures; a by-hand playthrough at speed is still outstanding.
 
 ## XII. Verification, Bug Registry & Technical Debt
 
