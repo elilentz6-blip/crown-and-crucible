@@ -677,7 +677,8 @@ continue and are not those endings. Malor's League protection at Red Sike remain
 
 **Coordination handoff:** The branch was rebased onto the new board/retinue commits. The board's
 inbox was read from the fetched copy; its authoritative live Mac path is inaccessible from Linux.
-No clone-board claims were written or presented as live locks. A draft PR carries the integration
-handoff, and main remains untouched. Grok's prior four failures are addressed: the dynamic finding
+No clone-board claims were written or presented as live locks. The local commits and downloadable review package carry the integration
+handoff; automatic approval review blocked the remote push because explicit publication authorization
+was missing. No PR was created, and main remains untouched. Grok's prior four failures are addressed: the dynamic finding
 text is included in content integrity, current rank expectations are coherent, and legitimate
 professional titles still round-trip. Final native gates must be run on the Mac before merge.

@@ -192,7 +192,8 @@ It also supports the existing Chronicle walkthrough. It does not compile or repa
 
 **Shared-board limitation:** Main `47f045c` and its Codex inbox were read after fetch; the listed
 Codex claims match the new modules. The authoritative board on Eli's disconnected Mac could not be
-read live or updated from Linux. No private board fork was edited. This branch therefore stays in
-review/draft for Grok's native verification and live-board reconciliation; it does not merge itself.
+read live or updated from Linux. No private board fork was edited. This branch therefore stays local in a downloadable review package for Grok's native verification
+and live-board reconciliation. Automatic approval review rejected the GitHub push because explicit
+publication authorization was missing; no PR was created and nothing was merged.
 Claude's claimed minigame code/art directories are untouched. The old Mac clone may still hold an
 older uncommitted patch; do not apply it over this newer tested branch without comparing first.
