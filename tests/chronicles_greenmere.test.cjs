@@ -565,6 +565,7 @@ test('content integrity: every reply leads somewhere, every id is handled, every
       for (const p of pages) assert.ok(g.ui_text_wrap(p, 'body', 780).length <= 3, `${t}.${nid} page fits`);
       const norm = x => String(x).replace(/\s+/g, ' ').trim();
       assert.equal(norm(pages.join(' ')), norm(text), `${t}.${nid} pages keep every word`);
+      for (const sn of g.convo_sentences(text)) assert.ok(g.ui_text_wrap(sn, 'body', 780).length <= 3, `${t}.${nid} sentence longer than a page: ${sn}`);
       // a page may end mid-sentence only when that sentence is longer than a page
       pages.slice(0, -1).forEach((p, i) => assert.ok(/[.?!]["')]*$/.test(p) || g.ui_text_wrap(p, 'body', 780).length === 3,
         `${t}.${nid} page ${i + 1} stops mid-sentence: ${p}`));
@@ -586,6 +587,15 @@ test('content integrity: every reply leads somewhere, every id is handled, every
     const yy = JSON.parse(fs.readFileSync(path.join(ROOT, `scripts/${s}/${s}.yy`), 'utf8'));
     assert.equal(yy.isDnD, false);
     assert.ok(new RegExp(String.raw`"path":\s*"scripts/${s}/${s}\.yy"`).test(fs.readFileSync(path.join(ROOT, 'BLANK GAME.yyp'), 'utf8')), s + ' registered'); // tolerate IDE-formatted yyp
+  }
+});
+
+test('every season ending pages cleanly, one whole sentence or more per page', () => {
+  const { g } = world();
+  for (const e of ['settlement', 'crown', 'league', 'ashen']) {
+    const text = g.war_clock_ending_text(e);
+    for (const sn of g.convo_sentences(text)) assert.ok(g.ui_text_wrap(sn, 'body', 780).length <= 3, `${e}: ${sn}`);
+    for (const p of g.convo_paginate(text)) assert.ok(/[.?!]["')]*$/.test(p) && /^[A-Z"(]/.test(p), `${e} page: ${p}`);
   }
 });
 

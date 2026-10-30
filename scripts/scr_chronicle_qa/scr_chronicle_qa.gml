@@ -50,12 +50,12 @@ function chron_qa_last_page() {
     V.chars = string_length(V.text);
 }
 
-function chron_qa_talk(_id) {
+function chron_qa_talk(_id, _dx = 0, _dy = 48) {
     var _g = obj_game;
     for (var _i = 0; _i < array_length(_g.world_villagers); _i++) {
         var _v = _g.world_villagers[_i];
         if (_v.id == _id) {
-            obj_player.x = _v.x; obj_player.y = _v.y + 48; // in front of them, not on top or inside a wall
+            obj_player.x = _v.x + _dx; obj_player.y = _v.y + _dy; // in front of them, not on top or inside a wall
             global.gm.legacy_skip = false;
             var _ok = gm_interact(obj_player.x, obj_player.y);
             chron_qa_log(_ok && global.game_mode == "CONVERSATION", "talk to " + _id);
@@ -137,7 +137,7 @@ function chron_qa_step() {
         case 520: chron_qa_last_page(); break;
         case 525: screen_save("chron_10_jory.png"); chron_qa_choose("What's the cargo"); break;
         case 540: chron_qa_close(); break;
-        case 555: chron_qa_talk("BAILIFF_GUY"); break;
+        case 555: chron_qa_talk("BAILIFF_GUY", 34, 0); // the river runs below his post break;
         case 590: chron_qa_last_page(); break;
         case 595: screen_save("chron_11_guy_barge.png"); chron_qa_close(); break;
         case 610:

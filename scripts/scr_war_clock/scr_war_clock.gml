@@ -239,7 +239,7 @@ function war_clock_ending_text(_e) {
         case "league":
             return "Oakhaven's paper went further than the bailiff's men. Barges ran down past Red Sike under League protection, and the post at King's Bridge was left to feed itself. The vale ate, mostly. What it owed the Crown did not go away because nobody came to collect it this season. People at the cross say the King will remember. This is a provisional end to the Greenmere season, not to the kingdom's war.";
     }
-    return "No one decided to burn the vale. Unpaid companies took what they needed, the bailiff's post took the rest, and the families who could leave did. The watermill stood black all winter. In Stonecross they call it the Ashen season, and nobody agrees whose fault it was: the Chancellor's demand, the League's buying, Rusk's hunger, or the men who were paid to keep the road and were not. This is a provisional end to the Greenmere season, not to the kingdom's war.";
+    return "No one decided to burn the vale. Unpaid companies took what they needed, the bailiff's post took the rest, and the families who could leave did. The watermill stood black all winter. In Stonecross they call it the Ashen season. Nobody agrees whose fault it was: the Chancellor's demand, the League's buying, Rusk's hunger, or the men paid to keep the road who did not. This is a provisional end to the Greenmere season, not to the kingdom's war.";
 }
 
 // --------------------------------------------------------------------------------------------

@@ -49,6 +49,7 @@ function vis_interiors_define() {
             [spr_int_pew, 0, 70, 220, 84, 6], [spr_int_pew, 0, 218, 220, 84, 6],
             [spr_int_pew, 0, 70, 260, 84, 6], [spr_int_pew, 0, 218, 260, 84, 6],
             [spr_int_pew, 0, 70, 300, 84, 6], [spr_int_pew, 0, 218, 300, 84, 6],
+            [spr_int_chest, 0, 240, 100, 22, 8], // the religious house's book-chest (Greenmere site)
         ] },
         { id: "cottage", tpl: "cottage", x: 1620, y: 2560, name: "A Stonecross Cottage", furniture: [
             [spr_int_bed, 0, 214, 122, 32, 40],
