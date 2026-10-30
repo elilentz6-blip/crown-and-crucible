@@ -36,7 +36,7 @@ This opening dashboard provides an immediate, verifiable status assessment of Cr
  [1. WHAT CAN I PLAY RIGHT NOW?]  • Full Stonecross sandbox (3200x3072 px) with seamless interior strip
                                   • Undertale action combat: 5 distinct weapon minigames + Soul dodge
                                   • 16 living villagers with dynamic dialogue & 4 regional reputations
-                                  • 9 retinue characters with follow trails, daily wages, and ledger (P)
+                                  • 8 retinue characters plus a mission ally, with follow trails, daily wages, and ledger (P)
                                   • 6 side quests, 4 knight contracts with defection/betrayal branches
                                   • Crown & Bones dice poker (4 AI profiles) & timed target archery
                                   • 4-commodity regional merchant trading with autonomous price shocks
@@ -282,23 +282,27 @@ To prevent the simulation from remaining a static circular loop, the proposed **
 ### 5.1 Protagonist: Sir Rowan & Chivalric Hierarchy
 Sir Rowan progresses across four chivalric ranks (`scripts/scr_feudal_hierarchy/scr_feudal_hierarchy.gml`):
 - **Rank 0: Wandering Hedge Knight** (0 Renown) — Starting status; unlanded mercenary.
-- **Rank 1: Recognized Freeblade Captain** (50 Renown) — Retinue max size expands; +10% merchant sell prices.
+- **Rank 1: Recognized Freeblade Captain** (50 Renown) — +10% merchant sell prices. (Larger retinue at this rank is planned; the cap is still two companions.)
 - **Rank 2: Sworn Knight-Banneret** (100 Renown + ≥40 Faction Rep) — Unlocks faction noble audience and heraldic tabard.
 - **Rank 3: Landed Marcher Castellan** (200 Renown + ≥70 Faction Rep) — Awards the Old Watchtower Fief Writ (`800, 1890`) and +50 Gold weekly tribute.
 
-### 5.2 The Knight's Retinue (9 Characters in `retinue_defs`)
+### 5.2 The Knight's Retinue (8 people in `retinue_defs`, plus allies in `retinue_ally_templates`)
 
-| Key | Name | Archetype | Daily Wage | Moral Profile | Mechanical Perk |
+Full spec and interfaces: `docs/RETINUE.md`. Rowan travels with up to two companions (`RET_MAX_COMPANIONS`) and one mission ally. Named companions have no wages; sellswords sign for a fee and draw a daily wage.
+
+| Id | Name | Specialty | Hire / wage | Found | Implemented effect |
 |---|---|---|---|---|---|
-| `galahalt` | Sir Galahalt | Rust-Worn Knight | 4g | Lawful / Strict | +3 Ward; blocks smuggling contracts |
-| `margery` | Margery | Minstrel Rogue | 2g | Chaotic / Prankster| +15% Gold drops; enables dice rerolls |
-| `dunstan` | Brother Dunstan | Friar Brewer | 2g | Compassionate | Heals Rowan +4 HP after combat; pleased by mercy |
-| `isolde` | Isolde Venn | Exiled Herald | 3g | Royalist / Proud | +20% Renown gains; noble dialogue access |
-| `ashby` | Hob Ashby | Soldier | 2g | Mercenary | +2 Attack power; deserts if unpaid |
-| `wenna` | Wenna Fletch | Archer | 2g | Mercenary | Widens Bow bullseye by +25% |
-| `reedy` | Tam Reedy | Scout | 1g | Mercenary | Detects ambushes; increases movement speed |
-| `agnes` | Sister Agnes | Battlefield Medic | 3g | Compassionate | Restores 1 Mead Flask every 3 battles |
-| `hale` | Corporal Hale | Crown Halberdier | 0g | Royal Guard | Temporary mission reinforcement during royal contracts |
+| `GALAHALT` | Sir Galahalt | Knight | none | Watchtower camp; guardhouse yard by day | +10 DEF in party; refuses smuggling and betrayal |
+| `MARGERY` | Margery | Minstrel | none | Tavern; square by day | +20 crit in party; refuses tax work |
+| `DUNSTAN` | Brother Dunstan | Friar | none | Chapel; brew vats by day; tavern at dusk | +10 max HP in party; slows the party's morale loss; refuses sacrilege |
+| `ISOLDE` | Isolde Venn | Herald | none, level 2 or Crown 20 to join | Notice board, shrine, tavern | Parley score in `retinue_tactical_profile`; refuses smuggling |
+| `HOB` | Hob Ashby | Soldier | 40g + 6/day, 5 days | Tavern bar | Tactical defence score |
+| `WENNA` | Wenna Fletch | Archer | 55g + 8/day, 5 days | Archery range | Scouting score |
+| `TAM` | Tam Reedy | Scout | 30g + 4/day, 6 days | Behind the stables | Scouting score |
+| `AGNES` | Sister Agnes | Healer | 25g + 5/day, 5 days | Chapel sickbed | Heals Rowan 6 HP after each fight (scales with morale) |
+| `MILITIA_HALE` | Corporal Hale | Mission ally | free | Joins once on the Barrows road | Leaves after a won battle or a day |
+
+The support abilities and fighter switching in `retinue_support_abilities` / `retinue_set_active_fighter` are exposed for the combat engine but not yet called by it, so they have no battle effect except Agnes's post-fight healing.
 
 ### 5.3 Living Villager Population (16 NPCs in `world_villagers`)
 Includes Alderman Alden, Baker Beatrice, Watchman Donald, Swineherd Giles, Clerk Pippin, Smuggler Wulf, Sir Balin, Peddler Corin, Bailiff Guy, Emissary Cecily, Sapper Vane, Refugee Mira, Hermit Mallow, Outlaw Grim, Foreman Brand, and Factor Malo.
@@ -526,7 +530,7 @@ global.factions              // { crown: struct, river_league: struct, iron_coun
 global.contested_zones       // { kings_bridge: struct, red_sike_wharf: struct, barrow_defile: struct }
 global.war_cycle_count       // int (Starts at 1, increments every 3600 frames)
 global.contracts             // { CONTRACT_BOUNTY_MALOR, CONTRACT_CONTRABAND_RUN, CONTRACT_QUARRY_DEFENSE, CONTRACT_SCOUT_PAVILION }
-global.retinue_roster        // { galahalt, margery, dunstan, isolde, ashby, wenna, reedy, agnes, hale }
+global.retinue               // { members, order, active, temp, day, bonds, chronicle, requests, ... } (see docs/RETINUE.md)
 global.war_chronicle         // array[string] (Last 20 campaign entries)
 global.vis                   // Rendering surfaces, particle emitters, camera state
 ```

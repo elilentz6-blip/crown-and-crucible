@@ -42,6 +42,8 @@ retinue_support_abilities()      // supports of everyone except the active fight
 retinue_member_take_damage(id, n) // a companion fighter at 0 HP is injured, never killed
 ```
 
+**Not wired yet:** the combat controller does not call these functions, so fighter switching and the supports shown in the ledger have no battle effect until combat adopts them. The exception is Field Dressing (`AFTER_BATTLE`), which the retinue applies itself.
+
 Weapon classes match `cc_weapon_definitions()` (SWORD, DAGGER, SPEAR, BOW). Equipment entries are ids/names only (`equipment.weapon`, `weapon_name`, ...), ready to point at real gear.
 
 ## Contracts and politics (Gemini)

@@ -2,7 +2,8 @@
 """
 Crown & Crucible - extra UI kit art for the menu screens (armory, journal, ledger, exchange).
 
-Writes three sprites straight into the GameMaker project with art_src/world/gm.py and
+Also refreshes spr_ui_font_body / _small so gen_ui.GLYPH_FIX reaches the game without a full art
+build. Writes three sprites straight into the GameMaker project with art_src/world/gm.py and
 registers them in the .yyp (only these three):
 
   spr_ui_goods  4 frames 44x44  trade goods: 0 wheat, 1 salted fish, 2 iron, 3 wine  (UI_GOODS_*)
@@ -307,6 +308,10 @@ def main():
     for name, frames in (("spr_ui_goods", goods), ("spr_ui_seal", seals), ("spr_ui_crest", crests)):
         save_ref(name, frames)
         gm.write_sprite(name, frames, (0, 0))
+    # The fonts stay registered from gen_ui; this only refreshes their frames for GLYPH_FIX.
+    for style in ("body", "small"):
+        K.build_font(style)
+        gm.write_sprite(f"spr_ui_font_{style}", K.FONT_GLYPHS[style], (0, 0))
     if "--no-register" not in sys.argv:
         gm.register([("sprites", "spr_ui_goods"), ("sprites", "spr_ui_seal"), ("sprites", "spr_ui_crest")])
     # contact sheet for a quick look

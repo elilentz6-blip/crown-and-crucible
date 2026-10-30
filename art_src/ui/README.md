@@ -18,6 +18,10 @@ That one command writes:
 
 The generator doesn't touch `BLANK GAME.yyp`, objects, rooms, `sprites/` or `generate_sprites.py`.
 
+`gen_screens.py` writes the menu-screen art (goods, seals, crests) straight into the project and
+refreshes the two Pixelify fonts after `GLYPH_FIX` changes (the source font's 5 reads as an S).
+Hold `/tmp/cc_yyp.lock` while it runs.
+
 ## Art rules
 
 * 1 art px = 2 GUI px (`SCALE = 2`), which matches the 2x world camera. Exception: the
@@ -74,6 +78,9 @@ Margins are left/top/right/bottom in GUI px. "-" means the sprite is drawn whole
 | `spr_ui_card_slot` | 1 | 112x152 | 0,0 | - | Dashed empty-card outline, tint with discipline colour |
 | `spr_ui_party_shield` | 2 | 24x26 | 0,0 | - | 0 empty, 1 gilt rim |
 | `spr_ui_party_field` | 1 | 24x26 | 0,0 | - | Shield field: draw it tinted with the companion colour, then the rim |
+| `spr_ui_goods` | 4 | 44x44 | 0,0 | - | Trade goods: wheat, salted fish, iron, wine (`gen_screens.py`) |
+| `spr_ui_seal` | 5 | 32x32 | 0,0 | - | Wax status seals: open, active, done, failed, betrayed (`gen_screens.py`) |
+| `spr_ui_crest` | 6 | 28x32 | 0,0 | - | Faction shields: crown, Stonecross, Oakhaven/River League, Dunhollow/Iron Council, High Cairn, unknown (`gen_screens.py`) |
 | `spr_ui_font_body` | 95 | 20x30 | 0,0 | - | Pixelify Sans 10 at 2x, ASCII 32..126 |
 | `spr_ui_font_small` | 95 | 14x22 | 0,0 | - | Pixelify Sans 16 at 1x |
 | `spr_ui_font_title` | 95 | 19x27 | 0,0 | - | Jacquard 12 (24 px) at 1x |

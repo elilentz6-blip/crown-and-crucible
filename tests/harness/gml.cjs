@@ -212,6 +212,7 @@ function baseShims(extra = {}) {
     vk_control: 17, vk_anykey: 1, vk_nokey: 0,
     vk_f1: 112, vk_f2: 113, vk_f3: 114, vk_f4: 115, vk_f5: 116, vk_f6: 117,
     vk_f7: 118, vk_f8: 119, vk_f9: 120, vk_f10: 121, vk_f11: 122, vk_f12: 123,
+    matrix_view: 0, matrix_projection: 1, matrix_world: 2, // GML built-in matrix type constants
     view_camera: [0],
     randomize() {}, random: n => n * 0.5, random_range: (a, b) => (a + b) / 2,
     irandom: n => Math.floor(n / 2), irandom_range: (a, b) => Math.floor((a + b) / 2),

@@ -218,3 +218,91 @@ function ui_item_slot_draw(_x, _y, _item, _slot, _state = 0, _size = 72) {
         if (_ghost >= 0) draw_sprite(_ghost, _gi, _x + (_size - sprite_get_width(_ghost)) / 2, _y + (_size - sprite_get_height(_ghost)) / 2);
     }
 }
+
+// --- Menu screen pieces (spr_ui_goods / _seal / _crest come from art_src/ui/gen_screens.py) ---
+
+/// Gold selection brackets around a rectangle, with a soft pulse.
+function ui_select_draw(_x, _y, _w, _h, _alpha = draw_get_alpha()) {
+    var _p = 0.72 + 0.28 * sin(current_time / 170);
+    ui_nine("spr_ui_select", 0, _x - 6, _y - 6, _w + 12, _h + 12, c_white, _alpha * _p);
+}
+
+/// Trade good icon (44x44) for a commodity id: WHEAT, FISH, IRON, WINE.
+function ui_goods_draw(_cid, _x, _y, _alpha = draw_get_alpha()) {
+    var _spr = ui_spr("spr_ui_goods");
+    var _i = (_cid == "FISH") ? 1 : ((_cid == "IRON") ? 2 : ((_cid == "WINE") ? 3 : 0));
+    if (_spr >= 0) draw_sprite_ext(_spr, _i, floor(_x), floor(_y), 1, 1, 0, c_white, _alpha);
+}
+
+/// Wax status seal (32x32) for a quest or contract status.
+function ui_seal_draw(_status, _x, _y, _alpha = draw_get_alpha()) {
+    var _spr = ui_spr("spr_ui_seal");
+    var _i = 0;
+    switch (_status) {
+        case "ACTIVE": _i = 1; break;
+        case "COMPLETED": _i = 2; break;
+        case "FAILED": case "ABANDONED": _i = 3; break;
+        case "BETRAYED": _i = 4; break;
+    }
+    if (_spr >= 0) draw_sprite_ext(_spr, _i, floor(_x), floor(_y), 1, 1, 0, c_white, _alpha);
+}
+
+/// Player-facing word for a quest or contract status.
+function ui_status_name(_status) {
+    switch (_status) {
+        case "ACTIVE": return "Under way";
+        case "COMPLETED": return "Done";
+        case "FAILED": return "Failed";
+        case "ABANDONED": return "Abandoned";
+        case "BETRAYED": return "Betrayed";
+    }
+    return "Open";
+}
+
+/// Faction or region shield (28x32). Accepts reputation, faction and region keys in any case.
+function ui_crest_draw(_faction, _x, _y, _alpha = draw_get_alpha()) {
+    var _spr = ui_spr("spr_ui_crest");
+    var _i = 5;
+    switch (string_lower(string(_faction))) {
+        case "crown": _i = 0; break;
+        case "stonecross": _i = 1; break;
+        case "oakhaven": case "river_league": _i = 2; break;
+        case "dunhollow": case "iron_council": _i = 3; break;
+        case "highcairn": _i = 4; break;
+    }
+    if (_spr >= 0) draw_sprite_ext(_spr, _i, floor(_x), floor(_y), 1, 1, 0, c_white, _alpha);
+}
+
+/// Display name for a reputation, faction or region key.
+function ui_faction_name(_faction) {
+    switch (string_lower(string(_faction))) {
+        case "crown": return "The Crown";
+        case "stonecross": return "Stonecross";
+        case "oakhaven": return "Oakhaven";
+        case "dunhollow": return "Dunhollow";
+        case "river_league": return "River League";
+        case "iron_council": return "Iron Council";
+        case "highcairn": return "High Cairn";
+    }
+    return string(_faction);
+}
+
+/// Row of key hints. _entries = [[["W", "S"], "Browse"], [["Esc"], "Close", true]]; a third
+/// element true greys the label. Returns the total width; _draw = false only measures.
+function ui_key_hints(_x, _y, _entries, _col = UI_COL_INK_SOFT, _draw = true) {
+    var _cx = _x;
+    for (var _i = 0; _i < array_length(_entries); _i++) {
+        var _e = _entries[_i];
+        var _keys = _e[0];
+        for (var _k = 0; _k < array_length(_keys); _k++) {
+            var _kw = max(24, ui_text_width(_keys[_k], "small") + 14);
+            if (_draw) ui_keycap(_cx, _y, _keys[_k]);
+            _cx += _kw + 3;
+        }
+        _cx += 4;
+        if (_draw) ui_text_draw(_cx, _y + 2, _e[1], "small", (array_length(_e) > 2 && _e[2]) ? UI_COL_MUTED : _col);
+        _cx += ui_text_width(_e[1], "small");
+        if (_i < array_length(_entries) - 1) _cx += 24;
+    }
+    return _cx - _x;
+}

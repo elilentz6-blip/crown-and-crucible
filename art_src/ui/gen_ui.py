@@ -1437,6 +1437,13 @@ FONTS = {
     "small": ("pixelifysans_PixelifySans[wght].ttf", 16, 1, 1),
     "title": ("jacquard12_Jacquard12-Regular.ttf", 24, 1, 0),
 }
+# Hand-drawn glyphs where the source font is ambiguous at this size: Pixelify's 5 reads as an S,
+# which matters on the price-heavy screens. Rows are stamped at the glyph's own top-left ink.
+GLYPH_FIX = {
+    ("body", "5"): ["#####", "#....", "####.", "....#", "....#", "#...#", ".###."],
+    ("small", "5"): ["########", "##......", "##......", "##......", "######..",
+                     "......##", "......##", "##....##", ".#...#..", ".#####.."],
+}
 FONT_META = {}
 FONT_GLYPHS = {}
 
@@ -1469,6 +1476,15 @@ def build_font(style):
         src = a[:hh, shift:shift + cell_w]
         out[:hh, :src.shape[1], 3] = np.where(src[:hh] > 127, 255, 0)
         out[..., :3] = 255
+        fix = GLYPH_FIX.get((style, ch))
+        if fix:
+            ys, xs = np.where(out[..., 3] > 0)
+            x0, y0 = xs.min(), ys.min()
+            out[..., 3] = 0
+            for ry, row in enumerate(fix):
+                for rx, c in enumerate(row):
+                    if c == "#":
+                        out[y0 + ry, x0 + rx, 3] = 255
         g = Image.fromarray(out, "RGBA")
         frames.append(g)
         a = int(round(font.getlength(ch)))

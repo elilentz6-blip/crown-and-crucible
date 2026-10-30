@@ -68,7 +68,7 @@ function ui_equipment_backdrop(_x, _y, _w, _h, _title) {
     var _a = draw_get_alpha();
     draw_set_alpha(_a * 0.72);
     draw_set_color(make_color_rgb(20, 14, 22));
-    draw_rectangle(0, 0, 1366, 768, false);
+    draw_rectangle(-40, -40, 1406, 808, false);   // oversize: the open slide moves the whole screen
     draw_set_alpha(_a);
     ui_panel("gilded", _x, _y, _w, _h);
     var _rw = ui_text_width(_title, "title") + 120;
@@ -117,34 +117,55 @@ function ui_equipment_draw_cards(_game) {
         var _cx = _gx + 98;
         ui_text_draw(_cx, _y + 10, _labels[_r] + "  " + string(_idx[_r] + 1) + "/" + string(array_length(_rows[_r])), "small", UI_COL_INK_SOFT);
         ui_keycap(_gx + _gw - 36, _y + 8, string(_r + 1));
-        ui_text_draw(_cx, _y + 30, _item.name, "body", UI_COL_INK, _gw - 112);
-        ui_text_draw(_cx, _y + 62, ui_equipment_stat_line(_item), "small", make_color_rgb(150, 70, 40));
+        ui_text_draw(_cx, _y + 30, ui_text_fit(_item.name, "body", _gw - 112), "body", UI_COL_INK);
+        ui_text_draw(_cx, _y + 62, ui_text_fit(ui_equipment_stat_line(_item), "small", _gw - 112), "small", make_color_rgb(150, 70, 40));
         var _socks = ui_equipment_sockets(_game, _item);
         for (var _s = 0; _s < array_length(_socks); _s++) {
             var _st = is_struct(_socks[_s].card) ? 1 : 0;
             if (_sel && _focus == 1 && _game.armory_slot == _s) _st = 2;
             ui_socket_draw(_cx + _s * 46, _y + 96, _socks[_s].type, _st);
         }
-        if (_sel && _focus == 0) ui_nine("spr_ui_select", 0, _gx - 6, _y - 6, _gw + 12, _h + 12);
+        if (_sel && _focus == 0) ui_select_draw(_gx, _y, _gw, _h);
     }
 
-    // --- Middle: sockets of the selected gear ----------------------------------
+    // --- Middle: technique slots of the selected gear, with the socketed card art -------
     var _mx = 506, _mw = 396;
     var _gear = _rows[_game.armory_row][_idx[_game.armory_row]];
     var _socks = ui_equipment_sockets(_game, _gear);
+    var _kit = ui_kit_data();
     ui_panel("inset", _mx, 84, _mw, 470);
-    var _yy = ui_equipment_heading(_mx, 84, _mw, "Sockets", _labels[_game.armory_row]);
-    _yy += ui_text_draw(_mx + 18, _yy, _gear[$ "desc"] ?? "", "small", UI_COL_INK_SOFT, _mw - 36) + 12;
-    for (var _s = 0; _s < array_length(_socks); _s++) {
-        var _sy = _yy + _s * 66;
+    var _yy = ui_equipment_heading(_mx, 84, _mw, "Technique Slots", _labels[_game.armory_row]);
+    ui_text_draw(_mx + 18, _yy - 4, _gear[$ "desc"] ?? "", "small", UI_COL_INK_SOFT, _mw - 36);
+    var _nsock = array_length(_socks);
+    var _sx0 = _mx + (_mw - (_nsock * _kit.card_w + (_nsock - 1) * 10)) / 2;
+    var _sy = 214;
+    for (var _s = 0; _s < _nsock; _s++) {
         var _kind = _socks[_s].type;
         var _card = _socks[_s].card;
         var _di = ui_discipline_index(_kind);
-        var _sel = (_game.armory_slot == _s);
-        ui_socket_draw(_mx + 18, _sy + 6, _kind, is_struct(_card) ? 1 : (_sel && _focus == 1 ? 2 : 0));
-        ui_text_draw(_mx + 70, _sy + 4, ui_kit_data().discipline_names[_di] + " socket", "small", ui_kit_data().discipline_inks[_di]);
-        ui_text_draw(_mx + 70, _sy + 22, is_struct(_card) ? _card.name : "Empty", "body", is_struct(_card) ? UI_COL_INK : UI_COL_MUTED);
-        if (_sel && _focus == 1) ui_nine("spr_ui_select", 0, _mx + 8, _sy - 4, _mw - 16, 62);
+        var _here = (_game.armory_slot == _s);
+        var _cx1 = _sx0 + _s * (_kit.card_w + 10);
+        var _cy1 = _sy - ((_here && _focus == 1) ? 4 : 0);
+        if (is_struct(_card)) {
+            ui_card_draw(_cx1, _cy1, _card.kind, _card[$ "rarity"], _card.name, ui_card_effect_text(_card));
+        } else {
+            var _empty = ui_spr("spr_ui_card_slot");
+            if (_empty >= 0) draw_sprite_ext(_empty, 0, _cx1, _cy1, 1, 1, 0, _kit.discipline_cols[_di], _a);
+            ui_socket_draw(_cx1 + (_kit.card_w - 40) / 2, _cy1 + 44, _kind, (_here && _focus == 1) ? 2 : 0);
+            ui_text_draw(_cx1 + (_kit.card_w - ui_text_width("Empty", "small")) / 2, _cy1 + 92, "Empty", "small", UI_COL_INK_SOFT);
+        }
+        var _nm = _kit.discipline_names[_di];
+        ui_text_draw(_cx1 + (_kit.card_w - ui_text_width(_nm, "small")) / 2, _sy + _kit.card_h + 4, _nm, "small", _kit.discipline_inks[_di]);
+        if (_here && _focus == 1) ui_select_draw(_cx1, _cy1, _kit.card_w, _kit.card_h);
+    }
+    if (_game.armory_slot < _nsock) {
+        var _pick = _socks[_game.armory_slot];
+        var _pi = ui_discipline_index(_pick.type);
+        ui_divider(_mx + 12, 394, _mw - 24);
+        var _rule = (_pick.type == "WILD") ? "Accepts any card." : "Takes " + _kit.discipline_names[_pi] + " cards only.";
+        ui_text_draw(_mx + 18, 410, _kit.discipline_names[_pi] + " slot " + string(_game.armory_slot + 1), "body", _kit.discipline_inks[_pi]);
+        ui_text_draw(_mx + 18, 440, _rule, "small", UI_COL_INK_SOFT, _mw - 36);
+        if (is_struct(_pick.card)) ui_text_draw(_mx + 18, 466, _pick.card.name + ": " + _pick.card.desc, "small", UI_COL_INK, _mw - 36);
     }
 
     // --- Right: card collection (pages of 6) -----------------------------------
@@ -161,9 +182,10 @@ function ui_equipment_draw_cards(_game) {
         var _kx = _cx0 + 14 + (_k mod 3) * 120, _ky = _yy + 2 + (_k div 3) * 166;
         var _fits = (_target == "WILD" || _target == _card.kind);
         draw_set_alpha(_a * ((_focus == 2 && !_fits) ? 0.45 : 1));
+        if (_focus == 2 && _game.armory_card == _i) _ky -= 4;
         ui_card_draw(_kx, _ky, _card.kind, _card[$ "rarity"], _card.name, ui_card_effect_text(_card));
         draw_set_alpha(_a);
-        if (_focus == 2 && _game.armory_card == _i) ui_nine("spr_ui_select", 0, _kx - 6, _ky - 6, ui_kit_data().card_w + 12, ui_kit_data().card_h + 12);
+        if (_focus == 2 && _game.armory_card == _i) ui_select_draw(_kx, _ky, ui_kit_data().card_w, ui_kit_data().card_h);
     }
     var _pages = max(1, ceil(array_length(_owned) / 6));
     var _pg = "Page " + string(_page + 1) + "/" + string(_pages);
@@ -199,7 +221,7 @@ function ui_equipment_draw_cards(_game) {
     // Key hints
     var _hx = 70, _hy = 704;
     _hx += ui_keycap(_hx, _hy, "Tab") + 6;
-    ui_text_draw(_hx, _hy + 2, "Gear / Sockets / Cards", "small", UI_COL_INK_SOFT); _hx += ui_text_width("Gear / Sockets / Cards", "small") + 26;
+    ui_text_draw(_hx, _hy + 2, "Gear / Slots / Cards", "small", UI_COL_INK_SOFT); _hx += ui_text_width("Gear / Slots / Cards", "small") + 26;
     _hx += ui_keycap(_hx, _hy, "Enter") + 6;
     ui_text_draw(_hx, _hy + 2, "Select", "small", UI_COL_INK_SOFT); _hx += ui_text_width("Select", "small") + 26;
     _hx += ui_keycap(_hx, _hy, "X") + 6;

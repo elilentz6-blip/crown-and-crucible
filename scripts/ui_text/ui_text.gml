@@ -143,3 +143,13 @@ function ui_text_draw(_x, _y, _str, _style = "body", _col = c_white, _max_width 
     }
     return _height;
 }
+
+/// _str shortened with "..." so it is no wider than _maxw (for one-line list rows).
+function ui_text_fit(_str, _style, _maxw) {
+    _str = string(_str);
+    if (ui_text_width(_str, _style) <= _maxw) return _str;
+    var _room = _maxw - ui_text_width("...", _style);
+    var _n = string_length(_str);
+    while (_n > 0 && ui_text_width(string_copy(_str, 1, _n), _style) > _room) _n--;
+    return string_trim_end(string_copy(_str, 1, _n)) + "...";
+}
