@@ -334,11 +334,11 @@ def gen_dice_bg():
         d.arc([x + 3, y - 9, x + 10, y - 2], 270, 90, fill=(70, 70, 82, 255))
 
     # the shelves flank the title; the wall panels sit below them
-    shelf(232, 306, 40)
-    bottle(246, 40, (58, 112, 74))
-    bottle(262, 40, (122, 58, 50))
-    mug(284, 40)
-    mug(298, 40)
+    shelf(258, 332, 40)
+    bottle(272, 40, (58, 112, 74))
+    bottle(288, 40, (122, 58, 50))
+    mug(310, 40)
+    mug(324, 40)
     shelf(378, 452, 40)
     d.ellipse([384, 30, 406, 41], fill=(176, 122, 62, 255))
     d.arc([384, 30, 406, 41], 190, 330, fill=(226, 176, 100, 255))

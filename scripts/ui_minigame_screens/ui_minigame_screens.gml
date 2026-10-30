@@ -151,8 +151,8 @@ function mg_dice_scene(_dg) {
     mg_spr("spr_mg_dice_bg", 0, 0, 0);
     // candles on the table's far corners
     var _cf = (current_time div 140) mod 3;
-    mg_glow(46, 160, 210 * _flick, make_color_rgb(70, 40, 14), 0.10);
-    mg_glow(1320, 160, 210 * (2 - _flick), make_color_rgb(70, 40, 14), 0.10);
+    mg_glow(46, 160, 230 * _flick, make_color_rgb(70, 40, 14), 0.12);
+    mg_glow(1320, 160, 230 * (2 - _flick), make_color_rgb(70, 40, 14), 0.12);
     mg_spr("spr_mg_candle", _cf, 46, 214);
     mg_spr("spr_mg_candle", (_cf + 1) mod 3, 1320, 214);
     // the opponent, framed like a dialogue portrait
@@ -171,11 +171,11 @@ function mg_dice_scene(_dg) {
     // stake and purse
     mg_parchment("parchment", 1044, 22, 292, 118);
     var _gold = instance_exists(obj_game) ? obj_game.hero_gold : 0;
-    mg_spr("spr_mg_chip", mg_chip_frame(_dg.wager), 1082, 58);
-    ui_text_draw(1106, 42, "Stake", "body", UI_COL_INK);
+    mg_spr("spr_mg_chip", mg_chip_frame(_dg.wager), 1088, 58);
+    ui_text_draw(1120, 42, "Stake", "body", UI_COL_INK);
     mg_text_r(1314, 42, string(_dg.wager), "body", "", UI_COL_INK);
-    ui_icon(UI_ICON_COIN, 1068, 80);
-    ui_text_draw(1106, 80, "Purse", "body", UI_COL_INK);
+    ui_icon(UI_ICON_COIN, 1074, 80);
+    ui_text_draw(1120, 80, "Purse", "body", UI_COL_INK);
     mg_text_r(1314, 80, string(_gold), "body", "", UI_COL_INK);
     mg_ribbon(683, 108, 60, "Crown & Bones");
     // the player's winnings, heaped at the table's edge
@@ -183,7 +183,7 @@ function mg_dice_scene(_dg) {
 }
 
 function mg_dice_bet_panel(_dg) {
-    var _x = 303, _y = 214, _w = 760, _h = 508;
+    var _x = 303, _y = 214, _w = 760, _h = 446;
     mg_parchment("gilded", _x, _y, _w, _h);
     mg_text_c(683, _y + 18, "Choose your opponent", "body", "", UI_COL_INK);
     var _n = array_length(_dg.opponents);
@@ -194,7 +194,7 @@ function mg_dice_bet_panel(_dg) {
         var _sel = (_i == _dg.opponent_idx);
         ui_panel("inset", _x + 34, _ry, 68, 64);
         var _p = mg_opp_portrait(_o.id);
-        if (_p >= 0) draw_sprite_part_ext(_p, 0, 16, 2, 32, 30, _x + 36, _ry + 2, 2, 2, c_white, 1);
+        if (_p >= 0) draw_sprite_part_ext(_p, 0, 16, 16, 32, 30, _x + 36, _ry + 2, 2, 2, c_white, 1);
         ui_text_draw(_x + 116, _ry + 6, _o.name, _sel ? "body_bold" : "body", UI_COL_INK);
         ui_text_draw(_x + 116, _ry + 36, _o.title, "small", UI_COL_INK_SOFT);
         mg_spr("spr_mg_chip", mg_chip_frame(_o.wager), _x + _w - 142, _ry + 30);
@@ -224,7 +224,7 @@ function mg_dice_draw(_dg, _age) {
     if (_ph == "BET_SELECT") {
         mg_dice_bet_panel(_dg);
         var _short = (_gold < _dg.wager);
-        if (_short) mg_text_c(683, 700, "Your purse cannot cover that stake.", "small", "outline", UI_COL_HP);
+        if (_short) mg_text_c(683, 672, "Your purse cannot cover that stake.", "small", "outline", UI_COL_HP);
         mg_keys([["W S", "Opponent"], ["A D", "Stake"], ["Space", "Throw"], ["Esc", "Leave"]]);
         return;
     }
@@ -386,15 +386,14 @@ function mg_archery_summary(_ag) {
     draw_set_alpha(1);
     draw_set_color(c_white);
 
-    var _x = 393, _y = 112, _w = 580, _h = 540;
+    var _x = 393, _y = 126, _w = 580, _h = 412;
     mg_parchment("gilded", _x, _y, _w, _h);
     mg_ribbon(683, _y - 30, 60, "Contest Complete");
-    mg_text_c(683, _y + 44, "Final score", "small", "", UI_COL_INK_SOFT);
-    mg_text_c(683, _y + 66, string(_ag.total_score), "title", "", UI_COL_INK);
+    mg_text_c(683, _y + 52, "Final score: " + string(_ag.total_score), "body", "", UI_COL_INK);
 
     // rewards as awarded by cc_archery_update
     var _gold = _ag.total_score * 3, _xp = _ag.total_score * 4, _rep = (_ag.total_score >= 20) ? 10 : 5;
-    var _ry = _y + 106;
+    var _ry = _y + 94;
     ui_icon(UI_ICON_COIN, _x + 66, _ry);
     ui_text_draw(_x + 100, _ry, "+" + string(_gold) + " gold", "body", UI_COL_INK);
     ui_icon(UI_ICON_SPARKLE, _x + 240, _ry);
@@ -483,7 +482,7 @@ function mg_archery_draw(_ag, _shots, _age) {
     mg_spr("spr_mg_quiver", clamp(_ag.arrows_left, 0, 3), 46, 26);
     mg_text_c(82, 162, string(_ag.arrows_left) + " left", "small", "outline", UI_COL_GOLD);
 
-    mg_ribbon(683, 12, 60, "The Warden's Target");
+    if (_ph != "SUMMARY") mg_ribbon(683, 12, 60, "The Warden's Target");
     mg_archery_scorecard(_ag, _shots);
 
     // draw weight: the fuller the draw, the tighter the arrow flies
