@@ -29,6 +29,7 @@
     {"id":{"name":"scr_art_engine","path":"scripts/scr_art_engine/scr_art_engine.yy",},},
     {"id":{"name":"scr_audio","path":"scripts/scr_audio/scr_audio.yy",},},
     {"id":{"name":"scr_chronicle_core","path":"scripts/scr_chronicle_core/scr_chronicle_core.yy",},},
+    {"id":{"name":"scr_chronicle_qa","path":"scripts/scr_chronicle_qa/scr_chronicle_qa.yy",},},
     {"id":{"name":"scr_combat_controller","path":"scripts/scr_combat_controller/scr_combat_controller.yy",},},
     {"id":{"name":"scr_combat_render","path":"scripts/scr_combat_render/scr_combat_render.yy",},},
     {"id":{"name":"scr_combat_save","path":"scripts/scr_combat_save/scr_combat_save.yy",},},
