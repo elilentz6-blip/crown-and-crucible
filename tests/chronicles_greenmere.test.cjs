@@ -461,6 +461,16 @@ test('rumours are heard one at a time and kept in the notebook; J opens and clos
   frames(g, 60);
   press(g, J);
   assert.equal(g.global.game_mode, 'OVERWORLD');
+  // with more notes than fit, the page says how many are hidden below
+  for (let i = 0; i < 9; i++) g.chron_note('qa_note_' + i, 'Note ' + i, 'Something Rowan learned that takes up a line or two of the notebook page.');
+  press(g, J);
+  const drawn = [];
+  const base = g.ui_text_draw;
+  g.ui_text_draw = (x, y, str, ...rest) => { drawn.push(String(str)); return base(x, y, str, ...rest); };
+  g.notebook_draw();
+  assert.ok(drawn.some(s => /more below/.test(s)), 'hidden entries are announced: ' + drawn.filter(s => /Entries/.test(s)).join());
+  g.ui_text_draw = base;
+  press(g, J);
 });
 
 test('asking for the old talk from a conversation hands the person back to their quest', () => {
@@ -553,6 +563,12 @@ test('content integrity: every reply leads somewhere, every id is handled, every
       const text = N.tx ? g.gm_text(N.tx) : N.text;
       const pages = g.convo_paginate(text);
       for (const p of pages) assert.ok(g.ui_text_wrap(p, 'body', 780).length <= 3, `${t}.${nid} page fits`);
+      const norm = x => String(x).replace(/\s+/g, ' ').trim();
+      assert.equal(norm(pages.join(' ')), norm(text), `${t}.${nid} pages keep every word`);
+      for (const sn of g.convo_sentences(text)) assert.ok(g.ui_text_wrap(sn, 'body', 780).length <= 3, `${t}.${nid} sentence longer than a page: ${sn}`);
+      // a page may end mid-sentence only when that sentence is longer than a page
+      pages.slice(0, -1).forEach((p, i) => assert.ok(/[.?!]["')]*$/.test(p) || g.ui_text_wrap(p, 'body', 780).length === 3,
+        `${t}.${nid} page ${i + 1} stops mid-sentence: ${p}`));
       for (const O of N.opts) {
         if (O.go) assert.ok(T[O.go], `${t}.${nid} -> ${O.go} exists`);
         if (O.fx) assert.ok(caseIds.has(O.fx), `${t}.${nid} fx ${O.fx}`);
@@ -571,6 +587,15 @@ test('content integrity: every reply leads somewhere, every id is handled, every
     const yy = JSON.parse(fs.readFileSync(path.join(ROOT, `scripts/${s}/${s}.yy`), 'utf8'));
     assert.equal(yy.isDnD, false);
     assert.ok(new RegExp(String.raw`"path":\s*"scripts/${s}/${s}\.yy"`).test(fs.readFileSync(path.join(ROOT, 'BLANK GAME.yyp'), 'utf8')), s + ' registered'); // tolerate IDE-formatted yyp
+  }
+});
+
+test('every season ending pages cleanly, one whole sentence or more per page', () => {
+  const { g } = world();
+  for (const e of ['settlement', 'crown', 'league', 'ashen']) {
+    const text = g.war_clock_ending_text(e);
+    for (const sn of g.convo_sentences(text)) assert.ok(g.ui_text_wrap(sn, 'body', 780).length <= 3, `${e}: ${sn}`);
+    for (const p of g.convo_paginate(text)) assert.ok(/[.?!]["')]*$/.test(p) && /^[A-Z"(]/.test(p), `${e} page: ${p}`);
   }
 });
 

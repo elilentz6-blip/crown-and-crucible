@@ -98,6 +98,19 @@ At 100 the season ends with one of four provisional epilogues (settlement, crown
 - content integrity: every reply leads somewhere, every id is handled and every page fits the box;
 - the canon wording.
 
+**Readability follow-up (after the native screenshots on main 47f045c):**
+
+- Key hints in conversations and the notebook are drawn as key caps, because the small font's "Z" reads as "2".
+- Pages break between sentences.
+- The notebook says how many entries are hidden.
+- The QA play-through stands Rowan beside each person and waits a few frames before each screenshot, because `screen_save` captures the previous frame.
+- Hand-drawn glyphs (`GLYPH_FIX` in art_src/ui/gen_ui.py) were applied to the existing font frames only:
+  - small Z, B, G, E and ( ), and body Z, B, G and ( );
+  - Z no longer reads as 2, B and G are distinct, and brackets no longer read as < > or { }.
+- The "more to read" arrow is hidden on a final page that has replies.
+- No spoken sentence is longer than a page (tested), so pages never break mid-sentence. The Ashen ending was reworded to fit.
+- The chapel book-chest is now drawn, beside the altar.
+
 ## 3. Provisional choices (easy to revise)
 
 - **War Clock numbers:**

@@ -447,6 +447,10 @@ These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the p
 - **New modules:**
   - `scr_chronicle_core`: calendar, flags, notes, papers, rumours, news and schedule.
   - `scr_conversation`: modes `CONVERSATION` and `NOTEBOOK` (key **J**).
+    - Pages break between sentences.
+    - Key hints use the kit's key caps (`ui_key_hints`, which now takes a label font).
+    - The notebook counts entries hidden above or below.
+    - The UI sprite fonts carry hand-drawn Z, B, G, E and bracket glyphs (`GLYPH_FIX` in art_src/ui/gen_ui.py), so key hints and prices read correctly.
   - `scr_greenmere`: people, places, events and the three situations.
   - `scr_war_clock`.
 - **Hooks in shared files:**
@@ -457,7 +461,7 @@ These are built from `docs/proposed/THE_CHRONICLES_OF_AETHELGARD.md`, with the p
 - **People:** Maud Hessel (1700,1480), Hugh Fenner (1690,1265), Hawise (tavern, 330,2700), Oswin Tarr (1990,1700), Jory Penhal (Red Sike, 2100,1860, while the barge is held), Sergeant Ebbe (tavern, stage 2 and later), Piers Hessel (by the pavilion at stage 3 and later; home once freed), and refugees at stage 2 and later.
 - **Places:**
   - The tower and barrows landmarks open conversations.
-  - New places are the Chapel Book-Chest (1400,2660), the cottage Box Bed (1834,2682), the Looter's Cache (2410,2075, after the Barrow renegade is beaten or spared), the Bridge Checkpoint (stage 3 and later) and the Burned Watermill (stage 4).
+  - New places are the Chapel Book-Chest (1400,2640, drawn as a chest beside the chapel altar), the cottage Box Bed (1834,2682), the Looter's Cache (2410,2075, after the Barrow renegade is beaten or spared), the Bridge Checkpoint (stage 3 and later) and the Burned Watermill (stage 4).
   - The notice board shows a new War Clock notice once.
 - **Situations:**
   - The levy for the empty tower, covering the settlement copy, petition, acquittance, repair and watch, the stolen lead and the captaincy.

@@ -118,7 +118,7 @@ function gm_world_refresh() {
 
     // places (put first so they win over a nearby legacy landmark, as the prompt shows)
     var _L = _g.world_landmarks;
-    array_insert(_L, 0, gm_site_entity("Chapel Book-Chest", 1400, 2660, 16, "bookchest"));
+    array_insert(_L, 0, gm_site_entity("Chapel Book-Chest", 1400, 2640, 16, "bookchest"));
     array_insert(_L, 0, gm_site_entity("Box Bed", 1834, 2682, 18, "bed"));
     if (chron_flag("renegade_cleared") && !chron_flag("cache_taken")) array_insert(_L, 0, gm_site_entity("Looter's Cache", 2410, 2075, 18, "cache"));
     if (_stage >= 3) array_insert(_L, 0, gm_site_entity("Bridge Checkpoint", GM_BRIDGE_X, 1700, 20, "checkpoint"));

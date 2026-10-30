@@ -14,7 +14,8 @@
 #macro UI_COL_DIALOGUE_INK make_color_rgb(34, 20, 24)
 
 /// _portrait: a 64x64 portrait sprite (drawn 2x) or -1. _visible_chars: typewriter count (-1 = all).
-function ui_dialogue_draw(_text, _speaker_name, _portrait, _visible_chars = -1, _alpha = 1) {
+/// _more: draw the "more to read" arrow once the text is shown (false when replies follow instead).
+function ui_dialogue_draw(_text, _speaker_name, _portrait, _visible_chars = -1, _alpha = 1, _more = true) {
     var _old_alpha = draw_get_alpha();
     draw_set_alpha(_old_alpha * clamp(_alpha, 0, 1));
     var _a = draw_get_alpha();
@@ -55,7 +56,7 @@ function ui_dialogue_draw(_text, _speaker_name, _portrait, _visible_chars = -1, 
     var _tw = _bx + _bw - 34 - _tx;
     ui_text_draw(_tx, _by + 26, _text, "body_bold", UI_COL_DIALOGUE_INK, _tw, _visible_chars);
 
-    if (_visible_chars < 0 || _visible_chars >= string_length(_text)) {
+    if (_more && (_visible_chars < 0 || _visible_chars >= string_length(_text))) {
         var _arrow = ui_spr("spr_ui_next_arrow");
         if (_arrow >= 0) draw_sprite_ext(_arrow, (current_time div 400) mod 2, _bx + _bw - 44, _by + _bh - 36, 1, 1, 0, c_white, _a);
     }
