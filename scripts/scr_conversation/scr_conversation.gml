@@ -286,8 +286,8 @@ function notebook_open() {
 function notebook_step() {
     var V = global.convo;
     if (keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("X")) || keyboard_check_pressed(ord("J"))) { global.game_mode = "OVERWORLD"; return; }
-    if (keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"))) { V.nb_tab = (V.nb_tab + 2) mod 3; V.nb_scroll = 0; cc_sfx_play("snd_ui_click", 1.0, 0.5); }
-    if (keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"))) { V.nb_tab = (V.nb_tab + 1) mod 3; V.nb_scroll = 0; cc_sfx_play("snd_ui_click", 1.0, 0.5); }
+    if (keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"))) { V.nb_tab = (V.nb_tab + 4) mod 5; V.nb_scroll = 0; cc_sfx_play("snd_ui_click", 1.0, 0.5); }
+    if (keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"))) { V.nb_tab = (V.nb_tab + 1) mod 5; V.nb_scroll = 0; cc_sfx_play("snd_ui_click", 1.0, 0.5); }
     if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))) V.nb_scroll = max(0, V.nb_scroll - 1);
     if (keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("S"))) V.nb_scroll += 1;
 }
@@ -307,12 +307,12 @@ function notebook_draw() {
     var _day = "Day " + string(C.day) + " since you came to Stonecross";
     ui_text_draw(_x + _w - 36 - ui_text_width(_day, "small"), _y + 38, _day, "small", UI_COL_INK_SOFT);
 
-    var _tabs = ["What I've learned", "Papers I carry", "What people say"];
-    var _tx = _x + 36;
-    for (var _i = 0; _i < 3; _i++) {
-        var _tw = ui_text_width(_tabs[_i], "body") + 34;
+    var _tabs = ["What I've learned", "Papers I carry", "What people say", "Work & Contracts", "Debts & Standing"];
+    var _tx = _x + 30;
+    for (var _i = 0; _i < 5; _i++) {
+        var _tw = max(140, ui_text_width(_tabs[_i], "small_bold") + 22);
         ui_button(_tx, _y + 76, _tw, 34, _tabs[_i], (_i == V.nb_tab) ? 1 : 0);
-        _tx += _tw + 10;
+        _tx += _tw + 8;
     }
     ui_divider(_x + 30, _y + 118, _w - 60);
 
@@ -323,12 +323,44 @@ function notebook_draw() {
     } else if (V.nb_tab == 1) {
         for (var _i = 0; _i < array_length(C.docs); _i++) array_push(_lines, gm_doc_desc(C.docs[_i]));
         if (array_length(_lines) == 0) array_push(_lines, ["No papers", "You carry nothing written down."]);
-    } else {
+    } else if (V.nb_tab == 2) {
         var _r = gm_rumours_heard();
         for (var _i = 0; _i < array_length(_r); _i++) array_push(_lines, _r[_i]);
         var _news = cf_heard_news();
         for (var _i = 0; _i < array_length(_news); _i++) array_push(_lines, _news[_i]);
         if (array_length(_lines) == 0) array_push(_lines, ["Quiet", "You have not heard much yet. Taverns and markets are where news gets told."]);
+    } else if (V.nb_tab == 3) {
+        var _tier = variable_global_exists("transport_tier") ? global.transport_tier : "FOOT_PACK";
+        var _tname = (_tier == "CARTER_WAGON" || _tier == "OX_CART") ? "Carter Wagon (" + string(cc_cargo_capacity_get()) + " sacks)" : ((_tier == "PACK_MULE") ? "Pack Mule (" + string(cc_cargo_capacity_get()) + " sacks)" : "Foot Pack (3 sacks)");
+        array_push(_lines, ["Haulage & Provisions", "Transport: " + _tname + "  •  Current Load: " + string(cc_cargo_total()) + "/" + string(cc_cargo_capacity_get()) + " sacks  •  Rations: " + string(variable_global_exists("player_rations") ? global.player_rations : 0) + " days"]);
+        var _wd = variable_global_exists("weapon_durability") ? global.weapon_durability : 100;
+        var _ad = variable_global_exists("armor_durability") ? global.armor_durability : 100;
+        var _st = variable_global_exists("hero_stamina") ? global.hero_stamina : 100;
+        var _mst = variable_global_exists("hero_max_stamina") ? global.hero_max_stamina : 100;
+        array_push(_lines, ["Kit & Stamina", "Blade Condition: " + string(_wd) + "%  •  Harness Condition: " + string(_ad) + "%  •  Stamina: " + string(_st) + "/" + string(_mst)]);
+        if (variable_global_exists("active_contract_id") && global.active_contract_id != "") {
+            var _ac = cc_contract_get(global.active_contract_id);
+            if (!is_undefined(_ac)) array_push(_lines, ["Active Commission: " + _ac.title, _ac.desc + " (Reward: " + string(_ac.reward_gold) + "G)"]);
+        } else {
+            array_push(_lines, ["No Active Commission", "Speak with Bailiff Guy, Lady Cecily, or Sapper Vane, or check the Contract Ledger (B) for paid military work."]);
+        }
+        array_push(_lines, ["Honest Livelihoods in Stonecross", "Daily shifts available once per day: Farm labor with Giles (14G), Forge bellows with Odo (18G), Parish road-watch with Donald (16G), River cartage with Malo (20G), Barrow hunting with Grim (18G), and Weald herb-foraging with Dunstan (14G)."]);
+    } else if (V.nb_tab == 4) {
+        if (variable_global_exists("player_debts") && is_array(global.player_debts) && array_length(global.player_debts) > 0) {
+            for (var _di = 0; _di < array_length(global.player_debts); _di++) {
+                var _d = global.player_debts[_di];
+                array_push(_lines, ["Debt: " + _d.title + " (" + string(_d.amount) + "G)", "Owed to " + _d.creditor + " since Day " + string(_d.day) + "."]);
+            }
+        } else {
+            array_push(_lines, ["No Recorded Debts", "Your tally sticks with the tavern, guild factors, and parish bailiffs are clean."]);
+        }
+        if (chron_flag("ebbe_bound")) {
+            array_push(_lines, ["King's Shilling (Sergeant Ebbe)", "You took Ebbe's 25G advance. Repay 25G before five days pass or be written down as a deserter."]);
+        }
+        var _inj = (variable_global_exists("player_injury") && global.player_injury != "") ? (global.player_injury + " (" + string(global.player_injury_days) + " days left)") : "Unhurt";
+        var _hng = (variable_global_exists("hunger_days") && global.hunger_days > 0) ? ("Hungry (" + string(global.hunger_days) + " days without rations)") : "Fed";
+        var _assize = (variable_global_exists("crown_assize_active") && global.crown_assize_active) ? "Active (Wheat capped at 18G in Crown markets)" : "Inactive";
+        array_push(_lines, ["Health & Royal Assize", "Condition: " + _inj + "  •  Provisions: " + _hng + "  •  Royal Assize of Bread: " + _assize]);
     }
     V.nb_scroll = clamp(V.nb_scroll, 0, max(0, array_length(_lines) - 1));
     var _yy = _y + 140;

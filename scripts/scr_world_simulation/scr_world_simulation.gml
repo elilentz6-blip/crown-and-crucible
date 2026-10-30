@@ -192,10 +192,11 @@ function cc_world_simulation_step() {
             cc_rep_add("stonecross", 5);
             obj_game.add_floating_text(_px, _py - 40, "HELPED MERCHANT! +15G", c_yellow);
         } else if (_roll == 1) {
-            global.active_event_text = "ROAD EVENT: A wandering pilgrim from the Weeping Weald offers a prayer for your party!";
+            global.active_event_text = "ROAD EVENT: A wandering pilgrim from the Weeping Weald shares travel-bread and clean linen!";
             global.active_event_timer = 240;
-            obj_game.hero_hp = obj_game.hero_max_hp;
-            obj_game.add_floating_text(_px, _py - 40, "PILGRIM'S BLESSING! HP FULL", c_lime);
+            obj_game.hero_hp = min(obj_game.hero_max_hp, obj_game.hero_hp + 5);
+            if (variable_global_exists("player_rations")) global.player_rations = min(10, global.player_rations + 1);
+            obj_game.add_floating_text(_px, _py - 40, "PILGRIM'S BREAD! +5 HP", c_lime);
         } else if (_roll == 2) {
             global.active_event_text = "ROAD GOSSIP: A royal rider gallops past toward High Cairn shouting news of the King's council!";
             global.active_event_timer = 240;
@@ -281,18 +282,29 @@ function cc_world_simulation_interact(_hx, _hy) {
 
                 // Hotspot D: Chapel Rose Altar & Brother Dunstan
                 else if (_spot.id == "CHAPEL_ALTAR") {
-                    obj_game.hero_hp = obj_game.hero_max_hp;
-                    obj_game.overworld_dialogue_text = cc_villager_get_dynamic_dialogue("DUNSTAN");
-                    obj_game.add_floating_text(_hx, _hy - 35, "FULL HP RESTORED!", c_lime);
+                    var _day = (variable_global_exists("chron") && is_struct(global.chron)) ? global.chron.day : 1;
+                    if (chron_get("chapel_pray_day", -1) != _day) {
+                        chron_set("chapel_pray_day", _day);
+                        obj_game.hero_hp = min(obj_game.hero_max_hp, obj_game.hero_hp + 3);
+                        obj_game.add_floating_text(_hx, _hy - 35, "+3 HP (CHAPEL PRAYER)", c_lime);
+                    }
+                    if (!convo_open("dunstan")) {
+                        obj_game.overworld_dialogue_text = cc_villager_get_dynamic_dialogue("DUNSTAN");
+                    }
                     return true;
                 }
 
-                // Hotspot E: Cottage Feather Bed (Rest Point)
+                // Hotspot E: Cottage Feather Bed (Rest Point — gated by Elder Alden's lodging permission)
                 else if (_spot.id == "COTTAGE_BED") {
-                    obj_game.hero_hp = obj_game.hero_max_hp;
-                    obj_game.time_of_day = (obj_game.time_of_day + 1) mod 4;
-                    obj_game.overworld_dialogue_text = "* You rest deeply beneath the warm woolen blankets by the fire. You awaken fully refreshed! (Time: " + obj_game.time_names[obj_game.time_of_day] + ", HP Restored!)";
-                    obj_game.add_floating_text(_hx, _hy - 40, "RESTED! TIME: " + obj_game.time_names[obj_game.time_of_day], c_yellow);
+                    if (!convo_open("site_bed")) {
+                        if (chron_flag("alden_lodging")) {
+                            chron_sleep_until_dawn();
+                            obj_game.hero_hp = obj_game.hero_max_hp;
+                            obj_game.overworld_dialogue_text = "* You rest deeply in the Cooper cottage's box bed until dawn.";
+                        } else {
+                            obj_game.overworld_dialogue_text = "* Someone's bed. The blanket is folded the way people fold their own.";
+                        }
+                    }
                     return true;
                 }
             }

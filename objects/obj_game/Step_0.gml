@@ -418,9 +418,18 @@ if (global.game_mode == "OVERWORLD") {
                     if (point_distance(obj_player.x, obj_player.y, _lm.x, _lm.y) < _lm.rad + 20) {
                         overworld_dialogue_text = _lm.text;
                         if (_lm.name == "Stonecross Town Fountain") {
-                            hero_hp = hero_max_hp;
-                            battle_flasks = battle_flasks_max;
-                            add_floating_text(obj_player.x, obj_player.y - 35, "HP RESTORED! MEAD FLASKS REFILLED", c_lime);
+                            var _fday = (variable_global_exists("chron") && is_struct(global.chron)) ? global.chron.day : 1;
+                            if (chron_get("fountain_drink_day", -1) != _fday) {
+                                chron_set("fountain_drink_day", _fday);
+                                hero_hp = hero_max_hp;
+                                battle_flasks = battle_flasks_max;
+                                if (variable_global_exists("hero_stamina") && variable_global_exists("hero_max_stamina")) {
+                                    global.hero_stamina = global.hero_max_stamina;
+                                }
+                                add_floating_text(obj_player.x, obj_player.y - 35, "HP RESTORED! MEAD FLASKS REFILLED", c_lime);
+                            } else {
+                                overworld_dialogue_text = "* (Cold spring water from the Stonecross well. You have already refilled your flasks today.)";
+                            }
                         } else if (_lm.name == "Tavern Gaming Table (Crown & Bones)") {
                             cc_dice_start(1);
                         } else if (_lm.name == "Militia Archery Range") {
@@ -518,7 +527,11 @@ else if (global.game_mode == "TRADE_MENU") {
                 trade_feedback_text = "Purchased 1 sack of " + _cname + "!";
                 trade_feedback_timer = 90;
             } else {
-                trade_feedback_text = "Cannot buy: insufficient gold or merchant out of stock!";
+                if (cc_cargo_total() >= cc_cargo_capacity_get()) {
+                    trade_feedback_text = "Cannot buy: pack capacity full (" + string(cc_cargo_total()) + "/" + string(cc_cargo_capacity_get()) + " sacks)!";
+                } else {
+                    trade_feedback_text = "Cannot buy: insufficient gold or merchant out of stock!";
+                }
                 trade_feedback_timer = 90;
             }
         }

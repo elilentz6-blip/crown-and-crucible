@@ -215,6 +215,7 @@ function chron_new_day() {
         }
     }
     war_clock_new_day();
+    cc_economy_new_day();
     gm_world_refresh();
 }
 

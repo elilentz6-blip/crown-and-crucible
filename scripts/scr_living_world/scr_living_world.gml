@@ -100,6 +100,35 @@ function cc_living_world_init() {
         HighCairn:  { WHEAT: 6,  FISH: 6,  IRON: 8,  WINE: 10, gold: 600 }
     };
 
+    // Baseline regional stocks for supply & demand elasticity and daily replenishment
+    global.merchant_base_stocks = {
+        Stonecross: { WHEAT: 12, FISH: 4, IRON: 2, WINE: 1, gold: 280 },
+        Oakhaven:   { WHEAT: 5,  FISH: 15, IRON: 3, WINE: 4, gold: 450 },
+        Dunhollow:  { WHEAT: 2,  FISH: 3,  IRON: 18, WINE: 2, gold: 380 },
+        HighCairn:  { WHEAT: 6,  FISH: 6,  IRON: 8,  WINE: 10, gold: 600 }
+    };
+
+    // Transport tier & cargo capacity ("FOOT_PACK": 3, "PACK_MULE": 8, "OX_CART": 16)
+    global.transport_tier = "FOOT_PACK";
+    global.cargo_capacity = 3;
+
+    // Rule 13: Royal Mercantilism & Assize of Bread
+    global.crown_assize_active = false;
+    global.crown_wheat_ceiling = 18;
+
+    // Survival, equipment durability, stamina, rations, injuries & debts
+    global.weapon_durability = 100;
+    global.armor_durability = 100;
+    global.hero_stamina = 100;
+    global.hero_max_stamina = 100;
+    global.player_rations = 2;
+    global.last_meal_day = 1;
+    global.hunger_days = 0;
+    global.player_injury = "";
+    global.player_injury_days = 0;
+    global.player_debts = [];
+    global.player_suspicion = 0;
+
     global.current_region = "Stonecross";
 
     // -------------------------------------------------------------------------
@@ -388,8 +417,118 @@ function cc_npc_has_memory(_npc_id, _key) {
 }
 
 // =========================================================================
-// COMMODITY TRADING API
+// COMMODITY TRADING, CARGO CAPACITY & DAILY ECONOMY API
 // =========================================================================
+
+function cc_cargo_total() {
+    if (!variable_global_exists("player_cargo") || !is_struct(global.player_cargo)) return 0;
+    var _keys = variable_struct_get_names(global.player_cargo);
+    var _tot = 0;
+    for (var _i = 0; _i < array_length(_keys); _i++) {
+        var _v = global.player_cargo[$ _keys[_i]];
+        if (is_real(_v) && !is_nan(_v) && _v > 0) _tot += floor(_v);
+    }
+    return _tot;
+}
+
+function cc_cargo_capacity_get() {
+    var _cap = (variable_global_exists("cargo_capacity") && is_real(global.cargo_capacity)) ? floor(global.cargo_capacity) : 3;
+    var _tier = variable_global_exists("transport_tier") ? global.transport_tier : "FOOT_PACK";
+    if (_tier == "CARTER_WAGON" || _tier == "OX_CART") _cap = max(16, _cap);
+    else if (_tier == "PACK_MULE") _cap = max(8, _cap);
+    else _cap = max(3, _cap);
+    global.cargo_capacity = _cap;
+    return _cap;
+}
+
+function cc_debt_add(_id, _title, _amount, _creditor = "Township") {
+    if (!variable_global_exists("player_debts") || !is_array(global.player_debts)) global.player_debts = [];
+    if (!is_real(_amount) || _amount <= 0) return false;
+    var _day = (variable_global_exists("chron") && is_struct(global.chron)) ? global.chron.day : 1;
+    for (var _i = 0; _i < array_length(global.player_debts); _i++) {
+        if (global.player_debts[_i].id == _id) {
+            global.player_debts[_i].amount += floor(_amount);
+            return true;
+        }
+    }
+    array_push(global.player_debts, {
+        id: _id,
+        title: _title,
+        amount: floor(_amount),
+        creditor: _creditor,
+        day: _day
+    });
+    return true;
+}
+
+function cc_debt_pay(_id, _amount) {
+    if (!variable_global_exists("player_debts") || !is_array(global.player_debts)) return false;
+    for (var _i = 0; _i < array_length(global.player_debts); _i++) {
+        var _d = global.player_debts[_i];
+        if (_d.id == _id) {
+            var _pay = min(_d.amount, max(0, floor(_amount)));
+            if (!instance_exists(obj_game) || obj_game.hero_gold < _pay) return false;
+            obj_game.hero_gold -= _pay;
+            _d.amount -= _pay;
+            if (_d.amount <= 0) array_delete(global.player_debts, _i, 1);
+            return true;
+        }
+    }
+    return false;
+}
+
+function cc_economy_new_day() {
+    var _day = (variable_global_exists("chron") && is_struct(global.chron)) ? global.chron.day : 1;
+
+    // 1. Daily ration consumption & hunger / stamina regulation
+    if (!variable_global_exists("player_rations")) global.player_rations = 2;
+    if (!variable_global_exists("hunger_days")) global.hunger_days = 0;
+    if (global.player_rations > 0) {
+        global.player_rations -= 1;
+        global.last_meal_day = _day;
+        global.hunger_days = 0;
+        global.hero_max_stamina = 100;
+    } else {
+        global.hunger_days += 1;
+        global.hero_max_stamina = max(60, 100 - global.hunger_days * 10);
+    }
+    global.hero_stamina = global.hero_max_stamina;
+
+    // 2. Daily injury recovery tick
+    if (variable_global_exists("player_injury_days") && global.player_injury_days > 0) {
+        global.player_injury_days -= 1;
+        if (global.player_injury_days <= 0) {
+            global.player_injury_days = 0;
+            global.player_injury = "";
+        }
+    }
+
+    // 3. Rule 13: Activate Royal Assize of Bread price ceiling when wartime pressure reaches Stage 2+
+    if (war_clock_stage() >= 2) {
+        global.crown_assize_active = true;
+    }
+
+    // 4. Replenish depleted regional merchant stocks (+1 sack/day toward baseline) and merchant gold
+    if (variable_global_exists("merchant_stocks") && variable_global_exists("merchant_base_stocks")) {
+        var _regs = variable_struct_get_names(global.merchant_stocks);
+        var _cids = ["WHEAT", "FISH", "IRON", "WINE"];
+        for (var _r = 0; _r < array_length(_regs); _r++) {
+            var _reg = _regs[_r];
+            var _st = global.merchant_stocks[$ _reg];
+            var _bs = global.merchant_base_stocks[$ _reg];
+            if (!is_struct(_st) || !is_struct(_bs)) continue;
+            for (var _c = 0; _c < array_length(_cids); _c++) {
+                var _cid = _cids[_c];
+                if (is_real(_st[$ _cid]) && is_real(_bs[$ _cid]) && _st[$ _cid] < _bs[$ _cid]) {
+                    _st[$ _cid] = min(_bs[$ _cid], _st[$ _cid] + 1);
+                }
+            }
+            if (is_real(_st.gold) && is_real(_bs.gold) && _st.gold < _bs.gold) {
+                _st.gold = min(_bs.gold, _st.gold + 25);
+            }
+        }
+    }
+}
 
 function cc_trade_get_price(_cid, _region, _is_buying) {
     if (!variable_struct_exists(global.commodities, _cid)) return 0;
@@ -399,7 +538,26 @@ function cc_trade_get_price(_cid, _region, _is_buying) {
     if (variable_global_exists("war_economic_modifiers")) {
         _war_mult = cc_war_get_price_mult(_cid);
     }
-    _base = max(1, round(_base * _war_mult));
+    var _stock_mult = 1.0;
+    if (variable_global_exists("merchant_stocks") && variable_global_exists("merchant_base_stocks")
+        && is_struct(global.merchant_stocks[$ _region]) && is_struct(global.merchant_base_stocks[$ _region])) {
+        var _cur_s = global.merchant_stocks[$ _region][$ _cid];
+        var _base_s = global.merchant_base_stocks[$ _region][$ _cid];
+        if (is_real(_cur_s) && is_real(_base_s)) {
+            var _delta = _base_s - _cur_s;
+            _stock_mult = clamp(1.0 + _delta * 0.05, 0.60, 1.65);
+        }
+    }
+    _base = max(1, round(_base * _war_mult * _stock_mult));
+
+    // Rule 13: Royal Mercantilism & Assize of Bread grain ceiling in Crown towns
+    if (_cid == "WHEAT" && (variable_global_exists("crown_assize_active") && global.crown_assize_active)) {
+        if (_region == "Stonecross" || _region == "HighCairn") {
+            var _ceil = variable_global_exists("crown_wheat_ceiling") ? global.crown_wheat_ceiling : 18;
+            _base = min(_base, _ceil);
+        }
+    }
+
     // Buying costs base; selling earns 85% of local price (tax/spread)
     if (_is_buying) {
         return _base;
@@ -410,6 +568,9 @@ function cc_trade_get_price(_cid, _region, _is_buying) {
 
 function cc_trade_buy(_cid, _qty = 1) {
     if (is_undefined(_cid) || _cid == "" || !variable_struct_exists(global.commodities, _cid)) return false;
+    if (!is_real(_qty) || _qty <= 0) return false;
+    if (cc_cargo_total() + _qty > cc_cargo_capacity_get()) return false;
+
     var _reg = global.current_region;
     var _stock = global.merchant_stocks[$ _reg];
     if (is_undefined(_stock) || !variable_struct_exists(_stock, _cid) || _stock[$ _cid] < _qty) return false;
@@ -545,6 +706,22 @@ function cc_save_game() {
         location: instance_exists(obj_player) ? cc_save_pack_location() : undefined,
         time_of_day: _g.time_of_day,
         time_timer: _g.time_timer,
+        economy: {
+            transport_tier: variable_global_exists("transport_tier") ? global.transport_tier : "FOOT_PACK",
+            cargo_capacity: cc_cargo_capacity_get(),
+            crown_assize_active: variable_global_exists("crown_assize_active") ? global.crown_assize_active : false,
+            weapon_durability: variable_global_exists("weapon_durability") ? global.weapon_durability : 100,
+            armor_durability: variable_global_exists("armor_durability") ? global.armor_durability : 100,
+            hero_stamina: variable_global_exists("hero_stamina") ? global.hero_stamina : 100,
+            hero_max_stamina: variable_global_exists("hero_max_stamina") ? global.hero_max_stamina : 100,
+            player_rations: variable_global_exists("player_rations") ? global.player_rations : 2,
+            last_meal_day: variable_global_exists("last_meal_day") ? global.last_meal_day : 1,
+            hunger_days: variable_global_exists("hunger_days") ? global.hunger_days : 0,
+            player_injury: variable_global_exists("player_injury") ? global.player_injury : "",
+            player_injury_days: variable_global_exists("player_injury_days") ? global.player_injury_days : 0,
+            player_debts: variable_global_exists("player_debts") ? global.player_debts : [],
+            player_suspicion: variable_global_exists("player_suspicion") ? global.player_suspicion : 0
+        },
         warfare: variable_global_exists("war_cycle_count") ? {
             cycle: global.war_cycle_count,
             factions: global.war_factions,
@@ -786,6 +963,42 @@ function cc_load_game() {
         global.fief_owned = bool(_wf[$ "fief_owned"] ?? false);
     }
 
+    // Restore systemic economy, transport, durability, rations & debts
+    var _ec = _data[$ "economy"];
+    if (is_struct(_ec)) {
+        var _tt = cc_save_string(_ec, "transport_tier", "FOOT_PACK");
+        if (_tt != "FOOT_PACK" && _tt != "PACK_MULE" && _tt != "OX_CART" && _tt != "CARTER_WAGON") _tt = "FOOT_PACK";
+        global.transport_tier = _tt;
+        global.cargo_capacity = clamp(floor(cc_save_number(_ec, "cargo_capacity", 3)), 3, 32);
+        cc_cargo_capacity_get();
+        global.crown_assize_active = bool(_ec[$ "crown_assize_active"] ?? false);
+        global.weapon_durability = clamp(floor(cc_save_number(_ec, "weapon_durability", 100)), 0, 100);
+        global.armor_durability = clamp(floor(cc_save_number(_ec, "armor_durability", 100)), 0, 100);
+        global.hero_max_stamina = clamp(floor(cc_save_number(_ec, "hero_max_stamina", 100)), 60, 120);
+        global.hero_stamina = clamp(floor(cc_save_number(_ec, "hero_stamina", global.hero_max_stamina)), 0, global.hero_max_stamina);
+        global.player_rations = clamp(floor(cc_save_number(_ec, "player_rations", 2)), 0, 20);
+        global.last_meal_day = max(1, floor(cc_save_number(_ec, "last_meal_day", 1)));
+        global.hunger_days = clamp(floor(cc_save_number(_ec, "hunger_days", 0)), 0, 30);
+        global.player_injury = cc_save_string(_ec, "player_injury", "");
+        global.player_injury_days = clamp(floor(cc_save_number(_ec, "player_injury_days", 0)), 0, 30);
+        global.player_suspicion = clamp(floor(cc_save_number(_ec, "player_suspicion", 0)), 0, 100);
+        global.player_debts = [];
+        if (is_array(_ec[$ "player_debts"])) {
+            for (var _di = 0; _di < array_length(_ec.player_debts); _di++) {
+                var _ds = _ec.player_debts[_di];
+                if (is_struct(_ds) && is_string(_ds[$ "id"]) && is_real(_ds[$ "amount"]) && _ds.amount > 0) {
+                    array_push(global.player_debts, {
+                        id: _ds.id,
+                        title: cc_save_string(_ds, "title", _ds.id),
+                        amount: floor(_ds.amount),
+                        creditor: cc_save_string(_ds, "creditor", "Township"),
+                        day: max(1, floor(cc_save_number(_ds, "day", 1)))
+                    });
+                }
+            }
+        }
+    }
+
     // Chronicles state; saves from before it existed start the region fresh from today
     if (chron_ready()) chron_load_restore(_data[$ "chronicle"]);
     cc_hierarchy_reconcile(true);
@@ -823,7 +1036,8 @@ function cc_draw_trade_menu() {
     ui_text_draw(683 - ui_text_width(_title, "title") / 2, 23, _title, "title_shadow", UI_COL_PARCHMENT);
 
     // Subtitle & Gold Summary
-    ui_text_draw(110, 66, "Buy regional goods cheap, haul across kingdoms for profit. Merchant Purse: " + string(_stock.gold) + " Gold", "small", UI_COL_INK_SOFT);
+    var _tier_label = (variable_global_exists("transport_tier") && global.transport_tier == "OX_CART") ? "Ox-Cart" : ((variable_global_exists("transport_tier") && global.transport_tier == "PACK_MULE") ? "Pack Mule" : "Foot Pack");
+    ui_text_draw(110, 66, "Merchant Purse: " + string(_stock.gold) + "G  •  Transport: " + _tier_label + " (" + string(cc_cargo_total()) + "/" + string(cc_cargo_capacity_get()) + " Sacks)", "small", UI_COL_INK_SOFT);
     ui_icon(6, 1070, 62); // UI_ICON_COIN
     ui_text_draw(1105, 66, "Gold: " + string(instance_exists(obj_game) ? obj_game.hero_gold : 0) + " G", "body_bold", UI_COL_GOLD);
     ui_divider(100, 92, 1166);
