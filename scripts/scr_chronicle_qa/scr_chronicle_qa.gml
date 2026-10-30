@@ -3,8 +3,8 @@
 ///
 /// PURPOSE:
 ///   With CC_CHRON_QA=1 the native runner plays through the Greenmere content on its own:
-///   conversations, the notebook, the tower, the barge, the War Clock stages, a sleep, and a
-///   save/load round trip. It saves chron_*.png screenshots, logs "CHRON QA" lines (any failure
+///   conversations, the notebook, the tower, the barge, the War Clock stages, a sleep, and an
+///   in-memory save/load round trip (the player's save file is not written). It saves chron_*.png screenshots, logs "CHRON QA" lines (any failure
 ///   reads "CHRON QA FAIL"), and quits. Without the variable it does nothing.
 ///
 /// STATE OWNERSHIP:
@@ -161,10 +161,11 @@ function chron_qa_step() {
         case 925: obj_player.x = 1110; obj_player.y = 1690; break;
         case 960: screen_save("chron_16_stage3_pavilion.png"); break;
         case 975:
-            cc_save_game();
+            // round trip through JSON in memory, so the player's own save file is never touched
+            var _json = json_stringify(chron_save_pack());
             var _day = global.chron.day, _p = global.war_clock.pressure;
             chron_init(); war_clock_init(); gm_world_reset();
-            cc_load_game();
+            chron_load_restore(json_parse(_json));
             chron_qa_log(global.chron.day == _day && global.war_clock.pressure == _p && chron_flag("maud_accepted") && chron_doc_has("settlement_copy"), "save and load keep the Chronicles");
             break;
         case 1000:

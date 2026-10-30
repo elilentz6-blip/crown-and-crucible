@@ -202,7 +202,8 @@ function convo_draw() {
         }
         ui_text_draw(_x + 22, _yy + 2, string(_i + 1) + ".  " + V.opts[_i].t, _sel ? "body_bold" : "body", _sel ? UI_COL_INK : UI_COL_INK_SOFT, _w - 44);
     }
-    ui_text_draw(_x + 4, _y + _h + 2, "W/S choose   Z choose   Esc leave", "small_outline", UI_COL_PARCHMENT);
+    // above the replies, clear of the speaker's name plate
+    ui_text_draw(_x + 4, _y - 22, "W/S choose   Z choose   Esc leave", "small_outline", UI_COL_PARCHMENT);
 }
 
 // --------------------------------------------------------------------------------------------
@@ -266,7 +267,7 @@ function notebook_draw() {
     var _yy = _y + 140;
     for (var _i = V.nb_scroll; _i < array_length(_lines); _i++) {
         var _body = ui_text_wrap(_lines[_i][1], "body", _w - 100);
-        var _bh = 26 + array_length(_body) * 22;
+        var _bh = 26 + array_length(_body) * ui_text_font("body").line_h;
         if (_yy + _bh > _y + _h - 50) break;
         ui_text_draw(_x + 40, _yy, _lines[_i][0], "body_bold", UI_COL_INK);
         ui_text_draw(_x + 56, _yy + 24, _lines[_i][1], "body", UI_COL_INK_SOFT, _w - 100);
