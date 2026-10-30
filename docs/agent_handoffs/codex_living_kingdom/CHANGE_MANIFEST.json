@@ -328,7 +328,7 @@
       "warnings_for_argon": [
         "Read evidence provenance; snapshots of external work do not transfer ownership."
       ],
-      "sha256": "d6ca6632286d544dfda2f2f006164df1c27e696b80359af2bc83012cab4620a8",
+      "sha256": "670a9de0491c76e74fcf869b2458cc0c0c6c05e6aaea3df08b134e41763183c7",
       "hash_note": null
     },
     {
@@ -456,7 +456,7 @@
       "warnings_for_argon": [
         "Read evidence provenance; snapshots of external work do not transfer ownership."
       ],
-      "sha256": "96077e297abf96f9151fc58fc100bd9d71a9581ea760acf9996ad35414092cf0",
+      "sha256": "c769c2e1736bffd3dd14b2e392fdd41a3f40c9fe2760490669c801db0dcee4f0",
       "hash_note": null
     },
     {
@@ -1017,6 +1017,22 @@
         "Read evidence provenance; snapshots of external work do not transfer ownership."
       ],
       "sha256": "9a155f03b83597ce8c149d168b1bdf55268b856c497caafe46fb50a548ffb765",
+      "hash_note": null
+    },
+    {
+      "path": "docs/agent_handoffs/codex_living_kingdom/evidence/whitespace-check.json",
+      "change_type": "created",
+      "related_feature": "Argon handoff / evidence",
+      "purpose": "Explain or preserve independently auditable implementation, provenance and validation.",
+      "integration_status": "Documentation only; not runtime code.",
+      "validation_status": "Document/evidence integrity only; external snapshots are not runtime-compiled.",
+      "known_dependencies": [
+        "Implementation commit 5926006668c35607d1bf43fbf2ac1dd2b875a4f7"
+      ],
+      "warnings_for_argon": [
+        "Read evidence provenance; snapshots of external work do not transfer ownership."
+      ],
+      "sha256": "87f10f0eecd252e0339d9195aeb6a9da2e314ebc0e5a336a2089243ba85a8c7b",
       "hash_note": null
     },
     {

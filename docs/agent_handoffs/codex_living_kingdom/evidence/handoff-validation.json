@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "manifest_matches_actual_git_changes": true,
-  "manifest_file_count": 111,
+  "manifest_file_count": 112,
   "external_observed_file_count": 41,
   "hashes_match": true,
   "required_docs_exist": true,

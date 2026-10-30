@@ -173,3 +173,14 @@ certainty, priorities and ownership. No new claim of a fixed defect is based sol
 7. On a coordinated combined branch, separately test M map/icons/surface loss, active dice/archery,
    day/night redoubt/Weald views and independent war consequences. Do not call inherited tests proof
    that unmerged content was integrated or that the final kingdom endings exist.
+
+
+## 7. Verbatim evidence whitespace warning
+
+The unfiltered `git diff --check 47f045c` did **not** pass cleanly: it reports trailing whitespace in
+raw compiler logs and saved patch context/header lines. Those records were intentionally preserved
+verbatim instead of silently edited. This is not a runtime-source defect. The separately executed
+source/document check excludes only `docs/agent_handoffs/codex_living_kingdom/evidence/*.log` and
+`*.diff`; it passes. Exact commands, exits and raw warning text are retained in
+[evidence/whitespace-check.json](evidence/whitespace-check.json). Do not describe the unfiltered
+command as passed. No source file is excluded from the source/document check.
