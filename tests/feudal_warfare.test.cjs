@@ -102,9 +102,9 @@ test('contract betrayal awards rival faction favors, higher bribes, and logs def
   assert.equal(g.global.contracts_betrayed_count, 1);
 });
 
-test('chivalric hierarchy promotes from Hedge Knight to Freeblade and Sworn Knight-Banneret', g => {
+test('chivalric hierarchy promotes from Common Man-at-Arms to Company Officer and Sworn Knight', g => {
   assert.equal(g.global.feudal_rank, 0);
-  assert.equal(g.global.player_title, 'Sir Rowan the Wanderer');
+  assert.equal(g.global.player_title, 'Rowan (Man-at-Arms)');
   
   // Gain 50 renown -> Freeblade Captain
   g.cc_hierarchy_add_renown(50);
@@ -115,7 +115,7 @@ test('chivalric hierarchy promotes from Hedge Knight to Freeblade and Sworn Knig
   g.cc_rep_add('crown', 50);
   g.cc_hierarchy_add_renown(60);
   assert.equal(g.global.feudal_rank, 2);
-  assert.match(g.global.player_title, /Crown Vanguard Knight/);
+  assert.match(g.global.player_title, /Sworn Knight/);
   assert.equal(g.global.sworn_faction, 'crown');
 });
 

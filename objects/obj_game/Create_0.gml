@@ -45,7 +45,8 @@ randomize();
 global.game_mode = "OVERWORLD";
 
 // --- HERO / PROTAGONIST DATA ---
-hero_name = "Sir Rowan";
+hero_name = "Rowan";
+global.player_title = "Rowan (Man-at-Arms)";
 hero_hp = 20;
 hero_max_hp = 20;
 hero_gold = 140;
@@ -181,7 +182,7 @@ world_villagers = [
         speed: 0.5,
         moving: true,
         anim: 0,
-        text: "* (Farmer Giles wrings his weathered hands.) 'Sir Rowan! My prized sow Clover went missing! Old Mallow stole her, I know it! Help me get her back!'"
+        text: "* (Farmer Giles wrings his weathered hands.) 'Rowan! My prized sow Clover went missing! Old Mallow stole her, I know it! Help me get her back!'"
     },
     {
         id: "PIPPIN",
@@ -454,7 +455,7 @@ world_landmarks = [
         x: 1600,
         y: 1400,
         rad: 35,
-        text: "* (Weathered wooden fingerpost: [NORTH] Stonecross Plaza & Dimensional Gate • [WEST] Master Odo's Forge • [SOUTH-WEST] King's Highroad & Old Watchtower • [SOUTH-EAST] River Wharf & Whispering Barrows)"
+        text: "* (Weathered wooden fingerpost: [NORTH] Stonecross Plaza & Overgrown Border Redoubt • [WEST] Master Odo's Forge • [SOUTH-WEST] King's Highroad & Old Watchtower • [SOUTH-EAST] River Wharf & Whispering Barrows)"
     }
 ];
 
@@ -484,7 +485,7 @@ treasure_chests = [
         y: 1980,
         opened: false,
         item_type: "ARMOR",
-        item: { name: "Sun-Emblazoned Cuirass", def: 18, hp_bonus: 20, desc: "Gilded plate armor radiating holy solar wards." },
+        item: { name: "Sun-Emblazoned Cuirass", def: 18, hp_bonus: 20, desc: "Gilded plate armor bearing the heraldic sun crest." },
         quote: "* (Opened chest! Found [Sun-Emblazoned Cuirass]! Massive Defense & HP boost!)"
     },
     {
@@ -502,11 +503,12 @@ treasure_chests = [
 roaming_foes = [
     { name: "Forest Highwayman", x: 1350, y: 1550, hp: 65, max_hp: 65, rad: 16, icon: "🥷", col: make_color_rgb(220, 38, 38) },
     { name: "Wild Barrow Boar", x: 1850, y: 1900, hp: 95, max_hp: 95, rad: 18, icon: "🐗", col: make_color_rgb(180, 83, 9) },
-    { name: "Barrow Warden Shade", x: 2380, y: 2100, hp: 140, max_hp: 140, rad: 20, icon: "👑", col: make_color_rgb(126, 34, 206) }
+    { name: "Barrow Renegade Warden", x: 2380, y: 2100, hp: 140, max_hp: 140, rad: 20, icon: "⚔️", col: make_color_rgb(180, 50, 50) }
 ];
 
 active_foe_idx = -1;
 overworld_dialogue_text = "* (Welcome to Stonecross. A handcrafted medieval world awaits exploration at your own pace.)";
+dialogue_dismissed_frame = -1000;
 
 // --- ATMOSPHERIC & TIME-OF-DAY SYSTEM ---
 // 0: DAWN (Golden Pink), 1: DAY (Clear Sun), 2: DUSK (Amber Red), 3: NIGHT (Moonlit Indigo)

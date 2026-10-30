@@ -210,6 +210,9 @@ function baseShims(extra = {}) {
     vk_left: 37, vk_right: 39, vk_up: 38, vk_down: 40, vk_tab: 9, vk_shift: 16,
     vk_enter: 13, vk_space: 32, vk_escape: 27, vk_delete: 46, vk_backspace: 8,
     vk_control: 17, vk_anykey: 1, vk_nokey: 0,
+    vk_f1: 112, vk_f2: 113, vk_f3: 114, vk_f4: 115, vk_f5: 116, vk_f6: 117,
+    vk_f7: 118, vk_f8: 119, vk_f9: 120, vk_f10: 121, vk_f11: 122, vk_f12: 123,
+    view_camera: [0],
     randomize() {}, random: n => n * 0.5, random_range: (a, b) => (a + b) / 2,
     irandom: n => Math.floor(n / 2), irandom_range: (a, b) => Math.floor((a + b) / 2),
     choose: (...a) => a[0], random_set_seed() {}, random_get_seed: () => 0,
@@ -303,6 +306,7 @@ function baseShims(extra = {}) {
     ...extra,
   };
   g.self = g;
+  g.id = g;
   return g;
 }
 

@@ -10,7 +10,7 @@
 ///   3. Smooth Follow Camera: Viewport lerp tracking on Sir Rowan with zoom controls and view bounds clamping.
 ///   4. Day/Night Dynamic Lighting Pass: Multiplied darkness surface with warm additive window/lantern glow cutouts.
 ///   5. Particle Systems: Chimney smoke puffs, blacksmith forge sparks, tavern fountain spray,
-///      drifting autumn leaves, dimensional rift motes, and dusk fireflies.
+///      drifting autumn leaves, ruin dust motes, and dusk fireflies.
 ///
 /// STATE OWNERSHIP:
 ///   - Managed entirely under global.vis (V struct).
@@ -550,13 +550,13 @@ function vis_place_layout() {
         var _s = L.solids[_i];
         vis_solid_add(_s[0], _s[1], _s[2], _s[3]);
     }
-    // the portal
+    // the border redoubt ruins
     var _po = L.portal;
     V.portal = _po;
     vis_add_static(spr_portal_arch, 0, _po.x, _po.y, 4);
-    array_push(V.lights, { x: _po.x, y: _po.y - 90, r: 300, col: make_color_rgb(150, 120, 255), k: 1.2, flicker: 0.08, always: true });
-    array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 200, col: make_color_rgb(110, 230, 255), k: 0.9, flicker: 0.05, always: true });
-    array_push(V.emitters, { type: "portal", x: _po.x, y: _po.y - 92, rate: 22, acc: 0 });
+    array_push(V.lights, { x: _po.x, y: _po.y - 90, r: 240, col: make_color_rgb(180, 160, 120), k: 0.8, flicker: 0.04, always: true });
+    array_push(V.lights, { x: _po.x, y: _po.y - 30, r: 160, col: make_color_rgb(200, 180, 130), k: 0.6, flicker: 0.03, always: true });
+    array_push(V.emitters, { type: "dust", x: _po.x, y: _po.y - 60, rate: 8, acc: 0 });
 }
 
 function vis_keepout(_x, _y, _r) {
@@ -921,7 +921,10 @@ function vis_dialogue_step(_dt) {
         var _z = keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
         if (_z) {
             if (_visible && D.chars < _len) D.chars = _len;          // first press: finish typing
-            else if (_visible) D.timer = 999;                          // second press: close
+            else if (_visible) {
+                D.timer = 999;                          // second press: close
+                if (instance_exists(obj_game)) obj_game.dialogue_dismissed_frame = current_time;
+            }
             else if (_txt == D.text && !_idle && D.alpha < 0.05) _show = true; // closed: replay
         }
     }
@@ -937,8 +940,15 @@ function vis_dialogue_step(_dt) {
         vis_dialogue_speaker();
     }
     _len = string_length(D.shown);
-    if (D.chars < _len) D.chars = min(_len, D.chars + 55 * _dt);
-    else D.timer += _dt;
+    if (D.chars < _len) {
+        var _cprev = floor(D.chars);
+        D.chars = min(_len, D.chars + 55 * _dt);
+        if (floor(D.chars) > _cprev && (floor(D.chars) mod 2 == 0)) {
+            cc_sfx_play("snd_dialogue_chitter", 0.95 + 0.1 * ((floor(D.chars) mod 4) / 4), 0.35);
+        }
+    } else {
+        D.timer += _dt;
+    }
     // walking away from where the line was said closes it too
     if (instance_exists(obj_player) && point_distance(obj_player.x, obj_player.y, D.ox, D.oy) > 150) D.timer = max(D.timer, 999);
     var _hold = 2.6 + _len * 0.045;

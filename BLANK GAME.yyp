@@ -1580,6 +1580,36 @@
         "name": "spr_ui_crest",
         "path": "sprites/spr_ui_crest/spr_ui_crest.yy"
       }
+    },
+    {
+      "id": {
+        "name": "scr_audio",
+        "path": "scripts/scr_audio/scr_audio.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "snd_ui_click",
+        "path": "sounds/snd_ui_click/snd_ui_click.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "snd_dialogue_chitter",
+        "path": "sounds/snd_dialogue_chitter/snd_dialogue_chitter.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "snd_sword_swing",
+        "path": "sounds/snd_sword_swing/snd_sword_swing.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "snd_hit_impact",
+        "path": "sounds/snd_hit_impact/snd_hit_impact.yy"
+      }
     }
   ],
   "resourceType": "GMProject",

@@ -45,6 +45,13 @@ function cc_living_world_init() {
     // -------------------------------------------------------------------------
     // 3. REGIONAL COMMODITY TRADE SYSTEM
     // -------------------------------------------------------------------------
+    global.commodity_price_multipliers = {
+        WHEAT: 1.0,
+        FISH: 1.0,
+        IRON: 1.0,
+        WINE: 1.0
+    };
+
     // Price = base_cost * regional_multiplier
     global.commodities = {
         WHEAT: {
@@ -144,22 +151,22 @@ function cc_living_world_init() {
             reward_rep: { stonecross: 10, oakhaven: 10 }
         },
 
-        // Quest 3: The Counterfeit Crown
+        // Quest 3: The Counterfeit Coin
         QUEST_COUNTERFEIT: {
             id: "QUEST_COUNTERFEIT",
-            title: "The Peddler's Astral Relic",
+            title: "The Counterfeit Coin",
             region: "Stonecross",
             giver: "Peddler Corin",
-            desc: "A traveling trader is selling cheap lead baubles as 'Ancestral Shards of the Sunken Crown'. One artifact strangely resonates with purple heat.",
+            desc: "Peddler Corin sells debased counterfeit silver groats stamped with an illicit royal die.",
             stage: 0,
             max_stages: 3,
             status: "NOT_STARTED",
-            objective: "Inspect Peddler Corin's wagon wares at the village crossroads.",
+            objective: "Inspect Peddler Corin's wares at the village crossroads.",
             resolution: "",
             stages: [
-                "Examine the counterfeit wares and identify the genuine astronomical talisman.",
-                "Take the talisman to Brother Dunstan at the chapel to examine the glyphs.",
-                "Decide whether to consecrate the relic or return it to the peddler for hush gold."
+                "Examine the counterfeit coin from Corin's wagon wares.",
+                "Take the debased silver groat to Master Odo at the forge anvil (810, 2710) for assay.",
+                "Search the Overgrown Border Redoubt (1600, 400) to find and smash the illicit minting press."
             ],
             reward_gold: 50,
             reward_xp: 120,
@@ -402,9 +409,10 @@ function cc_trade_get_price(_cid, _region, _is_buying) {
 }
 
 function cc_trade_buy(_cid, _qty = 1) {
+    if (is_undefined(_cid) || _cid == "" || !variable_struct_exists(global.commodities, _cid)) return false;
     var _reg = global.current_region;
     var _stock = global.merchant_stocks[$ _reg];
-    if (is_undefined(_stock) || _stock[$ _cid] < _qty) return false;
+    if (is_undefined(_stock) || !variable_struct_exists(_stock, _cid) || _stock[$ _cid] < _qty) return false;
 
     var _price = cc_trade_get_price(_cid, _reg, true) * _qty;
     if (instance_exists(obj_game) && obj_game.hero_gold >= _price) {
@@ -418,9 +426,10 @@ function cc_trade_buy(_cid, _qty = 1) {
 }
 
 function cc_trade_sell(_cid, _qty = 1) {
+    if (is_undefined(_cid) || _cid == "" || !variable_struct_exists(global.commodities, _cid)) return false;
     var _reg = global.current_region;
     var _stock = global.merchant_stocks[$ _reg];
-    if (global.player_cargo[$ _cid] < _qty) return false;
+    if (is_undefined(_stock) || !variable_struct_exists(global.player_cargo, _cid) || global.player_cargo[$ _cid] < _qty) return false;
 
     var _price = cc_trade_get_price(_cid, _reg, false) * _qty;
     if (is_undefined(_stock) || _stock.gold < _price) return false;
@@ -763,6 +772,10 @@ function cc_load_game() {
             }
         }
         global.active_contract_id = cc_save_string(_wf, "active_contract", "");
+        if (global.active_contract_id != "" && variable_global_exists("contracts") && is_array(global.contracts)) {
+            var _c = cc_contract_get(global.active_contract_id);
+            if (!is_undefined(_c)) _c.status = "ACTIVE";
+        }
         global.contracts_completed_count = max(0, floor(cc_save_number(_wf, "contracts_completed", 0)));
         global.contracts_betrayed_count = max(0, floor(cc_save_number(_wf, "contracts_betrayed", 0)));
         global.chivalric_renown = max(0, floor(cc_save_number(_wf, "renown", 0)));
@@ -789,47 +802,40 @@ function cc_draw_trade_menu() {
     var _stock = global.merchant_stocks[$ _reg] ?? { WHEAT: 0, FISH: 0, IRON: 0, WINE: 0, gold: 0 };
 
     // Dark backdrop
+    var _a = draw_get_alpha();
+    draw_set_alpha(_a * 0.75);
     draw_set_color(make_color_rgb(18, 14, 12));
     draw_rectangle(0, 0, 1366, 768, false);
+    draw_set_alpha(_a);
 
-    // Parchment Ledger Frame
-    draw_set_color(make_color_rgb(44, 28, 18));
-    draw_roundrect(140, 50, 1226, 718, false);
-    draw_set_color(make_color_rgb(88, 54, 30));
-    draw_roundrect(142, 52, 1224, 716, true);
-    draw_set_color(make_color_rgb(180, 130, 70));
-    draw_roundrect(148, 58, 1218, 710, true);
+    // Gilded Frame Backdrop
+    ui_panel("gilded", 80, 40, 1206, 688);
 
-    // Inner Cream Ledger Field
-    draw_set_color(make_color_rgb(238, 230, 210));
-    draw_roundrect(168, 78, 1198, 690, false);
-    draw_set_color(make_color_rgb(60, 40, 25));
-    draw_roundrect(168, 78, 1198, 690, true);
+    // Header Ribbon & Title
+    var _title = "Aethelgard Commodity Exchange • " + string_upper(_reg);
+    var _rw = ui_text_width(_title, "title") + 100;
+    ui_nine("spr_ui_ribbon", 0, 683 - _rw / 2, 20, _rw, 32);
+    ui_text_draw(683 - ui_text_width(_title, "title") / 2, 23, _title, "title_shadow", UI_COL_PARCHMENT);
 
-    // Header Title
-    draw_set_color(make_color_rgb(120, 40, 20));
-    draw_text(200, 95, "⚖️ AETHELGARD COMMODITY EXCHANGE • " + string_upper(_reg));
-
-    draw_set_color(make_color_rgb(60, 45, 30));
-    draw_text(200, 125, "Buy regional goods cheap, haul across kingdoms for profit. Merchant Purse: " + string(_stock.gold) + " Gold");
-
-    draw_set_color(make_color_rgb(160, 90, 10));
-    draw_text(920, 95, "🪙 YOUR GOLD: " + string(instance_exists(obj_game) ? obj_game.hero_gold : 0) + " G");
+    // Subtitle & Gold Summary
+    ui_text_draw(110, 66, "Buy regional goods cheap, haul across kingdoms for profit. Merchant Purse: " + string(_stock.gold) + " Gold", "small", UI_COL_INK_SOFT);
+    ui_icon(6, 1070, 62); // UI_ICON_COIN
+    ui_text_draw(1105, 66, "Gold: " + string(instance_exists(obj_game) ? obj_game.hero_gold : 0) + " G", "body_bold", UI_COL_GOLD);
+    ui_divider(100, 92, 1166);
 
     // Table Column Headers
-    var _hy = 160;
-    draw_set_color(make_color_rgb(60, 40, 25));
-    draw_rectangle(190, _hy, 1176, _hy + 32, false);
-    draw_set_color(make_color_rgb(251, 191, 36));
-    draw_text(210, _hy + 6, "COMMODITY (REGIONAL CARGO)");
-    draw_text(540, _hy + 6, "LOCAL BUY");
-    draw_text(700, _hy + 6, "LOCAL SELL");
-    draw_text(850, _hy + 6, "YOUR CARGO");
-    draw_text(1010, _hy + 6, "TOWN STOCK");
+    var _hy = 112;
+    ui_panel("inset_dark", 100, _hy, 1166, 32);
+    ui_text_draw(165, _hy + 8, "COMMODITY (REGIONAL CARGO)", "small_bold", UI_COL_GOLD);
+    ui_text_draw(540, _hy + 8, "LOCAL BUY", "small_bold", UI_COL_GOLD);
+    ui_text_draw(690, _hy + 8, "LOCAL SELL", "small_bold", UI_COL_GOLD);
+    ui_text_draw(840, _hy + 8, "YOUR CARGO", "small_bold", UI_COL_GOLD);
+    ui_text_draw(990, _hy + 8, "TOWN STOCK", "small_bold", UI_COL_GOLD);
 
     // Commodity Rows
     var _c_keys = obj_game.trade_commodity_keys;
-    var _start_y = 205;
+    var _start_y = 152;
+    var _spr_goods = ui_spr("spr_ui_goods");
 
     for (var _i = 0; _i < array_length(_c_keys); _i++) {
         var _cid = _c_keys[_i];
@@ -837,16 +843,12 @@ function cc_draw_trade_menu() {
         var _row_y = _start_y + _i * 68;
         var _is_sel = (obj_game.trade_cursor_idx == _i);
 
-        // Row Highlight
-        if (_is_sel) {
-            draw_set_color(make_color_rgb(217, 119, 6));
-            draw_roundrect(190, _row_y - 4, 1176, _row_y + 54, false);
-            draw_set_color(make_color_rgb(255, 250, 240));
-        } else {
-            draw_set_color((_i mod 2 == 0) ? make_color_rgb(228, 218, 196) : make_color_rgb(238, 230, 210));
-            draw_roundrect(190, _row_y - 4, 1176, _row_y + 54, false);
-            draw_set_color(make_color_rgb(40, 30, 20));
-        }
+        // Row Panel
+        ui_panel(_is_sel ? "gilded_dark" : "inset", 100, _row_y, 1166, 62);
+
+        // Goods Sprite Icon (0: Wheat, 1: Fish, 2: Iron, 3: Wine)
+        var _good_idx = (_cid == "WHEAT" ? 0 : (_cid == "FISH" ? 1 : (_cid == "IRON" ? 2 : 3)));
+        if (_spr_goods >= 0) draw_sprite(_spr_goods, _good_idx, 110, _row_y + 9);
 
         var _buy_p = cc_trade_get_price(_cid, _reg, true);
         var _sell_p = cc_trade_get_price(_cid, _reg, false);
@@ -854,83 +856,71 @@ function cc_draw_trade_menu() {
         var _town_stock = _stock[$ _cid] ?? 0;
 
         // Commodity Name & Lore
-        draw_text(210, _row_y + 4, _comm.name);
-        draw_set_color(_is_sel ? make_color_rgb(254, 240, 138) : make_color_rgb(100, 80, 60));
-        draw_text(210, _row_y + 28, _comm.desc);
+        ui_text_draw(165, _row_y + 10, _comm.name, "body_bold", _is_sel ? UI_COL_GOLD : UI_COL_INK);
+        ui_text_draw(165, _row_y + 34, _comm.desc, "small", _is_sel ? UI_COL_PARCHMENT : UI_COL_INK_SOFT);
 
         // Prices & Stock
-        draw_set_color(_is_sel ? c_white : make_color_rgb(160, 40, 20));
-        draw_text(540, _row_y + 14, string(_buy_p) + " Gold");
-
-        draw_set_color(_is_sel ? c_white : make_color_rgb(20, 100, 40));
-        draw_text(700, _row_y + 14, string(_sell_p) + " Gold");
-
-        draw_set_color(_is_sel ? c_white : make_color_rgb(40, 30, 20));
-        draw_text(850, _row_y + 14, string(_my_cargo) + " Sacks");
-
-        draw_set_color(_is_sel ? c_white : make_color_rgb(40, 30, 20));
-        draw_text(1010, _row_y + 14, string(_town_stock) + " Avail");
+        ui_text_draw(540, _row_y + 20, string(_buy_p) + " Gold", "body", _is_sel ? UI_COL_PARCHMENT : make_color_rgb(160, 40, 20));
+        ui_text_draw(690, _row_y + 20, string(_sell_p) + " Gold", "body", _is_sel ? UI_COL_PARCHMENT : make_color_rgb(20, 120, 40));
+        ui_text_draw(840, _row_y + 20, string(_my_cargo) + " Sacks", "body", _is_sel ? UI_COL_PARCHMENT : UI_COL_INK);
+        ui_text_draw(990, _row_y + 20, string(_town_stock) + " Avail", "body", _is_sel ? UI_COL_PARCHMENT : UI_COL_INK);
     }
 
     // Feedback Line
     if (obj_game.trade_feedback_timer > 0) {
         obj_game.trade_feedback_timer -= 1;
-        draw_set_color(make_color_rgb(180, 83, 9));
-        draw_text(210, 495, "📢 " + obj_game.trade_feedback_text);
+        ui_text_draw(110, 432, "[Notice] " + obj_game.trade_feedback_text, "body_bold", make_color_rgb(180, 83, 9));
     }
 
     // Regional Market Intelligence Hint Box
-    draw_set_color(make_color_rgb(220, 205, 180));
-    draw_roundrect(190, 525, 1176, 615, false);
-    draw_set_color(make_color_rgb(140, 100, 60));
-    draw_roundrect(190, 525, 1176, 615, true);
+    ui_panel("inset", 100, 460, 1166, 124);
+    ui_text_draw(120, 472, "REGIONAL TRADE INTELLIGENCE", "body_bold", UI_COL_INK);
+    ui_divider(120, 494, 1126);
+    ui_text_draw(120, 510, "• Dunhollow Quarry will pay up to 24G for Wheat and 52G for Wine.", "small", UI_COL_INK_SOFT);
+    ui_text_draw(120, 532, "• Oakhaven Shipyards buy Dunhollow Iron for 30G. Stonecross pays 22G for Salted Pike.", "small", UI_COL_INK_SOFT);
+    ui_text_draw(120, 554, "• River League patrols levy tariffs at contested bridges during wartime cycles.", "small", UI_COL_INK_SOFT);
 
-    draw_set_color(make_color_rgb(100, 40, 10));
-    draw_text(210, 538, "💡 REGIONAL TRADE INTELLIGENCE:");
-    draw_set_color(make_color_rgb(50, 40, 30));
-    draw_text(210, 562, "• Dunhollow Quarry will pay up to 24G for Wheat and 52G for Wine.");
-    draw_text(210, 584, "• Oakhaven Shipyards buy Dunhollow Iron for 30G. Stonecross pays 22G for Salted Pike.");
-
-    // Footer Controls
-    draw_set_color(make_color_rgb(60, 45, 30));
-    draw_text(200, 645, "[Up/Down] Select Item  •  [B / Enter] Buy 1  •  [S] Sell 1  •  [Esc / X] Exit Marketplace");
+    // Footer Controls with Keycaps
+    ui_divider(100, 598, 1166);
+    var _fx = 110, _fy = 624;
+    _fx += ui_keycap(_fx, _fy, "W / Up") + 8;
+    ui_text_draw(_fx, _fy + 4, "Up", "small", UI_COL_INK_SOFT); _fx += 40;
+    _fx += ui_keycap(_fx, _fy, "Down") + 8;
+    ui_text_draw(_fx, _fy + 4, "Down", "small", UI_COL_INK_SOFT); _fx += 60;
+    _fx += ui_keycap(_fx, _fy, "B / Enter") + 8;
+    ui_text_draw(_fx, _fy + 4, "Buy 1", "small", UI_COL_INK_SOFT); _fx += 65;
+    _fx += ui_keycap(_fx, _fy, "S") + 8;
+    ui_text_draw(_fx, _fy + 4, "Sell 1", "small", UI_COL_INK_SOFT); _fx += 65;
+    _fx += ui_keycap(_fx, _fy, "Esc / X") + 8;
+    ui_text_draw(_fx, _fy + 4, "Exit Market", "small", UI_COL_INK_SOFT);
 }
 
 function cc_draw_quest_log() {
     // Dark backdrop
+    var _a = draw_get_alpha();
+    draw_set_alpha(_a * 0.75);
     draw_set_color(make_color_rgb(18, 14, 12));
     draw_rectangle(0, 0, 1366, 768, false);
+    draw_set_alpha(_a);
 
-    // Royal Journal Leather Binding
-    draw_set_color(make_color_rgb(44, 28, 18));
-    draw_roundrect(140, 40, 1226, 728, false);
-    draw_set_color(make_color_rgb(88, 54, 30));
-    draw_roundrect(142, 42, 1224, 726, true);
-    draw_set_color(make_color_rgb(180, 130, 70));
-    draw_roundrect(148, 48, 1218, 720, true);
+    // Gilded Frame Backdrop
+    ui_panel("gilded", 80, 40, 1206, 688);
 
-    // Inner Parchment
-    draw_set_color(make_color_rgb(238, 230, 210));
-    draw_roundrect(168, 68, 1198, 700, false);
-    draw_set_color(make_color_rgb(60, 40, 25));
-    draw_roundrect(168, 68, 1198, 700, true);
-
-    // Header Title
-    draw_set_color(make_color_rgb(120, 40, 20));
-    draw_text(200, 85, "📜 CHRONICLES OF AETHELGARD • SIDE STORIES & FACTION STANDINGS");
-
-    // Divider line between columns
-    draw_set_color(make_color_rgb(160, 130, 100));
-    draw_line(570, 125, 570, 675);
+    // Header Ribbon & Title
+    var _title = "Chronicles of Aethelgard • Side Stories & Standings";
+    var _rw = ui_text_width(_title, "title") + 100;
+    ui_nine("spr_ui_ribbon", 0, 683 - _rw / 2, 20, _rw, 32);
+    ui_text_draw(683 - ui_text_width(_title, "title") / 2, 23, _title, "title_shadow", UI_COL_PARCHMENT);
 
     // -------------------------------------------------------------------------
     // LEFT COLUMN: SIDE QUESTS LIST
     // -------------------------------------------------------------------------
-    draw_set_color(make_color_rgb(60, 40, 25));
-    draw_text(200, 130, "--- LOCAL STORIES & COMMISSIONS ---");
+    ui_text_draw(110, 72, "LOCAL STORIES & COMMISSIONS", "body_bold", UI_COL_INK);
+    ui_divider(100, 94, 460);
 
     var _qkeys = obj_game.quest_log_keys;
-    var _start_y = 170;
+    var _start_y = 114;
+    var _spr_seal = ui_spr("spr_ui_seal");
 
     for (var _k = 0; _k < array_length(_qkeys); _k++) {
         var _qid = _qkeys[_k];
@@ -940,27 +930,17 @@ function cc_draw_quest_log() {
         var _qy = _start_y + _k * 78;
         var _is_sel = (obj_game.quest_log_cursor_idx == _k);
 
-        // Highlight
-        if (_is_sel) {
-            draw_set_color(make_color_rgb(217, 119, 6));
-            draw_roundrect(190, _qy - 4, 550, _qy + 66, false);
-            draw_set_color(make_color_rgb(255, 250, 240));
-        } else {
-            draw_set_color((_k mod 2 == 0) ? make_color_rgb(228, 218, 196) : make_color_rgb(238, 230, 210));
-            draw_roundrect(190, _qy - 4, 550, _qy + 66, false);
-            draw_set_color(make_color_rgb(40, 30, 20));
-        }
+        // Row Panel
+        ui_panel(_is_sel ? "gilded_dark" : "inset", 100, _qy, 460, 70);
 
-        // Status Badge
-        var _badge = (_q.status == "COMPLETED") ? "[DONE]" : ((_q.status == "ACTIVE") ? "[ACTIVE]" : "[AVAILABLE]");
-        var _bcol = (_q.status == "COMPLETED") ? make_color_rgb(20, 120, 40) : ((_q.status == "ACTIVE") ? make_color_rgb(180, 83, 9) : make_color_rgb(100, 100, 100));
-        if (_is_sel) _bcol = c_white;
+        // Status Seal Icon (0: Available, 1: Active, 2: Completed)
+        var _seal_idx = (_q.status == "COMPLETED" ? 2 : (_q.status == "ACTIVE" ? 1 : 0));
+        if (_spr_seal >= 0) draw_sprite(_spr_seal, _seal_idx, 110, _qy + 19);
 
-        draw_set_color(_bcol);
-        draw_text(205, _qy + 4, _badge + " " + _q.title);
-
-        draw_set_color(_is_sel ? make_color_rgb(254, 240, 138) : make_color_rgb(100, 80, 60));
-        draw_text(205, _qy + 30, "Region: " + _q.region + "  •  Giver: " + _q.giver);
+        // Status Badge & Title
+        var _badge = (_q.status == "COMPLETED") ? "[DONE]" : ((_q.status == "ACTIVE") ? "[ACTIVE]" : "[OPEN]");
+        ui_text_draw(155, _qy + 10, _badge + " " + _q.title, "body_bold", _is_sel ? UI_COL_GOLD : UI_COL_INK, 395);
+        ui_text_draw(155, _qy + 36, "Region: " + _q.region + "  •  Giver: " + _q.giver, "small", _is_sel ? UI_COL_PARCHMENT : UI_COL_INK_SOFT, 395);
     }
 
     // -------------------------------------------------------------------------
@@ -970,43 +950,31 @@ function cc_draw_quest_log() {
     var _cur_q = cc_quest_get(_cur_qid);
 
     if (!is_undefined(_cur_q)) {
-        draw_set_color(make_color_rgb(120, 40, 20));
-        draw_text(600, 130, _cur_q.title);
+        // Details Box
+        ui_panel("inset", 580, 70, 686, 330);
+        ui_text_draw(600, 84, _cur_q.title, "title", UI_COL_INK, 646);
+        ui_text_draw(600, 118, "Region: " + _cur_q.region + "   •   Giver: " + _cur_q.giver, "small", UI_COL_INK_SOFT);
+        ui_text_draw(600, 138, "Status: " + _cur_q.status + " (Stage " + string(_cur_q.stage) + " / " + string(_cur_q.max_stages) + ")", "small_bold", (_cur_q.status == "COMPLETED") ? make_color_rgb(20, 120, 40) : UI_COL_INK);
+        ui_divider(600, 156, 646);
 
-        draw_set_color(make_color_rgb(60, 45, 30));
-        draw_text(600, 160, "Region: " + _cur_q.region + "   •   Giver: " + _cur_q.giver);
-        draw_text(600, 185, "Status: " + _cur_q.status + " (Stage " + string(_cur_q.stage) + " / " + string(_cur_q.max_stages) + ")");
-
-        // Description Lore
-        draw_set_color(make_color_rgb(40, 30, 20));
-        draw_text_ext(600, 220, _cur_q.desc, 20, 560);
+        // Description Lore (Word-wrapped)
+        ui_text_draw(600, 172, _cur_q.desc, "body", UI_COL_INK, 646);
 
         // Current Objective Box
-        draw_set_color(make_color_rgb(220, 205, 180));
-        draw_roundrect(590, 310, 1170, 395, false);
-        draw_set_color(make_color_rgb(140, 100, 60));
-        draw_roundrect(590, 310, 1170, 395, true);
-
-        draw_set_color(make_color_rgb(180, 83, 9));
-        draw_text(610, 322, "CURRENT OBJECTIVE:");
-        draw_set_color(make_color_rgb(30, 20, 10));
-        draw_text_ext(610, 348, _cur_q.objective, 18, 540);
+        ui_panel("inset_dark", 600, 240, 646, 64);
+        ui_text_draw(612, 246, "CURRENT OBJECTIVE:", "small_bold", UI_COL_GOLD);
+        ui_text_draw(612, 268, _cur_q.objective, "body", UI_COL_PARCHMENT, 620);
 
         // Rewards
-        draw_set_color(make_color_rgb(120, 40, 20));
-        draw_text(600, 415, "QUEST REWARDS: " + string(_cur_q.reward_gold) + " Gold   •   " + string(_cur_q.reward_xp) + " XP");
+        ui_text_draw(600, 320, "QUEST REWARDS: " + string(_cur_q.reward_gold) + " Gold   •   " + string(_cur_q.reward_xp) + " XP", "body_bold", make_color_rgb(120, 40, 20));
     }
 
     // -------------------------------------------------------------------------
     // BOTTOM RIGHT: FACTION STANDINGS METER
     // -------------------------------------------------------------------------
-    draw_set_color(make_color_rgb(225, 215, 195));
-    draw_roundrect(590, 455, 1170, 630, false);
-    draw_set_color(make_color_rgb(140, 100, 60));
-    draw_roundrect(590, 455, 1170, 630, true);
-
-    draw_set_color(make_color_rgb(100, 40, 10));
-    draw_text(610, 468, "⚖️ FACTION REPUTATION & REALM STANDINGS:");
+    ui_panel("inset", 580, 418, 686, 196);
+    ui_text_draw(600, 430, "FACTION REPUTATION & REALM STANDINGS", "body_bold", UI_COL_INK);
+    ui_divider(600, 452, 646);
 
     var _reps = [
         { name: "Crown Favor (King Aldous III)", val: global.reputation.crown },
@@ -1015,28 +983,178 @@ function cc_draw_quest_log() {
         { name: "Dunhollow Quarry Bastion", val: global.reputation.dunhollow }
     ];
 
+    var _spr_crest = ui_spr("spr_ui_crest");
     for (var _r = 0; _r < 4; _r++) {
-        var _ry = 498 + _r * 30;
+        var _ry = 466 + _r * 32;
         var _f = _reps[_r];
-        draw_set_color(make_color_rgb(40, 30, 20));
-        draw_text(610, _ry, _f.name + ":");
+        if (_spr_crest >= 0) draw_sprite(_spr_crest, _r, 600, _ry - 2);
+        ui_text_draw(636, _ry + 4, _f.name, "small", UI_COL_INK);
 
-        // Standing Bar
-        var _bar_x = 920;
-        var _bar_w = 160;
+        // Standing Bar via UI Kit ui_bar
         var _pct = clamp((_f.val + 100) / 200, 0, 1);
-
-        draw_set_color(make_color_rgb(180, 160, 140));
-        draw_rectangle(_bar_x, _ry + 2, _bar_x + _bar_w, _ry + 14, false);
-        draw_set_color((_f.val >= 30) ? make_color_rgb(22, 163, 74) : ((_f.val >= 0) ? make_color_rgb(217, 119, 6) : make_color_rgb(220, 38, 38)));
-        draw_rectangle(_bar_x, _ry + 2, _bar_x + (_bar_w * _pct), _ry + 14, false);
-        draw_set_color(make_color_rgb(60, 40, 20));
-        draw_rectangle(_bar_x, _ry + 2, _bar_x + _bar_w, _ry + 14, true);
-
-        draw_text(_bar_x + _bar_w + 10, _ry, string(_f.val));
+        ui_bar(930, _ry + 6, 260, _pct, (_f.val >= 30 ? 3 : (_f.val >= 0 ? 1 : 0)));
+        ui_text_draw(1205, _ry + 4, string(_f.val), "small_bold", UI_COL_INK);
     }
 
-    // Footer Controls
-    draw_set_color(make_color_rgb(60, 45, 30));
-    draw_text(200, 660, "[Up/Down / W/S] Navigate Stories  •  [Q / Esc / Space] Close Journal");
+    // Footer Controls with Keycaps
+    ui_divider(100, 628, 1166);
+    var _fx = 110, _fy = 654;
+    _fx += ui_keycap(_fx, _fy, "Up / Down / W / S") + 8;
+    ui_text_draw(_fx, _fy + 4, "Navigate Stories", "small", UI_COL_INK_SOFT); _fx += 50;
+    _fx += ui_keycap(_fx, _fy, "Q / Esc / Space") + 8;
+    ui_text_draw(_fx, _fy + 4, "Close Journal", "small", UI_COL_INK_SOFT);
+}
+
+// =========================================================================
+// SECTION: DYNAMIC WAR REACTIVITY & VILLAGER DIALOGUE MATRIX
+// =========================================================================
+
+/// @description Returns dynamic, context-sensitive dialogue for Stonecross villagers reacting to war cycle, market prices, and faction control.
+function cc_villager_get_dynamic_dialogue(_vid) {
+    var _cycle = variable_global_exists("war_cycle_count") ? global.war_cycle_count : 0;
+    var _bridge_fac = (variable_global_exists("contested_zones") && is_struct(global.contested_zones) && variable_struct_exists(global.contested_zones, "kings_bridge")) ? global.contested_zones.kings_bridge.controlling_faction : "crown";
+    var _wheat_mult = (variable_global_exists("commodity_price_multipliers") && is_struct(global.commodity_price_multipliers) && variable_struct_exists(global.commodity_price_multipliers, "WHEAT")) ? global.commodity_price_multipliers.WHEAT : 1.0;
+    var _iron_mult = (variable_global_exists("commodity_price_multipliers") && is_struct(global.commodity_price_multipliers) && variable_struct_exists(global.commodity_price_multipliers, "IRON")) ? global.commodity_price_multipliers.IRON : 1.0;
+    var _title = variable_global_exists("player_title") ? global.player_title : "Rowan, Man-at-Arms";
+    var _rep_sc = cc_rep_get("stonecross");
+
+    switch (_vid) {
+        case "ALDEN":
+            if (_rep_sc >= 30) {
+                return "* Elder Alden bows with deep respect: 'The entire township speaks of your deeds, Rowan. In these dark days of civil strife, you are the rock Stonecross leans upon.'";
+            } else if (_cycle >= 3) {
+                return "* Elder Alden watches smoke on the horizon: 'The feudal lords tear Aethelgard apart while mercenary companies plunder the harvest. Tread cautiously on the highroads, man-at-arms.'";
+            } else {
+                return "* Elder Alden leans on his staff: 'Welcome to Stonecross, man-at-arms. The realm has grown weary, but our hearts remain steadfast.'";
+            }
+
+        case "BEATRICE":
+            if (_cycle >= 6) {
+                return "* Baker Beatrice wipes soot from her brow: 'The wounded from the border skirmish arrived at dawn. I gave them yesterday's trenchers. Pray for rain, Rowan—the wheat fields along the river are burning.'";
+            } else if (_wheat_mult > 1.25 || _cycle >= 3) {
+                return "* Baker Beatrice dusts rye flour from her apron: 'Flour has doubled in price since the river barges were stopped at King's Bridge. I've had to mix ground acorns and barley into the dough to keep loaves affordable for the cottages.'";
+            } else if (cc_npc_has_memory("beatrice", "DAILY_BREAD")) {
+                return "* Baker Beatrice smiles warmly: 'The morning loaves came out golden and crisp! Eat well on the road, Rowan; honest bread makes honest steel.'";
+            } else {
+                return "* Baker Beatrice dusts flour from her apron: 'Fresh crusty loaves baked at dawn! Take heart on your journey, traveler!'";
+            }
+
+        case "GILES":
+            if (_cycle >= 6) {
+                return "* Farmer Giles leans over his wattle fence, weary: 'Crown bailiffs took two bushels of seed corn yesterday for the siege train. If this war lasts through the frost, we won't have grain to sow come spring.'";
+            } else if (_wheat_mult > 1.25 || _cycle >= 3) {
+                return "* Farmer Giles wipes his brow: 'Grain prices are through the roof in Dunhollow, but royal requisition squads keep patrolling the lanes. A farmer can hardly keep enough oats to feed his plow-ox.'";
+            } else if (cc_quest_is_completed("QUEST_PIG")) {
+                return "* Farmer Giles pats Clover's back proudly: 'Clover has been fed double barley mash today! Stonecross will never forget your kindness, " + _title + "!'";
+            } else {
+                return "* Farmer Giles wrings his weathered hands: 'Rowan! My prized sow Clover went missing! Old Mallow stole her, I know it! Help me get her back!'";
+            }
+
+        case "OLD_MALLOW":
+            if (_cycle >= 6) {
+                return "* Old Mallow scowls, sharpening his hoe: 'Smoke over the western orchards. Deserters from both armies are prowling the ditches for turnips. Any man crosses my trench gets a hoe-blade to the shins.'";
+            } else if (_cycle >= 3) {
+                return "* Old Mallow grumbles: 'The bailiffs doubled the cart toll across the brook. Honest growers can't make two coppers at market, but the lords drink vintage wine in their pavilions.'";
+            } else if (cc_quest_is_completed("QUEST_PIG")) {
+                return "* Old Mallow nods grudgingly: 'Giles actually patched his wattle fence. First sensible thing that old codger has done this harvest.'";
+            } else {
+                return "* Old Mallow leans on his hoe, scowling: 'The autumn frost is coming early. If the bailiffs raise wheat taxes again, we'll all be eating turnip peelings.'";
+            }
+
+        case "PIPPIN":
+            if (_cycle >= 6) {
+                return "* Scribe Pippin dips his quill with trembling fingers: 'Every page I copy is a muster roll of fallen boys from the valley. Villages emptied of young hands. When will King Aldous call an armistice?'";
+            } else if (_cycle >= 3) {
+                return "* Scribe Pippin shakes his head over ink-stained parchment: 'I am copying conflicting tax warrants—one from King Aldous, one from Baroness Vivienne. Two rulers taxing the same acre of cabbages! It's sheer folly, Rowan.'";
+            } else if (cc_quest_is_completed("QUEST_GAMBLER")) {
+                return "* Scribe Pippin hums merrily as he copies an illuminated manuscript: 'My quill flies across the vellum! Not a single copper lost to the dice table since you saved me, " + _title + "!'";
+            } else {
+                return "* Scribe Pippin trembles, clutching parchment: 'I owe 40 Gold to Wulf the Smuggler at the dice table! If I cannot pay, he will break my quill hand!'";
+            }
+
+        case "BALIN":
+            if (_cycle >= 6) {
+                return "* Sir Balin stares into his tankard: 'King Aldous is issuing muster writs for every retired knight and man-at-arms. Even with a knee like a mashed turnip, I may have to haul out my grandfather's hauberk.'";
+            } else if (_cycle >= 3) {
+                return "* Sir Balin winces, shifting his leg: 'Heard the royal cavalry was bloodied near the barrows. If my knee weren't swollen to the size of a pumpkin, I'd ride out and teach those sellswords how a true knight holds a lance!'";
+            } else if (cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) {
+                return "* Sir Balin raises his flagon in a cheerful toast: 'Grim knows the code of steel! A knight knows when to charge and when to drink. Today, brother, we drink!'";
+            } else {
+                return "* Sir Balin sips cider, wincing: 'I swore at the bar I could best any man with a blade... but my left knee is swollen like a turnip. I need help before dusk!'";
+            }
+
+        case "WULF":
+            if (_cycle >= 6) {
+                return "* Wulf rolls two bone dice against his knuckles: 'Martial law at every crossroads. A smuggler has to crawl through river reeds just to move a wheel of cheese. But risk means profit, " + _title + ".'";
+            } else if (_cycle >= 3) {
+                return "* Wulf grins knowingly: 'Word from the docks: River League cutthroats are charging triple to slip contraband past the King's cutters. Good time to have friends with boats.'";
+            } else {
+                return "* Wulf clinks two bone dice together with a smirk: 'Care for a round of Crown & Bones, knight? Or are you here to pay off that ink-stained clerk's debt?'";
+            }
+
+        case "DONALD":
+            if (_cycle >= 4) {
+                return "* Guard Donald grips his halberd with white knuckles: 'Stay alert, Rowan. Road patrols reported armed renegades shadowing wagons near the barrows. The village militia is on full alert.'";
+            } else {
+                return "* Guard Donald points his halberd: 'Looking for direction, Rowan? The southern path leads to the Crossroads Guidepost. West leads to the forge; east crosses the brook to the farmsteads!'";
+            }
+
+        case "REFUGEE_MIRA":
+            if (_bridge_fac == "river_league") {
+                return "* Refugee Mira gazes west with guarded hope: 'They say Baroness Vivienne's river rangers have cleared the King's Bridge. If the barges run, perhaps my brother can return from Oakhaven.'";
+            } else if (_cycle >= 4) {
+                return "* Refugee Mira pulls her threadbare shawl close: 'More families arrived from the eastern marches last night. The bailiffs burned the hayricks to deny forage to the armies. We have nothing left.'";
+            } else {
+                return "* Refugee Mira warms trembling hands by the campfire: 'The armies clashed near the western marches... We fled when the bailiffs burned the mill. Is there no peace left in Aethelgard?'";
+            }
+
+        case "ODO":
+            if (_cycle >= 6) {
+                return "* Master Odo hammers white-hot iron with thunderous blows: 'Raw bog-ore is cut off from the hills! I am melting down old plowshares and wagon rims to forge spear-points. War devours iron like a furnace!'";
+            } else if (_iron_mult > 1.25 || _cycle >= 3) {
+                return "* Master Odo wipes sweat with a leather forearm: 'Morvath's garrison placed an order for fifty billhooks. The forge runs night and day, Rowan. Every scrap of crucible steel you bring is worth its weight in silver.'";
+            } else if (cc_quest_is_completed("QUEST_COUNTERFEIT")) {
+                return "* Master Odo bellows over his anvil: 'That illicit mint at the Border Redoubt is smashed for good! The groats in Stonecross ring true once more. Check my iron chest for a tempered blade, " + _title + "!'";
+            } else {
+                return "* Master Odo bellows over his anvil: 'Check the heavy iron chest beside my bench for a tempered blade! When you bring me rare slag from Dunhollow, we shall forge legendary plate!'";
+            }
+
+        case "DUNSTAN":
+            if (_cycle >= 6) {
+                return "* Brother Dunstan tends a simmering kettle of barley broth: 'The chapel crypts are full of wounded drovers and fatherless children. Put up your blade whenever you can, Rowan. Mercy is the only crown that does not tarnish.'";
+            } else if (_cycle >= 3) {
+                return "* Brother Dunstan sighs gently: 'More refugees arrive with each sundown. We share what bread Beatrice can bake and pray for King Aldous's council to seek peace.'";
+            } else {
+                return "* Brother Dunstan lays hands upon your brow: 'Go forth with righteous courage, Rowan. May your strength serve the afflicted!'";
+            }
+
+        case "MARGERY":
+            if (_cycle >= 6) {
+                return "* Margery strums a slow, solemn minor chord: 'No one pays for drinking songs anymore, Rowan. The patrons want ballads of fallen knights and burned keeps. Even the Boar & Flagon feels like a tomb tonight.'";
+            } else if (_cycle >= 3) {
+                return "* Margery tunes a gut string with a smirk: 'Heard a drover say Baroness Vivienne's rangers confiscated sixty barrels of cider at the river bend. The tavern regulars were ready to march to war right then and there!'";
+            } else {
+                return "* Margery sings softly: 'O, the Sunken Crown beneath the deep, where ancient kings in starlight sleep...' Your spirit feels restored! (+4 HP)";
+            }
+    }
+
+    return "* (The villager nods respectfully.) 'Godspeed on your journey, " + _title + ".'";
+}
+
+/// @description Returns dynamic ambient gossip from Boar & Flagon tavern patrons reacting to war, trade, and feudal lords.
+function cc_tavern_get_ambient_banter() {
+    var _cycle = variable_global_exists("war_cycle_count") ? global.war_cycle_count : 0;
+    var _bridge_fac = (variable_global_exists("contested_zones") && is_struct(global.contested_zones) && variable_struct_exists(global.contested_zones, "kings_bridge")) ? global.contested_zones.kings_bridge.controlling_faction : "crown";
+
+    var _rumors = [
+        "A royal courier changed horses at dawn—King Aldous's vanguard is marching south along the turnpike.",
+        "Baroness Vivienne slapped an eighty-groat toll on every wool barge passing Oakhaven. The river boatmen are ready to riot!",
+        "Castellan Morvath's teamsters requisitioned all the charcoal wagons from the kiln. The smiths are spitting mad.",
+        "Bailiff Sir Guy posted muster notices on the town oak. Every second son in the parish has been called up for the militia.",
+        "The drovers won't take the south road after sundown. Armed renegades from the old border bastions are bold as wolves.",
+        "Word from King's Bridge: " + (_bridge_fac == "river_league" ? "River League rangers hold the crossing and charge water-tax." : (_bridge_fac == "iron_council" ? "Morvath's heavy spearmen have fortified the stone arches." : "Royal cavalry maintain a strict toll and search all baggage wagons."))
+    ];
+
+    var _idx = (_cycle + irandom(array_length(_rumors) - 1)) mod array_length(_rumors);
+    return _rumors[_idx];
 }

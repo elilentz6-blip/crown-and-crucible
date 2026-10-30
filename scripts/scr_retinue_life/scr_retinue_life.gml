@@ -363,7 +363,7 @@ function retinue_on_combat_event(_kind, _data) {
     }
     if (_kind == "encounter_ended") {
         var _won = is_struct(_data) && (_data[$ "won"] ?? false);
-        var _big = string_pos("Shade", _foe) > 0 || string_pos("Boar", _foe) > 0;
+        var _big = string_pos("Shade", _foe) > 0 || string_pos("Renegade", _foe) > 0 || string_pos("Warden", _foe) > 0 || string_pos("Boar", _foe) > 0;
         var _tags = _won ? ["VICTORY", "VALOR"] : ["MERCY"];
         if (!_won && string_pos("Highwayman", _foe) > 0) array_push(_tags, "SPARE_BANDIT");
         retinue_react(_tags, _big ? 4 : 2, (_won ? "defeating the " : "sparing the ") + _foe, "PARTY");
@@ -382,7 +382,7 @@ function retinue_on_combat_event(_kind, _data) {
                 retinue_say("AGNES", "Hold still. There. Try not to do that again. (+" + string(_h) + " HP)", 1.5);
             }
         }
-        if (string_pos("Shade", _foe) > 0 && _won) retinue_barrows_victory();
+        if ((string_pos("Shade", _foe) > 0 || string_pos("Renegade", _foe) > 0 || string_pos("Warden", _foe) > 0) && _won) retinue_barrows_victory();
         for (var _i = array_length(R.temp) - 1; _i >= 0; _i--) if (_won) retinue_release_temp(R.temp[_i], "battle won");
         R.battle = undefined;
         return;
@@ -394,10 +394,10 @@ function retinue_on_combat_event(_kind, _data) {
         for (var _i = 0; _i < array_length(_party); _i++) if (_party[_i].kind != RET_KIND_ALLY) array_push(_named, _party[_i]);
         if (array_length(_named) > 0) {
             var M = _named[irandom(array_length(_named) - 1)];
-            if (string_pos("Shade", _foe) > 0 && M.kind == RET_KIND_COMPANION) {
+            if ((string_pos("Shade", _foe) > 0 || string_pos("Renegade", _foe) > 0 || string_pos("Warden", _foe) > 0) && M.kind == RET_KIND_COMPANION) {
                 retinue_set_status(M, "CAPTURED", 0, "dragged into the barrow-dark");
-                retinue_remember(M, "CAPTURED", "Was dragged into the Barrows by the Warden Shade when we fell", 3);
-                retinue_chronicle("The company is routed at the Barrows. " + M.name + " is dragged into the dark by the Warden Shade.", [M.id]);
+                retinue_remember(M, "CAPTURED", "Was dragged into the Barrows by the Renegade Warden when we fell", 3);
+                retinue_chronicle("The company is routed at the Barrows. " + M.name + " is dragged into the dark by the Renegade Warden.", [M.id]);
                 retinue_toast(M.name + " has been taken by the Barrow Warden!", UI_COL_HP);
             } else retinue_injure(M, 2, "wounded in a lost fight against the " + _foe);
         }
@@ -408,7 +408,7 @@ function retinue_on_combat_event(_kind, _data) {
 
 function retinue_battle_cry(M, _foe) {
     switch (M.id) {
-        case "GALAHALT": return string_pos("Shade", _foe) > 0 ? "For the Ashen Lance!" : "Guard up, Rowan!";
+        case "GALAHALT": return (string_pos("Shade", _foe) > 0 || string_pos("Renegade", _foe) > 0 || string_pos("Warden", _foe) > 0) ? "For the Ashen Lance!" : "Guard up, Rowan!";
         case "MARGERY": return "Ooh, this'll make a verse!";
         case "DUNSTAN": return "Lord, let us be merciful. And quick.";
         case "ISOLDE": return "Yield in the King's name! ...No? Very well.";
@@ -420,7 +420,7 @@ function retinue_battle_cry(M, _foe) {
     return "To arms!";
 }
 
-/// Beating the Warden Shade frees anyone it took and settles Galahalt's oath.
+/// Beating the Barrow Renegade Warden frees anyone it took and settles Galahalt's oath.
 function retinue_barrows_victory() {
     var R = global.retinue;
     for (var _i = 0; _i < array_length(R.order); _i++) {
@@ -430,7 +430,7 @@ function retinue_barrows_victory() {
             M.hp = max(1, floor(M.stats.max_hp * 0.4));
             retinue_adjust(M, 25, 10, 15);
             retinue_remember(M, "RESCUED", "Rowan came back for me in the Barrows. I won't forget it", 3);
-            retinue_chronicle("Rowan breaks the Warden Shade and carries " + M.name + " out of the barrow-dark.", [M.id]);
+            retinue_chronicle("Rowan breaks the Renegade Warden and carries " + M.name + " out of the barrow-dark.", [M.id]);
             retinue_toast(M.name + " is free! They are recovering at the chapel.", UI_COL_GOLD);
         }
     }
@@ -525,7 +525,7 @@ function retinue_check_quests() {
     if (Mg.quest_stage == 1 && Mg.deeds >= 3 && Mg.status != "CAPTURED") {
         Mg.quest_stage = 2;
         retinue_request_add({ key: "SONG", id: "MARGERY", kind: "SONG", cost: 0, expires: R.day + 30,
-            text: "* Margery, ink on her fingers: 'It's done! The Ballad of Sir Rowan! Every word true, give or take. Shall I sing it at the Flagon tonight?'",
+            text: "* Margery, ink on her fingers: 'It's done! The Ballad of Rowan! Every word true, give or take. Shall I sing it at the Flagon tonight?'",
             yes_label: "Let her sing", no_label: "Please don't",
             yes_text: "* The Boar & Flagon roars the chorus. Strangers buy you drinks. (Stonecross standing +5)",
             no_text: "* Margery: 'You're embarrassed! That's adorable. Fine. Another time.'" });

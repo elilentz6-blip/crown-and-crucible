@@ -73,7 +73,7 @@ function vis_themes_init() {
 }
 
 /// Stonecross: town square, fountain, tavern, forge, chapel, cottages, river, barrows and the
-/// forest path to the dimensional portal. Coordinates are world pixels.
+/// forest path to the overgrown border redoubt. Coordinates are world pixels.
 function vis_layout_stonecross() {
     var _L = {
         theme: "verdant",
@@ -226,7 +226,7 @@ function vis_layout_stonecross() {
             [spr_veg_reeds, 0, 1095, 1270, 0, 0],
             [spr_veg_reeds, 0, 1205, 1330, 0, 0],
             [spr_prop_rock_s, 0, 1210, 1262, 20, 8],
-            // portal clearing standing stones
+            // border redoubt ruins standing stones
             [spr_prop_rock_l, 0, 1430, 470, 36, 12],
             [spr_prop_rock_l, 0, 1770, 470, 36, 12],
             [spr_prop_rock_s, 0, 1460, 330, 20, 8],
@@ -293,19 +293,19 @@ function vis_layout_stonecross() {
 
         // Extra collision boxes for art the player should not walk through: [x1, y1, x2, y2]
         solids: [
-            [1527, 352, 1673, 402],    // portal arch and stones
+            [1527, 352, 1673, 402],    // border redoubt ruins arch and stones
             [1548, 1176, 1652, 1222],  // fountain rim (outer basin)
         ],
 
         // Places where vegetation must never grow (in addition to live gameplay positions)
         keepout: [
-            [1600, 400, 190],   // portal clearing
+            [1600, 400, 190],   // border redoubt clearing
             [760, 520, 80],     // secret grove
             [1600, 1280, 80],   // player start
             [880, 1900, 70],    // camp
         ],
 
-        // The portal centrepiece
+        // The border redoubt ruins centrepiece
         portal: { x: 1600, y: 400 },
 
         // Ambient fx regions

@@ -168,6 +168,16 @@ if (global.game_mode == "OVERWORLD") {
 
         // 7. Overworld Interaction (Z / Enter / Space)
         var _interact = keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
+        var _dlg_active = false;
+        if (variable_global_exists("vis") && is_struct(global.vis) && variable_struct_exists(global.vis, "dlg") && is_struct(global.vis.dlg)) {
+            var _D = global.vis.dlg;
+            if (_D.alpha > 0.05 && _D.timer < 2.6 + string_length(_D.shown) * 0.045) {
+                _dlg_active = true;
+            }
+        }
+        if (_dlg_active || (current_time - dialogue_dismissed_frame) < 150) {
+            _interact = false;
+        }
         if (_interact) {
             var _handled = false;
 
@@ -242,15 +252,16 @@ if (global.game_mode == "OVERWORLD") {
                     if (_vil.id == "GILES") {
                             if (!cc_quest_is_active("QUEST_PIG") && !cc_quest_is_completed("QUEST_PIG")) {
                                 cc_quest_start("QUEST_PIG");
-                                overworld_dialogue_text = "* Farmer Giles wrings his hands: 'Sir Rowan! My prized sow Clover went missing! Check behind Old Mallow's barn across the brook at (1850, 1500)!' (Quest Started: The Missing Sow!)";
+                                overworld_dialogue_text = "* Farmer Giles wrings his hands: 'Rowan! My prized sow Clover went missing! Check behind Old Mallow's barn across the brook at (1850, 1500)!' (Quest Started: The Missing Sow!)";
                             } else if (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage >= 2) {
                                 cc_quest_complete("QUEST_PIG", "RETURNED_CLOVER");
+                                cc_war_record_dispatch("stonecross", "Prized Sow Returned", "Farmer Giles and Old Mallow reconciled over the recovery of Clover, easing farmstead tensions.");
                                 overworld_dialogue_text = "* Farmer Giles weeps with joy: 'Clover, my girl! You brought her back! Here is the 45 Gold I promised and fresh goat cheese!' (+45G, +80 XP, +15 Rep, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +45G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_PIG")) {
-                                overworld_dialogue_text = "* Farmer Giles paces nervously: 'Please, Sir Rowan! Check Old Mallow's turnip patch across the brook (1850, 1500) before nightfall!'";
+                                overworld_dialogue_text = "* Farmer Giles paces nervously: 'Please, Rowan! Check Old Mallow's turnip patch across the brook (1850, 1500) before nightfall!'";
                             } else {
-                                overworld_dialogue_text = "* Farmer Giles pats Clover's back proudly: 'Clover has been fed double barley mash today! Stonecross will never forget your kindness, Sir Rowan!'";
+                                overworld_dialogue_text = cc_villager_get_dynamic_dialogue("GILES");
                             }
                         } else if (_vil.id == "OLD_MALLOW") {
                             if (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage == 1) {
@@ -260,9 +271,9 @@ if (global.game_mode == "OVERWORLD") {
                             } else if (cc_quest_is_active("QUEST_PIG") && cc_quest_get("QUEST_PIG").stage >= 2) {
                                 overworld_dialogue_text = "* Old Mallow shooes Clover: 'Shoo! Get back across the brook to Giles's pen before you ruin my winter leeks!'";
                             } else if (cc_quest_is_completed("QUEST_PIG")) {
-                                overworld_dialogue_text = "* Old Mallow nods grudgingly: 'Giles actually patched his wattle fence. First sensible thing that old codger has done this harvest.'";
+                                overworld_dialogue_text = cc_villager_get_dynamic_dialogue("OLD_MALLOW");
                             } else {
-                                overworld_dialogue_text = "* Old Mallow grumbles: 'The autumn frost is coming early. If the bailiffs raise wheat taxes again, we'll all be eating turnip peelings.'";
+                                overworld_dialogue_text = cc_villager_get_dynamic_dialogue("OLD_MALLOW");
                             }
                         } else if (_vil.id == "PIPPIN") {
                             if (!cc_quest_is_active("QUEST_GAMBLER") && !cc_quest_is_completed("QUEST_GAMBLER")) {
@@ -271,13 +282,14 @@ if (global.game_mode == "OVERWORLD") {
                             } else if (cc_quest_is_active("QUEST_GAMBLER") && cc_quest_get("QUEST_GAMBLER").stage >= 3) {
                                 // Winning a dice round sets stage 3; handing back the slip finishes the quest.
                                 cc_quest_complete("QUEST_GAMBLER", "DEBT_RESOLVED");
+                                cc_war_record_dispatch("stonecross", "Scribe Debt Settled", "Pippin's debt slip was retrieved from Wulf's gaming table, preserving the township archives.");
                                 cc_npc_add_affinity("pippin", 30, "DEBT_CLEARED");
                                 overworld_dialogue_text = "* Pippin hugs his debt slip: 'You won it back! I swear on the Sunken Crown I will never touch dice again!' (+30G, +100 XP, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +30G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_GAMBLER")) {
                                 overworld_dialogue_text = "* Pippin wrings his ink-stained hands: 'Wulf sits at the gaming table inside the Boar & Flagon. Beat him at Crown & Bones!'";
                             } else {
-                                overworld_dialogue_text = "* Pippin hums merrily as he copies an illuminated manuscript: 'My quill flies across the vellum! Bless you, Sir Rowan!'";
+                                overworld_dialogue_text = cc_villager_get_dynamic_dialogue("PIPPIN");
                             }
                         } else if (_vil.id == "WULF") {
                             cc_dice_start(1); // Challenge Wulf to Crown & Bones
@@ -287,37 +299,39 @@ if (global.game_mode == "OVERWORLD") {
                                 overworld_dialogue_text = "* Sir Balin winces, nursing his swollen knee: 'I swore at the bar I could best any mercenary in the south... but my left knee is ruined! Barrow Mercenary Grim waits at the barrow crossing (1040, 1600). Stand as my second and satisfy the vow!' (Quest Started: The Boast of Sir Balin!)";
                             } else if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage >= 2) {
                                 cc_quest_complete("QUEST_DRUNKEN_KNIGHT", "CHAMPIONED_BALIN");
+                                cc_war_record_dispatch("crown", "Balin's Honor Championed", "Rowan stood as Sir Balin's second against Mercenary Grim, upholding the martial code of steel.");
                                 overworld_dialogue_text = "* Sir Balin raises his flagon: 'Grim accepted? By the Sunken Crown, my knightly honor is saved! Take this 60 Gold and my spare tournament gorget!' (+60G, +140 XP, +15 Crown Rep, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +60G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT")) {
-                                overworld_dialogue_text = "* Sir Balin rubs his knee: 'Hurry to the barrow crossing (1040, 1600), Rowan! Mercenary Grim has no patience for tardy knights!'";
+                                overworld_dialogue_text = "* Sir Balin rubs his knee: 'Hurry to the barrow crossing (1040, 1600), Rowan! Mercenary Grim has no patience for tardy sellswords!'";
                             } else {
-                                overworld_dialogue_text = "* Sir Balin chuckles over spiced cider: 'A knight knows when to charge and when to drink. Today, brother, we drink!'";
+                                overworld_dialogue_text = cc_villager_get_dynamic_dialogue("BALIN");
                             }
                         } else if (_vil.id == "MERCENARY_GRIM") {
                             if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage == 1) {
                                 cc_quest_advance("QUEST_DRUNKEN_KNIGHT", 2, "Report back to Sir Balin at the Boar & Flagon.");
-                                overworld_dialogue_text = "* Mercenary Grim sizes Rowan up, resting on his poleaxe: 'Sir Balin sent a knight of the realm as his second? That satisfies the code of steel. Tell Balin his boast is answered.' (Objective Updated: Return to Sir Balin!)";
+                                overworld_dialogue_text = "* Mercenary Grim sizes Rowan up, resting on his poleaxe: 'Sir Balin sent a capable man-at-arms as his second? That satisfies the code of steel. Tell Balin his boast is answered.' (Objective Updated: Return to Sir Balin!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "BALIN'S VOW SATISFIED!", c_yellow);
                             } else if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage >= 2) {
                                 overworld_dialogue_text = "* Mercenary Grim nods: 'Go report to Balin before he drinks himself unconscious.'";
                             } else if (cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) {
-                                overworld_dialogue_text = "* Mercenary Grim grunts: 'You carry yourself well, Sir Rowan. Keep your eyes sharp—the barrows south of here crawl with shades at sundown.'";
+                                overworld_dialogue_text = "* Mercenary Grim grunts: 'You carry yourself well, man-at-arms. Keep your eyes sharp—the barrows south of here crawl with renegades at sundown.'";
                             } else {
                                 overworld_dialogue_text = "* Mercenary Grim leans on his poleaxe: 'I travel south toward Dunhollow at nightfall. Watch your step in the dark woods.'";
                             }
                         } else if (_vil.id == "FOREMAN_BRAND") {
                             if (!cc_quest_is_active("QUEST_MISSING_WINE") && !cc_quest_is_completed("QUEST_MISSING_WINE")) {
                                 cc_quest_start("QUEST_MISSING_WINE");
-                                overworld_dialogue_text = "* Foreman Brand wipes stone dust from his goggles: 'Sir Rowan! We finished the eastern river bridge three days early and tapped Castellan Morvath's reserve wine cask to celebrate! If Bailiff Guy finds out, we'll be sent to the iron mines. Seek Sapper Vane at the barrow pass (2450, 1850) for an overtime pardon writ!' (Quest Started: The Quarrymen's Tapped Cask!)";
+                                overworld_dialogue_text = "* Foreman Brand wipes stone dust from his goggles: 'Rowan! We finished the eastern river bridge three days early and tapped Castellan Morvath's reserve wine cask to celebrate! If Bailiff Guy finds out, we'll be sent to the iron mines. Seek Sapper Vane at the barrow pass (2450, 1850) for an overtime pardon writ!' (Quest Started: The Quarrymen's Tapped Cask!)";
                             } else if (cc_quest_is_active("QUEST_MISSING_WINE") && cc_quest_get("QUEST_MISSING_WINE").stage >= 2) {
                                 cc_quest_complete("QUEST_MISSING_WINE", "MEDIATED_MASONS");
+                                cc_war_record_dispatch("dunhollow", "Quarrymen Pardon Granted", "Sapper Vane's overtime writ shielded Foreman Brand's masons from bailiff retribution.");
                                 overworld_dialogue_text = "* Foreman Brand laughs in relief: 'A signed military pardon from Sapper Vane! Morvath's bailiffs can't touch us now! Take this 55 Gold and our finest river gravel-mortar!' (+55G, +110 XP, +20 Dunhollow Rep, Quest Completed!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "QUEST COMPLETED! +55G", c_yellow);
                             } else if (cc_quest_is_active("QUEST_MISSING_WINE")) {
                                 overworld_dialogue_text = "* Foreman Brand whispers: 'Have you spoken with Sapper Vane at (2450, 1850)? We need that signed overtime pardon before Morvath's inspectors arrive!'";
                             } else {
-                                overworld_dialogue_text = "* Foreman Brand taps the stone balustrade: 'Built to withstand five hundred spring floods. The masons of Stonecross salute you, knight!'";
+                                overworld_dialogue_text = "* Foreman Brand taps the stone balustrade: 'Built to withstand five hundred spring floods. The masons of Stonecross salute you, friend!'";
                             }
                         } else if (_vil.id == "FACTOR_MALO") {
                             if (!cc_quest_is_active("QUEST_SMUGGLER_RUN") && !cc_quest_is_completed("QUEST_SMUGGLER_RUN")) {
@@ -333,9 +347,9 @@ if (global.game_mode == "OVERWORLD") {
                         } else if (_vil.id == "CORIN") {
                             if (!cc_quest_is_active("QUEST_COUNTERFEIT") && !cc_quest_is_completed("QUEST_COUNTERFEIT")) {
                                 cc_quest_start("QUEST_COUNTERFEIT");
-                                // Corin hands over the shard at once, so the chapel altar (which checks stage 2) can finish it.
+                                // Corin hands over the debased coin, directing Rowan to Master Odo's anvil at (810, 2710) for assay
                                 cc_quest_advance("QUEST_COUNTERFEIT", 2);
-                                overworld_dialogue_text = "* Peddler Corin whispers: 'A hooded buyer gave me a strange astral shard. Consecrate it at Brother Dunstan's altar!' (Quest Started: The Counterfeit Crown!)";
+                                overworld_dialogue_text = "* Peddler Corin whispers: 'A traveling tinker sold me these silver groats cheap, but the stamp looks crooked. Take this debased coin to Master Odo at the forge anvil (810, 2710) to test the metal!' (Quest Started: The Counterfeit Coin!)";
                             } else {
                                 global.game_mode = "TRADE_MENU";
                             }
@@ -343,31 +357,21 @@ if (global.game_mode == "OVERWORLD") {
                             if (!cc_npc_has_memory("beatrice", "DAILY_BREAD")) {
                                 cc_npc_add_affinity("beatrice", 5, "DAILY_BREAD");
                                 hero_hp = min(hero_max_hp, hero_hp + 6);
-                                overworld_dialogue_text = "* Baker Beatrice smiles warmly and wraps a warm, crusty loaf in linen: 'You look famished from the road, Sir Rowan. Eat this honey-crust loaf with my blessing!' (+6 HP)";
+                                overworld_dialogue_text = "* Baker Beatrice smiles warmly and wraps a warm, crusty loaf in linen: 'You look famished from the road, Rowan. Eat this honey-crust loaf with my blessing!' (+6 HP)";
                                 add_floating_text(obj_player.x, obj_player.y - 35, "+6 HP (FRESH BREAD)", c_lime);
                             } else {
-                                overworld_dialogue_text = "* Baker Beatrice dusts flour from her apron: 'The refugee camp south of town is growing. I'm baking twice as many barley loaves today so no child goes hungry.'";
+                                overworld_dialogue_text = cc_villager_get_dynamic_dialogue("BEATRICE");
                             }
                         } else if (_vil.id == "ALDEN") {
-                            if (cc_rep_get("stonecross") >= 30) {
-                                overworld_dialogue_text = "* Elder Alden bows with deep respect: 'The entire township speaks of your deeds, Sir Rowan. In these dark days of the Fracture, you are the rock Stonecross leans upon.'";
-                            } else if (global.war_cycle_count >= 3) {
-                                overworld_dialogue_text = "* Elder Alden watches smoke on the horizon: 'The feudal lords tear Aethelgard apart while the ancient rift hums with malice. Tread cautiously on the highroads, knight.'";
-                            } else {
-                                overworld_dialogue_text = "* Elder Alden leans on his staff: 'Welcome to Stonecross, knight. The realm has grown weary, but our hearts remain steadfast.'";
-                            }
+                            overworld_dialogue_text = cc_villager_get_dynamic_dialogue("ALDEN");
                         } else if (_vil.id == "DONALD") {
-                            overworld_dialogue_text = "* Guard Donald points his halberd: 'Looking for direction, Sir Rowan? Follow the southern path to the Crossroads Guidepost (1600, 1400). West leads to the forge and barrow watchtower; east crosses the brook to the farmsteads and old quarries!'";
+                            overworld_dialogue_text = cc_villager_get_dynamic_dialogue("DONALD");
                         } else if (_vil.id == "REFUGEE_MIRA") {
-                            if (global.contested_zones.kings_bridge.controlling_faction == "river_league") {
-                                overworld_dialogue_text = "* Refugee Mira gazes west: 'They say Baroness Vivienne's river rangers have retaken the King's Bridge. Perhaps soon the river trade will flow again...'";
-                            } else {
-                                overworld_dialogue_text = "* Refugee Mira warms trembling hands by the campfire: 'The armies clashed near the western marches... We fled when the bailiffs burned the mill. Is there no peace left in Aethelgard?'";
-                            }
+                            overworld_dialogue_text = cc_villager_get_dynamic_dialogue("REFUGEE_MIRA");
                         } else if (_vil.id == "SAPPER_VANE") {
                             if (cc_quest_is_active("QUEST_MISSING_WINE") && cc_quest_get("QUEST_MISSING_WINE").stage == 1) {
                                 cc_quest_advance("QUEST_MISSING_WINE", 2, "Deliver the Overtime Defense Writ to Foreman Brand.");
-                                overworld_dialogue_text = "* Sapper Vane snorts with laughter: 'Morvath's private vintage? Brand and his lads rebuilt that bridge under goblin fire—they earned every drop! Here, take this signed Overtime Defense Writ. Tell Morvath it was military requisition!' (Pardon Writ Obtained!)";
+                                overworld_dialogue_text = "* Sapper Vane snorts with laughter: 'Morvath's private vintage? Brand and his lads rebuilt that bridge under crossbow fire—they earned every drop! Here, take this signed Overtime Defense Writ. Tell Morvath it was military requisition!' (Pardon Writ Obtained!)";
                                 add_floating_text(obj_player.x, obj_player.y - 40, "PARDON WRIT OBTAINED!", c_yellow);
                             } else {
                                 global.game_mode = "CONTRACTS";
@@ -463,35 +467,48 @@ else if (global.game_mode == "ARCHERY_GAME") {
 // =========================================================================
 else if (global.game_mode == "TRADE_MENU") {
     var _num_comm = array_length(trade_commodity_keys);
-    if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))) {
-        trade_cursor_idx = (trade_cursor_idx - 1 + _num_comm) % _num_comm;
-    }
-    // S is the Sell key here, so only the arrow key moves the cursor down.
-    if (keyboard_check_pressed(vk_down)) {
-        trade_cursor_idx = (trade_cursor_idx + 1) % _num_comm;
+    if (_num_comm > 0) {
+        if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))) {
+            trade_cursor_idx = (trade_cursor_idx - 1 + _num_comm) % _num_comm;
+            cc_sfx_play("snd_ui_click", 1.0, 0.7);
+        }
+        // S is the Sell key here, so only the arrow key moves the cursor down.
+        if (keyboard_check_pressed(vk_down)) {
+            trade_cursor_idx = (trade_cursor_idx + 1) % _num_comm;
+            cc_sfx_play("snd_ui_click", 1.0, 0.7);
+        }
+        trade_cursor_idx = clamp(trade_cursor_idx, 0, _num_comm - 1);
     }
 
-    var _cur_cid = trade_commodity_keys[trade_cursor_idx];
+    var _cur_cid = (_num_comm > 0) ? trade_commodity_keys[trade_cursor_idx] : "";
 
     // Buy 1 sack [B] or [Enter]
     if (keyboard_check_pressed(ord("B")) || keyboard_check_pressed(vk_enter)) {
-        if (cc_trade_buy(_cur_cid, 1)) {
-            trade_feedback_text = "Purchased 1 sack of " + global.commodities[$ _cur_cid].name + "!";
-            trade_feedback_timer = 90;
-        } else {
-            trade_feedback_text = "Cannot buy: insufficient gold or merchant out of stock!";
-            trade_feedback_timer = 90;
+        if (_num_comm > 0 && _cur_cid != "" && variable_struct_exists(global.commodities, _cur_cid)) {
+            if (cc_trade_buy(_cur_cid, 1)) {
+                cc_sfx_play("snd_ui_click", 1.2, 0.85);
+                var _cname = (variable_struct_exists(global.commodities, _cur_cid)) ? global.commodities[$ _cur_cid].name : _cur_cid;
+                trade_feedback_text = "Purchased 1 sack of " + _cname + "!";
+                trade_feedback_timer = 90;
+            } else {
+                trade_feedback_text = "Cannot buy: insufficient gold or merchant out of stock!";
+                trade_feedback_timer = 90;
+            }
         }
     }
 
     // Sell 1 sack [S]
     if (keyboard_check_pressed(ord("S"))) {
-        if (cc_trade_sell(_cur_cid, 1)) {
-            trade_feedback_text = "Sold 1 sack of " + global.commodities[$ _cur_cid].name + "!";
-            trade_feedback_timer = 90;
-        } else {
-            trade_feedback_text = "Cannot sell: none in cargo or merchant cannot afford it!";
-            trade_feedback_timer = 90;
+        if (_num_comm > 0 && _cur_cid != "" && variable_struct_exists(global.commodities, _cur_cid)) {
+            if (cc_trade_sell(_cur_cid, 1)) {
+                cc_sfx_play("snd_ui_click", 1.2, 0.85);
+                var _cname = (variable_struct_exists(global.commodities, _cur_cid)) ? global.commodities[$ _cur_cid].name : _cur_cid;
+                trade_feedback_text = "Sold 1 sack of " + _cname + "!";
+                trade_feedback_timer = 90;
+            } else {
+                trade_feedback_text = "Cannot sell: none in cargo or merchant cannot afford it!";
+                trade_feedback_timer = 90;
+            }
         }
     }
 
@@ -508,9 +525,11 @@ else if (global.game_mode == "QUEST_LOG") {
     var _num_q = array_length(quest_log_keys);
     if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))) {
         quest_log_cursor_idx = (quest_log_cursor_idx - 1 + _num_q) % _num_q;
+        cc_sfx_play("snd_ui_click", 1.0, 0.7);
     }
     if (keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("S"))) {
         quest_log_cursor_idx = (quest_log_cursor_idx + 1) % _num_q;
+        cc_sfx_play("snd_ui_click", 1.0, 0.7);
     }
 
     // Close Quest Log [Q], [Esc], [Space], [Enter], or [X]
@@ -526,9 +545,11 @@ else if (global.game_mode == "CONTRACTS") {
     var _num_c = array_length(global.contracts);
     if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"))) {
         global.contract_cursor_idx = (global.contract_cursor_idx - 1 + _num_c) % _num_c;
+        cc_sfx_play("snd_ui_click", 1.0, 0.7);
     }
     if (keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("S"))) {
         global.contract_cursor_idx = (global.contract_cursor_idx + 1) % _num_c;
+        cc_sfx_play("snd_ui_click", 1.0, 0.7);
     }
 
     var _cur_c = global.contracts[global.contract_cursor_idx];
@@ -536,6 +557,7 @@ else if (global.game_mode == "CONTRACTS") {
     // Accept Contract [Enter] or [Space]
     if (keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space)) {
         if (_cur_c.status == "AVAILABLE") {
+            cc_sfx_play("snd_ui_click", 1.2, 0.85);
             cc_contract_accept(_cur_c.id);
         }
     }

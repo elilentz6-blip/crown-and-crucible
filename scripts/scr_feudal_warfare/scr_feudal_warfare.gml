@@ -31,14 +31,14 @@ function cc_warfare_init() {
             capital: "High Cairn",
             color: make_color_rgb(234, 179, 8),
             dark_color: make_color_rgb(113, 63, 18),
-            banner_symbol: "👑 Solar Crown",
+            banner_symbol: "[Crown] Solar Crown",
             power: 85,           // Military strength (0-100)
             treasury: 1400,      // Faction gold reserves
             food: 90,            // Granary reserves
             iron: 45,            // Armory & steel reserves
             territory: 45,       // % of realm territorial control
             stance: "DEFENSIVE_EXPANSION",
-            ambition: "Enforce martial tithes across all baronies to finance sealing the Great Fracture.",
+            ambition: "Enforce royal tithes across all baronies to secure the realm and suppress rebellious marcher lords.",
             doctrine: "Disciplined royal knights, halberdiers, and fortified toll gates."
         },
         river_league: {
@@ -50,7 +50,7 @@ function cc_warfare_init() {
             capital: "Oakhaven Wharfs",
             color: make_color_rgb(56, 189, 248),
             dark_color: make_color_rgb(12, 74, 110),
-            banner_symbol: "🐟 Silver Pike",
+            banner_symbol: "[Pike] Silver Pike",
             power: 65,
             treasury: 2200,      // Wealthiest faction
             food: 60,
@@ -69,7 +69,7 @@ function cc_warfare_init() {
             capital: "Dunhollow Bastion",
             color: make_color_rgb(239, 68, 68),
             dark_color: make_color_rgb(127, 29, 29),
-            banner_symbol: "⚒️ Obsidian Pick",
+            banner_symbol: "[Pick] Obsidian Pick",
             power: 75,
             treasury: 800,
             food: 40,            // Starving for agricultural provisions!
@@ -114,7 +114,7 @@ function cc_warfare_init() {
             controlling_faction: "iron_council",
             contested: true,
             defense_level: 2,
-            banner_text: "IRON COUNCIL MARCH: Beware quarry sappers and restless crypt shades!"
+            banner_text: "IRON COUNCIL MARCH: Beware quarry sappers and armed barrow renegades!"
         }
     };
 
@@ -175,7 +175,7 @@ function cc_war_record_dispatch(_faction, _headline, _flavor) {
 
     // Trigger floating announcement on screen
     if (instance_exists(obj_game) && instance_exists(obj_player)) {
-        obj_game.add_floating_text(obj_player.x, obj_player.y - 50, "📢 WAR DISPATCH: " + _headline, c_yellow);
+        obj_game.add_floating_text(obj_player.x, obj_player.y - 50, "[WAR DISPATCH] " + _headline, c_yellow);
         obj_game.overworld_dialogue_text = "* [WAR CHRONICLE] " + _headline + " (" + _flavor + ")";
     }
 }

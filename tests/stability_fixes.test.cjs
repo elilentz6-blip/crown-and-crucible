@@ -80,9 +80,9 @@ test('a beaten foe leaves the map and cannot be fought again until it respawns',
   assert.equal(foe.respawn_at, 0);
 });
 
-test('the Dimensional Gate pays its XP and Crown favor only once', () => {
+test('the Overgrown Border Redoubt pays its XP and Crown favor only once', () => {
   const { g } = world();
-  g.cc_npc_add_affinity('odo', 0, 'RELIC_CONSECRATED');
+  g.cc_npc_add_affinity('odo', 0, 'COUNTERFEIT_ASSAYED');
   const crown = g.cc_rep_get('crown');
   assert.equal(g.cc_world_simulation_interact(1600, 400), true);
   const xp = g.hero_xp + (g.hero_lv - 1) * 1000, lv = g.hero_lv;
@@ -91,7 +91,7 @@ test('the Dimensional Gate pays its XP and Crown favor only once', () => {
   assert.equal(g.hero_xp + (g.hero_lv - 1) * 1000, xp); assert.equal(g.hero_lv, lv);
 });
 
-test('The Peddler\'s Astral Relic can be started at Corin and finished at the chapel altar', () => {
+test('The Counterfeit Coin quest can be started at Corin, assayed at Odo\'s anvil, and resolved at the Border Redoubt', () => {
   const { g, player } = world();
   const corin = g.world_villagers.find(v => v.id === 'CORIN');
   player.x = corin.x; player.y = corin.y + 10;
@@ -102,7 +102,11 @@ test('The Peddler\'s Astral Relic can be started at Corin and finished at the ch
   press(g, Z);
   assert.equal(g.global.game_mode, 'TRADE_MENU', 'later talks open the market');
   g.global.game_mode = 'OVERWORLD';
-  assert.equal(g.cc_world_simulation_interact(1304, 2634), true);
+  // Assay debased groat at Master Odo's Great Anvil (810, 2710) -> stage 3
+  assert.equal(g.cc_world_simulation_interact(810, 2710), true);
+  assert.equal(g.cc_quest_get('QUEST_COUNTERFEIT').stage, 3);
+  // Search Overgrown Border Redoubt (1600, 400) -> smash illicit mint and complete quest
+  assert.equal(g.cc_world_simulation_interact(1600, 400), true);
   assert.equal(g.cc_quest_get('QUEST_COUNTERFEIT').status, 'COMPLETED');
 });
 

@@ -67,9 +67,9 @@ console.log('================================================================\n'
 // -----------------------------------------------------------------------------
 console.log('--- SECTION 1: BUG B12 STRESS TESTS (Elder Alden Interaction) ---');
 
-const DIALOGUE_HIGH_REP = "* Elder Alden bows with deep respect: 'The entire township speaks of your deeds, Sir Rowan. In these dark days of the Fracture, you are the rock Stonecross leans upon.'";
-const DIALOGUE_WAR_ALERT = "* Elder Alden watches smoke on the horizon: 'The feudal lords tear Aethelgard apart while the ancient rift hums with malice. Tread cautiously on the highroads, knight.'";
-const DIALOGUE_DEFAULT = "* Elder Alden leans on his staff: 'Welcome to Stonecross, knight. The realm has grown weary, but our hearts remain steadfast.'";
+const DIALOGUE_HIGH_REP = "* Elder Alden bows with deep respect: 'The entire township speaks of your deeds, Rowan. In these dark days of civil strife, you are the rock Stonecross leans upon.'";
+const DIALOGUE_WAR_ALERT = "* Elder Alden watches smoke on the horizon: 'The feudal lords tear Aethelgard apart while mercenary companies plunder the harvest. Tread cautiously on the highroads, man-at-arms.'";
+const DIALOGUE_DEFAULT = "* Elder Alden leans on his staff: 'Welcome to Stonecross, man-at-arms. The realm has grown weary, but our hearts remain steadfast.'";
 
 test('B12.1: Interacting with Elder Alden when rep < 30 and war cycle >= 3 selects war alert without crash', () => {
   const { g, player } = createWorld();

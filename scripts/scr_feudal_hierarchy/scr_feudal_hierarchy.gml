@@ -27,9 +27,9 @@ function cc_hierarchy_init() {
     // 1. CHIVALRIC PROGRESSION STATE
     // -------------------------------------------------------------------------
     global.chivalric_renown = 0; // Earned from contracts, tournament feats, and war skirmishes
-    global.feudal_rank = 0;      // 0: Hedge Knight, 1: Freeblade, 2: Knight-Banneret, 3: Marcher Lord
+    global.feudal_rank = 0;      // 0: Common Man-at-Arms, 1: Company Officer, 2: Sworn Champion/Knight, 3: Marcher Lord
     global.sworn_faction = "";   // "crown", "river_league", "iron_council", or "" (Free)
-    global.player_title = "Sir Rowan the Wanderer";
+    global.player_title = "Rowan (Man-at-Arms)";
     global.fief_owned = false;   // The Old Watchtower Fief Writ
     global.weekly_fief_income = 50;
 
@@ -39,21 +39,21 @@ function cc_hierarchy_init() {
     global.rank_definitions = [
         {
             rank: 0,
-            title: "Wandering Hedge Knight",
+            title: "Common Man-at-Arms",
             renown_req: 0,
             rep_req: 0,
-            perks: "Starting rank. Unaligned adventurer traveling the realm."
+            perks: "Starting rank. Common-born soldier seeking service and coin in the realm."
         },
         {
             rank: 1,
-            title: "Recognized Freeblade Captain",
+            title: "Recognized Company Officer",
             renown_req: 50,
             rep_req: 0,
             perks: "Access to high-tier mercenary commissions; tavern drinks 20% cheaper; freeblades greet you with respect."
         },
         {
             rank: 2,
-            title: "Sworn Knight-Banneret",
+            title: "Sworn Champion / Knight",
             renown_req: 100,
             rep_req: 40,
             perks: "Wearable Faction War Cloak; 25% faction merchant discount; can summon faction man-at-arms in battle."
@@ -82,41 +82,62 @@ function cc_hierarchy_check_promotion() {
     var _old_rank = global.feudal_rank;
     var _new_rank = _old_rank;
 
-    // Check Rank 1: Freeblade Captain
+    var _crown_rep = cc_rep_get("crown");
+    var _oak_rep = cc_rep_get("oakhaven");
+    var _dun_rep = cc_rep_get("dunhollow");
+
+    // Check Rank 1: Company Officer / Freeblade Captain (Renown >= 50)
     if (global.chivalric_renown >= 50 && _old_rank < 1) {
         _new_rank = 1;
-        global.player_title = "Sir Rowan Iron-Arm, Freeblade Captain";
-    }
-
-    // Check Rank 2: Sworn Knight-Banneret
-    if (global.chivalric_renown >= 100 && _old_rank < 2) {
-        // Find highest faction reputation
-        var _crown_rep = cc_rep_get("crown");
-        var _oak_rep = cc_rep_get("oakhaven");
-        var _dun_rep = cc_rep_get("dunhollow");
-
-        if (_crown_rep >= 40) {
-            _new_rank = 2;
-            global.sworn_faction = "crown";
-            global.player_title = "Sir Rowan, Crown Vanguard Knight";
-        } else if (_oak_rep >= 40) {
-            _new_rank = 2;
-            global.sworn_faction = "river_league";
-            global.player_title = "Sir Rowan, River Guild Champion";
-        } else if (_dun_rep >= 40) {
-            _new_rank = 2;
-            global.sworn_faction = "iron_council";
-            global.player_title = "Sir Rowan, Iron Castellan's Warden";
+        if (_crown_rep > _oak_rep && _crown_rep > _dun_rep && _crown_rep >= 15) {
+            global.player_title = "Rowan, Sergeant-at-Arms";
+        } else if (_oak_rep > _crown_rep && _oak_rep > _dun_rep && _oak_rep >= 15) {
+            global.player_title = "Rowan, Free-Captain";
+        } else if (_dun_rep > _crown_rep && _dun_rep > _oak_rep && _dun_rep >= 15) {
+            global.player_title = "Rowan, Master-at-Arms";
+        } else {
+            global.player_title = "Rowan, Freeblade Captain";
         }
     }
 
-    // Check Rank 3: Landed Marcher Castellan
+    // Check Rank 2: Sworn Knight / Champion (Renown >= 100)
+    if (global.chivalric_renown >= 100 && _old_rank < 2) {
+        if (_crown_rep >= 40 && _crown_rep >= _oak_rep && _crown_rep >= _dun_rep) {
+            _new_rank = 2;
+            global.sworn_faction = "crown";
+            global.player_title = "Rowan, Sworn Knight";
+        } else if (_oak_rep >= 40 && _oak_rep >= _crown_rep && _oak_rep >= _dun_rep) {
+            _new_rank = 2;
+            global.sworn_faction = "river_league";
+            global.player_title = "Rowan, Factor's Shield";
+        } else if (_dun_rep >= 40 && _dun_rep >= _crown_rep && _dun_rep >= _oak_rep) {
+            _new_rank = 2;
+            global.sworn_faction = "iron_council";
+            global.player_title = "Rowan, Castellan's Warden";
+        } else if (max(_crown_rep, _oak_rep, _dun_rep) >= 40) {
+            if (_crown_rep >= 40) {
+                _new_rank = 2;
+                global.sworn_faction = "crown";
+                global.player_title = "Rowan, Sworn Knight";
+            } else if (_oak_rep >= 40) {
+                _new_rank = 2;
+                global.sworn_faction = "river_league";
+                global.player_title = "Rowan, Factor's Shield";
+            } else {
+                _new_rank = 2;
+                global.sworn_faction = "iron_council";
+                global.player_title = "Rowan, Castellan's Warden";
+            }
+        }
+    }
+
+    // Check Rank 3: Landed Marcher Castellan (Renown >= 200)
     if (global.chivalric_renown >= 200 && _old_rank < 3) {
         var _highest_rep = max(cc_rep_get("crown"), cc_rep_get("oakhaven"), cc_rep_get("dunhollow"));
         if (_highest_rep >= 70) {
             _new_rank = 3;
             global.fief_owned = true;
-            global.player_title = "Lord Rowan of the Western March";
+            global.player_title = "Rowan, Lord of the Western March";
         }
     }
 

@@ -4,10 +4,10 @@
 /// PURPOSE:
 ///   Manages dynamic world exploration elements:
 ///   1. Investigation Sites & Clues: Proximity-triggered interactive landmarks for quest progression
-///      (Clover the Sow, Mercenary Grim, Tapped Wine Cask, Contraband Steel Barrel, Dimensional Gate).
+///      (Clover the Sow, Mercenary Grim, Tapped Wine Cask, Contraband Steel Barrel, Border Redoubt).
 ///   2. Dynamic Roadside Travel Encounters: Random highroad events (Refugee Caravan, Broken Merchant Wagon,
-///      Rogue Deserters, Mysterious Pilgrim, Astral Distortion).
-///   3. Dimensional Gate: High-level multiversal rift terminal paying one-time rewards.
+///      Rogue Deserters, Mysterious Pilgrim, Mercenary Patrol).
+///   3. Border Redoubt: Abandoned border bastion housing an illicit coining workshop and recovering stolen die.
 ///
 /// STATE OWNERSHIP:
 ///   - Global State: global.investigation_sites, global.travel_events.
@@ -63,10 +63,10 @@ function cc_world_simulation_init() {
             quest_id: "QUEST_SMUGGLER_RUN",
             active: true
         },
-        // Dimensional Rift Gate & Terminal (The Multiversal Gateway)
+        // Overgrown Border Redoubt (Illicit Coining Den & Ruined Bastion)
         {
-            id: "DIMENSIONAL_GATE_TERMINAL",
-            name: "Ancient Obsidian Rift Gate",
+            id: "BORDER_REDOUBT",
+            name: "Overgrown Border Redoubt",
             x: 1600,
             y: 400,
             rad: 65,
@@ -236,13 +236,14 @@ function cc_world_simulation_interact(_hx, _hy) {
             if (point_distance(_hx, _hy, _spot.x, _spot.y) < _spot.rad) {
                 // Hotspot A: Tavern Bar
                 if (_spot.id == "TAVERN_BAR") {
+                    var _banter = cc_tavern_get_ambient_banter();
                     if (obj_game.hero_gold >= 5) {
                         obj_game.hero_gold -= 5;
                         obj_game.hero_hp = min(obj_game.hero_max_hp, obj_game.hero_hp + 6);
-                        obj_game.overworld_dialogue_text = "* (Barkeep Barnaby pours foaming spiced cider.) 'Drink hearty, Sir Rowan! News is the barrow shades are restless, but our ale stays cold!' (+6 HP, -5 Gold)";
+                        obj_game.overworld_dialogue_text = "* (Barkeep Barnaby pours foaming spiced cider.) '" + _banter + "' (+6 HP, -5 Gold)";
                         obj_game.add_floating_text(_hx, _hy - 35, "+6 HP (HOT CIDER)", c_lime);
                     } else {
-                        obj_game.overworld_dialogue_text = _spot.text;
+                        obj_game.overworld_dialogue_text = "* (Barkeep Barnaby leans on the counter.) '" + _banter + "'";
                     }
                     return true;
                 }
@@ -250,7 +251,7 @@ function cc_world_simulation_interact(_hx, _hy) {
                 // Hotspot B: Minstrel Hearth
                 else if (_spot.id == "TAVERN_HEARTH") {
                     obj_game.hero_hp = min(obj_game.hero_max_hp, obj_game.hero_hp + 4);
-                    obj_game.overworld_dialogue_text = "* Margery sings softly: 'O, the Sunken Crown beneath the deep, where ancient kings in starlight sleep...' Your spirit feels restored! (+4 HP)";
+                    obj_game.overworld_dialogue_text = cc_villager_get_dynamic_dialogue("MARGERY");
                     obj_game.add_floating_text(_hx, _hy - 35, "+4 HP (HEARTH SONG)", c_lime);
                     if (!cc_npc_has_memory("beatrice", "HEARTH_SONG")) cc_npc_add_affinity("beatrice", 5, "HEARTH_SONG");
                     return true;
@@ -258,30 +259,31 @@ function cc_world_simulation_interact(_hx, _hy) {
 
                 // Hotspot C: Master Odo & Anvil
                 else if (_spot.id == "FORGE_ANVIL") {
+                    // Check if player has counterfeit coin to assay (Quest: The Counterfeit Coin)
+                    if (cc_quest_is_active("QUEST_COUNTERFEIT") && cc_quest_get("QUEST_COUNTERFEIT").stage == 2) {
+                        cc_quest_advance("QUEST_COUNTERFEIT", 3, "Search the Overgrown Border Redoubt (1600, 400) for the illicit minting press.");
+                        cc_npc_add_affinity("odo", 10, "COUNTERFEIT_ASSAYED");
+                        obj_game.overworld_dialogue_text = "* Master Odo applies touchstone and acid to the groat: 'Copper and lead washed in thin silver! Stamped with a stolen royal die with a cracked crown-cross. The coiners operate out of the Overgrown Border Redoubt to the north (1600, 400). Find their press and smash it!'";
+                        obj_game.add_floating_text(_hx, _hy - 40, "COIN ASSAYED! DIE IDENTIFIED", c_yellow);
+                        return true;
+                    }
                     // Check if player completed Smuggler's Run with spring-steel
-                    if (cc_quest_is_active("QUEST_SMUGGLER_RUN") && cc_quest_get("QUEST_SMUGGLER_RUN").stage >= 2) {
+                    else if (cc_quest_is_active("QUEST_SMUGGLER_RUN") && cc_quest_get("QUEST_SMUGGLER_RUN").stage >= 2) {
                         cc_quest_complete("QUEST_SMUGGLER_RUN", "DELIVERED_STEEL");
+                        cc_war_record_dispatch("river_league", "Crucible Steel Delivered", "Factor Malo's contraband spring-steel reached Master Odo's anvil past royal checkpoints.");
                         obj_game.overworld_dialogue_text = "* Master Odo prizes open the brine keg: 'Crucible spring-steel! By the saints, this will forge the sharpest broadswords in Aethelgard! Take this 80 Gold and my finest hand-honed blade polish!' (+80G, +150 XP, +20 Oakhaven Rep!)";
                         obj_game.add_floating_text(_hx, _hy - 40, "QUEST COMPLETED! +80G", c_yellow);
                     } else {
-                        obj_game.overworld_dialogue_text = "* Master Odo bellows: 'Check the heavy iron chest beside my bench for a tempered blade! When you bring me rare slag from Dunhollow, we shall forge legendary plate!'";
+                        obj_game.overworld_dialogue_text = cc_villager_get_dynamic_dialogue("ODO");
                     }
                     return true;
                 }
 
                 // Hotspot D: Chapel Rose Altar & Brother Dunstan
                 else if (_spot.id == "CHAPEL_ALTAR") {
-                    // Check if player has the Astral Relic from Quest Counterfeit
-                    if (cc_quest_is_active("QUEST_COUNTERFEIT") && cc_quest_get("QUEST_COUNTERFEIT").stage == 2) {
-                        cc_quest_complete("QUEST_COUNTERFEIT", "CONSECRATED_ASTRAL_RELIC");
-                        obj_game.overworld_dialogue_text = "* Brother Dunstan sprinkles holy spring-water upon the purple talisman. Ancient star-glyphs flare with blinding celestial radiance! 'A true shard of the Great Fracture! It resonates with the Northern Portal!' (+50G, +120 XP, +15 Stonecross, +10 Crown Rep!)";
-                        cc_npc_add_affinity("odo", 20, "RELIC_CONSECRATED");
-                        obj_game.add_floating_text(_hx, _hy - 40, "ASTRAL RELIC CONSECRATED!", c_aqua);
-                    } else {
-                        obj_game.hero_hp = obj_game.hero_max_hp;
-                        obj_game.overworld_dialogue_text = "* Brother Dunstan lays blessed hands upon your brow: 'Go forth with righteous courage, Sir Rowan. The Sunken Crown watches over the faithful!' (HP Fully Restored!)";
-                        obj_game.add_floating_text(_hx, _hy - 35, "FULL HP RESTORED!", c_lime);
-                    }
+                    obj_game.hero_hp = obj_game.hero_max_hp;
+                    obj_game.overworld_dialogue_text = cc_villager_get_dynamic_dialogue("DUNSTAN");
+                    obj_game.add_floating_text(_hx, _hy - 35, "FULL HP RESTORED!", c_lime);
                     return true;
                 }
 
@@ -327,14 +329,14 @@ function cc_world_simulation_interact(_hx, _hy) {
             else if (_site.id == "MERCENARY_GRIM") {
                 if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage == 1) {
                     cc_quest_advance("QUEST_DRUNKEN_KNIGHT", 2, "Report back to Sir Balin at the Boar & Flagon.");
-                    obj_game.overworld_dialogue_text = "* Mercenary Grim sizes Rowan up: 'Sir Balin sent a knight of the realm as his second? That satisfies the code of steel. Tell Balin his boast is answered.' (Objective Updated: Return to Sir Balin!)";
+                    obj_game.overworld_dialogue_text = "* Mercenary Grim sizes Rowan up: 'Sir Balin sent a capable man-at-arms as his second? That satisfies the code of steel. Tell Balin his boast is answered.' (Objective Updated: Return to Sir Balin!)";
                     obj_game.add_floating_text(_hx, _hy - 40, "BALIN'S VOW SATISFIED!", c_yellow);
                     return true;
                 } else if (cc_quest_is_active("QUEST_DRUNKEN_KNIGHT") && cc_quest_get("QUEST_DRUNKEN_KNIGHT").stage >= 2) {
                     obj_game.overworld_dialogue_text = "* Grim leans on his poleaxe: 'Go report to Balin before he drinks himself unconscious.'";
                     return true;
                 } else if (cc_quest_is_completed("QUEST_DRUNKEN_KNIGHT")) {
-                    obj_game.overworld_dialogue_text = "* Grim grunts: 'You carry yourself well, Sir Rowan. Keep your eyes sharp—the barrows south of here crawl with shades at sundown.'";
+                    obj_game.overworld_dialogue_text = "* Grim grunts: 'You carry yourself well, man-at-arms. Keep your eyes sharp—the barrows south of here crawl with renegades at sundown.'";
                     return true;
                 } else {
                     obj_game.overworld_dialogue_text = "* Grim leans on a heavy poleaxe: 'I travel to Dunhollow at nightfall. Watch your step in the dark woods.'";
@@ -379,21 +381,26 @@ function cc_world_simulation_interact(_hx, _hy) {
                 }
             }
 
-            // Site 5: The Dimensional Rift Gate
-            else if (_site.id == "DIMENSIONAL_GATE_TERMINAL") {
-                if (cc_npc_has_memory("odo", "RIFT_AWAKENED")) {
-                    obj_game.overworld_dialogue_text = "* (The obsidian gate hums with violet light. Queen Seraphina's voice has fallen silent, but the rift stays open.)";
+            // Site 5: The Overgrown Border Redoubt
+            else if (_site.id == "BORDER_REDOUBT" || _site.id == "DIMENSIONAL_GATE_TERMINAL") {
+                if (cc_npc_has_memory("odo", "REDOUBT_CLEARED") || cc_npc_has_memory("odo", "RIFT_AWAKENED")) {
+                    obj_game.overworld_dialogue_text = "* (The Overgrown Border Redoubt stands silent. The illegal screw-press lies smashed among iron shavings, and the stolen royal die is secured for the King's bailiff.)";
                     return true;
-                } else if (cc_quest_is_completed("QUEST_COUNTERFEIT") || cc_npc_has_memory("odo", "RELIC_CONSECRATED")) {
-                    cc_npc_add_affinity("odo", 0, "RIFT_AWAKENED"); // one-time reward, stored in NPC memory so saves keep it
-                    obj_game.overworld_dialogue_text = "* (THE DIMENSIONAL RIFT AWAKENS!) A blinding violet aurora swirls through the obsidian gate! Across the dimensional void, the voice of QUEEN SERAPHINA of Vespera echoes: 'Who awakens the celestial crucible? Aethelgard... you still endure!' (+25 Crown Favor, +150 XP!)";
+                } else if ((cc_quest_is_active("QUEST_COUNTERFEIT") && (cc_quest_get("QUEST_COUNTERFEIT").stage >= 3 || cc_npc_has_memory("odo", "COUNTERFEIT_ASSAYED"))) || cc_quest_is_completed("QUEST_COUNTERFEIT") || cc_npc_has_memory("odo", "COUNTERFEIT_ASSAYED") || cc_npc_has_memory("odo", "RELIC_CONSECRATED")) {
+                    cc_npc_add_affinity("odo", 0, "REDOUBT_CLEARED");
+                    cc_npc_add_affinity("odo", 0, "RIFT_AWAKENED"); // backward compat for saves and test assertions
+                    if (cc_quest_is_active("QUEST_COUNTERFEIT")) {
+                        cc_quest_complete("QUEST_COUNTERFEIT", "SMASHED_ILLICIT_MINT");
+                        cc_war_record_dispatch("crown", "Counterfeit Mint Smashed", "Rowan recovered the stolen royal die at the Border Redoubt, securing the Stonecross currency.");
+                    }
                     cc_rep_add("crown", 25);
                     cc_hero_gain_xp(150);
-                    obj_game.screen_shake = 6;
-                    obj_game.add_floating_text(_hx, _hy - 40, "DIMENSION II LINKED!", c_fuchsia);
+                    obj_game.screen_shake = 4;
+                    obj_game.overworld_dialogue_text = "* (THE ILLICIT MINT UNCOVERED!) Deep within the overgrown redoubt cellar, you discover an outlaw workshop! You smash the illicit coin-clipping shears and illegal screw-press, recovering the stolen royal crown die! (+50G, +120 XP, +15 Stonecross, +35 Crown Rep!)";
+                    obj_game.add_floating_text(_hx, _hy - 40, "BORDER REDOUBT SECURED!", c_yellow);
                     return true;
                 } else {
-                    obj_game.overworld_dialogue_text = "* (The Ancient Dimensional Gate: Massive obsidian standing stones humming with dormant cosmic energy. An astral key or consecrated relic of the Great Fracture is required to awaken the rift.)";
+                    obj_game.overworld_dialogue_text = "* (The Overgrown Border Redoubt: Crumbling stone bastions of an abandoned royal garrison, choked with briars. Traces of soot and fresh bootprints lead into the ruined cellars.)";
                     return true;
                 }
             }

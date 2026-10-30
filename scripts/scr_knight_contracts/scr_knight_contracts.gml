@@ -167,6 +167,13 @@ function cc_contract_get(_cid) {
 function cc_contract_accept(_cid) {
     var _c = cc_contract_get(_cid);
     if (!is_undefined(_c) && _c.status == "AVAILABLE") {
+        // Revert any previously active contract to AVAILABLE to prevent orphaning
+        if (global.active_contract_id != "" && global.active_contract_id != _cid) {
+            var _old_c = cc_contract_get(global.active_contract_id);
+            if (!is_undefined(_old_c) && _old_c.status == "ACTIVE") {
+                _old_c.status = "AVAILABLE";
+            }
+        }
         // Only one active contract at a time
         global.active_contract_id = _cid;
         _c.status = "ACTIVE";
@@ -334,66 +341,47 @@ function cc_contracts_check_interaction(_px, _py) {
 
 function cc_draw_contracts_menu() {
     // Dark Backdrop
+    var _a = draw_get_alpha();
+    draw_set_alpha(_a * 0.75);
     draw_set_color(make_color_rgb(18, 14, 12));
     draw_rectangle(0, 0, 1366, 768, false);
+    draw_set_alpha(_a);
 
-    // Leather Bound War Ledger Frame
-    draw_set_color(make_color_rgb(44, 28, 18));
-    draw_roundrect(120, 36, 1246, 732, false);
-    draw_set_color(make_color_rgb(88, 54, 30));
-    draw_roundrect(122, 38, 1244, 730, true);
-    draw_set_color(make_color_rgb(180, 130, 70));
-    draw_roundrect(128, 44, 1238, 724, true);
+    // Gilded Frame Backdrop
+    ui_panel("gilded", 80, 40, 1206, 688);
 
-    // Inner Parchment
-    draw_set_color(make_color_rgb(238, 230, 210));
-    draw_roundrect(148, 64, 1218, 704, false);
-    draw_set_color(make_color_rgb(60, 40, 25));
-    draw_roundrect(148, 64, 1218, 704, true);
-
-    // Header Title
-    draw_set_color(make_color_rgb(120, 40, 20));
-    draw_text(180, 80, "⚔️ THE KNIGHT'S CONTRACT LEDGER • FREELANCE COMMISSIONS & WAR CHRONICLE");
-
-    // Divider line between columns
-    draw_set_color(make_color_rgb(160, 130, 100));
-    draw_line(570, 120, 570, 680);
+    // Header Ribbon & Title
+    var _title = "The Knight's Contract Ledger • Freelance Commissions";
+    var _rw = ui_text_width(_title, "title") + 100;
+    ui_nine("spr_ui_ribbon", 0, 683 - _rw / 2, 20, _rw, 32);
+    ui_text_draw(683 - ui_text_width(_title, "title") / 2, 23, _title, "title_shadow", UI_COL_PARCHMENT);
 
     // -------------------------------------------------------------------------
     // LEFT COLUMN: CONTRACTS LIST
     // -------------------------------------------------------------------------
-    draw_set_color(make_color_rgb(60, 40, 25));
-    draw_text(180, 125, "--- AVAILABLE & ACTIVE COMMISSIONS ---");
+    ui_text_draw(110, 72, "AVAILABLE & ACTIVE COMMISSIONS", "body_bold", UI_COL_INK);
+    ui_divider(100, 94, 460);
 
-    var _start_y = 160;
+    var _start_y = 114;
     var _num_c = array_length(global.contracts);
+    var _spr_seal = ui_spr("spr_ui_seal");
 
     for (var _i = 0; _i < _num_c; _i++) {
         var _c = global.contracts[_i];
-        var _cy = _start_y + _i * 72;
+        var _cy = _start_y + _i * 76;
         var _is_sel = (global.contract_cursor_idx == _i);
 
-        // Row Highlight
-        if (_is_sel) {
-            draw_set_color(make_color_rgb(217, 119, 6));
-            draw_roundrect(170, _cy - 4, 550, _cy + 62, false);
-            draw_set_color(make_color_rgb(255, 250, 240));
-        } else {
-            draw_set_color((_i mod 2 == 0) ? make_color_rgb(228, 218, 196) : make_color_rgb(238, 230, 210));
-            draw_roundrect(170, _cy - 4, 550, _cy + 62, false);
-            draw_set_color(make_color_rgb(40, 30, 20));
-        }
+        // Row Panel
+        ui_panel(_is_sel ? "gilded_dark" : "inset", 100, _cy, 460, 68);
 
-        // Status Badge
-        var _badge = (_c.status == "COMPLETED") ? "[DONE]" : ((_c.status == "ACTIVE") ? "[ACTIVE]" : ((_c.status == "BETRAYED") ? "[BETRAYED]" : "[AVAILABLE]"));
-        var _bcol = (_c.status == "COMPLETED") ? make_color_rgb(20, 120, 40) : ((_c.status == "ACTIVE") ? make_color_rgb(180, 83, 9) : ((_c.status == "BETRAYED") ? make_color_rgb(168, 85, 247) : make_color_rgb(100, 100, 100)));
-        if (_is_sel) _bcol = c_white;
+        // Status Seal Icon (0: Available, 1: Active, 2: Completed, 4: Betrayed)
+        var _seal_idx = (_c.status == "COMPLETED" ? 2 : (_c.status == "ACTIVE" ? 1 : (_c.status == "BETRAYED" ? 4 : 0)));
+        if (_spr_seal >= 0) draw_sprite(_spr_seal, _seal_idx, 110, _cy + 18);
 
-        draw_set_color(_bcol);
-        draw_text(180, _cy + 4, _badge + " " + _c.title);
-
-        draw_set_color(_is_sel ? make_color_rgb(254, 240, 138) : make_color_rgb(100, 80, 60));
-        draw_text(180, _cy + 28, "Bounty: " + string(_c.reward_gold) + "G  •  Renown: +" + string(_c.reward_renown) + "  •  " + _c.employer_name);
+        // Status Badge & Title
+        var _badge = (_c.status == "COMPLETED") ? "[DONE]" : ((_c.status == "ACTIVE") ? "[ACTIVE]" : ((_c.status == "BETRAYED") ? "[BETRAYED]" : "[OPEN]"));
+        ui_text_draw(155, _cy + 8, _badge + " " + _c.title, "body_bold", _is_sel ? UI_COL_GOLD : UI_COL_INK, 395);
+        ui_text_draw(155, _cy + 34, "Bounty: " + string(_c.reward_gold) + "G  •  +" + string(_c.reward_renown) + " Renown  •  " + _c.employer_name, "small", _is_sel ? UI_COL_PARCHMENT : UI_COL_INK_SOFT, 395);
     }
 
     // -------------------------------------------------------------------------
@@ -401,65 +389,58 @@ function cc_draw_contracts_menu() {
     // -------------------------------------------------------------------------
     var _cur_c = global.contracts[global.contract_cursor_idx];
 
-    draw_set_color(make_color_rgb(120, 40, 20));
-    draw_text(600, 125, _cur_c.title);
+    // Details Box
+    ui_panel("inset", 580, 70, 686, 330);
+    ui_text_draw(600, 84, _cur_c.title, "title", UI_COL_INK, 646);
 
-    draw_set_color(make_color_rgb(60, 45, 30));
-    draw_text(600, 152, "Employer: " + _cur_c.employer_name + " (" + string_upper(_cur_c.employer_faction) + ")");
-    draw_text(600, 174, "Status: " + _cur_c.status + "   •   Type: " + _cur_c.type);
+    // Employer & Faction Crest (0: Crown, 1: Stonecross, 2: River League, 3: Iron Council)
+    var _spr_crest = ui_spr("spr_ui_crest");
+    var _fac_idx = (_cur_c.employer_faction == "crown" ? 0 : (_cur_c.employer_faction == "river_league" ? 2 : (_cur_c.employer_faction == "iron_council" ? 3 : 1)));
+    if (_spr_crest >= 0) draw_sprite(_spr_crest, _fac_idx, 600, 116);
+    ui_text_draw(636, 122, "Employer: " + _cur_c.employer_name + " (" + string_upper(_cur_c.employer_faction) + ")   •   Status: " + _cur_c.status + "   •   Type: " + _cur_c.type, "small", UI_COL_INK_SOFT);
+    ui_divider(600, 150, 646);
 
-    // Description
-    draw_set_color(make_color_rgb(40, 30, 20));
-    draw_text_ext(600, 205, _cur_c.desc, 18, 560);
+    // Description Lore
+    ui_text_draw(600, 164, _cur_c.desc, "body", UI_COL_INK, 646);
 
     // Objective Box
-    draw_set_color(make_color_rgb(220, 205, 180));
-    draw_roundrect(590, 265, 1180, 335, false);
-    draw_set_color(make_color_rgb(140, 100, 60));
-    draw_roundrect(590, 265, 1180, 335, true);
-
-    draw_set_color(make_color_rgb(180, 83, 9));
-    draw_text(610, 275, "MISSION TARGET & LOCATION:");
-    draw_set_color(make_color_rgb(30, 20, 10));
-    draw_text_ext(610, 298, _cur_c.target_desc, 16, 540);
+    ui_panel("inset_dark", 600, 224, 646, 52);
+    ui_text_draw(612, 228, "MISSION TARGET & LOCATION:", "small_bold", UI_COL_GOLD);
+    ui_text_draw(612, 246, _cur_c.target_desc, "body", UI_COL_PARCHMENT, 620);
 
     // Betrayal Option Box
     if (_cur_c.has_betrayal_option) {
-        draw_set_color(make_color_rgb(235, 215, 225));
-        draw_roundrect(590, 350, 1180, 425, false);
-        draw_set_color(make_color_rgb(147, 51, 234));
-        draw_roundrect(590, 350, 1180, 425, true);
-
-        draw_set_color(make_color_rgb(126, 34, 206));
-        draw_text(610, 360, "⚡ BETRAYAL OPPORTUNITY (DOUBLE AGENT):");
-        draw_set_color(make_color_rgb(50, 30, 40));
-        draw_text(610, 385, "Deliver cargo/bounty to " + _cur_c.betrayal_contact_name + " (" + string_upper(_cur_c.betrayal_faction) + ")");
-        draw_text(610, 403, "Betrayal Reward: " + string(_cur_c.betrayal_gold) + " Gold (+higher bribe, but loses original employer trust!)");
+        ui_panel("inset_dark", 600, 282, 646, 52);
+        ui_text_draw(612, 286, "BETRAYAL OPPORTUNITY (DOUBLE AGENT):", "small_bold", make_color_rgb(220, 140, 255));
+        ui_text_draw(612, 304, "Deliver to " + _cur_c.betrayal_contact_name + " (" + string_upper(_cur_c.betrayal_faction) + ") • Reward: " + string(_cur_c.betrayal_gold) + "G (Loss of trust)", "small", UI_COL_PARCHMENT, 620);
+    } else {
+        ui_text_draw(600, 290, "Standard chivalric commission under feudal law. Fulfill contract to earn bounty.", "small", UI_COL_INK_SOFT);
+        ui_text_draw(600, 314, "CONTRACT REWARD: " + string(_cur_c.reward_gold) + " Gold   •   +" + string(_cur_c.reward_renown) + " Renown", "body_bold", make_color_rgb(120, 40, 20));
     }
 
     // -------------------------------------------------------------------------
     // BOTTOM RIGHT: RECENT WAR CHRONICLE DISPATCHES
     // -------------------------------------------------------------------------
-    draw_set_color(make_color_rgb(225, 215, 195));
-    draw_roundrect(590, 440, 1180, 640, false);
-    draw_set_color(make_color_rgb(140, 100, 60));
-    draw_roundrect(590, 440, 1180, 640, true);
-
-    draw_set_color(make_color_rgb(100, 40, 10));
-    draw_text(610, 452, "📜 BREAKING WAR CHRONICLE DISPATCHES:");
+    ui_panel("inset", 580, 418, 686, 196);
+    ui_text_draw(600, 430, "BREAKING WAR CHRONICLE DISPATCHES", "body_bold", UI_COL_INK);
+    ui_divider(600, 452, 646);
 
     var _max_disp = min(3, array_length(global.war_chronicle));
     for (var _d = 0; _d < _max_disp; _d++) {
         var _disp = global.war_chronicle[_d];
-        var _dy = 480 + _d * 50;
+        var _dy = 466 + _d * 44;
 
-        draw_set_color(make_color_rgb(180, 83, 9));
-        draw_text(610, _dy, "[" + _disp.time_str + " • " + string_upper(_disp.faction) + "]");
-        draw_set_color(make_color_rgb(40, 30, 20));
-        draw_text(610, _dy + 18, _disp.headline);
+        ui_text_draw(600, _dy, "[" + _disp.time_str + " • " + string_upper(_disp.faction) + "]", "small_bold", make_color_rgb(180, 83, 9));
+        ui_text_draw(600, _dy + 18, _disp.headline, "small", UI_COL_INK, 646);
     }
 
-    // Footer Controls
-    draw_set_color(make_color_rgb(60, 45, 30));
-    draw_text(180, 665, "[Up/Down / W/S] Select Contract  •  [Enter / Space] Accept Contract  •  [B / Esc] Close Ledger");
+    // Footer Controls with Keycaps
+    ui_divider(100, 628, 1166);
+    var _fx = 110, _fy = 654;
+    _fx += ui_keycap(_fx, _fy, "Up / Down / W / S") + 8;
+    ui_text_draw(_fx, _fy + 4, "Select Contract", "small", UI_COL_INK_SOFT); _fx += 50;
+    _fx += ui_keycap(_fx, _fy, "Enter / Space") + 8;
+    ui_text_draw(_fx, _fy + 4, "Accept Contract", "small", UI_COL_INK_SOFT); _fx += 50;
+    _fx += ui_keycap(_fx, _fy, "B / Esc") + 8;
+    ui_text_draw(_fx, _fy + 4, "Close Ledger", "small", UI_COL_INK_SOFT);
 }

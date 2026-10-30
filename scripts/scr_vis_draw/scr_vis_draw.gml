@@ -123,10 +123,7 @@ function vis_draw_world() {
         }
     }
     var _po = V.portal;
-    var _pulse = 0.55 + 0.45 * sin(_t * 2.2);
-    draw_sprite_ext(spr_portal_arch, 1, _po.x, _po.y, 1, 1, 0, c_white, 0.5 + 0.5 * _pulse);
-    draw_sprite_ext(spr_fx_light, 0, _po.x, _po.y - 92, 2.2, 2.2, 0, make_color_rgb(110, 70, 220), 0.25 + 0.15 * _pulse);
-    draw_sprite_ext(spr_fx_light, 0, _po.x, _po.y - 20, 2.0, 0.7, 0, make_color_rgb(70, 170, 230), 0.25 + 0.1 * _pulse);
+    draw_sprite_ext(spr_portal_arch, 1, _po.x, _po.y, 1, 1, 0, c_white, 0.4);
     vis_particles_draw(true);
     vis_weather_draw_sky();
     gpu_set_blendmode(bm_normal);
@@ -147,8 +144,7 @@ function vis_draw_static(_e) {
             var _fps = (_e.spr == spr_prop_fountain) ? 10 : 12;
             draw_sprite(_e.spr, floor(V.time * _fps + _e.seed) mod _n, _e.x, _e.y);
             break;
-        case 4: // portal: swirling vortex behind the stone ring
-            draw_sprite(spr_portal_vortex, floor(V.time * 12) mod sprite_get_number(spr_portal_vortex), _e.x, _e.y);
+        case 4: // border redoubt: stone arch and ruins
             draw_sprite(_e.spr, 0, _e.x, _e.y);
             break;
         default:
@@ -218,8 +214,8 @@ function vis_collect_actors() {
     if (instance_exists(obj_player)) {
         var _p = obj_player;
         var _map = [2, 3, 1, 0]; // facing_dir 0 right,1 up,2 left,3 down -> sheet rows
-        // sort by the collision feet (check_player_collision probes y + 8) so the hero never hides behind a wall it is touching
-        array_push(_out, { sy: _p.y + 10, kind: "char", key: "rowan", x: _p.x, y: _p.y, dir: _map[clamp(_p.facing_dir, 0, 3)], mv: _p.is_moving, t: _t });
+        // Harmonized entity depth sorting anchor (matching villagers, companions, and foes)
+        array_push(_out, { sy: _p.y, kind: "char", key: "rowan", x: _p.x, y: _p.y, dir: _map[clamp(_p.facing_dir, 0, 3)], mv: _p.is_moving, t: _t });
     }
     return _out;
 }
@@ -415,7 +411,7 @@ function vis_draw_world_labels() {
     }
     var _po = V.portal;
     var _dp = point_distance(_px, _py, _po.x, _po.y);
-    if (_dp < 260) _plate(_po.x, _po.y - 196, "The Dimensional Gate", make_color_rgb(190, 170, 255), clamp((260 - _dp) / 80, 0, 1));
+    if (_dp < 260) _plate(_po.x, _po.y - 196, "Overgrown Border Redoubt", make_color_rgb(229, 189, 86), clamp((260 - _dp) / 80, 0, 1));
 
     // The prompt mirrors obj_game's interaction priority and ranges.
     var _tx = 0, _ty = 0, _verb = "";

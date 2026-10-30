@@ -35,12 +35,12 @@ function cc_card_definitions() {
         { id: "steady_hand", name: "Steady Hand", kind: "FINESSE", desc: "25% slower sword sweep. Wider perfect windows for every weapon.", effects: { precision: 0.25, attack_window: 0.035 } },
         { id: "lucky_penny", name: "Lucky Penny", kind: "LUCK", desc: "+7% crit. One automatic second chance after a missed FIGHT.", effects: { crit: 7, attack_retry: 1 } },
         { id: "silver_tongue", name: "Silver Tongue", kind: "LUCK", desc: "+10 gold after victory or successful mercy.", effects: { gold: 10 } },
-        { id: "fleet_foot", name: "Fleet Foot", kind: "QUICK", desc: "+0.65 soul speed. Dagger marks arrive 12% faster.", effects: { spd: 0.65, combo_speed: 0.12 } },
-        { id: "light_step", name: "Light Step", kind: "QUICK", desc: "+1 soul speed, -2 ATK. One extra dagger strike.", effects: { spd: 1, atk: -2, extra_strikes: 1 } },
-        { id: "vigor", name: "Vigor", kind: "HEALTH", desc: "+8 max HP. Good attacks heal 1 HP. Slotting never heals.", effects: { hp: 8, heal_on_hit: 1 } },
-        { id: "second_wind", name: "Second Wind", kind: "HEALTH", desc: "Recover 2 HP after surviving each dodge wave.", effects: { regen: 2 } },
-        { id: "oak_guard", name: "Oak Guard", kind: "SHIELD", desc: "Start encounters with 6 Ward; perfect attacks generate 2 more.", effects: { shield: 6, ward_on_perfect: 2 } },
-        { id: "iron_skin", name: "Iron Skin", kind: "SHIELD", desc: "+4 defense. Perfect attacks generate 1 Ward.", effects: { def: 4, ward_on_perfect: 1 } }
+        { id: "fleet_foot", name: "Fleet Foot", kind: "QUICK", desc: "+0.65 footwork speed. Dagger marks arrive 12% faster.", effects: { spd: 0.65, combo_speed: 0.12 } },
+        { id: "light_step", name: "Light Step", kind: "QUICK", desc: "+1 footwork speed, -2 ATK. One extra dagger strike.", effects: { spd: 1, atk: -2, extra_strikes: 1 } },
+        { id: "vigor", name: "Vigor", kind: "HEALTH", desc: "+8 max HP. Good attacks heal 1 HP. Conditioning never heals.", effects: { hp: 8, heal_on_hit: 1 } },
+        { id: "second_wind", name: "Second Wind", kind: "HEALTH", desc: "Recover 2 HP after surviving each defense wave.", effects: { regen: 2 } },
+        { id: "oak_guard", name: "Oak Guard", kind: "SHIELD", desc: "Start encounters with 6 Guard; perfect attacks generate 2 more.", effects: { shield: 6, ward_on_perfect: 2 } },
+        { id: "iron_skin", name: "Iron Skin", kind: "SHIELD", desc: "+4 defense. Perfect attacks generate 1 Guard.", effects: { def: 4, ward_on_perfect: 1 } }
     ];
 }
 
@@ -139,7 +139,7 @@ function cc_equipment_init() {
     armory_slot = 0;
     armory_card = 0;
     armory_focus = 0; // 0: gear, 1: sockets, 2: collection
-    armory_notice = "Select gear, choose a socket, then assign a matching card.";
+    armory_notice = "Select gear, choose a technique slot, then assign a matching conditioning card.";
     cc_recalculate_stats();
 }
 
@@ -229,6 +229,7 @@ function cc_take_hit(_damage) {
     hero_shield -= _absorbed;
     var _lost = max(0, _damage - _absorbed);
     hero_hp = max(0, hero_hp - _lost);
+    cc_sfx_play("snd_hit_impact", 0.85, 1.0);
     return { absorbed: _absorbed, hp_lost: _lost };
 }
 
@@ -300,12 +301,17 @@ function cc_armory_step() {
             cc_cycle_gear(_row, 1);
         }
     }
-    if (keyboard_check_pressed(vk_tab)) armory_focus = (armory_focus + 1) % 3;
+    if (keyboard_check_pressed(vk_tab)) {
+        armory_focus = (armory_focus + 1) % 3;
+        cc_sfx_play("snd_ui_click", 1.0, 0.7);
+    }
     var _up = keyboard_check_pressed(vk_up) || keyboard_check_pressed(ord("W"));
     var _down = keyboard_check_pressed(vk_down) || keyboard_check_pressed(ord("S"));
     var _left = keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"));
     var _right = keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"));
     var _confirm = keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
+    if (_up || _down || _left || _right) cc_sfx_play("snd_ui_click", 1.0, 0.6);
+    if (_confirm) cc_sfx_play("snd_ui_click", 1.2, 0.8);
     if (armory_focus == 0) {
         armory_row = (armory_row + (_down - _up) + 3) % 3;
         armory_slot = 0;
@@ -407,7 +413,7 @@ function cc_draw_armory() {
         draw_set_color(cc_kind_color(_card.kind));
         draw_text(894, _yy, (armory_card == _i ? "> " : "  ") + _card.name + " / " + _card.kind);
         draw_set_color(_fits ? make_color_rgb(125, 185, 112) : make_color_rgb(164, 174, 183));
-        draw_text(906, _yy + 17, _fits ? "Fits selected socket" : "Needs " + _card.kind + " or WILD");
+        draw_text(906, _yy + 17, _fits ? "Fits selected technique slot" : "Needs " + _card.kind + " or WILD");
     }
     draw_set_color(make_color_rgb(164, 174, 183));
     draw_text(890, 425, "Arrows: browse / Left-Right: page / Enter: assign");
@@ -416,8 +422,8 @@ function cc_draw_armory() {
     draw_set_color(make_color_rgb(229, 189, 86));
     draw_text(62, 490, "ACTIVE BUILD");
     draw_set_color(c_white);
-    draw_text(62, 517, "ATK " + string(stat_atk) + "     DEF " + string(stat_def) + "     CRIT " + string(stat_crit) + "%     SOUL SPEED " + string_format(stat_spd, 1, 2));
-    draw_text(62, 546, "HP " + string(hero_hp) + "/" + string(hero_max_hp) + "     STARTING SHIELD " + string(stat_shield) + "     GOLD BONUS +" + string(stat_reward_gold) + "     WAVE HEAL +" + string(stat_regen));
+    draw_text(62, 517, "ATK " + string(stat_atk) + "     DEF " + string(stat_def) + "     CRIT " + string(stat_crit) + "%     FOOTWORK SPEED " + string_format(stat_spd, 1, 2));
+    draw_text(62, 546, "HP " + string(hero_hp) + "/" + string(hero_max_hp) + "     STARTING GUARD " + string(stat_shield) + "     GOLD BONUS +" + string(stat_reward_gold) + "     WAVE HEAL +" + string(stat_regen));
     draw_set_color(make_color_rgb(164, 174, 183));
     draw_text(910, 490, "COMPANIONS / " + string(array_length(recruited_party)) + " OF 3");
     for (var _i = 0; _i < array_length(recruited_party); _i++) {
@@ -433,6 +439,6 @@ function cc_draw_armory() {
     draw_set_color(make_color_rgb(229, 189, 86));
     draw_text(46, 668, armory_notice);
     draw_set_color(make_color_rgb(164, 174, 183));
-    draw_text(46, 707, "[TAB] Gear > Sockets > Cards    [Arrows / WASD] Browse    [Enter / Z] Select    [X] Remove card");
-    draw_text(46, 732, "Matching types only. Wild accepts any type. Cards can be moved freely between encounters; each card exists once.");
+    draw_text(46, 707, "[TAB] Gear > Technique Slots > Conditioning Cards    [Arrows / WASD] Browse    [Enter / Z] Select    [X] Remove card");
+    draw_text(46, 732, "Matching types only. Wild accepts any technique. Conditioning can be adjusted freely between encounters; each card exists once.");
 }

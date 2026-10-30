@@ -95,6 +95,7 @@ function cc_begin_attack() {
     weapon_attack = cc_attack_create(cc_gear(0), combat_modifiers, weapon_minigames);
     battle_phase = "FIGHT_WEAPON";
     battle_input_armed = false;
+    cc_sfx_play("snd_sword_swing", 1.0, 0.85);
     cc_combat_emit("weapon_ready", { weapon_class: weapon_attack.weapon_class, weapon_id: weapon_attack.weapon_id });
 }
 
@@ -113,6 +114,7 @@ function cc_resolve_attack() {
     if (weapon_attack.result.quality >= 0.65 && attack_outcome.damage > 0) hero_hp = min(hero_max_hp, hero_hp + combat_modifiers.heal_on_hit);
     if (weapon_attack.result.perfect) hero_shield += combat_modifiers.ward_on_perfect;
     screen_shake = attack_outcome.damage > 0 ? (_crit ? 8 : 4) : 0;
+    if (attack_outcome.damage > 0) cc_sfx_play("snd_hit_impact", _crit ? 1.2 : 1.0, 0.9);
     combat_result_timer = 0.8;
     battle_phase = "FIGHT_RESULT";
     cc_combat_emit("weapon_impact", { weapon_class: weapon_attack.weapon_class, grade: weapon_attack.result.grade, quality: weapon_attack.result.quality, damage: attack_outcome.damage, critical: _crit, combo: weapon_attack.result.combo });
@@ -150,7 +152,7 @@ function cc_begin_defense() {
     defense_elapsed = 0;
     combat_transition = 0.35;
     soul_invulnerable = 0;
-    var _fallback = battle_enemy.name == "Wild Barrow Boar" ? "BOAR_LANES" : (battle_enemy.name == "Barrow Warden Shade" ? "CROWN_RAIN" : "KNIFE_FAN");
+    var _fallback = battle_enemy.name == "Wild Barrow Boar" ? "BOAR_LANES" : ((battle_enemy.name == "Barrow Warden Shade" || battle_enemy.name == "Barrow Renegade Warden") ? "CROWN_RAIN" : "KNIFE_FAN");
     defense_pattern = cc_value(battle_enemy, "pattern_id", _fallback);
     if (!variable_struct_exists(defense_patterns, defense_pattern)) defense_pattern = "KNIFE_FAN";
     cc_combat_emit("defense_started", { pattern_id: defense_pattern });
@@ -255,10 +257,17 @@ function cc_defense_tick(_dt) {
 function cc_combat_step(_dt) {
     var _seconds = clamp(_dt, 0, 0.05);
     if (battle_phase == "PLAYER_MENU") {
-        if (keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"))) battle_btn_index = (battle_btn_index + 3) % 4;
-        if (keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"))) battle_btn_index = (battle_btn_index + 1) % 4;
+        if (keyboard_check_pressed(vk_left) || keyboard_check_pressed(ord("A"))) {
+            battle_btn_index = (battle_btn_index + 3) % 4;
+            cc_sfx_play("snd_ui_click", 1.0, 0.7);
+        }
+        if (keyboard_check_pressed(vk_right) || keyboard_check_pressed(ord("D"))) {
+            battle_btn_index = (battle_btn_index + 1) % 4;
+            cc_sfx_play("snd_ui_click", 1.0, 0.7);
+        }
         var _confirm = keyboard_check_pressed(ord("Z")) || keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_space);
         if (!_confirm) return;
+        cc_sfx_play("snd_ui_click", 1.2, 0.85);
         switch (battle_btn_index) {
             case 0: cc_begin_attack(); break;
             case 1:

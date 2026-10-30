@@ -219,7 +219,7 @@ function cc_draw_combat() {
         var _blend = clamp(1 - combat_transition / 0.35, 0, 1);
         _blend = _blend * _blend * (3 - 2 * _blend);
         draw_set_color(c_white);
-        var _pattern_name = defense_pattern == "KNIFE_FAN" ? "KNIVES FROM COVER" : (defense_pattern == "BOAR_LANES" ? "CHARGING LANES" : "CROWN RAIN");
+        var _pattern_name = defense_pattern == "KNIFE_FAN" ? "KNIVES FROM COVER" : (defense_pattern == "BOAR_LANES" ? "CHARGING LANES" : "CROSSBOW VOLLEY");
         draw_text(281, 323, "DEFEND / " + _pattern_name + "   " + string_format(max(0, dodge_timer), 1, 1) + "s");
         draw_rectangle(lerp(253, _x1, _blend), lerp(309, _y1, _blend), lerp(1113, _x1 + dodge_box_w, _blend), lerp(575, _y1 + dodge_box_h, _blend), true);
         for (var _i = 0; _i < array_length(defense_warnings); _i++) {
@@ -234,16 +234,16 @@ function cc_draw_combat() {
         draw_triangle(soul_x - 7, soul_y - 1, soul_x + 7, soul_y - 1, soul_x, soul_y + 8, false);
         draw_circle(soul_x - 3, soul_y - 3, 4, false);
         draw_circle(soul_x + 3, soul_y - 3, 4, false);
-        if (combat_transition > 0) { draw_set_color(c_yellow); draw_text(600, 543, "READY YOUR SOUL"); }
+        if (combat_transition > 0) { draw_set_color(c_yellow); draw_text(600, 543, "READY YOUR FOCUS"); }
         draw_set_color(make_color_rgb(164, 174, 183));
         draw_text(281, 715, "Arrows / WASD move. Gold marks warn where attacks will emerge.");
     }
     draw_set_color(c_white);
     draw_text(253, 594, hero_name + "   HP " + string(hero_hp) + "/" + string(hero_max_hp));
     draw_set_color(make_color_rgb(106, 163, 216));
-    draw_text(660, 594, "WARD " + string(hero_shield));
+    draw_text(660, 594, "GUARD " + string(hero_shield));
     draw_set_color(make_color_rgb(164, 174, 183));
-    draw_text(850, 594, "SOUL SPEED " + string_format(stat_spd, 1, 2));
+    draw_text(850, 594, "FOOTWORK SPEED " + string_format(stat_spd, 1, 2));
     var _labels = ["FIGHT", "ACT", "ITEM", "MERCY"];
     for (var _i = 0; _i < 4; _i++) {
         var _x = 253 + _i * 220;

@@ -317,7 +317,7 @@ for (var _fo = 0; _fo < array_length(roaming_foes); _fo++) {
     if (_rf.x >= _vx1 && _rf.x <= _vx2 && _rf.y >= _vy1 && _rf.y <= _vy2) {
         var _sp_foe = spr_foe_highwayman;
         if (_rf.name == "Wild Barrow Boar") _sp_foe = spr_foe_boar;
-        else if (_rf.name == "Barrow Warden Shade") _sp_foe = spr_foe_shade;
+        else if (_rf.name == "Barrow Warden Shade" || _rf.name == "Barrow Renegade Warden") _sp_foe = spr_foe_shade;
 
         draw_sprite(_sp_foe, 0, _rf.x + _sx, _rf.y + _sy);
 
