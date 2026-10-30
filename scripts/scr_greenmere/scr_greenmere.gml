@@ -654,6 +654,12 @@ function gm_fx(_id) {
             chron_set("settlement_found", true);
             chron_note("settlement_found", "The chapel's copy", "The chapel book-chest holds an old bundle marked with the crowned hand and the year 192. The house kept it because it confirms their meadow rights. It is in a clerk's hand you cannot read; Pippin could.");
             break;
+        case "bookchest_witness":
+            if (!chron_doc_has("chronicle_witness")) {
+                chron_doc_give("chronicle_witness");
+                chron_note("witness_roll", "The Roll of the Witness", "The Common Observance keeps memory of the dead of the Greenmere Vale. Dunstan's roll bears witness to every generation that tilled this valley.");
+            }
+            break;
         case "pippin_copy":
             if (chron_doc_has("settlement_copy")) break;
             var _cost = cc_quest_is_completed("QUEST_GAMBLER") ? 0 : 3;
@@ -670,6 +676,10 @@ function gm_fx(_id) {
         case "note_ordel":
             chron_set("ordel_settlement", true);
             chron_note("ordel", "The Ordel Settlement of 446", "After a royal officer held an Ordel grain ship for its owner's arrears and the quarrel became a war, the Settlement limited certain seizures and said disputed accounts must be heard. It also left room for emergencies, and nobody agrees what an emergency is.");
+            break;
+        case "note_greyhaven":
+            chron_set("greyhaven_articles", true);
+            chron_note("greyhaven", "The Greyhaven Articles of 426", "King Edric III's treaty tried to settle thirty years of seized estates. Powerful holders got exceptions; smaller folk got nothing. It left neighborhoods bitter enough to fight.");
             break;
         case "note_composition":
             chron_note("composition", "What Stonecross owes", "The composition: two hundred marks a year in four portions, confirmed long ago and called the king's tithe locally. It is not the church's dues. Now there is a new demand of fifty marks for emergency cartage and the roads and landings. The town says a new charge needs its consent.");
@@ -921,6 +931,10 @@ function gm_doc_desc(_id) {
         case "surety": return ["Oakhaven surety", "Lady Cecily's letter standing surety, on behalf of Oakhaven's factors, for the Terveth grower's debt to the King's account."];
         case "dispatch": return ["Household dispatch, 476", "Order for the support company to withdraw to the Vey transports landing. On the back, another hand: 'came to the Cut past the ninth hour; they were already engaged.'"];
         case "dispatch_copy": return ["Isolde's copy of the dispatch", "Isolde copied the Barrow Cut order and its endorsement word for word before it went to the King's record."];
+        case "chronicle_aveline": return ["Queen Aveline's Roll, 192", "Extract from the High Cairn rolls: Queen Aveline confirms the market of Oakhaven and commissions the western watchtower above Stonecross to guard the passage of grain and stone."];
+        case "chronicle_greyhaven": return ["The Greyhaven Articles, 426", "Articles issued under King Edric III: restoring certain confiscated manors after the joined succession, establishing commissions for damages, and leaving 'exceptions' that fueled localized feuds."];
+        case "chronicle_witness": return ["Roll of the Witness", "From the chapel book-chest: the names of the Vale's dead, recorded under the Common Observance, with the reminder that every oath taken before witnesses binds the soul."];
+        case "clippers_tally": return ["Debased Coiners' Tally", "A notched tally and memorandum recovered from the Border Redoubt: accounts of clipped silver groats melted with base lead, bearing marks for Factor Malo and peddlers on the western road."];
     }
     return [_id, ""];
 }
@@ -1181,8 +1195,11 @@ function gm_tree(_id) {
         // ================= THE CHAPEL BOOK-CHEST =================
         case "site_bookchest":
             T.start = cv("site_bookchest", "The chapel's book-chest: a psalter, a rent roll for the meadows, and a bundle tied with tape and marked with a crowned hand.", [
-                cvo("Look at the bundle.", "bundle", "bookchest_find"), cvo("(Leave it.)", "")]);
+                cvo("Look at the bundle.", "bundle", "bookchest_find"),
+                cvo("Read the memorial roll of the Witness.", "witness", "bookchest_witness"),
+                cvo("(Leave it.)", "")]);
             T.bundle = cv("site_bookchest", "You can make out the crowned hand, a tower drawn in the margin and the number one hundred and ninety-two. The rest is in a clerk's hand you can't read. Pippin could.", []);
+            T.witness = cv("site_bookchest", "The roll records generations of the Vale: births, burials, and pledges sworn before the Maker. Dunstan has noted in the margin: 'What is given in life remains in the keeping of the Witness.'", [cvo("(Back)", "start")]);
             break;
 
         // ================= THE COTTAGE BED =================
@@ -1243,6 +1260,7 @@ function gm_tree(_id) {
                 cvo("Can you read the tower bundle in the chapel chest?", "copy", "", "settlement_found&!doc:settlement_copy"),
                 cvo("Write a petition for Maud Hessel.", "pet", "", "doc:settlement_copy&maud_accepted&!doc:petition&!petition_sent"),
                 cvo("What's the Ordel Settlement?", "ordel", "", "heard_ordel&!ordel_settlement"),
+                cvo("What are the Greyhaven Articles?", "greyhaven", "", "!note:greyhaven"),
                 cvo("(Something else.)", "", "legacy"),
                 cvo("(Leave)", "")
             ]);
@@ -1253,6 +1271,8 @@ function gm_tree(_id) {
             T.pet_done = cv("pippin", "There. It asks that the Lady name a captain or the households be quit of victuals for a garrison that isn't there, and that Maud be given an acquittance for what she's paid.", [cvo("(Back)", "start")]);
             T.ordel = cv("pippin", "From my grandfather's day. An officer held an Ordel grain ship for the owner's arrears and it turned into a war. The Settlement says certain seizures need a hearing first. Then it says 'save in emergency', and everyone argues about what emergency means.", [cvo("(Back)", "start")]);
             T.ordel.enter = "note_ordel";
+            T.greyhaven = cv("pippin", "From King Edric's time, after the Winter Settlement. Hundreds came seeking their grandfather's land back. The Articles promised hearings, but allowed exceptions for powerful lords. It ended the great war and started fifty small ones.", [cvo("(Back)", "start")]);
+            T.greyhaven.enter = "note_greyhaven";
             T.p_poor = cv("pippin", "That's not enough, Rowan. Parchment doesn't grow on sheep. Well. It does. Not for free.", [cvo("(Back)", "start")]);
             break;
 
