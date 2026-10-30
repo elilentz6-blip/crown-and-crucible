@@ -40,6 +40,10 @@ function vis_interiors_define() {
             [spr_prop_trough, 0, 96, 214, 36, 8],
             [spr_prop_crates, 0, 40, 236, 30, 10],
             [spr_prop_barrels, 0, 284, 238, 30, 8],
+            [spr_prop_woodpile, 0, 34, 122, 28, 8],
+            [spr_int_armor_stand, 0, 250, 190, 12, 6],
+            [spr_int_chest, 0, 276, 134, 22, 8],
+            [spr_prop_wheelbarrow, 0, 226, 236, 30, 8],
         ] },
         { id: "chapel", tpl: "chapel", x: 1160, y: 2540, name: "Eastern Stone Chapel", furniture: [
             [spr_int_altar, 0, 144, 94, 52, 10],

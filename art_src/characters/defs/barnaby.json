@@ -1,0 +1,34 @@
+{
+  "id": "barnaby",
+  "extends": "_base_villager",
+  "name": "Barnaby the Carter",
+  "body": {
+    "build": "stout",
+    "height": "normal"
+  },
+  "palette": {
+    "hair": "#a8683a",
+    "main": "#5a7a8a",
+    "trim": "#c8a060",
+    "hat": "#6a4a2a",
+    "pants": "#5a4a36",
+    "boots": "#3e2c20",
+    "skin": "#e0a882"
+  },
+  "face": {
+    "beard": "stubble",
+    "beard_color": "hair",
+    "smile": true
+  },
+  "hair": {
+    "style": "curly"
+  },
+  "outfit": {
+    "top": "tunic",
+    "belt": "#6a4226"
+  },
+  "headwear": {
+    "style": "none"
+  },
+  "accessories": []
+}

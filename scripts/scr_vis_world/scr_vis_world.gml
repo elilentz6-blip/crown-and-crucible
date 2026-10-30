@@ -187,6 +187,9 @@ function vis_tour_step(_dt) {
     if (V.tour_i < 0 || V.tour_t > 3.2) {
         V.tour_i++;
         V.tour_t = 0;
+        // CC_VIS_TOUR=1 visits everything; any other value only stops whose name contains it
+        var _tf = environment_get_variable("CC_VIS_TOUR");
+        while (_tf != "1" && V.tour_i < array_length(_stops) && string_pos(_tf, _stops[V.tour_i][4]) == 0) V.tour_i++;
         if (V.tour_i >= array_length(_stops)) { game_end(); return; }
         var _s = _stops[V.tour_i];
         V.inside = undefined;

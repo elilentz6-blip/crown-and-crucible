@@ -2142,6 +2142,30 @@
         "name": "scr_vis_map",
         "path": "scripts/scr_vis_map/scr_vis_map.yy"
       }
+    },
+    {
+      "id": {
+        "name": "spr_char_barnaby",
+        "path": "sprites/spr_char_barnaby/spr_char_barnaby.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_barnaby",
+        "path": "sprites/spr_portrait_barnaby/spr_portrait_barnaby.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_char_geoffrey",
+        "path": "sprites/spr_char_geoffrey/spr_char_geoffrey.yy"
+      }
+    },
+    {
+      "id": {
+        "name": "spr_portrait_geoffrey",
+        "path": "sprites/spr_portrait_geoffrey/spr_portrait_geoffrey.yy"
+      }
     }
   ],
   "resourceType": "GMProject",

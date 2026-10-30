@@ -104,13 +104,13 @@ function mg_preview_save(_kind, _list, _counter) {
 // CROWN & BONES
 // =========================================================================
 
-/// Face for each opponent. Nobody at the table has their own portrait yet, so the closest match stands in.
+/// Face for each opponent.
 function mg_opp_portrait(_id) {
     switch (_id) {
-        case "BARNABY":  return ui_spr("spr_portrait_giles");
+        case "BARNABY":  return ui_spr("spr_portrait_barnaby");
         case "WULF":     return ui_spr("spr_portrait_wulf");
         case "HOBB":     return ui_spr("spr_portrait_hob");
-        case "GEOFFREY": return ui_spr("spr_portrait_balin");
+        case "GEOFFREY": return ui_spr("spr_portrait_geoffrey");
     }
     return ui_spr("spr_portrait_highwayman");
 }

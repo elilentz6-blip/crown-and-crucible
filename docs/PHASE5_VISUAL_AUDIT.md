@@ -94,6 +94,7 @@ Verified in a native Igor build with `CC_VIS_SCREENS=1` (no runtime errors) on 2
 | Battle: black screen, blob foes, primitive buttons | Painted backdrops by area, finished hero and foe sprites (29 `spr_cbt_*`), kit panels and bars, illustrated weapon minigames, themed attack patterns (knives, boar lanes, bolts), hit effects and a victory or quarter banner | `scr_combat_render`, `art_src/combat` |
 | `spr_foe_*` in battle | Replaced by the finished character art | `scr_combat_render` |
 | Barrow Renegade Warden drawn as Farmer Giles in the overworld | Uses the battle thread's warden sheet, now a registered character | `vis_char_key`, `build_all.py` |
+| Barnaby and Lord Geoffrey borrowing the Giles and Balin portraits at dice; a bare forge | Own portraits; forge gains a woodpile, second armor stand, chest and wheelbarrow | `ui_minigame_screens`, `scr_vis_interiors` |
 | 8 NPCs drawn as Farmer Giles (Bailiff Guy, Lady Cecily, Sapper Vane, Refugee Mira, Old Mallow, Grim, Foreman Brand, Factor Malo) | Each has an original sprite sheet and portrait | `art_src/characters/defs`, `vis_char_key` |
 | Emoji in menu titles | Gone with the old screens; `vis_glyph_safe` also strips unsupported glyphs from floating text and toasts | `scr_vis_feel` |
 | No map or navigation screen (the brief lists one; the game had none) | **New realm map (M):** inked parchment baked from the live terrain and building layout, place names, compass, hero banner. Places only, no quest markers. | `scr_vis_map`, `art_src/world/map_art.py` |
@@ -109,11 +110,11 @@ Verified in a native Igor build with `CC_VIS_SCREENS=1` (no runtime errors) on 2
 |---|---|---|
 | **Not playtested at speed by a person.** Everything above was checked from headless captures of each screen, not by playing. The dice roll/hold/resolve flow and archery's stuck-arrow code were never run from real key presses. | Animation timing and feel are unverified | QA threads are on it |
 | Close-fade path for menus (`ui_screens_close_fx`) is now wired but not visually checked | Could look wrong on exit | Open |
-| Interiors: the forge is sparse, and the manor, weaver and six houses share one cottage room | "Empty buildings" is only partly solved | Open |
+| Interiors: the manor, weaver and six houses still share one cottage room (the forge has been furnished) | "Empty buildings" is only partly solved | Open |
 | Environment art (buildings, terrain, water, vegetation) was reviewed but not redrawn in this phase; it already matched the target look | Brief asks to improve every environment | Partly done |
 | Foes with no art of their own, such as Captain Malor from contracts, use the highwayman sprite and the Greenway Road backdrop | Duplicate art on contract fights | Open |
-| Barnaby and Lord Geoffrey borrow the Giles and Balin portraits in dice | Duplicate portraits | Open |
 | "Reconnaissance: Inspect Royal Checkpoint" truncates in the ledger list | Minor | Open |
+| The opening line "Welcome to Stonecross. A handcrafted medieval world awaits..." reads like marketing copy, not the game's voice | Hurts immersion; gameplay text, so not changed here | Open |
 | Retinue screens were built by their own thread and not re-audited here | Consistency unverified | Open |
 | Old `cc_draw_*` screens and their emoji remain as dead code in Gemini's and ChatGPT's files | Harmless; owners should remove them | KEEP |
 | Legacy fallback renderer and `spr_hero_knight`, `spr_building_*` etc. | Unused while the renderer exists | KEEP |

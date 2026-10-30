@@ -1,0 +1,48 @@
+{
+  "id": "geoffrey",
+  "extends": "_base_villager",
+  "name": "Lord Geoffrey",
+  "body": {
+    "build": "average",
+    "height": "tall"
+  },
+  "palette": {
+    "hair": "#d0b878",
+    "main": "#7a1f2e",
+    "trim": "#e8c860",
+    "tabard": "#7a1f2e",
+    "pants": "#2e2a34",
+    "boots": "#2a1e1a",
+    "skin": "#f0c8a8",
+    "cape": "#1f2e5a",
+    "metal": "#c0c8d4"
+  },
+  "face": {
+    "beard": "mustache",
+    "beard_color": "hair"
+  },
+  "hair": {
+    "style": "swept"
+  },
+  "outfit": {
+    "top": "plate",
+    "tabard": "tabard",
+    "crest": "cross",
+    "crest_color": "trim",
+    "belt": "#e8c860"
+  },
+  "headwear": {
+    "style": "none"
+  },
+  "accessories": [
+    {
+      "type": "cape",
+      "color": "cape"
+    },
+    {
+      "type": "sword_hip",
+      "hilt": "#e8c860",
+      "sheath": "#2a1e1a"
+    }
+  ]
+}

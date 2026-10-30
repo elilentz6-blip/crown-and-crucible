@@ -1672,5 +1672,99 @@
     "walk_fps": 8,
     "shadow": "shadow.png",
     "floats": false
+  },
+  "barnaby": {
+    "display_name": "Barnaby the Carter",
+    "role": "npc",
+    "sheet": "barnaby/barnaby_sheet.png",
+    "strips": {
+      "idle_down": "barnaby/barnaby_idle_down.png",
+      "walk_down": "barnaby/barnaby_walk_down.png",
+      "idle_left": "barnaby/barnaby_idle_left.png",
+      "walk_left": "barnaby/barnaby_walk_left.png",
+      "idle_right": "barnaby/barnaby_idle_right.png",
+      "walk_right": "barnaby/barnaby_walk_right.png",
+      "idle_up": "barnaby/barnaby_idle_up.png",
+      "walk_up": "barnaby/barnaby_walk_up.png"
+    },
+    "portrait": "barnaby/barnaby_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
+  },
+  "geoffrey": {
+    "display_name": "Lord Geoffrey",
+    "role": "npc",
+    "sheet": "geoffrey/geoffrey_sheet.png",
+    "strips": {
+      "idle_down": "geoffrey/geoffrey_idle_down.png",
+      "walk_down": "geoffrey/geoffrey_walk_down.png",
+      "idle_left": "geoffrey/geoffrey_idle_left.png",
+      "walk_left": "geoffrey/geoffrey_walk_left.png",
+      "idle_right": "geoffrey/geoffrey_idle_right.png",
+      "walk_right": "geoffrey/geoffrey_walk_right.png",
+      "idle_up": "geoffrey/geoffrey_idle_up.png",
+      "walk_up": "geoffrey/geoffrey_walk_up.png"
+    },
+    "portrait": "geoffrey/geoffrey_portrait.png",
+    "frame_w": 32,
+    "frame_h": 48,
+    "origin": [
+      16,
+      45
+    ],
+    "frames_per_strip": 4,
+    "sheet_rows": [
+      "down",
+      "left",
+      "right",
+      "up"
+    ],
+    "sheet_cols": {
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "walk": [
+        4,
+        5,
+        6,
+        7
+      ]
+    },
+    "idle_fps": 4,
+    "walk_fps": 8,
+    "shadow": "shadow.png",
+    "floats": false
   }
 }
