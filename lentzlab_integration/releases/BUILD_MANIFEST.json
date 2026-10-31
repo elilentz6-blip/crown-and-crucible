@@ -1,0 +1,45 @@
+{
+  "manifest_version": "1.0.0",
+  "project": {
+    "name": "Crown & Crucible",
+    "slug": "crown-and-crucible",
+    "hub_url": "https://lentzlab.dev/projects/crown-and-crucible",
+    "version": "0.9.0-living-kingdom",
+    "release_track": "Pre-release candidate toward 1.0.1",
+    "target_version": "1.0.1"
+  },
+  "platform": {
+    "os": "macOS (Universal / Apple Silicon arm64)",
+    "runtime": "GameMaker Studio 2 Runtime 2024.14.4.268",
+    "compiler": "Igor 2024.14.4.268",
+    "base_resolution": "1366x768",
+    "display_scale": "HD Pixel / 16:9 Showcase"
+  },
+  "build_artifacts": {
+    "release_zip": {
+      "filename": "crown-and-crucible-0.9.0-macos.zip"
+    }
+  },
+  "visual_material_inventory": {
+    "showcase_plates_1280x720": [
+      "01-stonecross-market.png",
+      "02-boar-and-flagon-interior.png",
+      "03-border-redoubt-investigation.png",
+      "04-combat-man-at-arms.png",
+      "05-rowans-notebook-economy.png"
+    ],
+    "total_curated_gameplay_screens": 18,
+    "total_character_portraits": 27,
+    "total_faction_crests": 6,
+    "branding_assets": [
+      "crown_crucible_header.png",
+      "game_splash.png",
+      "app_icon_1024.png"
+    ]
+  },
+  "publication_state": {
+    "publication_status": "DRAFT_AWAITING_OWNER_REVIEW",
+    "public_download_enabled": false,
+    "staged_at": "2026-10-30T19:35:00Z"
+  }
+}

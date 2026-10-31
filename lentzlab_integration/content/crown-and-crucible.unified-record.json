@@ -1,0 +1,339 @@
+{
+  "project_id": "crown-and-crucible",
+  "meta": {
+    "schema_version": "1.0.0",
+    "generated_at": "2026-10-30T19:30:00-04:00",
+    "generated_by": "Argon",
+    "baseline_engine": "GameMaker 2024.14.4.268 (macOS Apple Silicon)",
+    "purpose": "Public Showcase Data Draft for Lentz Lab (lentzlab.dev/projects/crown-and-crucible)"
+  },
+  "publication_controls": {
+    "visibility": "public",
+    "approved_for_public": false,
+    "approved_by_owner": false,
+    "publication_status": "DRAFT_AWAITING_OWNER_REVIEW",
+    "release_download_published": false,
+    "requires_owner_approval_for_binary": true
+  },
+  "public": {
+    "header": {
+      "slug": "crown-and-crucible",
+      "route": "/projects/crown-and-crucible",
+      "flagship": true,
+      "title": "Crown & Crucible",
+      "subtitle": "A Grounded Feudal Sandbox of War, Trade, and Consequence",
+      "tagline": "Common-born beginnings. Inherited power. A war that does not wait.",
+      "genre": "Medieval RPG / Feudal Life Sandbox",
+      "engine": "GameMaker 2024.14 (macOS Native)",
+      "platforms": [
+        "macOS (Apple Silicon & Intel)"
+      ],
+      "development_status": "Feature-Complete Pre-Release (v0.9.0-living-kingdom)",
+      "content_rating": "Historical Violence, Economic Scarcity, Feudal Politics (16+)"
+    },
+    "overview": {
+      "synopsis": "Crown & Crucible is an uncompromising, historical medieval sandbox set across the fractured archipelago of Aethelgard. You step into the worn leather boots of Rowan, an experienced common-born man-at-arms navigating the escalating civil war between the royal Crown of King Aldous III and the rebellious Iron Council of Dunhollow.",
+      "thematic_core": "Unlike conventional fantasy roleplaying games, Crown & Crucible enforces absolute historical realism (c. 1150–1350 Western Europe): zero magic, zero supernatural forces, zero prophecies, and zero unearned chivalric knighthood. Rowan possesses no noble birthright and no divine favor. Victory is earned through discipline with cold iron, shrewd trade under royal price controls, living wages paid to your retinue, and hard choices within overlapping feudal jurisdictions.",
+      "world_hook": "While you work honest shifts as a farmhand, forge apprentice, carter, or town watchman, the realm does not pause. The War Clock advances silently across the Marches. As regional harvests spoil and bridgeheads fall to mercenary companies, bread prices rise, supply lines strangle, and the choices you make leave lasting physical and narrative scars."
+    },
+    "feature_pillars": [
+      {
+        "id": "pillar_interiors",
+        "title": "17 Distinct Enterable Building Interiors",
+        "category": "World & Spatial Design",
+        "summary": "Every functional building in the hamlet of Stonecross—from Master Odo's smithy and Beatrice's bakery to the Tithe Barn, Weaver's workshop, and Toll Gatehouse—features a fully realized, enterable interior with dedicated furniture and seamless doorways that eliminate collision bounce."
+      },
+      {
+        "id": "pillar_schedules",
+        "title": "4-Phase Living Inhabitant Routines",
+        "category": "Living World Simulation",
+        "summary": "Stonecross inhabitants live structured daily lives across Dawn, Midday, Dusk, and Night. Blacksmiths hammer iron at dawn and drink at the tavern by nightfall; farmers harvest rye under the midday sun and retire to their hearths at dusk."
+      },
+      {
+        "id": "pillar_dialogue",
+        "title": "37 Reactive Branching Conversation Trees",
+        "category": "Narrative Engine",
+        "summary": "A deep narrative framework comprising 28 character dialogue trees and 9 site inspections. NPCs remember past favors, track unpaid tavern tabs, react to visible battle injuries, and respect your actual military standing rather than flattering you."
+      },
+      {
+        "id": "pillar_economy",
+        "title": "Systemic Feudal Economy & Cargo Tiers",
+        "category": "Economic Simulation",
+        "summary": "Dynamic local supply-and-demand elasticity governs all trade commodities. Rowan's cargo is physically constrained by equipment tiers—from a 3-sack foot pack to pack mules and 30-sack heavy carter wagons."
+      },
+      {
+        "id": "pillar_assize",
+        "title": "Rule 13 Royal Assize of Bread (Price Controls)",
+        "category": "Historical Governance",
+        "summary": "When wartime escalation strikes, the Crown enforces statutory price controls in royal markets like Stonecross and High Cairn, capping wheat at 18 Gold to prevent starvation, while rebel territory suffers unchecked war inflation."
+      },
+      {
+        "id": "pillar_livelihoods",
+        "title": "6 Grounded Commoner Occupations & Tenancy",
+        "category": "Career Progression",
+        "summary": "Earn honest silver outside of violence through field farm labor, smithy forge work, town watch shifts, quarry cartage, forest timber hunting, and herbal foraging, advancing from day-laborer to a chartered tenant with daily dividend yields."
+      },
+      {
+        "id": "pillar_combat",
+        "title": "Consequential Stamina, Wear & Defeat Mechanics",
+        "category": "Tactical Combat",
+        "summary": "Real-time bullet-hell defense coupled with precision rhythm attack timing across 5 distinct weapon classes. Striking burns stamina, unblocked blows shatter armor durability, and defeat revives Rowan at 50% HP with bruised ribs, repair debts, and physical wear."
+      },
+      {
+        "id": "pillar_notebook",
+        "title": "Diegetic 5-Tab Commoner's Notebook",
+        "category": "Interface Design",
+        "summary": "Rowan tracks his life through an in-game parchment journal organized into five authentic sections: Learned Chronicles, Papers & Warrants, Heard Rumors, Feudal Contracts, and Debts & Standing."
+      },
+      {
+        "id": "pillar_realism",
+        "title": "Strict Historical Medieval Grounding (Zero Magic)",
+        "category": "Canon & Lore",
+        "summary": "Written to the 12 Locked Canon Rules and Rule 13: zero spells, zero dimensional rifts, zero magical portals, zero monsters. Every mystery, crime, and war consequence is rooted in authentic 12th–14th century institutions."
+      }
+    ],
+    "world_and_history": {
+      "setting": "The Archipelago of Aethelgard",
+      "era": "Circa 1150–1350 Western European Feudalism (Crown Reckoning 487)",
+      "chronicler": "Oren of Halewick, Chronicler of the Common Observance",
+      "seven_isles": [
+        {
+          "name": "Maroven",
+          "character": "The Royal Heartland",
+          "description": "Seat of King Aldous III and the historic high seat of royal justice. Anchored by the fortified capital of High Cairn, royal river ports, and vast fertile grain manors."
+        },
+        {
+          "name": "Caerwyn",
+          "character": "Chivalric Border Marches",
+          "description": "Ancient chivalric valley ruled by proud marcher lords, tournament traditions, and defensive border stone keeps watching the high passes."
+        },
+        {
+          "name": "Rusk",
+          "character": "Ironstone & Industrial Foundations",
+          "description": "Rugged, smoke-choked hills famed for deep iron pits, master stonemasons, sappers, and heavy smelting hearths."
+        },
+        {
+          "name": "Ordel",
+          "character": "The Breadbasket Valleys",
+          "description": "Rich arable river valleys governed by monastic tithes, expansive rye and barley fields, and complex manorial tenancy customs."
+        },
+        {
+          "name": "Terveth",
+          "character": "The Navigators & Waterway League",
+          "description": "Interlocking river estuaries, marshland tracks, and independent bargemasters who command the trade routes between the inner seas."
+        },
+        {
+          "name": "Sere",
+          "character": "The Windward Coastal Cliffs",
+          "description": "Bleak, storm-battered cliff coasts sustained by herring fisheries, kelp-gathering, and staunch local self-reliance."
+        },
+        {
+          "name": "Vey",
+          "character": "The Outer Wild Border",
+          "description": "Dense pine taiga, isolated logging hamlets, abandoned Roman-era border redoubts, and deep limestone barrows."
+        }
+      ],
+      "major_factions": [
+        {
+          "name": "The Royal Crown of King Aldous III",
+          "motto": "The Crown Endures",
+          "principles": "Lawful feudal monarchy, maintenance of the King's Highway, statutory price ceilings on staple food, and collection of royal tallage."
+        },
+        {
+          "name": "The Iron Council of Dunhollow",
+          "motto": "Iron Binds the Free",
+          "principles": "Rebellious coalition of mining barons, independent sappers, and veteran mercenary companies resisting royal river taxation."
+        },
+        {
+          "name": "The River League of Oakhaven",
+          "motto": "By Keel and Coin",
+          "principles": "A wealthy confederation of merchants and bargemasters who profit from transporting war cargo while evading royal tariffs."
+        },
+        {
+          "name": "The Common Observance",
+          "motto": "The Witness Records All",
+          "principles": "The shared medieval faith across the islands; maintains parish churches, hospices, roadside shrines of Saint Aveline, and monastic ledgers."
+        }
+      ]
+    },
+    "protagonist": {
+      "name": "Rowan",
+      "social_origin": "Common-born man-at-arms",
+      "starting_assets": "A worn gambeson, serviceable iron arming sword, three-sack foot pack, and an empty coin purse",
+      "progression_ladder": [
+        {
+          "rank": 0,
+          "title": "Rowan (Man-at-Arms)",
+          "threshold": "Starting Rank",
+          "privileges": "Basic day labor, local town trade, tavern contracts"
+        },
+        {
+          "rank": 1,
+          "title": "Rowan, Freeblade Captain",
+          "threshold": "50 Chivalric Renown",
+          "privileges": "Right to recruit up to two retinue companions, hire sellsword mercenaries"
+        },
+        {
+          "rank": 2,
+          "title": "Rowan, Trusted Company Captain",
+          "threshold": "100 Renown + 40 Faction Rep",
+          "privileges": "Eligible to lease agricultural tenancy and accept Crown garrison contracts"
+        },
+        {
+          "rank": 3,
+          "title": "Rowan, Veteran Company Captain",
+          "threshold": "200 Renown + 70 Faction Rep",
+          "privileges": "Highroad safe-conduct warrants, access to royal armory requisition"
+        }
+      ]
+    },
+    "milestones": [
+      {
+        "id": "M0",
+        "title": "Foundational Prototype & Core Combat Engine",
+        "status": "Implemented",
+        "summary": "Established the initial GameMaker 2024.14 2D overworld framework, dual-grid terrain renderer, and hybrid rhythm/bullet-hell combat mechanics."
+      },
+      {
+        "id": "M1",
+        "title": "World Sense of Place & Spatial Integrity",
+        "status": "Implemented",
+        "summary": "Implemented 17 distinct functional building interiors on a dedicated non-overlapping sub-map, safe doorway collision geometries, and 4-phase inhabitant routines."
+      },
+      {
+        "id": "M2",
+        "title": "Reactive Branching Narrative & Dialogue Engine",
+        "status": "Implemented",
+        "summary": "Constructed 37 multi-tier conversation trees with stateful memory, memory callbacks, and complete purge of unearned noble titles."
+      },
+      {
+        "id": "M3",
+        "title": "Systemic Feudal Economy & 6 Regional Livelihoods",
+        "status": "Implemented",
+        "summary": "Authored elastic supply-and-demand market trading, cargo transport tiers (Foot Pack, Mule, Wagon), Rule 13 Assize of Bread price caps, and 6 daily labor shifts."
+      },
+      {
+        "id": "M4",
+        "title": "Combat Consequences, Equipment Wear & Ambient Chatter",
+        "status": "Implemented",
+        "summary": "Integrated stamina attack costs, armor damage on hit, non-trivial defeat revival (50% HP, bruised ribs, rescue debts), and time-sensitive ambient rumors."
+      },
+      {
+        "id": "M5",
+        "title": "Career Yields & Tenancy Advancement",
+        "status": "Implemented",
+        "summary": "Developed career standing ladders, tenancy lease acquisitions, and multi-day dividend calculations responding to wartime requisition."
+      },
+      {
+        "id": "M6",
+        "title": "Ambient World Reactive Barks & Inhabitant Life",
+        "status": "Implemented",
+        "summary": "Created context-sensitive village barks reacting to time of day, player injuries, active debt status, and royal news bulletins."
+      },
+      {
+        "id": "M7",
+        "title": "Chronicles Canon Lore Purge & Grounded Visuals",
+        "status": "Implemented",
+        "summary": "Systematically purged all magical runes, portal arches, and supernatural glows; replaced with authentic boundary watchposts, granite mortar lines, and amber glass."
+      },
+      {
+        "id": "M_FUTURE",
+        "title": "Road to 1.0.1: Multi-Island Expansion & Siege Skirmishes",
+        "status": "Planned Roadmap",
+        "summary": "Seamless multi-island transitions via river wharves and mine lifts, multi-phase castle siege engagements, and companion personal arc quests."
+      }
+    ],
+    "version_history": [
+      {
+        "version": "v0.9.0-living-kingdom",
+        "date": "2026-10-30",
+        "type": "Major Feature Release",
+        "highlights": [
+          "17 distinct enterable interiors with zero-bounce doorways",
+          "37 reactive character and landmark dialogue trees",
+          "Rule 13 Royal Assize of Bread wheat ceiling (<= 18G in Crown markets)",
+          "Complete purge of portals, magical runes, and floating entities"
+        ]
+      },
+      {
+        "version": "v0.4.0-chronicle-followthrough",
+        "date": "2026-10-30",
+        "type": "Content Milestone",
+        "highlights": [
+          "Integrated Oren of Halewick's Chronicles of Aethelgard historical ledger",
+          "Added Maud Hessel tower levy dispute and Sapper Vane pardon writ quests",
+          "Integrated 5-stage systemic War Clock with regional market news broadcasts"
+        ]
+      },
+      {
+        "version": "v0.3.0-retinue-war-clock",
+        "date": "2026-10-29",
+        "type": "Systems Integration",
+        "highlights": [
+          "Companion retinue system with daily wages, routines, and in-combat active synergy",
+          "Dynamic time-of-day lighting engine with dual-grid terrain transitions"
+        ]
+      },
+      {
+        "version": "v0.1.0-prototype",
+        "date": "2026-10-28",
+        "type": "Initial Prototype",
+        "highlights": [
+          "Baseline 2D overworld exploration and rhythm-timed weapon combat engine"
+        ]
+      }
+    ],
+    "supported_platforms": {
+      "macos": {
+        "status": "Primary platform",
+        "architectures": [
+          "Apple Silicon (arm64: M1/M2/M3/M4)",
+          "Intel (x86_64)"
+        ],
+        "recommended_resolution": "1366x768"
+      }
+    },
+    "release_downloads": {
+      "published": false,
+      "requires_owner_approval": true,
+      "notice": "Public download binaries require explicit approval by Creative Director Eli Lentz before distribution.",
+      "staged_builds": [
+        {
+          "build_id": "cc-macos-v0.9.0-living-kingdom",
+          "file_name": "crown-and-crucible-0.9.0-macos.zip",
+          "target_environment": "macOS Universal Application Bundle (arm64 & x86_64)",
+          "download_url": null,
+          "gated_access": true
+        }
+      ]
+    },
+    "credits": {
+      "creative_director": "Eli Lentz",
+      "studio": "Lentz Lab",
+      "website": "https://lentzlab.dev",
+      "engineering_collaboration": [
+        {
+          "agent": "Argon",
+          "focus": "Documentation, Handoff Engineering, Living Livelihoods & Verification Gate"
+        },
+        {
+          "agent": "Claude",
+          "focus": "Front-End Presentation, UI Kit, Native Igor Harness & Realm Cartography"
+        },
+        {
+          "agent": "Gemini",
+          "focus": "Visual Art Pipelines, 2D Architecture Engine, Retinue Combat Synergy"
+        },
+        {
+          "agent": "ChatGPT / Codex",
+          "focus": "Chronicles Implementation, Systemic Narrative & War Clock Architecture"
+        },
+        {
+          "agent": "Grok Bot",
+          "focus": "Integration & Merge Verification"
+        }
+      ],
+      "page_text": "Project page text was written by Gemini and edited by Claude."
+    }
+  }
+}
