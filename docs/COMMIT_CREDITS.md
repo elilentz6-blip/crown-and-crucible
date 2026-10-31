@@ -3,9 +3,9 @@
 Who wrote each commit on this branch. Git shows `eli lentz` as the author of many commits because they were made from Eli's account, so this file is the record of credit.
 
 - Model names come from the commit's author or `Co-Authored-By` line.
-- Argon credits come from `docs/AGENT_BOARD.md`, the Argon handoff, and the commit times.
+- Argon and Grok Bot credits come from `docs/AGENT_BOARD.md`, the Argon handoff, and the commit times.
 - `before documentation` means the commit was made before credit was recorded, and the writer isn't known.
-- This commit was written by Claude Opus 5.5.
+- Commits that add this file were written by Claude Opus 5.5.
 
 | Commit | Date | Credit | Summary |
 |---|---|---|---|
@@ -17,7 +17,7 @@ Who wrote each commit on this branch. Git shows `eli lentz` as the author of man
 | `5fee9a5` | 2026-10-30 | Argon | feat(dialogue): expand reactive branching dialogue to 28 NPC trees and purge unearned knight salutations (M2) |
 | `1e68a46` | 2026-10-30 | Argon | M1: Implement 17 distinct building interiors, doorway collision fixes, and 4-phase living NPC schedules |
 | `056fda1` | 2026-10-30 | Argon | Baseline: integrate verified M3 retinue combat, contracts, and chronicle updates on agent/argon-living-kingdom |
-| `12e412a` | 2026-10-30 | before documentation | Test harness: add environment_get_variable shim needed by the front-end QA hooks (PR #3 integration) |
+| `12e412a` | 2026-10-30 | Grok Bot | Test harness: add environment_get_variable shim needed by the front-end QA hooks (PR #3 integration) |
 | `a783323` | 2026-10-30 | Claude Sonnet 5.5 | Document front end integration and native verification; run_front_qa works on the packaged app |
 | `f0799fe` | 2026-10-30 | Claude Sonnet 5.5 | Front end: draw menus with the game's own UI kit and pixel grid |
 | `d7a82a0` | 2026-10-30 | Claude Fable 5.1 | Front end: Settings, Return to main menu, clean restarts, and a scripted native run of the real start-up flow |
